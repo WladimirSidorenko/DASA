@@ -1,0 +1,20 @@
+Discourse-Aware Sentiment Analysis
+==================================
+.. image:: https://travis-ci.org/WladimirSidorenko/DASA.svg?branch=master
+   :alt: Build Status
+   :target: https://travis-ci.org/WladimirSidorenko/DASA
+
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+   :alt: MIT License
+   :align: right
+   :target: http://opensource.org/licenses/MIT
+
+*This project is currently work in progress.*
+
+
+Description
+-----------
+
+This package implements sevaral approaches to discourse-aware
+sentiment analysis, which infer sentiment class of the document from
+the polarity scores of its elementary discourse segments (EDUs).
