@@ -15,6 +15,7 @@ Discourse-Aware Sentiment Analysis
 Description
 -----------
 
-This package implements sevaral approaches to discourse-aware
-sentiment analysis, which infer sentiment class of the document from
-the polarity scores of its elementary discourse segments (EDUs).
+This package provides several approaches to discourse-aware sentiment
+analysis (DASA).  More precisely, these methods infer the overall
+sentiment class of the document from the polarity scores of its
+elementary discourse units (EDUs).
