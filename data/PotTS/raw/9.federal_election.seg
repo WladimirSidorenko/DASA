@@ -1,0 +1,1177 @@
+	id	381005347911380992
+	time	Fri Sep 20 12:42:08 +0000 2013
+	replace	offset	61	length	10	num	0	orig	.8	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	2::1	3::8	12::5	18::6	25::5	31::3	35::3	39::11	50::1	52::2	55::4	60::1	61::10	72::9	82::1	83::7	90::1	91::1	92::6	98::1	100::3	104::4	109::3	113::7	121::6	128::6	135::12	147::1
+(HS Ex - Minister Yaşar Okuyan hatte auf sie hingewiesen : (OBJ Es sind 4 %PosSmiley Millionen -OP- Geister - -CP- Wähler , (ARR die nach den letzten Wahlen wieder verschwanden . ) ) )
+
+	id	362675460108328960
+	time	Wed Jul 31 22:45:42 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@henriette345 	replacement		info_end
+	replace	offset	24	length	11	num	2	orig	:-) 	replacement	%PosSmiley 	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::2	9::6	16::7	24::10	35::2	38::3	42::4	47::3	51::5	57::10	67::3
+(HS Alles im grünen Bereich %PosSmiley 15_ Uhr kann man nicht versemmeln ... )
+
+	id	374249263750184960
+	time	Sun Sep 01 21:15:52 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Killimanscharo 	replacement		info_end
+	replace	offset	46	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::5	9::4	14::6	21::6	28::5	34::3	38::2	41::5	46::10	57::1	59::2	62::6	69::3	73::3	76::1
+(HS Da guckt wohl gerade jemand nicht das TV duell %PosSmiley 1 in meiner TL. Wow ! )
+
+	id	370491912827854848
+	time	Thu Aug 22 12:25:30 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Schlueri 	replacement		info_end
+	replace	offset	48	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	59	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	59	length	5	num	6	orig	mautau79	replacement	%User	info_end
+	sentence_start	0	3
+	token_offsets	sentence	0	offsets	0::3
+	token_offsets	sentence	1	offsets	3::9	13::3	16::1	17::4	22::2	25::3	29::7	37::5	43::4	48::10	59::5
+(FRE ... )
+
+(HS natürlich nur , wenn es die Piraten nicht gäbe %PosSmiley mautau79 )
+
+	id	372777279933677568
+	time	Wed Aug 28 19:46:44 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Bitsammelwanne: 	replacement		info_end
+	replace	offset	74	length	11	num	2	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	85	length	5	num	4	orig	http://t.co/1zBlGtJ6f7	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::20	25::4	30::3	34::2	37::6	44::3	48::3	52::4	57::6	64::9	74::10	85::5
+(HS Der Rechenschaftsbericht 2012_ vom LV Hessen ist nun auch Online einsehbar %PosSmiley %Link )
+
+	id	363727713825075200
+	time	Sat Aug 03 20:26:59 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ttrueten 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@bodoramelow 	replacement		info_end
+	replace	offset	49	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	81	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	24	49	61
+	token_offsets	sentence	0	offsets	0::10	11::5	17::5	22::1
+	token_offsets	sentence	1	offsets	24::2	26::2	29::2	32::3	35::1	36::12	48::1
+	token_offsets	sentence	2	offsets	49::10	59::1
+	token_offsets	sentence	3	offsets	61::3	65::6	72::2	74::1	76::4	81::10	92::2	95::2	98::5	104::6	111::5	117::5	122::1
+(HS Vielleicht hilft lesen ? )
+
+(HSF Z. B. im SPD - Wahlprogramm ? )
+
+(HSF %PosSmiley . )
+
+(HS Was ändert es , (ADV wenn Steinbrück es in JEDEM seiner Sätze sagte ? ) )
+
+	id	365776167648755712
+	time	Fri Aug 09 12:06:48 +0000 2013
+	replace	offset	26	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	37	length	0	num	2	orig	RT @CASIBLUM:	replacement		info_end
+	replace	offset	108	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	6
+	token_offsets	sentence	0	offsets	0::4	4::1
+	token_offsets	sentence	1	offsets	6::2	9::4	14::2	17::4	22::4	26::10	38::3	42::3	46::9	56::5	62::11	74::9	84::3	88::4	93::2	96::11	108::3
+(FRE Haha ! )
+
+(HS So muss es wohl sein %PosSmiley 52%_ der Deutschen leben anscheinend permanent bei IKEA im Bällchenbad CDU )
+
+	id	365414666333208577
+	time	Thu Aug 08 12:10:20 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @K_SA: 	replacement		info_end
+	replace	offset	18	length	11	num	2	orig	;-) 	replacement	%PosSmiley 	info_end
+	replace	offset	75	length	0	num	4	orig	 gruene-hessen.de	replacement		info_end
+	replace	offset	78	length	5	num	6	orig	http://t.co/bZbkePd2WK	replacement	%Link	info_end
+	replace	offset	84	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	96	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::10	18::10	29::4	34::5	40::2	43::8	51::1	53::3	57::14	72::3	76::1	78::5	84::5	90::5	96::2
+(HS Gerade erschienen %PosSmiley Alle Infos zu Landtags - und Bundestagswahl auf - %Link ltwHe btw13 fb )
+
+	id	370568150653624320
+	time	Thu Aug 22 17:28:26 +0000 2013
+	replace	offset	17	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	25	length	11	num	2	orig	:-) 	replacement	%PosSmiley 	info_end
+	replace	offset	36	length	0	num	4	orig	RT @larswillen3:	replacement		info_end
+	replace	offset	37	length	0	num	6	orig	@13DX110 	replacement		info_end
+	replace	offset	116	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::3	13::3	17::5	23::1	25::10	37::8	46::2	49::10	59::1	60::6	67::3	71::2	74::3	78::9	88::4	93::6	100::3	104::4	109::6	116::3
+(HS frag mal bei den grüne n %PosSmiley schnauze du hackfresse - (HS sobald wir an der regierung sind werden wir dich ficken AfD ) )
+
+	id	381556713763389440
+	time	Sun Sep 22 01:13:04 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Mario_WL: 	replacement		info_end
+	replace	offset	8	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	16	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	21	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	27	length	0	num	8	orig	RT @denyo252:	replacement		info_end
+	replace	offset	88	length	0	num	10	orig	#	replacement		info_end
+	replace	offset	99	length	10	num	12	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	67	88
+	token_offsets	sentence	0	offsets	0::1	1::6	8::3	12::3	16::3	19::1	21::5	28::3	32::2	34::1	36::4	41::5	47::6	54::4	59::6	65::1
+	token_offsets	sentence	1	offsets	67::4	71::1	73::6	80::6	86::1
+	token_offsets	sentence	2	offsets	88::9	97::1	99::10
+(HS [ Ausser AfD und NPD ] fixed Ach ja , geht bitte morgen alle wählen ! )
+
+(HSF Egal , welche Partei ! )
+
+(HSF gehwählen ! %PosSmiley )
+
+	id	373753355417690112
+	time	Sat Aug 31 12:25:18 +0000 2013
+	replace	offset	30	length	5	num	0	orig	http://t.co/tephK0IRzQ	replacement	%Link	info_end
+	replace	offset	72	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	replace	offset	83	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	91	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	100	length	0	num	8	orig	@	replacement		info_end
+	replace	offset	100	length	5	num	10	orig	thorstenfaas	replacement	%User	info_end
+	sentence_start	0	83
+	token_offsets	sentence	0	offsets	0::3	4::3	8::6	15::10	26::3	30::5	36::10	47::5	53::3	57::6	64::6	70::1	72::10
+	token_offsets	sentence	1	offsets	83::7	91::5	97::2	100::5
+(HS Ist das virale verbreiten von %Link vielleicht schon die Studie selbst ? %PosSmiley )
+
+(HSF tvduell btw13 cc thorstenfaas )
+
+	id	384397363466735616
+	time	Sun Sep 29 21:20:47 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@PickiHH 	replacement		info_end
+	replace	offset	68	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::6	16::5	22::3	26::3	30::3	34::3	38::7	46::2	49::3	53::6	60::7	68::10
+(HS Nein die Bürger haben der fdp und den Piraten in die fresse gehauen %PosSmiley )
+
+	id	379484344165101568
+	time	Mon Sep 16 07:58:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@hagen_hoppe 	replacement		info_end
+	replace	offset	80	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	9::1	11::3	15::7	23::9	33::3	37::3	40::1	41::6	48::2	51::5	57::9	67::12	80::10
+(HS ich denke , man getrost zumindest mal NPD - Wähler in diese Kategorie einsortieren %PosSmiley )
+
+	id	376311526119858177
+	time	Sat Sep 07 13:50:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ProSieben 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	4	length	10	num	4	orig	:(	replacement	%NegSmiley	info_end
+	replace	offset	129	length	10	num	6	orig	:/	replacement	%NegSmiley	info_end
+	sentence_start	0	129
+	token_offsets	sentence	0	offsets	0::3	4::10	15::3	19::6	26::2	29::5	35::5	41::4	46::5	52::3	56::3	60::4	65::3	69::2	72::4	77::4	82::5	88::5	94::5	100::4	105::4	109::1	111::3	115::3	119::2	122::4	126::3
+	token_offsets	sentence	1	offsets	129::10
+(HS SdR %NegSmiley ich wollte da schon immer sooo gerne hin und dann ist da auch noch miley cyrus heute aber nein , (ATT ich bin zu jung ... ) )
+
+(FRE %NegSmiley )
+
+	id	372698011819724800
+	time	Wed Aug 28 14:31:45 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@	replacement		info_end
+	replace	offset	0	length	5	num	2	orig	Gruene_Austria	replacement	%User	info_end
+	replace	offset	41	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	78	length	11	num	6	orig	:-) 	replacement	%PosSmiley 	info_end
+	replace	offset	89	length	5	num	8	orig	http://t.co/YYuqB0UEzg	replacement	%Link	info_end
+	sentence_start	0	28
+	token_offsets	sentence	0	offsets	0::5	5::1	7::5	13::3	17::3	21::5	26::1
+	token_offsets	sentence	1	offsets	28::3	32::4	37::3	41::3	44::1	46::10	57::3	61::6	68::9	78::10	89::5
+(HS Gruene_Austria , kennt ihr das schon ? )
+
+(HS Wie sich der ÖVP - Bauernbund die Grünen vorstellt %PosSmiley %Link )
+
+	id	373802194963034112
+	time	Sat Aug 31 15:39:22 +0000 2013
+	replace	offset	25	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	60	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	60	length	5	num	4	orig	frederics	replacement	%User	info_end
+	replace	offset	66	length	10	num	6	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::9	20::4	25::6	32::10	42::1	44::15	60::5	66::10
+(HS Die ganze Prominenz beim Grünen Sommerfest , einschliesslich frederics %PosSmiley )
+
+	id	381690191770943488
+	time	Sun Sep 22 10:03:27 +0000 2013
+	replace	offset	73	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	73
+	token_offsets	sentence	0	offsets	0::3	4::7	12::3	16::7	23::1	25::4	30::3	34::6	41::3	45::2	48::3	52::9	62::9	71::1
+	token_offsets	sentence	1	offsets	73::10
+(HS Ich wünsche den Piraten , (OBJ dass sie dieses Mal in den Bundestag einziehen . ) )
+
+(FRE %PosSmiley )
+
+	id	379148318212771841
+	time	Sun Sep 15 09:42:57 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@_graciosa 	replacement		info_end
+	replace	offset	102	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	33
+	token_offsets	sentence	0	offsets	0::3	4::6	11::4	16::4	21::3	25::6	31::1
+	token_offsets	sentence	1	offsets	33::4	38::4	43::3	47::3	51::7	59::19	79::4	84::2	87::6	94::6	100::1	102::10
+(HS Ich drücke Euch echt die Daumen ! )
+
+(HS Auch wenn mir die Piraten verständlicherweise mehr am Herzen liegen ! %PosSmiley )
+
+	id	375156652041048064
+	time	Wed Sep 04 09:21:30 +0000 2013
+	replace	offset	73	length	11	num	0	orig	;-) 	replacement	%PosSmiley 	info_end
+	replace	offset	84	length	5	num	2	orig	http://t.co/WcFpXcI8HD	replacement	%Link	info_end
+	sentence_start	0	49
+	token_offsets	sentence	0	offsets	0::7	8::9	18::3	22::12	35::2	38::6	45::3
+	token_offsets	sentence	1	offsets	49::4	54::3	58::5	64::3	68::4	73::10	84::5
+(HSF Unseren Radiospot zur Landtagswahl in Hessen ... )
+
+(HS hier zum hören für Euch %PosSmiley %Link )
+
+	id	374893740047224833
+	time	Tue Sep 03 15:56:47 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @beatbaron90: 	replacement		info_end
+	replace	offset	91	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	102	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	112	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	119	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0	61
+	token_offsets	sentence	0	offsets	0::4	5::5	11::3	15::11	27::5	33::2	36::4	41::5	47::5	53::6	59::1
+	token_offsets	sentence	1	offsets	61::6	68::3	72::3	76::3	80::3	84::6	91::10	102::9	112::6	119::7	127::3
+(HS Alle Leute die ansatzweise Grips im Kopf haben gehen wählen ! )
+
+(HS Wollte ich nur Mal los werden %PosSmiley Wahlkampf wahlen politik ... )
+
+	id	375154693900484608
+	time	Wed Sep 04 09:13:43 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@netzwege_Go 	replacement		info_end
+	replace	offset	115	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::6	11::5	16::1	18::5	23::1	25::3	29::17	47::5	53::3	57::8	66::5	72::8	81::1	83::4	88::2	91::4	95::1	96::1	97::1	99::10	110::4	115::10
+(HS Ich dachte immer , Markt - und Meinungsforschung würde mit anonymen Daten arbeiten - aber so geht ' ' s vielleicht auch %PosSmiley )
+
+	id	378936421488525312
+	time	Sat Sep 14 19:40:57 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ProSieben 	replacement		info_end
+	replace	offset	107	length	10	num	2	orig	:*	replacement	%PosSmiley	info_end
+	sentence_start	0	87	104
+	token_offsets	sentence	0	offsets	0::3	4::3	8::6	15::3	19::6	26::2	29::3	33::2	36::3	40::3	44::12	57::3	61::12	74::6	81::4	85::1
+	token_offsets	sentence	1	offsets	87::3	91::3	95::7	102::1
+	token_offsets	sentence	2	offsets	104::2	107::10
+(HS Hey ich wollte mal Fragen wo und ob ich die Wiederholung von supernatural gucken kann ? )
+
+(FRB Die von gestern . )
+
+(HSF LG %PosSmiley )
+
+	id	377387725365972992
+	time	Tue Sep 10 13:06:59 +0000 2013
+	replace	offset	75	length	10	num	0	orig	:(	replacement	%NegSmiley	info_end
+	sentence_start	0	47	74
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::3	19::7	27::3	31::3	34::1	35::7	43::2	45::1
+	token_offsets	sentence	1	offsets	47::4	52::3	56::5	62::4	67::5	72::1
+	token_offsets	sentence	2	offsets	74::1	75::10
+(HS Wer reisst mit mir überall die NPD - Plakate ab ? )
+
+(HS Kann die nicht mehr sehen . )
+
+(HS > %NegSmiley )
+
+	id	356686508243165184
+	time	Mon Jul 15 10:07:45 +0000 2013
+	replace	offset	44	length	11	num	0	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	55	length	5	num	2	orig	http://t.co/11voKQBU98	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::7	15::2	18::13	32::3	36::7	44::10	55::5
+(HS Volker Pispers zu Umfragewerten der Piraten %PosSmiley %Link )
+
+	id	364343568611016704
+	time	Mon Aug 05 13:14:10 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@zynaesthesie 	replacement		info_end
+	replace	offset	13	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	17	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	21	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	73	length	10	num	8	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::7	13::3	17::3	21::3	25::2	28::5	34::4	39::4	44::6	51::3	55::3	59::5	65::7	73::10
+(HS Dann müssten CDU CSU SPD es ihnen aber auch gleich tun bei ihren Wählern %PosSmiley )
+
+	id	375331453334458368
+	time	Wed Sep 04 20:56:06 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @RobertMuromix: 	replacement		info_end
+	replace	offset	0	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	11	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	11	length	5	num	6	orig	ziesmannmedia	replacement	%User	info_end
+	replace	offset	27	length	0	num	8	orig	@	replacement		info_end
+	replace	offset	27	length	5	num	10	orig	BR_Bayern	replacement	%User	info_end
+	replace	offset	57	length	0	num	12	orig	#	replacement		info_end
+	replace	offset	64	length	0	num	14	orig	#	replacement		info_end
+	sentence_start	0	57
+	token_offsets	sentence	0	offsets	0::10	11::5	16::1	18::4	23::3	27::5	33::3	37::5	43::5	49::6	55::1
+	token_offsets	sentence	1	offsets	57::6	64::7
+(HS (FRE %PosSmiley ziesmannmedia : ) Darf der BR_Bayern das jetzt alles senden ? )
+
+(HSF BRwahl TVDuell )
+
+	id	361172215431036928
+	time	Sat Jul 27 19:12:21 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Marktzyniker: 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	11	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	106	length	10	num	6	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	117	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::3	11::5	17::7	25::3	29::6	36::12	49::5	55::9	64::1	66::12	79::5	85::3	89::6	96::9	106::10	117::12	129::3
+(HS Wähler der Union sollten bei diesen Temperaturen nackt rumlaufen , schliesslich haben sie nichts verbergen %PosSmiley stopwatching ... )
+
+	id	355958555985190912
+	time	Sat Jul 13 09:55:07 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@DennisBeck_w 	replacement		info_end
+	replace	offset	91	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	102	length	0	num	4	orig	@JChristandl 	replacement		info_end
+	replace	offset	102	length	0	num	6	orig	@	replacement		info_end
+	replace	offset	102	length	5	num	8	orig	AndiSchneider	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::5	12::5	18::6	25::2	28::3	32::5	38::4	43::3	46::1	48::4	53::3	57::7	65::5	71::10	82::8	91::10	102::5
+(HS Linke beten einen Mörder an (HSF und regen sich auf , (ADV wenn die Polizei einen Verbrecher umnietet %PosSmiley AndiSchneider ) ) )
+
+	id	375571223507238912
+	time	Thu Sep 05 12:48:52 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ihiergeist 	replacement		info_end
+	replace	offset	58	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	47
+	token_offsets	sentence	0	offsets	0::6	7::4	12::11	24::3	28::3	32::6	38::1	39::6	45::2
+	token_offsets	sentence	1	offsets	47::4	52::5	58::10
+(HSF gerade noch rechtzeitig vor den Bayern - Wahlen .. )
+
+(HSF sehr schon %PosSmiley )
+
+	id	381891959948070912
+	time	Sun Sep 22 23:25:13 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	92	length	0	num	2	orig	.	replacement		info_end
+	replace	offset	132	length	10	num	4	orig	:(	replacement	%NegSmiley	info_end
+	sentence_start	0	38	93
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	14::1	15::3	18::1	19::4	24::10	34::3
+	token_offsets	sentence	1	offsets	38::7	46::6	53::3	57::3	61::3	65::6	72::3	76::3	80::2	83::6	89::3
+	token_offsets	sentence	2	offsets	93::3	97::4	102::3	106::2	109::6	116::2	119::5	125::6	132::10
+(HSF zdf wahlen rot - rot - grün verhindern ... )
+
+(HS Deshalb musste ich die FDP opfern (HSF und CSU zu wählen ... ) )
+
+(HS CDU kann man in Bayern ja nicht wählen %NegSmiley )
+
+	id	380786637443465216
+	time	Thu Sep 19 22:13:03 +0000 2013
+	replace	offset	62	length	10	num	0	orig	;-)	replacement	%PosSmiley	info_end
+	replace	offset	73	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	73	length	5	num	4	orig	FOCUSOnline	replacement	%User	info_end
+	replace	offset	79	length	5	num	6	orig	http://t.co/yxyuTwLCez	replacement	%Link	info_end
+	replace	offset	85	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0	23	62
+	token_offsets	sentence	0	offsets	0::1	1::13	15::5	20::3
+	token_offsets	sentence	1	offsets	23::1	25::1	27::5	33::6	40::3	44::4	49::11	60::1
+	token_offsets	sentence	2	offsets	62::10	73::5	79::5	85::3	88::1	90::2	93::6	100::3	104::4	108::1
+(HS " Bundeskanzler Lucke ... )
+
+(HS " - Damit könnte ich mich arrangieren . )
+
+(HS %PosSmiley FOCUSOnline %Link AfD + im Moment bei 55,2 % )
+
+	id	381406414658232321
+	time	Sat Sep 21 15:15:50 +0000 2013
+	replace	offset	0	length	0	num	0	orig	...	replacement		info_end
+	replace	offset	22	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	22	length	5	num	4	orig	AgnesKrumwiede	replacement	%User	info_end
+	replace	offset	35	length	10	num	6	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	106	length	5	num	8	orig	http://t.co/PXhxYNJLKy	replacement	%Link	info_end
+	replace	offset	112	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0	46	49	93	106
+	token_offsets	sentence	0	offsets	0::7	8::9	18::3	22::5	27::1	29::4	33::1	35::10
+	token_offsets	sentence	1	offsets	46::3
+	token_offsets	sentence	2	offsets	49::4	54::5	60::4	65::9	75::2	78::3	82::7	90::3
+	token_offsets	sentence	3	offsets	93::4	98::6	104::1
+	token_offsets	sentence	4	offsets	106::5	112::1	113::2
+(HS letzter Infostand mit AgnesKrumwiede : done ! %PosSmiley )
+
+(FRE ... )
+
+(HS heut Abend noch Wahlkampf in den Kneipen ... )
+
+(HSF noch Fragen ? )
+
+(HS %Link 3 tw )
+
+	id	355732898202128384
+	time	Fri Jul 12 18:58:26 +0000 2013
+	replace	offset	4	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	44	length	5	num	2	orig	http://t.co/2sOdwBVvzj	replacement	%Link	info_end
+	replace	offset	59	length	10	num	4	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	50
+	token_offsets	sentence	0	offsets	0::3	4::5	10::1	12::3	16::1	17::5	23::7	31::3	35::7	42::1	44::5
+	token_offsets	sentence	1	offsets	50::3	54::4	59::10
+(HS Die grüne n und " Keine Pflanze ist illegal " %Link )
+
+(HSF via fefe %PosSmiley )
+
+	id	347998981080633344
+	time	Fri Jun 21 10:46:37 +0000 2013
+	replace	offset	75	length	0	num	0	orig	 http://t.co/GDLIdjB8au	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::10	11::1	13::9	23::3	27::11	38::1	40::3	44::5	50::9	60::3	64::5	70::5
+(HS (HSF Geretsried - Aufräumen und ausleuchten : ) Die Stadt gestaltet den Neuen Platz )
+
+	id	380253844657426432
+	time	Wed Sep 18 10:55:56 +0000 2013
+	replace	offset	15	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	19	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	23	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	92	length	5	num	6	orig	http://t.co/Fxr7DtOQYx	replacement	%Link	info_end
+	replace	offset	98	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	104	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0	37	98
+	token_offsets	sentence	0	offsets	0::10	11::3	15::3	19::3	23::3	27::9
+	token_offsets	sentence	1	offsets	37::1	39::2	42::11	54::6	61::4	66::4	71::7	79::4	83::1	84::6	90::1	92::5
+	token_offsets	sentence	2	offsets	98::5	104::6
+(HSF Wahrheiten der CDU CSU FDP Regierung )
+
+(HS - In Deutschland fehlen noch rund 100.000 Kita - Plätze . %Link )
+
+(HS btw13 wahlen )
+
+	id	379629839374106625
+	time	Mon Sep 16 17:36:21 +0000 2013
+	replace	offset	100	length	5	num	0	orig	http://t.co/j5zL1SB5cM	replacement	%Link	info_end
+	replace	offset	106	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	63	100
+	token_offsets	sentence	0	offsets	0::8	9::16	26::1	28::12	41::3	45::3	49::12	61::1
+	token_offsets	sentence	1	offsets	63::7	71::3	75::8	84::7	91::1	92::6	98::1
+	token_offsets	sentence	2	offsets	100::5	106::7	113::1	115::1	116::2
+(HSF Zentrale Datenspeicherung & Auswirkungen auf die Gesellschaft . )
+
+(HS Sprengt die goldenen Digital - Käfige ! )
+
+(HS %Link piraten + / TC )
+
+	id	349958661961035776
+	time	Wed Jun 26 20:33:41 +0000 2013
+	replace	offset	53	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	80	length	0	num	2	orig	 http://t.co/1JcQNo78Nl	replacement		info_end
+	sentence_start	0	40	68	78
+	token_offsets	sentence	0	offsets	0::4	5::7	13::6	20::3	24::2	27::4	32::6	38::1
+	token_offsets	sentence	1	offsets	40::4	45::3	49::3	53::5	59::5	64::3
+	token_offsets	sentence	2	offsets	68::5	74::3
+	token_offsets	sentence	3	offsets	78::2
+(HS Alte Vulkane sollte man in Ruhe lassen . )
+
+(HSF Auch den von Neuss Nappi ... )
+
+(HSF Nappi ... )
+
+go
+
+	id	380079597565779968
+	time	Tue Sep 17 23:23:32 +0000 2013
+	replace	offset	67	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	75	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	79	length	0	num	4	orig	 http://t.co/7I8kQVIc74	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::8	15::1	16::9	26::3	30::9	40::3	44::13	58::3	61::1	63::3	67::7	75::3	78::1
+(HSF Neuer Blogpost " Einladung zur Wahlparty der Piratenpartei NRW " bei Piraten NRW : )
+
+	id	381164220978429952
+	time	Fri Sep 20 23:13:26 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@DaSch_Tour 	replacement		info_end
+	replace	offset	101	length	0	num	2	orig	 http://t.co/nNZKP74re5	replacement		info_end
+	sentence_start	0	65
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::6	20::4	25::11	36::1	38::3	42::2	45::5	51::3	55::8	63::1
+	token_offsets	sentence	1	offsets	65::2	68::3	72::9	82::6	89::11	100::1
+(HS (ADV Nur weil die Medien dies propagieren , ) ist es nicht die Wahrheit . )
+
+(HS DE und Schuldner würden profitieren . )
+
+	id	372101294967619584
+	time	Mon Aug 26 23:00:36 +0000 2013
+	replace	offset	35	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	46	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	83	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	120	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	92	120
+	token_offsets	sentence	0	offsets	0::7	8::7	16::14	31::3	35::6	42::3	46::10	56::1	58::3	62::14	77::5	83::7	90::1
+	token_offsets	sentence	1	offsets	92::3	96::6	103::3	107::3	110::1	112::3	116::2	118::1
+	token_offsets	sentence	2	offsets	120::12
+(HS Claudia fordert Gleichstellung von Frauen und Leiharbeit , (HS ist selbstkritisch bzgl. HartzIV . ) )
+
+(HS Wir finden das gut , (HSF und du ? ) )
+
+uberzeugtuns
+
+	id	371596932772163584
+	time	Sun Aug 25 13:36:27 +0000 2013
+	sentence_start	0	35
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::9	25::4	30::3	33::1
+	token_offsets	sentence	1	offsets	35::9	45::6	52::3	56::4	61::5
+(HS was machen die überhaupt noch gut ? )
+
+(HS Wahlkampf können sie auch nicht )
+
+	id	375328716916011008
+	time	Wed Sep 04 20:45:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @sigmargabriel: 	replacement		info_end
+	replace	offset	95	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	80
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::15	27::1	28::8	37::3	41::4	45::1	47::6	54::4	58::1	59::8	68::10	78::1
+	token_offsets	sentence	1	offsets	80::2	83::3	87::3	91::3	95::7
+(HS (SUB Wer was für Geringverdiener - Familien tun will , ) sollte Kita - Gebühren abschaffen . )
+
+(HSF So wie die SPD tvduell )
+
+	id	374004553743478784
+	time	Sun Sep 01 05:03:28 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	103	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	107	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	113	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	117	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	121	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::5	16::2	19::3	23::7	31::9	41::4	46::9	56::2	59::6	66::3	70::12	83::3	87::3	91::7	99::3	103::3	107::5	113::3	117::3	121::3
+(HS BTW13 Ein hoher IQ mit Asozial Tendenzen Null Emotional IQ bringt der Gesellschaft was sie aktuell hat CDU GRÜNE FDP AfD SPD )
+
+	id	374223679476871168
+	time	Sun Sep 01 19:34:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Kwatschkopph 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::5	14::4	18::1	20::6	27::1
+(HS Ist ein neues Team , Angela -CP- )
+
+	id	346272136706543616
+	time	Sun Jun 16 16:24:45 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@hb_politik 	replacement		info_end
+	replace	offset	25	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	9
+	token_offsets	sentence	0	offsets	0::7	7::1
+	token_offsets	sentence	1	offsets	9::5	15::5	21::3	25::8	34::6	41::6	47::1	49::5	55::12
+(FRE endlich ! )
+
+(HS jetzt werde ich dieLinke wieder wählen , prima Wahlprogramm )
+
+	id	353801197515317248
+	time	Sun Jul 07 11:02:33 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @ShaunaKing14: 	replacement		info_end
+	replace	offset	33	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	38	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	43	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	48	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	105	length	0	num	10	orig	 http://t.co	replacement		info_end
+	sentence_start	0	94
+	token_offsets	sentence	0	offsets	0::6	6::1	8::3	12::3	16::6	23::5	29::3	33::3	36::1	38::3	41::1	43::3	46::1	48::5	53::1	55::5	61::4	66::12	79::3	83::9	92::1
+	token_offsets	sentence	1	offsets	94::3	98::6	104::4
+(HS umrath : (HS Der BND wusste alles und CDU - FDP - SPD - Grüne - geben sich scheinheilig und unwissend . ) )
+
+(HSF Zum kotzen !... )
+
+	id	375888655090733056
+	time	Fri Sep 06 09:50:13 +0000 2013
+	replace	offset	73	length	0	num	0	orig	 http://t.co/w8SkEFt8ul	replacement		info_end
+	sentence_start	0	40
+	token_offsets	sentence	0	offsets	0::7	8::3	12::4	17::4	22::7	30::6	37::2
+	token_offsets	sentence	1	offsets	40::1	42::3	46::5	52::3	56::8	65::8
+(HS Bayerns SPD legt laut Umfrage leicht zu )
+
+(HS - CSU hätte die absolute Mehrheit )
+
+	id	354257622997798914
+	time	Mon Jul 08 17:16:13 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	4	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	114	length	0	num	4	orig	 http://t.co/Amzh8zkWYj	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::10	23::9	33::7	41::6	48::2	51::3	55::3	59::13	73::5	79::6	86::6	93::1	95::9	105::9
+(HS CDU FDP Der wichtigste Indikator rutscht weiter ab (HS und die Investitionen gehen erneut zurück | Flassbeck Economics ) )
+
+	id	361148414999793664
+	time	Sat Jul 27 17:37:46 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @vmdrews: 	replacement		info_end
+	replace	offset	8	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	8	length	5	num	4	orig	muellersoenksen	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	3::1	4::3	8::5	14::3	18::2	21::2	24::3	28::5	34::4	39::5	45::11	57::5	63::12	76::2	79::3	83::3	87::5	93::9	103::3	107::8	116::1	117::3
+(HS FDP - MdB muellersoenksen ist in HH bei einer Demo gegen Überwachung durch Geheimdienst du von der Bühne geschubst (HSF und verletzt w ... ) )
+
+	id	374260621615063040
+	time	Sun Sep 01 22:01:00 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @erdbeeretta: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::13	14::2	16::1	17::5	22::1	23::5	28::1	29::7	37::9	47::3	51::8	60::5	66::3	70::5	76::3	80::13	93::1
+(HS Qualifizierte TV - Duell - Mimik - Studien entbinden Sie übrigens nicht vom Lesen der Wahlprogramme . )
+
+	id	372335086508597248
+	time	Tue Aug 27 14:29:36 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @AliCologne: 	replacement		info_end
+	replace	offset	12	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	24	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	67	length	0	num	6	orig	!	replacement		info_end
+	replace	offset	68	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	77	length	0	num	10	orig	@	replacement		info_end
+	replace	offset	77	length	5	num	12	orig	KlausGraf	replacement	%User	info_end
+	replace	offset	83	length	0	num	14	orig	 http://t.co/jCn074FNc7	replacement		info_end
+	sentence_start	0	39	58	68
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::3	16::3	20::3	24::3	28::9	37::1
+	token_offsets	sentence	1	offsets	39::3	43::13	56::1
+	token_offsets	sentence	2	offsets	58::8	66::1
+	token_offsets	sentence	3	offsets	68::8	77::5	82::1
+(HS Was hat die FDP und die NPD gemeinsam ? )
+
+(FRB Den Wahlwerbespot . )
+
+(FRE Muahhaha ! )
+
+(FRE Megafail KlausGraf : )
+
+	id	381768913102454784
+	time	Sun Sep 22 15:16:16 +0000 2013
+	replace	offset	104	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	113	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	48
+	token_offsets	sentence	0	offsets	0::3	4::7	12::5	18::6	25::3	29::7	37::9	46::1
+	token_offsets	sentence	1	offsets	48::5	54::9	64::4	69::3	73::3	77::8	86::8	95::8	104::7	111::1	113::3	116::1
+(HS Den letzten Tweet musste ich einfach retweeten . )
+
+(HS Sowas abartiges muss für die Nachwelt erhalten bleiben. piraten + afd - )
+
+	id	360848445277356032
+	time	Fri Jul 26 21:45:48 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @cduwatch: 	replacement		info_end
+	replace	offset	112	length	0	num	2	orig	 http://t.co/	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::6	16::3	20::3	24::2	27::5	33::3	37::3	41::6	48::3	52::2	55::11	67::8	76::8	85::5	91::3	95::16	111::1	112::3
+(HS Hier die Bilanz der CDU in Bezug auf den Schutz der in Deutschland lebenden Menschen gegen den Überwachungswahn : ... )
+
+	id	379336683474649088
+	time	Sun Sep 15 22:11:27 +0000 2013
+	replace	offset	62	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	111	length	0	num	2	orig	 http://t.co/xT5cQTD6g5	replacement		info_end
+	sentence_start	0	62
+	token_offsets	sentence	0	offsets	0::3	4::11	16::3	20::11	32::3	36::2	39::3	43::8	52::8	60::1
+	token_offsets	sentence	1	offsets	62::5	68::6	75::4	80::5	86::3	90::3	94::4	99::8	107::1	108::3
+(HS Die Alternative für Deutschland hat in den Umfragen zugelegt . )
+
+(HS Lucke betont eine Woche vor der Wahl deutlich : ... )
+
+	id	381445458452701184
+	time	Sat Sep 21 17:50:58 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::4	17::10	28::3	32::8	41::3	45::5	51::5	57::4	62::3	66::3	70::5	76::2	79::3	83::9	93::5	98::1
+(HS Tut uns und euch wenigstens den Gefallen und sorgt dafür (OBJ dass die AfD nicht in den Bundestag kommt . ) )
+
+	id	346302276572422144
+	time	Sun Jun 16 18:24:31 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @hillecrane: 	replacement		info_end
+	replace	offset	4	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	54	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	62	length	0	num	6	orig	 http://t.co/gcSee4v7bZ	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::11	16::2	19::9	29::4	34::5	40::3	44::8	52::1	54::7	61::1
+(HS Wer Netzpolitik im Bundestag will wählt das Original : (FRB Piraten . ) )
+
+	id	374259828132429824
+	time	Sun Sep 01 21:57:51 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @tj_tweets: 	replacement		info_end
+	replace	offset	73	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	63
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::2	14::1	15::5	20::1	22::4	27::7	35::10	46::3	50::3	54::7	61::1
+	token_offsets	sentence	1	offsets	63::8	71::1	73::7
+(HS (FRE Was für ein TV - Duell : ) Raab schickt Steinbrück auf die Bretter . )
+
+(HSF Legendär . tvduell )
+
+	id	384352177810309120
+	time	Sun Sep 29 18:21:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Gruene_Austria: 	replacement		info_end
+	replace	offset	88	length	0	num	2	orig	 http://t.co/AwkOW3fcB3	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::12	18::5	24::4	28::1	30::5	36::4	41::13	55::3	59::9	69::2	72::15	87::1
+(HS Neue Hochrechnung Grüne 12,1 % freut auch BesucherInnen der Wahlparty im Museumsquartier . )
+
+	id	355977167567466496
+	time	Sat Jul 13 11:09:05 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@HerrHartmann 	replacement		info_end
+	sentence_start	0	89
+	token_offsets	sentence	0	offsets	0::3	4::5	10::6	17::3	21::6	28::3	32::3	36::1	38::4	43::3	47::5	53::7	61::3	65::2	68::3	72::8	81::6	87::1
+	token_offsets	sentence	1	offsets	89::7	97::6	103::3
+(HS Den alten Slogan der Grünen mit den 5 Mark pro Liter knacken wir in den nächsten Jahren . )
+
+(HSF Gaaaanz sicher ... )
+
+	id	380386696224718848
+	time	Wed Sep 18 19:43:50 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Milatrud11: @ernstvall 	replacement		info_end
+	replace	offset	11	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	32	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	41	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	59	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	80	length	0	num	10	orig	#	replacement		info_end
+	replace	offset	92	length	0	num	12	orig	#	replacement		info_end
+	replace	offset	99	length	0	num	14	orig	 http:/	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::1	7::3	11::3	14::1	15::4	19::1	21::8	30::1	32::8	41::15	57::1	59::3	62::1	63::5	69::6	76::3	80::8	89::2	92::7	99::3
+(HS Hier ü die CSU - (FRE #HSS : ) Beratung v Pinochet Militärdiktatur + HSS - naher Jurist pro Dignidad gg Amnesty ... )
+
+	id	379686168935141377
+	time	Mon Sep 16 21:20:11 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @BILD_Politik: 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	35	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	103	length	5	num	6	orig	http://t.co/DbLd	replacement	%Link	info_end
+	sentence_start	0	44	103
+	token_offsets	sentence	0	offsets	0::10	10::1	11::7	19::8	28::6	35::7	42::1
+	token_offsets	sentence	1	offsets	44::6	51::3	55::9	64::1	65::7	73::3	77::6	84::3	88::14	102::1
+	token_offsets	sentence	2	offsets	103::5	108::3
+(HS Pädophilie - Debatte erreicht Jürgen Trittin . )
+
+(HS Kostet das Kindersex - Problem die Grünen die Bundestagswahl ? )
+
+(HSF %Link ... )
+
+	id	381773818261692416
+	time	Sun Sep 22 15:35:45 +0000 2013
+	replace	offset	76	length	0	num	0	orig	@CNN 	replacement		info_end
+	replace	offset	76	length	0	num	2	orig	@n-tv @ZDF 	replacement		info_end
+	replace	offset	76	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	76	length	5	num	6	orig	tagesschau	replacement	%User	info_end
+	sentence_start	0	50
+	token_offsets	sentence	0	offsets	0::14	15::4	20::4	25::15	41::7	48::1
+	token_offsets	sentence	1	offsets	50::10	61::2	64::11	76::5
+(HSF Flächendeckend Wahl ohne Personalausweis möglich . )
+
+(HSF Wahlbetrug in Deutschland tagesschau )
+
+	id	353229365955395584
+	time	Fri Jul 05 21:10:18 +0000 2013
+	replace	offset	44	length	5	num	0	orig	http://t.co/OHFZQTqcLN	replacement	%Link	info_end
+	replace	offset	50	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	55	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	60	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	65	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	72	length	0	num	10	orig	#	replacement		info_end
+	replace	offset	77	length	0	num	12	orig	#	replacement		info_end
+	replace	offset	84	length	0	num	14	orig	#	replacement		info_end
+	replace	offset	92	length	0	num	16	orig	@	replacement		info_end
+	replace	offset	92	length	5	num	18	orig	SPIEGEL_Top	replacement	%User	info_end
+	replace	offset	98	length	0	num	20	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::7	12::4	16::1	18::3	21::1	23::8	32::7	40::3	44::5	50::3	53::1	55::3	58::1	60::3	63::1	65::5	70::1	72::3	75::1	77::5	82::1	84::7	92::5	98::5
+(HS DER SPIEGEL 1989 : NSA : Amerikas grosses Ohr %Link cdu - csu - fdp - grüne - spd - linke + piraten SPIEGEL_Top prism )
+
+	id	376223717136678912
+	time	Sat Sep 07 08:01:38 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	55	length	5	num	2	orig	http://t.co/qHs9X1H2pX	replacement	%Link	info_end
+	replace	offset	61	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	6::1	8::3	12::8	21::8	30::3	34::13	47::1	48::6	55::5	61::4
+(HS (FRE merkur : ) Wir schicken Seehofer zum Überraschungs - Besuch %Link okru )
+
+	id	379976336540188673
+	time	Tue Sep 17 16:33:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @TimRozenski: 	replacement		info_end
+	sentence_start	0	94
+	token_offsets	sentence	0	offsets	0::1	1::6	8::6	15::4	20::7	28::8	36::1	38::1	40::3	44::8	53::3	57::3	61::10	72::4	77::6	84::8	92::1
+	token_offsets	sentence	1	offsets	94::4	99::3	103::4	108::4	112::1	114::3	118::3	122::3
+(HS " Manche Männer sind einfach rabiater " - (HS das Weltbild der CDU schockiert mich gerade zutiefst . ) )
+
+(HS (SUB Wenn der Mann will , ) hat die ... )
+
+	id	381767308907012096
+	time	Sun Sep 22 15:09:53 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	100	length	5	num	2	orig	http://t.co/iRE9JZQgZ0	replacement	%Link	info_end
+	replace	offset	106	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	114	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	106
+	token_offsets	sentence	0	offsets	0::13	14::10	24::1	26::11	38::5	44::3	48::5	54::4	59::3	63::9	73::3	77::3	81::8	90::1	92::4	96::3	100::5
+	token_offsets	sentence	1	offsets	106::7	114::2
+(HS Piratenpartei Wahlpartys : Deutschland wählt und sucht sich die Regierung für die nächsten 4 Jahr ... %Link )
+
+(HS Piraten bb )
+
+	id	351693821974810625
+	time	Mon Jul 01 15:28:36 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @NineBerry: 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	5	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	10	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	52	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	78	length	0	num	10	orig	#	replacement		info_end
+	replace	offset	109	length	0	num	12	orig	 https://t	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	3::1	5::3	8::1	10::5	15::1	17::7	25::3	29::21	50::1	52::3	55::1	57::7	65::4	70::3	74::3	78::7	85::1	87::7	95::7	103::2	106::2	108::1	109::3
+(HS SPD - CDU - Grüne - stimmen für Bestandsdatenauskunft , FDP - enthält sich und nur Piraten + stimmen dagegen in SH : ... )
+
+	id	374628423295324162
+	time	Mon Sep 02 22:22:31 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @ProSiebenMaxx: 	replacement		info_end
+	replace	offset	12	length	0	num	2	orig	RT @123Bloess: @ProSiebenMaxx @ProSieben @BoehnchenL 	replacement		info_end
+	sentence_start	0	12
+	token_offsets	sentence	0	offsets	0::10	10::1
+	token_offsets	sentence	1	offsets	12::8	21::3	25::3	29::6	36::4	41::4	46::10	56::1
+(HSF SATANtenne ? )
+
+(HS Empfange ich den Sender auch über Satantenne ? )
+
+	id	380693348077416448
+	time	Thu Sep 19 16:02:21 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@JuergWyss 	replacement		info_end
+	replace	offset	80	length	0	num	2	orig	!	replacement		info_end
+	sentence_start	0	2
+	token_offsets	sentence	0	offsets	0::2
+	token_offsets	sentence	1	offsets	2::3	6::7	14::4	18::1	19::6	26::8	35::7	43::5	49::4	54::4	59::6	66::12	79::1
+(HSF .. )
+
+(HS die meisten Fans - Wähler plappern sowieso alles nach ohne selbst nachzudenken ! )
+
+	id	370900815793627136
+	time	Fri Aug 23 15:30:20 +0000 2013
+	replace	offset	47	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	54	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	59	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	67	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	72	length	0	num	8	orig	 http://t.co/dkZ4CX7JA2	replacement		info_end
+	sentence_start	0	47
+	token_offsets	sentence	0	offsets	0::3	4::8	13::6	20::5	26::8	35::2	38::7	45::1
+	token_offsets	sentence	1	offsets	47::6	54::3	57::1	59::7	67::5
+(HS Die Menschen stehen schon Schlange am Einlass ! )
+
+(HSF merkel cdu + münster BTW13 )
+
+	id	382123475047297024
+	time	Mon Sep 23 14:45:10 +0000 2013
+	replace	offset	41	length	0	num	0	orig	 http://t.co/sX7N73o4F8	replacement		info_end
+	sentence_start	0	23
+	token_offsets	sentence	0	offsets	0::4	5::3	9::7	16::1	17::4	21::1
+	token_offsets	sentence	1	offsets	23::4	28::3	31::1	32::3	35::1	36::4	40::1
+(HSF Zeit für Schwarz - Grün ! )
+
+(HSF Oder Rot - Rot - Grün ? )
+
+	id	380717633924263936
+	time	Thu Sep 19 17:38:51 +0000 2013
+	replace	offset	47	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	51	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	51	length	5	num	4	orig	FOCUSlive	replacement	%User	info_end
+	replace	offset	57	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	62	length	0	num	8	orig	 http://t.co/ax60Qyicqd	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	2::1	3::3	6::1	7::4	12::7	20::5	26::12	39::3	43::3	47::3	51::5	57::5
+(HS Ex - SPD - Mann Clement rührt Werbetrommel für die FDP FOCUSlive btw13 )
+
+	id	382754109608062976
+	time	Wed Sep 25 08:31:05 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	50	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	50	length	5	num	4	orig	Senficon	replacement	%User	info_end
+	replace	offset	56	length	10	num	6	orig	):	replacement	%NegSmiley	info_end
+	replace	offset	71	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	108	length	5	num	10	orig	http://t.co/FVtbXQnDBH	replacement	%Link	info_end
+	replace	offset	114	length	0	num	12	orig	#	replacement		info_end
+	sentence_start	0	114
+	token_offsets	sentence	0	offsets	0::11	12::3	16::2	19::3	23::5	28::1	29::4	34::3	38::5	44::4	48::1	50::5	56::10	67::3	71::10	82::5	88::5	94::6	101::3	104::3	108::5
+	token_offsets	sentence	1	offsets	114::7
+(HS PiratTaxiTv Nr. 11_ vom 21.09 . 2013_ mit Julia Reda -OP- Senficon %NegSmiley Das PirateTaxi tourt durch Berlin und ... %Link )
+
+(HSF Piraten )
+
+	id	376703413343764480
+	time	Sun Sep 08 15:47:47 +0000 2013
+	replace	offset	1	length	0	num	0	orig	@DWDL: 	replacement		info_end
+	replace	offset	13	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	13	length	5	num	4	orig	oliverpocher	replacement	%User	info_end
+	replace	offset	28	length	0	num	6	orig	@	replacement		info_end
+	replace	offset	28	length	5	num	8	orig	RTLde	replacement	%User	info_end
+	replace	offset	75	length	5	num	10	orig	http://t.co/NesVOmbxRU	replacement	%Link	info_end
+	replace	offset	81	length	0	num	12	orig	#	replacement		info_end
+	replace	offset	85	length	0	num	14	orig	#	replacement		info_end
+	replace	offset	91	length	0	num	16	orig	#	replacement		info_end
+	sentence_start	0	91
+	token_offsets	sentence	0	offsets	0::1	1::4	5::1	6::5	11::1	13::5	19::4	24::3	28::5	34::5	40::1	41::6	48::3	52::4	56::1	58::3	62::12	75::5	81::3	85::4	89::1
+	token_offsets	sentence	1	offsets	91::5
+(HS " Show - Duell : oliverpocher wird für RTLde gegen " Schlag den Raab " zum Totalausfall %Link SdR AadK " )
+
+Loser
+
+	id	383536891665981440
+	time	Fri Sep 27 12:21:35 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @martinhaase: 	replacement		info_end
+	replace	offset	1	length	0	num	2	orig	@ansdan00p: 	replacement		info_end
+	replace	offset	26	length	5	num	4	orig	http://t.co/SvQliQmeGI"	replacement	%Link	info_end
+	replace	offset	42	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	89	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::1	1::5	7::5	13::12	26::5	32::4	37::4	42::7	50::7	58::3	62::4	67::6	74::7	82::2	85::3	89::1	90::3
+(HS " Immer diese Chaostruppen %Link erst über Piraten lästern und dann selbst Piraten in der S ... )
+
+	id	350185543906246656
+	time	Thu Jun 27 11:35:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @JottEs: 	replacement		info_end
+	replace	offset	107	length	0	num	2	orig	 http://t.co/VYawmDe	replacement		info_end
+	sentence_start	0	50
+	token_offsets	sentence	0	offsets	0::3	4::3	8::2	11::9	21::3	25::4	30::5	36::6	43::5	48::1
+	token_offsets	sentence	1	offsets	50::7	57::1	58::4	63::9	73::7	81::2	84::23	107::3
+(HS (SUB Wer was zu verbergen hat ) will nicht drüber reden . )
+
+(HS Schwarz - Gelb untersagt Debatte im Menschenrechtsausschuss ... )
+
+	id	378108392197603329
+	time	Thu Sep 12 12:50:40 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @tazgezwitscher: 	replacement		info_end
+	replace	offset	31	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::6	14::1	15::5	20::1	21::4	25::1	27::3	31::7	39::4	44::3	48::7	56::6	62::1	64::3	68::3	72::3	75::1	77::3	81::14	96::3	100::3	104::4	109::7	117::1	118::3
+(HS Weg von Mutter - Vater - Kind : Die Piraten sind die einzige Partei , die den Ehe - (HSF und Familiebegriff auf den Kopf stellt. h ... ) )
+
+	id	354140181458194432
+	time	Mon Jul 08 09:29:33 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @incredibul: 	replacement		info_end
+	replace	offset	43	length	0	num	2	orig	 http://t.co/hCCJV7uKlp	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::2	13::6	20::2	23::3	27::15	42::1
+(HS Wir haben 13_ Fragen an die Bundesregierung : )
+
+	id	381780828260691968
+	time	Sun Sep 22 16:03:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@	replacement		info_end
+	replace	offset	0	length	5	num	2	orig	Schopi21	replacement	%User	info_end
+	replace	offset	97	length	0	num	4	orig	 @Wissing	replacement		info_end
+	sentence_start	0	14
+	token_offsets	sentence	0	offsets	0::5	6::6	12::1
+	token_offsets	sentence	1	offsets	14::4	19::3	23::7	31::4	36::5	42::2	45::11	57::7	65::3	69::3	73::3	77::3	81::3	85::6	92::4	96::1
+(HS Schopi21 stimmt . )
+
+(HS Aber mit scgwarz gelb wurde es tendenziell weniger und mit der SPD und Grünen mehr . )
+
+	id	358138039618772992
+	time	Fri Jul 19 10:15:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @AfD_MR: 	replacement		info_end
+	replace	offset	5	length	0	num	2	orig	_	replacement		info_end
+	replace	offset	14	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	92	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	10	41	62	92
+	token_offsets	sentence	0	offsets	0::1	1::7	8::1
+	token_offsets	sentence	1	offsets	10::3	14::10	25::4	30::8	38::1	39::1
+	token_offsets	sentence	2	offsets	41::3	45::5	51::3	55::5	60::1
+	token_offsets	sentence	3	offsets	62::7	70::3	74::9	84::6	90::1
+	token_offsets	sentence	4	offsets	92::3	95::1
+(FRE " @VinEis : )
+
+(HS ist Steinbrück noch Kandidat ? " )
+
+(HS wer weiss das schon ? )
+
+(HS Bemerkt ihn überhaupt jemand ? )
+
+(FRE afd + )
+
+	id	369122029863071745
+	time	Sun Aug 18 17:42:04 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @TheFish1: 	replacement		info_end
+	replace	offset	80	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::3	13::5	18::1	20::3	24::4	29::3	33::4	38::12	51::2	54::9	64::4	69::4	74::5	80::7	87::1	89::6
+(HS Also wie man sieht , (HS wer nach der Wahl Unterhaltung im Bundestag will muss schon piraten + wählen ) )
+
+	id	347759343984312320
+	time	Thu Jun 20 18:54:23 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @KorsarMuc: 	replacement		info_end
+	replace	offset	28	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	66	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	103	length	0	num	6	orig	 http://t.co/mda9fk	replacement		info_end
+	sentence_start	0	26
+	token_offsets	sentence	0	offsets	0::3	4::2	7::9	17::5	22::1	23::3
+	token_offsets	sentence	1	offsets	26::1	28::3	32::9	42::2	45::7	53::8	62::3	66::3	70::6	77::6	84::1	85::6	91::1	92::4	96::1	97::5	102::1	103::3
+(HS Wer im Glasshaus sitzt , ... )
+
+(HS : FCB spendiert OB München Kandidat der SPD Dieter Reiter " Ticket , Flug , Hotel " ... )
+
+	id	384302433389649920
+	time	Sun Sep 29 15:03:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Liebestaumel: 	replacement		info_end
+	replace	offset	5	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	30	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	58	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::10	16::3	20::3	24::5	30::3	34::5	40::16	56::1	58::3	61::1	62::12	75::13	88::1
+(HS Nach Steinmeier nun die ganze SPD unter Plagiatsverdacht : CDU - Wahlprogramm abgeschrieben ! )
+
+	id	382943221036634112
+	time	Wed Sep 25 21:02:33 +0000 2013
+	replace	offset	7	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::3	7::3	10::1	12::3	16::9	26::3	30::6	37::11	49::8	58::3	62::5	68::3	72::5	78::3	82::4	87::3	91::2	94::9	103::1	104::5	110::6	117::5	122::1
+(HS Ob die FDP - die Wahlparty mit Imbiss kurzfristig abgesagt hat frage ich jedes Mal wenn ich am Mövenpick - Hotel vorbei komme . )
+
+	id	384799486545231872
+	time	Mon Sep 30 23:58:41 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @th_weber: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::4	8::5	14::3	18::6	25::3	29::5	35::3	39::3	43::4	48::9	57::1
+(HS In Graz haben die Grünen dem Nagle auf den Kopf getroffen . )
+
+	id	369706011709702144
+	time	Tue Aug 20 08:22:36 +0000 2013
+	replace	offset	61	length	5	num	0	orig	http://t.co/ixLqodZA41	replacement	%Link	info_end
+	replace	offset	67	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	81	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	101	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	109	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::19	19::1	21::7	29::5	35::3	39::3	43::13	57::3	61::5	67::13	81::19	101::7	109::5
+(HS (FRE Steuersenkungspläne : ) Trittin wirft der SPD Ängstlichkeit vor %Link Ängstlichkeit Steuersenkungspläne Trittin wirft )
+
+	id	382142327114182658
+	time	Mon Sep 23 16:00:05 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @devnull0000: 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	0	length	5	num	4	orig	piraten	replacement	%User	info_end
+	replace	offset	80	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::12	19::4	24::3	28::3	32::4	37::11	49::3	53::5	59::6	66::5	72::3	76::3	80::3	84::3	88::11	100::3	104::6	110::1
+(HS piraten konzentriert euch NUR auf euer kerngebiet. (HSF und lasst solche dinge wie das BGE ) das verschreckt nur wähler . )
+
+	id	350587410213650432
+	time	Fri Jun 28 14:12:06 +0000 2013
+	replace	offset	61	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	81	length	5	num	2	orig	https://t.co/ukjhewJsqu	replacement	%Link	info_end
+	replace	offset	95	length	0	num	4	orig	 http://t.co/bruqZYXCkB	replacement		info_end
+	sentence_start	0	87
+	token_offsets	sentence	0	offsets	0::5	6::6	13::3	17::3	21::16	37::1	39::3	43::3	47::9	57::3	61::19	81::5
+	token_offsets	sentence	1	offsets	87::3	91::3	94::1
+(HS (HSF Grüne Dächer für die Vogelperspektive : ) Die taz berichtet vom Turmbau_zu_Barmbek. %Link )
+
+(FRE Die Ini : )
+
+	id	370988731290746881
+	time	Fri Aug 23 21:19:40 +0000 2013
+	replace	offset	64	length	5	num	0	orig	http://t.co/d92Ji3UvRf	replacement	%Link	info_end
+	replace	offset	74	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	74	length	5	num	4	orig	welt	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::14	14::1	16::3	20::8	29::2	32::5	38::3	42::4	46::1	47::7	54::1	55::8	64::5	70::3	74::5
+(HS (FRE Bundestagswahl : ) SPD versucht es jetzt mit Anti - Hoeness - Kampagne %Link via welt )
+
+	id	355267966713081856
+	time	Thu Jul 11 12:10:58 +0000 2013
+	replace	offset	16	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	62	length	0	num	2	orig	 http://t.co/r8DXohFNnE	replacement		info_end
+	sentence_start	0	40
+	token_offsets	sentence	0	offsets	0::6	7::3	11::4	16::10	27::11	38::1
+	token_offsets	sentence	1	offsets	40::5	45::1	47::5	53::3	57::5
+(HS Wählen Sie Ihre Passwörter sorgfärltig ! )
+
+(HS Warum , lesen Sie unter )
+
+	id	359628106572636160
+	time	Tue Jul 23 12:56:36 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Muschelschloss 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@Pisepampell @CSU @MdLBeateMerk 	replacement		info_end
+	replace	offset	20	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	31	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	49	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	68	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0	74
+	token_offsets	sentence	0	offsets	0::4	5::7	13::6	20::10	31::10	42::2	45::3	49::5	55::5	61::2	64::3	68::5	73::1
+	token_offsets	sentence	1	offsets	74::1	75::1
+(HS Wann endlich kommen ReGierEnde Verbrecher in den Knast statt an die Macht ? )
+
+(HSF - P )
+
+	id	382965689692483584
+	time	Wed Sep 25 22:31:50 +0000 2013
+	replace	offset	77	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	106	length	0	num	2	orig	 http://t.co/NeV8YPYngg	replacement		info_end
+	sentence_start	0	54	90
+	token_offsets	sentence	0	offsets	0::4	5::2	8::10	19::3	23::11	35::3	39::13	52::1
+	token_offsets	sentence	1	offsets	54::3	58::7	66::5	72::4	77::11	88::1
+	token_offsets	sentence	2	offsets	90::3	94::4	98::1	99::1	100::1	102::3	105::1
+(HS Auch in Österreich ist Mindestlohn ein Wahlkamfthema . )
+
+(HS SPÖ fordert 1.500 Euro Mindestlohn . )
+
+(HS Auf geht ' ' s SPD . )
+
+	id	362668492476002307
+	time	Wed Jul 31 22:18:01 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@B5_Rundschau 	replacement		info_end
+	replace	offset	69	length	0	num	2	orig	_	replacement		info_end
+	sentence_start	0	74
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::5	18::10	29::3	33::5	39::11	51::9	61::3	65::7	72::1
+	token_offsets	sentence	1	offsets	74::3	78::3	82::3	85::1	86::7	93::1	94::3	97::1	98::3
+(HS Und ich bin Bibbi Blocksberg und mache hexerischen Wahlkampf pro GRÜNROT ! )
+
+(HS Weg der FDP - Komplex : HEX - HEX )
+
+	id	353857347157889026
+	time	Sun Jul 07 14:45:40 +0000 2013
+	replace	offset	23	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	34	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	84	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	108	length	0	num	6	orig	 http://t.co/fUknERplDl	replacement		info_end
+	sentence_start	0	73	102
+	token_offsets	sentence	0	offsets	0::1	1::3	5::13	19::3	23::2	26::3	30::3	34::3	38::4	43::4	48::15	64::7	71::1
+	token_offsets	sentence	1	offsets	73::9	82::1	84::15	99::1	100::1
+	token_offsets	sentence	2	offsets	102::3	105::3
+(HS " Die Verhandlungen der EU mit den USA über eine Freihandelszone stoppen . )
+
+(HS (FRE Ausserdem : ) Volksabstimmung ! " )
+
+(HSF Das ... )
+
+	id	357398165248823296
+	time	Wed Jul 17 09:15:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @michamo: 	replacement		info_end
+	replace	offset	85	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	116	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	121	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	60	116
+	token_offsets	sentence	0	offsets	0::2	3::3	7::6	14::6	21::13	35::3	39::11	51::7	58::1
+	token_offsets	sentence	1	offsets	60::3	64::6	71::3	75::2	78::6	85::11	97::4	102::4	107::7	114::1
+	token_offsets	sentence	2	offsets	116::3	119::1	121::2	123::3
+(HS In der Türkei werden Demonstranten nun Terroristen genannt . )
+
+(HS Das werden wir in diesem Deutschland auch noch erleben . )
+
+(HS CDU - SP ... )
+
+	id	365567789366382592
+	time	Thu Aug 08 22:18:47 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	87	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	98	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	113	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	117	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	121	length	0	num	10	orig	#	replacement		info_end
+	replace	offset	125	length	0	num	12	orig	#	replacement		info_end
+	sentence_start	0	42
+	token_offsets	sentence	0	offsets	0::12	13::3	17::8	26::5	32::9
+	token_offsets	sentence	1	offsets	42::1	44::3	48::8	57::6	64::14	78::1	80::6	87::10	98::14	113::3	117::3	121::3	125::6
+(HS ehrlichewahl Wir brauchen keine Regierung )
+
+(HS - Wir brauchen wieder Repräsentanten , keinen lobbyismus Einheitspartei CDU SPD FDP Grünen )
+
+	id	366643633211965440
+	time	Sun Aug 11 21:33:48 +0000 2013
+	replace	offset	67	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	95
+	token_offsets	sentence	0	offsets	0::4	5::4	10::6	17::3	21::3	25::3	29::3	33::3	37::6	44::2	47::15	63::3	67::3	71::2	74::8	83::10	93::1
+	token_offsets	sentence	1	offsets	95::6	102::13	116::10	126::3
+(HSF Hsbe mich gerade für den 23._ und 26._ August zu Veranstaltungen der SPD in Offebach angemeldet . )
+
+(HSF Morgen Urlaubsantrag einreichen ... )
+
+	id	349673168249688065
+	time	Wed Jun 26 01:39:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @alios: 	replacement		info_end
+	replace	offset	49	length	0	num	2	orig	 http://t.co/8HpjPeWLbG	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::7	11::1	13::5	18::1	20::7	28::3	32::3	36::13
+(HS der Freitag : Prism , Tempora und die Piratenpartei )
+
+	id	364304047194382336
+	time	Mon Aug 05 10:37:07 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @msgbi: RT @rivva: 	replacement		info_end
+	replace	offset	37	length	5	num	2	orig	http://t.co/fv94eGlSIM	replacement	%Link	info_end
+	replace	offset	70	length	0	num	4	orig	@MTaege 	replacement		info_end
+	replace	offset	70	length	0	num	6	orig	@	replacement		info_end
+	replace	offset	70	length	5	num	8	orig	rkeuper	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::1	1::3	5::3	9::3	13::5	19::2	22::4	26::1	28::1	30::6	37::5	43::4	48::9	58::11	70::5
+(HS " Das ist mir alles zu lahm " - dradio %Link Gysi Wahlkampf Deutschland rkeuper )
+
