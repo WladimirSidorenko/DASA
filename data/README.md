@@ -19,3 +19,13 @@ using the script `DASA/scripts/tsv2json`, e.g.:
 ```
 
 where `*.tsv` filed had been previously copied over from `CGSA`.
+
+Discourse segmentation was obtained using the discourse segmenter
+package `dsegmenter` from mate parse terrs.  The corresponding
+segments are stored in the files `data/{PotTS,SB10k}/raw/*.seg` and
+were merged into the main json files using the script
+`scripts/add_segmentation`, e.g.:
+
+```shell
+./scripts/add_segmentation data/SB10k/test/test.json data/SB10k/raw/corpus_v1.0.preprocessed.seg
+```

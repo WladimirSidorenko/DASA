@@ -1,0 +1,166 @@
+#!/usr/bin/env python
+
+##################################################################
+# Imports
+from __future__ import absolute_import, print_function, unicode_literals
+import argparse
+import codecs
+import json
+import logging
+import re
+import sys
+
+from dasa.constants import ENCODING
+
+
+##################################################################
+# Constants
+SPACE_RE = re.compile('\s+')
+LOG_LVL = logging.INFO
+LOGGER = logging.getLogger("CGSA")
+LOGGER.setLevel(LOG_LVL)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+sh = logging.StreamHandler()
+sh.setLevel(LOG_LVL)
+sh.setFormatter(formatter)
+LOGGER.addHandler(sh)
+
+
+##################################################################
+# Methods
+def parse_segments(segs, toks, tok_idx=0, start_tok=0, prnt_idx=None):
+    """Read discourse segments from file.
+
+    Args:
+      segs (list[dict]): list of discourse segments to populate
+      toks (list[str]): input tokens
+      tok_idx (int): index of the first segment token
+      start_tok (int): offset of the first token
+      prnt_idx (int): index of parent segment
+
+    Return:
+      2-tuple(int, int): number of processed tokens, new token offset
+
+    Note:
+      modifies `segs` in-place
+
+    """
+    def add_segment(segs, seg_type, seg_toks):
+        crnt_seg = {
+            "type": seg_type,
+            "prnt_edu": prnt_idx,
+            "toks": seg_toks
+        }
+        segs.append(crnt_seg)
+        return crnt_seg, seg_toks
+
+    crnt_seg = None
+    seg_toks = None
+    seg_idx = len(segs)
+    i = start_tok
+    N = len(toks)
+    while i < N:
+        tok_i = toks[i]
+        if tok_i.startswith("("):
+            if crnt_seg is None:
+                crnt_seg, seg_toks = add_segment(
+                    segs, seg_type=tok_i[1:], seg_toks=[]
+                )
+            else:
+                i, tok_idx = parse_segments(
+                    segs, toks, tok_idx, i, seg_idx
+                )
+        elif tok_i == ")":
+            if prnt_idx is None and i != N - 1:
+                LOGGER.error("Trailing tokens appear after the"
+                             " end of the segment: %r",
+                             toks)
+                sys.exit(1)
+            return i, tok_idx
+        else:
+            if seg_toks is None:
+                LOGGER.warn("Token %r appears outside of any segment.",
+                            tok_i)
+                crnt_seg, seg_toks = add_segment(
+                    segs, seg_type="UNK", seg_toks=[]
+                )
+            seg_toks.append(tok_idx)
+            tok_idx += 1
+        i += 1
+    return i, tok_idx
+
+
+def read_segments(fname):
+    """Read discourse segments from file.
+
+    Args:
+      fname (str): input file containing discourse segments
+
+    Return:
+      dict: mapping from message id to discourse segment information
+
+    """
+    msgid = None
+    segs = []
+    msgid2segs = {}
+    with codecs.open(fname, 'r', ENCODING) as ifile:
+        for iline in ifile:
+            iline = iline.strip()
+            if iline.startswith(''):
+                toks = iline.split('\t')
+                if toks[1] == "id":
+                    if segs:
+                        msgid2segs[msgid] = segs
+                        segs = []
+                    msgid = toks[-1]
+            elif iline:
+                toks = SPACE_RE.split(iline)
+                i, _ = parse_segments(segs, toks)
+        if segs:
+            msgid2segs[msgid] = segs
+    return msgid2segs
+
+
+def main(argv):
+    """Main method for adding information about discourse segments.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    Retruns:
+      int: 0 on success, non-0 otherwise
+
+    """
+    argparser = argparse.ArgumentParser(
+        description="Script for adding information about discourse segments"
+        " to JSON files."
+    )
+    argparser.add_argument("json_file",
+                           help="JSON file to which we should add information")
+    argparser.add_argument("seg_file",
+                           help="file with discourse segments")
+    args = argparser.parse_args(argv)
+    with open(args.json_file) as ifile:
+        data = json.load(ifile)
+        msgid2tweet = {t["msg_id"]: t for t in data["tweets"]}
+    msgid2segs = read_segments(args.seg_file)
+    for msgid in msgid2tweet:
+        segs = msgid2segs[msgid]
+        # check whether the lengths of the segments are equal
+        n_tweet = len(msgid2tweet[msgid]["toks"])
+        n_segs = sum(len(s["toks"]) for s in segs)
+        if n_tweet != n_segs:
+            LOGGER.error("Unequal number of tokens in tweet and segments:"
+                         "%d vs. %d (message %s)", n_tweet, n_segs, msgid)
+            sys.exit(2)
+        msgid2tweet[msgid]["edus"] = segs
+    json.dump(data, sys.stdout)
+    return 0
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main(sys.argv[1:])
