@@ -105,10 +105,12 @@ def read_segments(fname):
     msgid = None
     segs = []
     msgid2segs = {}
+    tok_idx = 0
     with codecs.open(fname, 'r', ENCODING) as ifile:
         for iline in ifile:
             iline = iline.strip()
             if iline.startswith(''):
+                tok_idx = 0
                 toks = iline.split('\t')
                 if toks[1] == "id":
                     if segs:
@@ -117,7 +119,8 @@ def read_segments(fname):
                     msgid = toks[-1]
             elif iline:
                 toks = SPACE_RE.split(iline)
-                i, _ = parse_segments(segs, toks)
+                i, tok_idx = parse_segments(segs, toks,
+                                            tok_idx=tok_idx)
         if segs:
             msgid2segs[msgid] = segs
     return msgid2segs

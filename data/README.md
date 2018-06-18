@@ -28,4 +28,9 @@ were merged into the main json files using the script
 
 ```shell
 ./scripts/add_segmentation data/SB10k/test/test.json data/SB10k/raw/corpus_v1.0.preprocessed.seg
+
+for f in data/PotTS/*/*.json ; do \
+  ./scripts/add_segmentation $f data/PotTS/raw/$(basename ${f%json})seg > 1 \
+  && mv 1 $f; \
+done
 ```
