@@ -1,0 +1,200 @@
+#!/usr/bin/env python
+
+##################################################################
+# Imports
+from __future__ import absolute_import, print_function, unicode_literals
+from collections import namedtuple
+import argparse
+import json
+import logging
+import numpy as np
+import os
+import re
+import sys
+
+from cgsa.cgsa import SentimentAnalyzer
+from cgsa.constants import DFLT_MODEL_PATH, DFLT_W2V_PATH
+
+
+##################################################################
+# Variables and Constants
+SPACE_RE = re.compile('\s+')
+LOG_LVL = logging.INFO
+LOGGER = logging.getLogger("CGSA")
+LOGGER.setLevel(LOG_LVL)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+sh = logging.StreamHandler()
+sh.setLevel(LOG_LVL)
+sh.setFormatter(formatter)
+LOGGER.addHandler(sh)
+Y = np.zeros(3)
+
+
+##################################################################
+# Class
+Word = namedtuple("Word", ["form", "lemma", "prnt_idx"])
+
+
+class Tweet(object):
+    def __init__(self, words):
+        self.words = [Word(*w) for w in words]
+        self.iwords = iter(self.words)
+
+    def __iter__(self):
+        """Private method required for iteration.
+
+        """
+        self.iwords = iter(self.words)
+        return self.iwords
+
+    def __next__(self):
+        """Private method required for iteration.
+
+        """
+        return next(self.iwords)
+
+    def __len__(self):
+        """Return number of tokens in the tweet.
+
+        """
+        return len(self.words)
+
+    def __str__(self):
+        """Return unicode representation of the given word.
+
+        Returns:
+          unicode:
+
+        """
+        # output the same string as the one that has been parsed
+        ret = "forms: {tokens:s}\nlemmas: {lemmas:s}\ndeps:{deps:s}".format(
+                  tokens=", ".join(w.form for w in self.words),
+                  lemmas=", ".join(w.lemma for w in self.words),
+                  deps=", ".join(str(w.prnt_idx) for w in self.words)
+              )
+        return ret
+
+
+##################################################################
+# Methods
+def debug_tweet(tweet):
+    for w_i in tweet:
+        print("w_i.lemma: ", repr(w_i.lemma))
+        print("w_i.prnt_idx: ", repr(w_i.prnt_idx))
+        if w_i.prnt_idx >= 0:
+            print("prnt: ", repr(tweet.words[w_i.prnt_idx].lemma))
+        print("")
+
+
+def msg2tweet(msg, toks, prnt_idcs=None):
+    msg_toks = msg["toks"]
+    if prnt_idcs is None:
+        prnt_idcs = [msg_toks[t]["prnt"] for t in toks]
+    return Tweet([(msg_toks[t]["form"],
+                   msg_toks[t]["lemma"],
+                   prnt_idx)
+                  for t, prnt_idx in zip(toks, prnt_idcs)])
+
+
+def map_prnt_idcs(edu_toks, prnt_idcs):
+    """Renumber indices of parent nodes in EDU segments.
+
+    Args:
+      edu_toks (list[int]): original tokens of the whole tweet
+      prnt_idcs (list[int]): original tokens of the whole tweet
+
+    """
+    edu_tok2i = {t: i for i, t in enumerate(edu_toks)}
+    mapped_prnt_idcs = []
+    for p_idx in prnt_idcs:
+        if p_idx < 0 or p_idx not in edu_tok2i:
+            mapped_prnt_idcs.append(-1)
+        else:
+            mapped_prnt_idcs.append(edu_tok2i[p_idx])
+    return mapped_prnt_idcs
+
+
+def add_scores(analyzer, messages):
+    """Main method for adding sentiment scores to tweets.
+
+    Args:
+      analyzer (SentimentAnalyzer): sentiment analyzer
+      messages (list[dict]): messages to analyze
+
+    Returns:
+      void:
+
+    Note:
+      modifies `tweets` in place
+
+    """
+    for msg_i in messages:
+        tweet = msg2tweet(msg_i, range(len(msg_i["toks"])))
+        # debug_tweet(tweet)
+        analyzer.predict_proba(tweet, Y)
+        msg_i["polarity_scores"] = Y.tolist()  # will create a copy
+        # assign polarity scores to each of the segments
+        for edu_i in msg_i["edus"]:
+            edu_toks = edu_i["toks"]
+            prnt_idcs = [msg_i["toks"][t]["prnt"] for t in edu_toks]
+            prnt_idcs = map_prnt_idcs(edu_toks, prnt_idcs)
+            tweet = msg2tweet(msg_i, edu_toks, prnt_idcs)
+            # debug_tweet(tweet)
+            analyzer.predict_proba(tweet, Y)
+            edu_i["polarity_scores"] = Y.tolist()  # will create a copy
+
+
+def main(argv):
+    """Main script for adding polarity scores to tweets and EDUs.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    Retruns:
+      int: 0 on success, non-0 otherwise
+
+    """
+    argparser = argparse.ArgumentParser(
+        description="Script for adding polarity scores to tweets and EDUs."
+    )
+    argparser.add_argument("--w2v-path",
+                           help="path to pre-trained word2vec embeddings"
+                           " to use (should better be the same as the ones "
+                           "used for training)", type=str,
+                           default=DFLT_W2V_PATH)
+    argparser.add_argument("-m", "--model",
+                           help="path to the main model (if different from"
+                           " default)", type=str, default=DFLT_MODEL_PATH)
+    argparser.add_argument("json_files",
+                           nargs='+',
+                           help="JSON file containing tweets")
+    args = argparser.parse_args(argv)
+
+    # initialize sentiment analyzer
+    analyzer = SentimentAnalyzer.load(args.model, args.w2v_path)
+    assert len(analyzer._models) == 1, (
+        "We currently support only analyzers with one model"
+    )
+    analyzer = analyzer._models[0]
+    for fname in args.json_files:
+        LOGGER.info("Processing file %s", fname)
+        if not (os.path.isfile(fname)
+                and os.access(fname, os.W_OK)):
+            LOGGER.error("Cannot write to file %s", fname)
+            sys.exit(1)
+        # read data
+        with open(fname) as ifile:
+            data = json.load(ifile)
+        add_scores(analyzer, data["tweets"])
+        # write data
+        with open(fname, 'w') as ofile:
+            json.dump(data, ofile)
+    return 0
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main(sys.argv[1:])

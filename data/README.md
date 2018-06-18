@@ -20,6 +20,10 @@ using the script `DASA/scripts/tsv2json`, e.g.:
 
 where `*.tsv` filed had been previously copied over from `CGSA`.
 
+
+Discourse Segmentation
+^^^^^^^^^^^^^^^^^^^^^^
+
 Discourse segmentation was obtained using the discourse segmenter
 package `dsegmenter` from mate parse terrs.  The corresponding
 segments are stored in the files `data/{PotTS,SB10k}/raw/*.seg` and
@@ -33,4 +37,18 @@ for f in data/PotTS/*/*.json ; do \
   ./scripts/add_segmentation $f data/PotTS/raw/$(basename ${f%json})seg > 1 \
   && mv 1 $f; \
 done
+```
+
+Polarity Scores
+^^^^^^^^^^^^^^^
+
+Polarity scores for the whole messages and their single discourse
+segments were added using the script `./scripts/add_polarity_scores`
+with the following commands:
+
+```shell
+export KERAS_BACKEND=theano
+./scripts/add_polarity_scores -m ../CGSA/data/PotTS/preprocessed/predicted/lba1/lstsq/cgsa.model data/PotTS/{train,dev,test}/*.json
+
+./scripts/add_polarity_scores -m ../CGSA/data/SB10k/preprocessed/predicted/lba1/lstsq/cgsa.model data/SB10k/{train,dev,test}/*.json
 ```
