@@ -4,6 +4,7 @@
 ##################################################################
 # Libraries
 from setuptools import setup
+from glob import glob
 from os import path
 import codecs
 
@@ -54,7 +55,7 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=TEST_REQUIRES,
     provides=["dasa (0.1.0a0)"],
-    scripts=[path.join("scripts", p) for p in []],
+    scripts=glob(path.join("scripts", "dasa*")),
     classifiers=["Development Status :: 3 - Alpha",
                  "Environment :: Console",
                  "Intended Audience :: Science/Research",
