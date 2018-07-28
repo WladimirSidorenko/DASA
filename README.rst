@@ -40,12 +40,15 @@ Discourse Parsing
 To derive RST trees for the obtained tweets, we have used the script
 `add_rst_trees` from the [RSTParser package]():
 
-```
-pwd
-/home/sidorenko/Projects/RSTParser
+.. code-block:: shell
 
-git rev-parse HEAD
-8b595c3913daa68745758c1eb3420bfa90cbb264
+  >pwd
+  /home/sidorenko/Projects/RSTParser
 
-for f in ../DASA/data/\*/\*/\*.json; do ./scripts/add_rst_trees bhatia data/pcc-dis-bhatia/test/rstparser.bhatia.model $f > 1 && \ mv 1 $f; done
-```
+  >git rev-parse HEAD
+  8b595c3913daa68745758c1eb3420bfa90cbb264
+
+  >for f in ../DASA/data/\*/\*/\*.json; do \
+     ./scripts/add_rst_trees bhatia data/pcc-dis-bhatia/test/rstparser.bhatia.model $f > 1 && \
+     mv 1 $f;
+   done
