@@ -355,11 +355,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -598,24 +604,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -946,37 +971,69 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -1259,11 +1316,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -1529,29 +1592,29 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         }
@@ -1560,6 +1623,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -2078,24 +2173,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -2699,50 +2813,95 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [
         {
+         "id": 1,
+         "rel2par": "other",
+         "children": [],
+         "n/s": "Nucleus"
+        },
+        {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [
           {
-           "id": 1,
-           "rel2par": "non-contrastive",
+           "id": 2,
+           "rel2par": "joint",
            "children": [],
            "n/s": "Nucleus"
           },
           {
-           "id": 2,
-           "rel2par": "non-contrastive",
+           "id": 3,
+           "rel2par": "joint",
            "children": [],
            "n/s": "Nucleus"
           }
          ],
          "n/s": "Nucleus"
-        },
-        {
-         "id": 3,
-         "rel2par": "non-contrastive",
-         "children": [],
-         "n/s": "Nucleus"
         }
        ],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 1,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          }
+         ]
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 3,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "negative",
@@ -3095,19 +3254,19 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [
         {
          "id": 1,
@@ -3117,7 +3276,7 @@
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -3126,6 +3285,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -3456,37 +3647,69 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -3654,8 +3877,8 @@
        "Diminisher": {
         "markable_15": {
          "Diminisher": true,
-         "EmoExpressionRef": "emo-expression:markable_14",
-         "Degree": "medium"
+         "Degree": "medium",
+         "EmoExpressionRef": "emo-expression:markable_14"
         }
        }
       },
@@ -3904,19 +4127,19 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [
         {
          "id": 1,
@@ -3926,7 +4149,7 @@
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -3935,6 +4158,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -4427,39 +4682,39 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [
           {
            "id": 2,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Nucleus"
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Nucleus"
           }
@@ -4471,6 +4726,51 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "negative",
@@ -4737,11 +5037,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -5032,11 +5338,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -5414,24 +5726,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -5893,23 +6224,23 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         },
@@ -5925,7 +6256,7 @@
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Satellite"
           }
@@ -5933,10 +6264,55 @@
          "n/s": "Nucleus"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "span",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Satellite",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "negative",
@@ -6373,7 +6749,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -6385,12 +6761,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "cause",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -6433,7 +6828,6 @@
       "case": "nom",
       "gender": "fem",
       "num": "sg",
-      "sup": true,
       "mmax": {
        "EmoExpression": {
         "markable_29": {
@@ -6450,7 +6844,8 @@
          "Sentiment": true
         }
        }
-      }
+      },
+      "sup": true
      }
     },
     {
@@ -6786,13 +7181,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": -2,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [
         {
          "id": 0,
@@ -6802,21 +7197,53 @@
         },
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 2,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 0,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        }
+       ]
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 2,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -7125,24 +7552,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -7555,7 +8001,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -7567,25 +8013,57 @@
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "span",
+         "rel2par": "other",
          "children": [],
-         "n/s": "Nucleus"
+         "n/s": "Satellite"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "span",
          "children": [],
-         "n/s": "Satellite"
+         "n/s": "Nucleus"
         }
        ],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -8014,7 +8492,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -8026,12 +8504,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -8291,24 +8788,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -8467,7 +8983,6 @@
       "case": "acc",
       "gender": "fem",
       "num": "sg",
-      "sup": true,
       "mmax": {
        "EmoExpression": {
         "markable_33": {
@@ -8484,7 +8999,8 @@
          "Sentiment": true
         }
        }
-      }
+      },
+      "sup": true
      }
     },
     {
@@ -8826,13 +9342,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
        "n/s": "Satellite"
       },
@@ -8848,7 +9364,7 @@
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -8857,6 +9373,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -9149,24 +9697,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -9541,24 +10108,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -9997,24 +10583,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "mixed",
@@ -10493,29 +11098,29 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         }
@@ -10524,6 +11129,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -10742,11 +11379,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -11178,24 +11821,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -11561,24 +12223,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -11940,7 +12621,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -11952,12 +12633,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "mixed",
@@ -12288,37 +12988,69 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -12613,7 +13345,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -12625,12 +13357,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -13012,29 +13763,29 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "span",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [
           {
            "id": 2,
@@ -13044,18 +13795,63 @@
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Satellite"
           }
          ],
-         "n/s": "Nucleus"
+         "n/s": "Satellite"
         }
        ],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "span",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Satellite",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -13438,11 +14234,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -14059,7 +14861,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -14071,11 +14873,11 @@
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         },
@@ -14090,6 +14892,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -14369,11 +15203,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -14586,24 +15426,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -15052,11 +15911,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -15445,11 +16310,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -15827,24 +16698,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -16194,11 +17084,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -16442,11 +17338,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -16861,7 +17763,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -16873,7 +17775,7 @@
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
@@ -16883,19 +17785,19 @@
         },
         {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [
           {
            "id": 2,
-           "rel2par": "span",
+           "rel2par": "other",
            "children": [],
-           "n/s": "Nucleus"
+           "n/s": "Satellite"
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "span",
            "children": [],
-           "n/s": "Satellite"
+           "n/s": "Nucleus"
           }
          ],
          "n/s": "Satellite"
@@ -16905,6 +17807,51 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "span",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Satellite",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -17396,13 +18343,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       },
@@ -17418,7 +18365,7 @@
         },
         {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [
           {
            "id": 2,
@@ -17428,7 +18375,7 @@
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Satellite"
           }
@@ -17440,6 +18387,51 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "span",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Satellite",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -17774,37 +18766,69 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "span",
+         "rel2par": "background",
          "children": [],
-         "n/s": "Nucleus"
+         "n/s": "Satellite"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "span",
          "children": [],
-         "n/s": "Satellite"
+         "n/s": "Nucleus"
         }
        ],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "negative",
@@ -18163,7 +19187,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -18175,12 +19199,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -18538,11 +19581,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -18944,23 +19993,23 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         },
@@ -18976,7 +20025,7 @@
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Satellite"
           }
@@ -18988,6 +20037,51 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "span",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Satellite",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "negative",
@@ -19257,24 +20351,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -19513,11 +20626,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -19672,11 +20791,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -20111,13 +21236,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
        "n/s": "Satellite"
       },
@@ -20127,21 +21252,53 @@
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "span",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
-         "n/s": "Nucleus"
+         "n/s": "Satellite"
         }
        ],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -20551,24 +21708,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -20886,24 +22062,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -21341,29 +22536,29 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         }
@@ -21372,6 +22567,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -21716,8 +22943,8 @@
        },
        "Intensifier": {
         "markable_87": {
-         "EmoExpressionRef": "emo-expression:markable_88",
          "Degree": "medium",
+         "EmoExpressionRef": "emo-expression:markable_88",
          "Intensifier": true
         }
        }
@@ -21853,24 +23080,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -22276,11 +23522,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -22752,7 +24004,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -22764,7 +24016,7 @@
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
@@ -22774,7 +24026,7 @@
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -22783,6 +24035,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "positive",
@@ -23020,24 +24304,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -23503,24 +24806,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -23807,24 +25129,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -24194,11 +25535,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -24539,13 +25886,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [
         {
          "id": 0,
@@ -24555,7 +25902,7 @@
         },
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -24564,12 +25911,44 @@
       },
       {
        "id": 2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 0,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        }
+       ]
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 2,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -24784,11 +26163,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -25089,24 +26474,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -25228,8 +26632,8 @@
        },
        "Intensifier": {
         "markable_106": {
-         "EmoExpressionRef": "emo-expression:markable_105",
          "Degree": "medium",
+         "EmoExpressionRef": "emo-expression:markable_105",
          "Intensifier": true
         }
        }
@@ -25574,7 +26978,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -25586,12 +26990,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "cause",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -25800,11 +27223,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -26073,24 +27502,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -26282,11 +27730,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -26483,11 +27937,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -26595,9 +28055,9 @@
      "feats": {
       "case": "acc",
       "comp": true,
-      "gender": "fem",
       "num": "pl",
-      "mmax": {}
+      "mmax": {},
+      "gender": "fem"
      }
     },
     {
@@ -26796,24 +28256,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -27202,7 +28681,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -27214,12 +28693,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -27484,13 +28982,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
        "n/s": "Satellite"
       },
@@ -27502,6 +29000,25 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -27890,19 +29407,19 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
@@ -27912,7 +29429,7 @@
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -27921,6 +29438,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -27968,8 +29517,8 @@
        },
        "Intensifier": {
         "markable_120": {
-         "EmoExpressionRef": "emo-expression:markable_119",
          "Degree": "medium",
+         "EmoExpressionRef": "emo-expression:markable_119",
          "Intensifier": true
         }
        }
@@ -28208,13 +29757,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "background",
        "children": [],
        "n/s": "Satellite"
       },
@@ -28226,6 +29775,25 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -28565,7 +30133,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -28581,7 +30149,7 @@
         },
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Satellite"
         }
@@ -28590,12 +30158,44 @@
       },
       {
        "id": 2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "span",
+         "n/s": "Nucleus",
+         "id": 0,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Satellite",
+         "id": 1,
+         "children": []
+        }
+       ]
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 2,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -28972,11 +30572,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -29277,29 +30883,29 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": 2,
-         "rel2par": "non-contrastive",
+         "rel2par": "joint",
          "children": [],
          "n/s": "Nucleus"
         }
@@ -29308,6 +30914,38 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 2,
+         "children": []
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -29666,24 +31304,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -29880,11 +31537,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -30273,24 +31936,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "negative",
@@ -30620,11 +32302,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -30920,11 +32608,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -31309,7 +33003,6 @@
       "case": "acc",
       "gender": "masc",
       "num": "pl",
-      "sup": true,
       "mmax": {
        "EmoExpression": {
         "markable_127": {
@@ -31326,7 +33019,8 @@
          "Sentiment": true
         }
        }
-      }
+      },
+      "sup": true
      }
     },
     {
@@ -31516,11 +33210,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -31718,11 +33418,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -31926,11 +33632,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -32235,24 +33947,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "background",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -32501,24 +34232,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "span",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Nucleus"
+       "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -32901,11 +34651,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "negative",
@@ -33325,7 +35081,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -33337,12 +35093,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -33660,24 +35435,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "span",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "contrastive",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "positive",
@@ -33967,11 +35761,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -34260,11 +36060,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "positive",
@@ -34689,39 +36495,39 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [],
        "n/s": "Nucleus"
       },
       {
        "id": -2,
-       "rel2par": "non-contrastive",
+       "rel2par": "joint",
        "children": [
         {
          "id": 1,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [],
          "n/s": "Nucleus"
         },
         {
          "id": -3,
-         "rel2par": "non-contrastive",
+         "rel2par": "other",
          "children": [
           {
            "id": 2,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Nucleus"
           },
           {
            "id": 3,
-           "rel2par": "non-contrastive",
+           "rel2par": "other",
            "children": [],
            "n/s": "Nucleus"
           }
@@ -34733,6 +36539,51 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Nucleus",
+       "id": -2,
+       "children": [
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": 1,
+         "children": []
+        },
+        {
+         "rel2par": "non-contrastive",
+         "n/s": "Nucleus",
+         "id": -3,
+         "children": [
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 2,
+           "children": []
+          },
+          {
+           "rel2par": "non-contrastive",
+           "n/s": "Nucleus",
+           "id": 3,
+           "children": []
+          }
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -35018,24 +36869,43 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
-       "n/s": "Satellite"
+       "n/s": "Nucleus"
       },
       {
        "id": 1,
-       "rel2par": "span",
+       "rel2par": "other",
        "children": [],
        "n/s": "Nucleus"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -35383,7 +37253,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -35395,12 +37265,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -35659,13 +37548,13 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
       {
        "id": 0,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       },
@@ -35677,6 +37566,25 @@
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
@@ -35859,11 +37767,17 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": 0,
      "rel2par": null,
      "children": [],
      "n/s": ""
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": "",
+     "id": 0,
+     "children": []
     }
    },
    "label": "neutral",
@@ -36155,7 +38069,7 @@
     }
    ],
    "rst_trees": {
-    "bhatia": {
+    "chenlo": {
      "id": -1,
      "rel2par": null,
      "children": [
@@ -36167,12 +38081,31 @@
       },
       {
        "id": 1,
-       "rel2par": "non-contrastive",
+       "rel2par": "other",
        "children": [],
        "n/s": "Satellite"
       }
      ],
      "n/s": null
+    },
+    "bhatia": {
+     "rel2par": null,
+     "n/s": null,
+     "id": -1,
+     "children": [
+      {
+       "rel2par": "span",
+       "n/s": "Nucleus",
+       "id": 0,
+       "children": []
+      },
+      {
+       "rel2par": "non-contrastive",
+       "n/s": "Satellite",
+       "id": 1,
+       "children": []
+      }
+     ]
     }
    },
    "label": "neutral",
