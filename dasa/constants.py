@@ -13,6 +13,32 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
+from six import iteritems
+import os
+
 ##################################################################
 # Constants
-ENCODING = "utf-8"
+DFLT_ENCODING = "utf-8"
+
+DIRNAME = os.path.dirname(__file__)
+DATA_DIR = os.path.join(DIRNAME, "data")
+MODEL_DIR = os.path.join(DATA_DIR, "models")
+DFLT_MODEL_PATH = os.path.join(MODEL_DIR, "cgsa.model")
+
+# Methods and Relation Schemes
+LAST = "last"
+ROOT = "root"
+BHATIA = "bhatia"
+CHENLO = "chenlo"
+HEERSCHOP = "heerschop"
+PCC = "pcc"
+ZHOU = "zhou"
+
+# mapping from polarity classes to indices nad vice versa
+POSITIVE = "positive"
+NEGATIVE = "negative"
+UNKNOWN = "unknown"
+NEUTRAL = "neutral"
+MIXED = "mixed"
+CLS2IDX = {NEGATIVE: 0, NEUTRAL: 1, POSITIVE: 2}
+IDX2CLS = {v: k for k, v in iteritems(CLS2IDX)}

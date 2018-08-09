@@ -11,10 +11,14 @@
 # Imports
 from __future__ import absolute_import, unicode_literals, print_function
 
+from .base import DASBaseAnalyzer
+from .last import DASLastAnalyzer
+
+
 ##################################################################
 # Variables and Constants
 __name__ = "dasa"
-__all__ = []
+__all__ = ["DASBaseAnalyzer", "DASLastAnalyzer"]
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.1.0a0"
