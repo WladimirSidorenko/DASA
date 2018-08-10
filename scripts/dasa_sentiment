@@ -13,7 +13,8 @@ import sys
 from dasa import DASBaseAnalyzer, DASLastAnalyzer
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, BHATIA, CHENLO,
-                            HEERSCHOP, PCC, ZHOU)
+                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE,
+                            NEUTRAL)
 
 
 ##################################################################
@@ -62,6 +63,14 @@ def _read_data(files):
                 LOGGER.warn("No tweets found in %s", fname)
                 continue
             for tweet_i in data["tweets"]:
+                if len(tweet_i["edus"]) < 2:
+                    LOGGER.warn("Skipping tweet %s containing a single EDU.",
+                                tweet_i["msg_id"])
+                    continue
+                elif tweet_i["label"] not in (POSITIVE, NEGATIVE, NEUTRAL):
+                    LOGGER.warn("Skipping tweet %s due to non-standard polarity.",
+                                tweet_i["msg_id"])
+                    continue
                 yield tweet_i
 
 
@@ -101,8 +110,9 @@ def main(argv):
         TEST, help="determine polarity of the given messages")
     _add_cmn_options(parser_test)
 
-    parser_debug = subparsers.add_parser(DEBUG,
-                                         help="explain model's prediction")
+    parser_debug = subparsers.add_parser(
+        DEBUG, help="explain model's prediction"
+    )
     _add_cmn_options(parser_debug)
     args = argparser.parse_args()
 
@@ -115,8 +125,7 @@ def main(argv):
     if args.mode == TRAIN:
         train_set = [tweet_i for tweet_i in _read_data(args.files)]
         LOGGER.debug("Reading development set...")
-        dev_set = [tweet_i
-                   for tweet_i in _read_data(args.dev)]
+        dev_set = [tweet_i for tweet_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
         if args.type == LAST:
             analyzer = DASLastAnalyzer(args.type)
@@ -144,7 +153,8 @@ def main(argv):
         for tweet_i in _read_data(args.files):
             tweet_i["predicted"] = predict(tweet_i)
             ret.append(tweet_i)
-        json.dump({"tweets": ret}, sys.stdout, indent=1, separators=[',', ": "])
+        json.dump({"tweets": ret}, sys.stdout, indent=1,
+                  separators=[',', ": "])
 
 
 ##################################################################

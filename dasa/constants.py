@@ -23,7 +23,7 @@ DFLT_ENCODING = "utf-8"
 DIRNAME = os.path.dirname(__file__)
 DATA_DIR = os.path.join(DIRNAME, "data")
 MODEL_DIR = os.path.join(DATA_DIR, "models")
-DFLT_MODEL_PATH = os.path.join(MODEL_DIR, "cgsa.model")
+DFLT_MODEL_PATH = os.path.join(MODEL_DIR, "dasa.model")
 
 # Methods and Relation Schemes
 LAST = "last"

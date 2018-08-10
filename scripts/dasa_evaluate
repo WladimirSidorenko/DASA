@@ -1,0 +1,207 @@
+#!/usr/bin/env python
+# -*- coding: utf-8; mode: python; -*-
+
+#########################################################################
+# This script is a modified version of SemEval-2013 scorer.
+#
+# Scorer for the SEMEVAL-2013 Task 2: Twitter Sentiment Analysis
+# Author: ves@cs.jhu.edu
+#
+# This script takes a prediction file and a gold standard file
+# (i.e., tweeti-a.dist.tsv) and produces scores. The prediction file
+# should be in the same format as the gold standard file.
+#
+#########################################################################
+from __future__ import absolute_import, unicode_literals, print_function
+
+from glob import iglob
+import sklearn.metrics as sklm
+import pandas as pd
+import json
+import os
+import sys
+
+from dasa.constants import POSITIVE, NEGATIVE, NEUTRAL
+
+##################################################################
+# Variables and Classes
+ENCODING = "utf-8"
+ID = "id"
+POLARITY = "polarity"
+TOKS = "tokens"
+
+ACRO_CLASSES = [POSITIVE, NEGATIVE]
+MICRO_CLASSES = [POSITIVE, NEGATIVE, NEUTRAL]
+
+SORT_ARGS = {"by": [ID], "axis": 0, "inplace": True, "kind": "heapsort"}
+
+
+##################################################################
+# Methods
+def read_file(fname, label_field="label"):
+    """Read input file and construct DataFrame.
+
+    Args:
+      fname (str): path to the input file
+      label_field (str): name of the field containing polarity labels
+
+    Returns:
+      pd.DataFrame: tabular view of file's contents
+
+    """
+    assert os.path.exists(fname) and os.access(fname, os.R_OK), \
+        "Cannot read file {!r}.".format(fname)
+    with open(fname, 'r') as ifile:
+        data = []
+        for t in json.load(ifile)["tweets"]:
+            if len(t["edus"]) < 2:
+                print(
+                    "Skipping tweet {:s} containing a single EDU.".format(
+                        t["msg_id"]
+                    ), file=sys.stderr)
+                continue
+            data.append(t)
+    data = {
+        ID: [t["msg_id"] for t in data],
+        POLARITY: [t[label_field] for t in data],
+        TOKS: [t["text"] for t in data],
+    }
+    ret = pd.DataFrame.from_dict(data, dtype=str)
+    # only leave data with labels (positive, negative, or neutral)
+    ret = ret.loc[lambda df: df.polarity.isin(MICRO_CLASSES)]
+    ret.sort_values(**SORT_ARGS)
+    return ret
+
+
+def read_dir(fnames, label_field="label"):
+    """Read multiple input files and construct single DataFrame.
+
+    Args:
+      fnames (list[str]): paths to the input files
+      label_field (str): name of the field containing polarity labels
+
+    Returns:
+      pd.DataFrame: tabular view of files' contents
+
+    """
+    dframes = []
+    for fname_i in fnames:
+        os.path.exists(fname_i) and os.access(fname_i, os.R_OK), \
+            "Cannot read file {!r}.".format(fname_i)
+        dframes.append(read_file(fname_i, label_field))
+    ret = pd.concat(dframes)
+    ret.sort_values(**SORT_ARGS)
+    return ret
+
+
+def read_data(path, glob_ptrn, label_field="label"):
+    """Read file or directory containing input data.
+
+    Args:
+      path (str): file or directory containing input data
+      glob_ptrn (str): globbing pattern to use for finding files
+      label_field (str): name of the field containing polarity labels
+
+    Returns:
+      pd.DataFrame: tabular view of files' contents
+
+    """
+    if os.path.isdir(path):
+        return read_dir(iglob(os.path.join(path, glob_ptrn)), label_field)
+    return read_file(path, label_field)
+
+
+def compute_stat(gold, pred, verbose):
+    """Compute and output classification statistics.
+
+    Args:
+      gold (pd.DataFrame): annotated gold data
+      pred (pd.DataFrame): predicted data
+      verbose (bool): verbosity flag
+
+    Returns:
+      void:
+
+    """
+    y_gold = gold.loc[:, POLARITY]
+    y_pred = pred.loc[:, POLARITY]
+
+    print("General Statistics:")
+    print(sklm.classification_report(y_gold, y_pred), end="\n\n")
+
+    # Macro-Averaged F1 Score
+    print(
+        "Macro-Averaged F1-Score (Positive and Negative Classes):"
+        " {:.2%}".format(
+            sklm.f1_score(y_gold, y_pred,
+                          labels=(POSITIVE, NEGATIVE), average="macro")
+        ))
+
+    # Micro-Averaged F1 Score
+    print(
+        "Micro-Averaged F1-Score (All Classes): {:.4%}".format(
+            sklm.f1_score(y_gold, y_pred, average="micro")
+        ), end="\n\n")
+
+    # Confusion Matrix and Examples
+    if verbose:
+        print("Confusion Matrix:")
+        print(sklm.confusion_matrix(
+            gold.loc[:, POLARITY], pred.loc[:, POLARITY]))
+        print("")
+
+        print("Examples:")
+        for y_g, y_p, (_, df) in zip(y_gold, y_pred, gold.iterrows()):
+            if y_g != y_p:
+                print(
+                    ("<<<\tgold:\t{:s}\n>>>\tpredicted:\t{:s}"
+                     "\n{:s}\t{:s}\n").format(
+                         y_g, y_p, df[ID], df[TOKS]
+                     )
+                )
+
+
+def main(argv):
+    """Main method for evaluating coarse-grained sentiment analysis.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    """
+    from argparse import ArgumentParser
+    argparser = ArgumentParser(description="")
+    argparser.add_argument("-g", "--glob-ptrn",
+                           help="globbing pattern to use for finding files in"
+                           " directories", type=str, default="*.json")
+    argparser.add_argument("-v", "--verbose",
+                           help="output prediction errors",
+                           action="store_true")
+    argparser.add_argument("gold_file",
+                           help="file or directory containing gold data")
+    argparser.add_argument("pred_file",
+                           help="file or directory containing predicted"
+                           " labels")
+    args = argparser.parse_args(argv)
+
+    gold_data = read_data(args.gold_file, args.glob_ptrn,
+                          label_field="label")
+    pred_data = read_data(args.pred_file, args.glob_ptrn,
+                          label_field="predicted")
+    # check whether we have the same set of ids in both datasets
+    gold_ids = gold_data.loc[:, ID].values
+    gold_ids_set = set(gold_ids)
+    pred_ids = pred_data.loc[:, ID].values
+    pred_ids_set = set(pred_ids)
+    xor_ids = (gold_ids_set - pred_ids_set) | (pred_ids_set - gold_ids_set)
+    assert len(gold_ids) == len(pred_ids) and all(gold_ids == pred_ids), \
+        "Unmatched ids: {!r} vs. {!r} (ids present in just one" \
+        " of the sets: {!r})".format(gold_ids, pred_ids, xor_ids)
+
+    # compute and output classification statistics
+    compute_stat(gold_data, pred_data, args.verbose)
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main(sys.argv[1:])
