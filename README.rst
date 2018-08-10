@@ -78,6 +78,7 @@ quality:
 equivalently:
 
 .. code-block:: shell
+
   dasa_sentiment -v train -t last data/SB10k/train/\*.json  data/SB10k/dev/\*.json
   dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/last/last.json
   dasa_evaluate data/SB10k/test/ data/SB10k/predicted/last/last.json
