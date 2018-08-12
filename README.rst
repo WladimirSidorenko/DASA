@@ -33,7 +33,7 @@ Tagging, Parsing, and Discourse Segmentation
 
 Before using these corpora, we have processed all tweets of these
 datasets with the `text normalization pipeline`_ of Sidarenka et al.,
-and parsed them using the `Mate Dependency Parser`_ of Bohnet et al.
+and parsed them using the `Mate dependency parser`_ of Bohnet et al.
 Afterwards, we have converted the resulting CoNLL files into the TSV
 format using the scipt ``conll2tsv_``, and subsequently exported the
 resulting TSV into JSON with the help of the script ``tsv2json_``.  In
@@ -46,7 +46,7 @@ Discourse Parsing
 ^^^^^^^^^^^^^^^^^
 
 To derive RST trees for the obtained tweets, we used the script
-`add_rst_trees` from the [RSTParser package]():
+`add_rst_trees` from the `RSTParser package`_:
 
 .. code-block:: shell
 
@@ -115,14 +115,14 @@ Results
    Macro-Averaged F1-Score (Positive and Negative Classes): 45.86%
    Micro-Averaged F1-Score (All Classes): 66.1333%
 
-+-----------+-------------------------------+-------------------------------+-----------------------------+-----------------------+-----------------------+
-| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | **:math:`Macro F_1`** | **:math:`Micro F_1`** |
-+           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                       +                       +
-|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                       |                       |
-+-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-----------------------+-----------------------+
-| PotTS     |  0.52  | 0.83 |      0.64     |  0.57  | 0.17 |     0.26      |  0.61  | 0.43 |     0.5     |         0.453         |          0.549        |
-| SB10k     |  0.56  | 0.55 |      0.56     |  0.46  | 0.29 |     0.36      |  0.73  | 0.8  |     0.76    |         0.459         |          0.661        |
-+-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-----------------------+-----------------------+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.52  | 0.83 |      0.64     |  0.57  | 0.17 |     0.26      |  0.61  | 0.43 |     0.5     |       0.453       |       0.549       |
+| SB10k     |  0.56  | 0.55 |      0.56     |  0.46  | 0.29 |     0.36      |  0.73  | 0.8  |     0.76    |       0.459       |       0.661       |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 
 Root EDU
@@ -176,8 +176,9 @@ Results
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf
-.. _Mate Dependency Parser: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/matetools.en.html
+.. _Mate dependency parser: http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/matetools.en.html
 .. _conll2tsv: https://github.com/WladimirSidorenko/CGSA/blob/master/scripts/conll2tsv
 .. _tsv2json: https://github.com/WladimirSidorenko/DASA/blob/master/scripts/tsv2json
 .. _add_segmentation: https://github.com/WladimirSidorenko/DASA/blob/master/scripts/add_segmentation
 .. _add_polarity_scores: https://github.com/WladimirSidorenko/DASA/blob/master/scripts/add_polarity_scores
+.. _RSTParser package: https://github.com/WladimirSidorenko/RSTParser
