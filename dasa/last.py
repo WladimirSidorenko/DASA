@@ -37,8 +37,8 @@ class DASLastAnalyzer(DASBaseAnalyzer):
         """Class constructor.
 
         Args:
-          a_args (list[str]): arguments to use for initializing models
-          a_kwargs (dict): keyword arguments to use for initializing models
+          args (list[str]): arguments to use for initializing models
+          kwargs (dict): keyword arguments to use for initializing models
 
         """
         super(DASLastAnalyzer, self).__init__(*args, **kwargs)
@@ -48,17 +48,8 @@ class DASLastAnalyzer(DASBaseAnalyzer):
         """Train specified model(s) on the provided data.
 
         Args:
-          a_train_data (list or None):
-            training set
-          a_dev_data (list or None):
-            development set
-          a_path (str):
-            path for storing the model
-          a_grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          a_balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
+          args (list[str]): arguments to use for initializing models
+          kwargs (dict): keyword arguments to use for initializing models
 
         Returns:
           void:
@@ -97,6 +88,11 @@ class DASLastAnalyzer(DASBaseAnalyzer):
         """
         print("Polarity scores of all EDUs: %r.",
               [edu["polarity_scores"] for edu in instance["edus"]])
-        self._logger.info("Polarity scores of last EDU: %r",
+        self._logger.info("Polarity scores of the last EDU: %r",
                           instance["edus"][-1]["polarity_scores"])
-        return IDX2CLS[np.argmax(instance["edus"][-1]["polarity_scores"])]
+        cls_idx = np.argmax(instance["edus"][-1]["polarity_scores"])
+        self._logger.info("cls_idx: %r", cls_idx)
+        self._logger.info("label: %s", IDX2CLS[cls_idx])
+        self._logger.info("score: %f",
+                          instance["edus"][-1]["polarity_scores"][cls_idx])
+        return IDX2CLS[cls_idx]
