@@ -3,11 +3,12 @@
 
 ##################################################################
 # Documentation
-"""Module providing an abstract base for all discourse-aware analyzers.
+"""Module providing a class for predicting polarity of a tweet based on the
+    polarity of the root EDU(s).
 
 Attributes:
-  BaseAnalyzer (class): abstract base for all discourse-aware sentiment
-    analyzers
+  DASRootAnalyzer (class): class for predicting polarity of a tweet based on
+    the polarity of the root EDU(s)
 
 """
 
@@ -50,17 +51,8 @@ class DASRootAnalyzer(DASBaseAnalyzer):
         """Train specified model(s) on the provided data.
 
         Args:
-          a_train_data (list or None):
-            training set
-          a_dev_data (list or None):
-            development set
-          a_path (str):
-            path for storing the model
-          a_grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          a_balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
+          args (list[str]): arguments to use for initializing models
+          kwargs (dict): keyword arguments to use for initializing models
 
         Returns:
           void:

@@ -3,11 +3,12 @@
 
 ##################################################################
 # Documentation
-"""Module providing an abstract base for all discourse-aware analyzers.
+"""Module providing a class for predicting polarity of a tweet based on the
+    polarity of the last EDU.
 
 Attributes:
-  BaseAnalyzer (class): abstract base for all discourse-aware sentiment
-    analyzers
+  DASLastAnalyzer (class): class for predicting polarity of a tweet based on
+    the polarity of the last EDU
 
 """
 

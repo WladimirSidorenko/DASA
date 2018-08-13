@@ -25,9 +25,15 @@ DATA_DIR = os.path.join(DIRNAME, "data")
 MODEL_DIR = os.path.join(DATA_DIR, "models")
 DFLT_MODEL_PATH = os.path.join(MODEL_DIR, "dasa.model")
 
-# Methods and Relation Schemes
+# Methods
 LAST = "last"
 ROOT = "root"
+R2N2 = "r2n2"
+DDR = "ddr"
+ZIRN = "zirn"
+NO_DISCOURSE = "no-discourse"
+
+# Relation Schemes
 BHATIA = "bhatia"
 CHENLO = "chenlo"
 HEERSCHOP = "heerschop"
