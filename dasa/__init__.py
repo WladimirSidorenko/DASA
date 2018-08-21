@@ -12,16 +12,17 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 from .base import DASBaseAnalyzer
-from .last import DASLastAnalyzer
+from .ddr import DDRAnalyzer
+from .last import LastAnalyzer
 from .no_discourse import DUSAnalyzer
-from .root import DASRootAnalyzer
+from .root import RootAnalyzer
 
 
 ##################################################################
 # Variables and Constants
 __name__ = "dasa"
-__all__ = ["DASBaseAnalyzer", "DASLastAnalyzer", "DASRootAnalyzer",
-           "DUSAnalyzer"]
+__all__ = ["DASBaseAnalyzer", "DDRAnalyzer", "DUSAnalyzer", "LastAnalyzer",
+           "RootAnalyzer"]
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.1.0a0"

@@ -29,7 +29,7 @@ from .rst import Tree as RSTTree
 
 ##################################################################
 # Classes
-class DASRootAnalyzer(DASBaseAnalyzer):
+class RootAnalyzer(DASBaseAnalyzer):
     """Main class for coarse-grained sentiment analyzer.
 
     Attributes:
@@ -43,7 +43,7 @@ class DASRootAnalyzer(DASBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(DASRootAnalyzer, self).__init__(*args, **kwargs)
+        super(RootAnalyzer, self).__init__(*args, **kwargs)
         self._relation_scheme = relation_scheme
         self._name = "RootEDU"
 

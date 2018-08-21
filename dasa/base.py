@@ -68,43 +68,30 @@ class DASBaseAnalyzer(object):
         """
         self._name = "BaseAnalyzer"
         self._n_cls = 0
-        self._model = None
         self._wbench = None
         self._logger = LOGGER
 
-    def train(self, a_train_data, a_dev_data=None,
-              a_grid_search=True, a_balance=False):
+    @abc.abstractmethod
+    def train(self, train_set, dev_set=None,
+              grid_search=True, balance=False):
         """Train specified model(s) on the provided data.
 
         Args:
-          a_train_data (list or None):
+          train_set (list or None):
             training set
-          a_dev_data (list or None):
+          dev_set (list or None):
             development set
-          a_grid_search (bool):
+          grid_search (bool):
             use grid search in order to determine hyper-paramaters of
             the model
-          a_balance (bool): balance dataset to get equal number of instances
+          balance (bool): balance dataset to get equal number of instances
             for all classes (via downsampling)
 
         Returns:
           void:
 
         """
-        # convert polarity classes to integer indices
-        self._n_cls = len(
-            set(t.label for t in a_train_data) |
-            set(t.label for t in (a_dev_data if a_dev_data else []))
-        )
-        train_x, train_y = self._generate_ts(a_train_data)
-        dev_x, dev_y = self._generate_ts(a_dev_data)
-        # separately train and dump each model
-        if a_balance:
-            train_x, train_y = balance_data(train_x, train_y)
-        LOGGER.debug("Training model...")
-        self._model.train(train_x, train_y, dev_x, dev_y,
-                          a_grid_search=a_grid_search)
-        LOGGER.debug("Model trained...")
+        raise NotImplementedError
 
     @abc.abstractmethod
     def predict(self, instance):
@@ -176,34 +163,6 @@ class DASBaseAnalyzer(object):
                 raise RuntimeError("Cannot write to file '{:s}'.".format(
                     a_path))
         return dirname
-
-    def _generate_ts(self, a_data):
-        """Generate training set.
-
-        Args:
-          a_data (list): input instances
-
-        Returns:
-          2-tuple(list, list):
-            lists of input features and expected classes
-
-        """
-        x, y = [], []
-        if not a_data:
-            return (x, y)
-        for msg_i in a_data:
-            if not msg_i:
-                continue
-            x.append(msg_i)
-            y_i = msg_i.label
-            # we use a pre-defined mapping of symbolic labels to integers, as
-            # we need these labels to be sorted proportionally to the
-            # subjective scores they get assigned when optimizing threshold of
-            # lexicon-based methods
-            assert y_i in CLS2IDX, "Unknown label {:s}".format(y_i)
-            y_i = CLS2IDX[y_i]
-            y.append(y_i)
-        return (x, y)
 
     def _reset(self):
         """Remove members which cannot be serialized.

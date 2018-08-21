@@ -17,30 +17,29 @@ Description
 
 This package provides several implementations of common
 discourse-aware sentiment analysis (DASA) methods.  Most of these
-approaches infer the overall polarity of input document (*e.g,* of a
-tweet) from the polarity scores of its elementary discourse units
-(EDUs) by either accumulating these scores over the RST tree or
-choosing a single EDU, which is most representative of the whole
-analyzed text (*e.g.*, the last or root discourse segment).
+approaches infer the overall polarity of the input (*e.g,* of a tweet)
+from the polarity scores of its elementary discourse units (EDUs) by
+either accumulating these scores over the RST tree or choosing a
+single EDU, which is most representative of the whole analyzed text
+(*e.g.*, the last discourse segment).
 
 Data Preparation
 ----------------
 
-We use the PotTS_ and SB10k_ corpora as primary data for evaluation.
+We use PotTS_ and SB10k_ as primary data sources for evaluation.
 
 Tagging, Parsing, and Discourse Segmentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Before using these corpora, we have processed all tweets of these
-datasets with the `text normalization pipeline`_ of Sidarenka et al.,
-and parsed them using the `Mate dependency parser`_ of Bohnet et al.
-Afterwards, we have converted the resulting CoNLL files into the TSV
-format using the scipt ``conll2tsv_``, and subsequently exported the
-resulting TSV into JSON with the help of the script ``tsv2json_``.  In
-addition to that, we have also added information about discourse
-segments and automatically predicted sentiment scores for each of
-these segements with the scripts `scripts/add_segmentation` and
-`scripts/add_polarity_scores` respectively.
+Before using these corpora, we processed all tweets of these datasets
+with the `text normalization pipeline`_ [SIDARENKA]_ and parsed them
+using the `Mate dependency parser`_ [BOHNET]_.  Afterwards, we
+converted the resulting CoNLL files into the TSV format using the
+scipt conll2tsv_, and subsequently exported the resulting TSV into
+JSON with the script tsv2json_.  In addition to that, we also added
+information about discourse segments and automatically predicted
+sentiment scores for each of these segements with the scripts
+`add_segmentation`_ and `add_polarity_scores`_ respectively.
 
 Discourse Parsing
 ^^^^^^^^^^^^^^^^^
@@ -64,6 +63,67 @@ To derive RST trees for the obtained tweets, we used the script
 
 Examples
 --------
+
+DDR
+^^^
+
+To determine the polarity of a tweet using the discourse depth
+reweighting (DDR) method [BHATIA]_, you can use the following command to
+create the model:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t ddr -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+
+and then execute the following scripts to predict the labels for the
+test sets and evaluate the quality of the resulting model:
+
+.. code-block:: shell
+
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/root/root.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/root/root.json
+
+Equivalently, you can run the following commands to check the
+performance of this approach on the SB10k_ corpus:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t ddr -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
+  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/ddr/ddr.json
+  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/ddr/ddr.json
+
+
+Results
+~~~~~~~
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.73      0.77      0.75       437
+   negative       0.54      0.59      0.56       209
+   neutral       0.69      0.61      0.65       360
+   avg / total       0.68      0.67      0.67      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 65.50%
+   Micro-Averaged F1-Score (All Classes): 67.3956%
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.59      0.63      0.61       190
+   negative       0.48      0.44      0.46       113
+   neutral       0.77      0.76      0.77       447
+   avg / total       0.68      0.68      0.68       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 53.39%
+   Micro-Averaged F1-Score (All Classes): 68.1333%
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.73  | 0.77 |      0.75     |  0.54  | 0.59 |     0.56      |  0.69  | 0.61 |     0.65    |       0.655       |      0.674        |
+| SB10k     |  0.59  | 0.63 |      0.61     |  0.48  | 0.44 |     0.46      |  0.77  | 0.76 |     0.77    |       0.534       |      0.681        |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 Last EDU
 ^^^^^^^^
@@ -124,6 +184,68 @@ Results
 | SB10k     |  0.56  | 0.55 |      0.56     |  0.46  | 0.29 |     0.36      |  0.73  | 0.8  |     0.76    |       0.459       |       0.661       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+
+No-Discourse
+^^^^^^^^^^^^
+
+To predict the polarity of a tweet discregarding the discourse
+information, you can invoke the above scripts as follows:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t no-discourse data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+
+and then the following scripts to predict the label and evaluate the
+quality:
+
+.. code-block:: shell
+
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/no-discourse/no-discourse.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/no-discourse/no-discourse.json
+
+equivalently:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t no-discourse data/SB10k/train/\*.json  data/SB10k/dev/\*.json
+  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/no-discourse/no-discourse.json
+  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/no-discourse/no-discourse .json
+
+
+Results
+~~~~~~~
+
+.. comment:
+
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.73      0.82      0.77       437
+   negative       0.61      0.56      0.58       209
+   neutral       0.72      0.66      0.69       360
+   avg / total       0.70      0.71      0.70      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.66%
+   Micro-Averaged F1-Score (All Classes): 70.5765%
+
+.. comment:
+
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
+
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.73  | 0.82 |      0.77     |  0.61  | 0.56 |     0.58      |  0.72  | 0.66 |    0.69     |       0.677       |       0.706       |
+| SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |    0.8      |       0.557       |       0.713       |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 Root EDU
 ^^^^^^^^
@@ -188,68 +310,6 @@ Results
 | SB10k     |  0.51  | 0.55 |      0.53     |  0.4   | 0.3  |     0.35      |  0.74  | 0.76 |    0.75     |       0.438       |       0.64        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
-No-Discourse
-^^^^^^^^^^^^
-
-To predict the polarity of a tweet discregarding the discourse
-information, you can invoke the above scripts as follows:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t no-discourse data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-
-and then the following scripts to predict the label and evaluate the
-quality:
-
-.. code-block:: shell
-
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/no-discourse/no-discourse.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/no-discourse/no-discourse.json
-
-equivalently:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t no-discourse data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/no-discourse/no-discourse.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/no-discourse/no-discourse .json
-
-
-Results
-~~~~~~~
-
-.. comment:
-
-   General Statistics:
-   precision    recall  f1-score   support
-   positive       0.73      0.82      0.77       437
-   negative       0.61      0.56      0.58       209
-   neutral       0.72      0.66      0.69       360
-   avg / total       0.70      0.71      0.70      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 67.66%
-   Micro-Averaged F1-Score (All Classes): 70.5765%
-
-.. comment:
-
-   General Statistics:
-   precision    recall  f1-score   support
-   positive       0.64      0.69      0.66       190
-   negative       0.45      0.45      0.45       113
-   neutral       0.82      0.79      0.80       447
-   avg / total       0.72      0.71      0.71       750
-   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
-   Micro-Averaged F1-Score (All Classes): 71.3333%
-
-
-+-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
-| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
-+           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
-|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
-+-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.73  | 0.82 |      0.77     |  0.61  | 0.56 |     0.58      |  0.72  | 0.66 |    0.69     |       0.677       |       0.706       |
-| SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |    0.8      |       0.557       |       0.713       |
-+-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf
@@ -259,3 +319,23 @@ Results
 .. _add_segmentation: https://github.com/WladimirSidorenko/DASA/blob/master/scripts/add_segmentation
 .. _add_polarity_scores: https://github.com/WladimirSidorenko/DASA/blob/master/scripts/add_polarity_scores
 .. _RSTParser package: https://github.com/WladimirSidorenko/RSTParser
+
+References
+----------
+
+.. [BHATIA] Parminder Bhatia, Yangfeng Ji, and Jacob
+         Eisenstein. 2015. Better Document-Level Sentiment Analysis
+         from RST Discourse Parsing. In Proceedings of Empirical
+         Methods for Natural Language Processing (EMNLP), Lisbon,
+         September.
+.. [BOHNET] Bernd Bohnet. 2009. Effiient parsing of syntactic and
+	    semantic dependency structures. In Hajic, J., editor,
+	    Proceedings of the Thirteenth Conference on Computational
+	    Natural Lan- guage Learning: Shared Task, CoNLL 2009,
+	    Boulder, Colorado, USA, June 4, 2009 , pages 67--72. ACL.
+.. [SIDARENKA] Uladzimir Sidarenka, Tatjana Schefflr and Manfred
+	 Stede. 2013.  Rule-based normalization of German Twitter
+	 messages. In Language Processing and Knowledge in the Web -
+	 25th International Conference, GSCL 2013: Proceedings of the
+	 workshop Verarbeitung und Annotation von Sprachdaten aus
+	 Genres internetbasierter Kommunikation , Darmstadt, Germany.

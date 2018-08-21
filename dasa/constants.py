@@ -14,11 +14,13 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from six import iteritems
+import torch
 import os
 
 ##################################################################
 # Constants
 DFLT_ENCODING = "utf-8"
+DFLT_DTYPE = torch.get_default_dtype()
 
 DIRNAME = os.path.dirname(__file__)
 DATA_DIR = os.path.join(DIRNAME, "data")

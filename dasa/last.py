@@ -28,7 +28,7 @@ from .constants import IDX2CLS
 
 ##################################################################
 # Classes
-class DASLastAnalyzer(DASBaseAnalyzer):
+class LastAnalyzer(DASBaseAnalyzer):
     """Main class for coarse-grained sentiment analyzer.
 
     Attributes:
@@ -42,7 +42,7 @@ class DASLastAnalyzer(DASBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(DASLastAnalyzer, self).__init__(*args, **kwargs)
+        super(LastAnalyzer, self).__init__(*args, **kwargs)
         self._name = "LastEDU"
 
     def train(self, *args, **kwargs):

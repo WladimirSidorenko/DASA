@@ -10,8 +10,8 @@ import json
 import logging
 import sys
 
-from dasa import (DASBaseAnalyzer, DASLastAnalyzer, DASRootAnalyzer,
-                  DUSAnalyzer)
+from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
+                  LastAnalyzer, RootAnalyzer,)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH,
                             LAST, ROOT, NO_DISCOURSE, R2N2, DDR, ZIRN,
@@ -29,22 +29,22 @@ NO_REL_TYPE = (LAST, NO_DISCOURSE)
 
 ##################################################################
 # Methods
-def _add_cmn_options(a_parser):
+def _add_cmn_options(parser):
     """Add common options to option subparser
 
     Args:
-      a_parser (argparse.ArgumentParser):
+      parser (argparse.ArgumentParser):
         option subparser to which new options should be added
 
     Returns:
       void:
 
     """
-    a_parser.add_argument("-m", "--model",
-                          help="path to the main model (if different from"
-                          " default)", type=str, default=DFLT_MODEL_PATH)
-    a_parser.add_argument("files", help="input file(s)",
-                          type=str, nargs="+")
+    parser.add_argument("-m", "--model",
+                        help="path to the main model (if different from"
+                        " default)", type=str, default=DFLT_MODEL_PATH)
+    parser.add_argument("files", help="input file(s)",
+                        type=str, nargs="+")
 
 
 def _read_data(files):
@@ -108,7 +108,7 @@ def main(argv):
                               choices=(BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU))
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
-                              choices=(LAST, ROOT, NO_DISCOURSE),
+                              choices=(DDR, LAST, ROOT, NO_DISCOURSE),
                               required=True, type=str)
     _add_cmn_options(parser_train)
 
@@ -138,12 +138,14 @@ def main(argv):
         LOGGER.debug("Reading development set...")
         dev_set = [tweet_i for tweet_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
-        if args.type == LAST:
-            analyzer = DASLastAnalyzer()
+        if args.type == DDR:
+            analyzer = DDRAnalyzer(args.relation_scheme)
+        elif args.type == LAST:
+            analyzer = LastAnalyzer()
         elif args.type == NO_DISCOURSE:
             analyzer = DUSAnalyzer()
         elif args.type == ROOT:
-            analyzer = DASRootAnalyzer(args.relation_scheme)
+            analyzer = RootAnalyzer(args.relation_scheme)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
@@ -152,8 +154,7 @@ def main(argv):
             )
         LOGGER.debug("Training analyzer...")
         analyzer.train(train_set, dev_set,
-                       a_path=args.model,
-                       a_grid_search=args.grid_search
+                       grid_search=args.grid_search
                        )
         LOGGER.debug("Analyzer trained.")
         analyzer.save(args.model)
