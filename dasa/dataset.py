@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- mode: python; coding: utf-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 
 ##################################################################
 # Documentation
@@ -23,15 +23,14 @@ from .constants import DFLT_DTYPE
 ##################################################################
 # Class
 class Dataset(TDS):
-    def __init__(self, x, y):
+    def __init__(self, *x):
         """Class constructor.
 
         Args:
-          x (np.array): digitized input data
-          y (np.array): digitized labels
+          x (list[np.array]): digitized input data
 
         """
-        super(Dataset, self).__init__(
-            torch.from_numpy(x).to(DFLT_DTYPE),
-            torch.from_numpy(y)
-        )
+        y = torch.from_numpy(x[-1])
+        x = [torch.from_numpy(x_) for x_ in x[:-1]]
+        x.append(y)
+        super(Dataset, self).__init__(*x)

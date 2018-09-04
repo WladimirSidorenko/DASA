@@ -11,7 +11,7 @@ import logging
 import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
-                  LastAnalyzer, RootAnalyzer,)
+                  LastAnalyzer, RootAnalyzer, R2N2Analyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH,
                             LAST, ROOT, NO_DISCOURSE, R2N2, DDR, ZIRN,
@@ -108,7 +108,7 @@ def main(argv):
                               choices=(BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU))
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
-                              choices=(DDR, LAST, ROOT, NO_DISCOURSE),
+                              choices=(DDR, LAST, ROOT, R2N2, NO_DISCOURSE),
                               required=True, type=str)
     _add_cmn_options(parser_train)
 
@@ -146,6 +146,8 @@ def main(argv):
             analyzer = DUSAnalyzer()
         elif args.type == ROOT:
             analyzer = RootAnalyzer(args.relation_scheme)
+        elif args.type == R2N2:
+            analyzer = R2N2Analyzer(args.relation_scheme)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
@@ -154,8 +156,7 @@ def main(argv):
             )
         LOGGER.debug("Training analyzer...")
         analyzer.train(train_set, dev_set,
-                       grid_search=args.grid_search
-                       )
+                       grid_search=args.grid_search)
         LOGGER.debug("Analyzer trained.")
         analyzer.save(args.model)
     else:

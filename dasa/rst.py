@@ -45,6 +45,9 @@ class Tree(object):
         """
         self._id = int(root["id"])
         self._is_leaf = self._id >= 0
+        self._depth = -1
+        self._len = -1
+        self._width = -1
         self._rel2par = root["rel2par"]
         self._ns = root["n/s"]
         self._prnt = prnt
@@ -63,17 +66,86 @@ class Tree(object):
                             for ch in self._children
                             for leaf in ch.leaves]
 
+    def __len__(self):
+        """Total number of nodes in th
+
+        """
+        if self._len < 0:
+            self._len = sum(len(ch) for ch in self._children) + 1
+        return self._len
+
+    def bfs(self):
+        """Iterate over all tree nodes.
+
+        Yields:
+          all tree nodes in bfs order
+
+        """
+        nodes = [self]
+        visited_nodes = set([self._id])
+        while nodes:
+            yield nodes
+            nodes = [ch
+                     for node_i in nodes
+                     for ch in node_i._children
+                     if ch._id not in visited_nodes]
+            for node in nodes:
+                visited_nodes.add(node._id)
+
+    def dfs(self):
+        """Iterate over all tree nodes.
+
+        Yields:
+          all tree nodes in dfs order
+
+        """
+        yield self
+        for child in self.children:
+            for grandchild in iter(child):
+                yield grandchild
+
     @property
     def children(self):
         return self._children
+
+    @property
+    def depth(self):
+        if self._depth < 0:
+            if len(self._children) == 0:
+                self._depth = 1
+            else:
+                self._depth = 1 + max([ch.depth for ch in self.children])
+        return self._depth
+
+    @property
+    def id(self):
+        return self._id
 
     @property
     def leaves(self):
         return self._leaves
 
     @property
+    def ns(self):
+        return self._ns
+
+    @property
     def parent(self):
         return self._prnt
+
+    @property
+    def rel2par(self):
+        return self._rel2par
+
+    @rel2par.setter
+    def rel2par(self, value):
+        self._rel2par = value
+
+    @property
+    def width(self):
+        if self._width < 0:
+            self._width = len(self.children)
+        return self._width
 
     @property
     def root_edus(self):
@@ -92,7 +164,7 @@ class Tree(object):
                 self._root_edus = [edu
                                    for ch in self._children
                                    for edu in ch.root_edus
-                                   if ch._ns == "Nucleus"]
+                                   if ch.ns == "Nucleus"]
         return self._root_edus
 
     def to_deps(self):
@@ -101,11 +173,11 @@ class Tree(object):
         See Hirao et al. (2013) for particular details about this conversion.
 
         """
-        nuclei = [leaf for leaf in self.leaves if leaf._ns == "Nucleus"]
+        nuclei = [leaf for leaf in self.leaves if leaf.ns == "Nucleus"]
         # compute heads
         heads = self._compute_heads(nuclei)
         # convert nucleus and satellite EDUs to dg nodes
-        satellites = [leaf for leaf in self.leaves if leaf._ns == "Satellite"]
+        satellites = [leaf for leaf in self.leaves if leaf.ns == "Satellite"]
         id2dg_node = {leaf._id: DepDT(leaf._id, leaf.polarity_scores)
                       for leaf in chain(nuclei, satellites)}
         dg_root = self._nuclei2dg_tree(nuclei, id2dg_node, heads)
@@ -130,7 +202,7 @@ class Tree(object):
             head = heads[node_id]
             prnt = node.parent
             # skip satellites and the root node
-            if node._ns == "Satellite" or prnt is None:
+            if node.ns == "Satellite" or prnt is None:
                 continue
             prnt_id = prnt._id
             head_id = head._id
@@ -165,7 +237,7 @@ class Tree(object):
             while prnt is not None:
                 if rel2par is None or rel2par == "span":
                     rel2par = prnt._rel2par
-                if prnt._ns != "Nucleus":
+                if prnt.ns != "Nucleus":
                     break
                 prnt = prnt.parent
             if prnt.parent is None:
@@ -204,7 +276,7 @@ class Tree(object):
     def __repr__(self):
         tree = ("<RSTTree id={} leaf={} rel2par={} n/s={}"
                 " children=[{:s}]>").format(
-                    self._id, self._is_leaf, self._rel2par, self._ns,
+                    self._id, self._is_leaf, self._rel2par, self.ns,
                     ", ".join([repr(ch) for ch in self._children])
                 )
         return tree

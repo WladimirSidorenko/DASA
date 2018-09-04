@@ -16,13 +16,14 @@ from .ddr import DDRAnalyzer
 from .last import LastAnalyzer
 from .no_discourse import DUSAnalyzer
 from .root import RootAnalyzer
+from .r2n2 import R2N2Analyzer
 
 
 ##################################################################
 # Variables and Constants
 __name__ = "dasa"
 __all__ = ["DASBaseAnalyzer", "DDRAnalyzer", "DUSAnalyzer", "LastAnalyzer",
-           "RootAnalyzer"]
+           "RootAnalyzer", "R2N2Analyzer"]
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.1.0a0"

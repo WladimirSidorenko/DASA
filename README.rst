@@ -310,6 +310,69 @@ Results
 | SB10k     |  0.51  | 0.55 |      0.53     |  0.4   | 0.3  |     0.35      |  0.74  | 0.76 |    0.75     |       0.438       |       0.64        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+R2N2
+^^^^
+
+To determine the polarity of a tweet using rhetorical recursive neural
+networks (R2N2) [BHATIA]_, you can use the following command to create
+the model:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t r2n2 -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+
+and then runt:
+
+.. code-block:: shell
+
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/r2n2/r2n2.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/r2n2/r2n2.json
+
+to predict the labels on the test sets and evaluate the quality of the
+resulting model.
+
+Equivalently, you can run the following commands to check the
+performance of this approach on the SB10k_ corpus:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t r2n2 -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
+  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/r2n2/r2n2.json
+  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/r2n2/r2n2.json
+
+
+Results
+~~~~~~~
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.74      0.78      0.76       437
+   negative       0.59      0.53      0.56       209
+   neutral       0.68      0.68      0.68       360
+   avg / total       0.69      0.69      0.69      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 65.72%
+   Micro-Averaged F1-Score (All Classes): 69.1849%
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.46      0.45      0.45       113
+   neutral       0.81      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.92%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.74  | 0.78 |      0.76     |  0.59  | 0.53 |     0.56      |  0.68  | 0.68 |     0.68    |       0.6572      |      0.6918       |
+| SB10k     |  0.64  | 0.69 |      0.66     |  0.46  | 0.45 |     0.45      |  0.81  | 0.79 |     0.8     |       0.5592      |      0.7133       |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf

@@ -50,3 +50,4 @@ NEUTRAL = "neutral"
 MIXED = "mixed"
 CLS2IDX = {NEGATIVE: 0, NEUTRAL: 1, POSITIVE: 2}
 IDX2CLS = {v: k for k, v in iteritems(CLS2IDX)}
+N_POLARITIES = len(CLS2IDX)

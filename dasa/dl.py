@@ -102,9 +102,11 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
             dev_loss = 0.
             i = next_i = 0
             epoch_start = datetime.utcnow()
-            for batch_j, (inputs, labels) in enumerate(train_set):
+            for train_batch in train_set:
+                inputs = train_batch[:-1]
+                labels = train_batch[-1]
                 optimizer.zero_grad()
-                outputs = self._model(inputs)
+                outputs = self._model(*inputs)
                 # compute loss and evaluate model's performance on the training
                 # data
                 loss = self._train_criterion(outputs, labels)
@@ -120,8 +122,10 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
             # evaluate model's performance on the dev set
             with torch.no_grad():
                 j = next_j = 0
-                for inputs, labels in dev_set:
-                    outputs = self._model(inputs)
+                for dev_batch in dev_set:
+                    inputs = dev_batch[:-1]
+                    labels = dev_batch[-1]
+                    outputs = self._model(*inputs)
                     loss = self._dev_criterion(outputs, labels)
                     dev_loss += loss.item()
                     _, predicted_labels = torch.max(outputs, 1)
