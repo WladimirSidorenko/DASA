@@ -17,8 +17,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 from torch.utils.data import TensorDataset as TDS
 import torch
 
-from .constants import DFLT_DTYPE
-
 
 ##################################################################
 # Class

@@ -44,7 +44,7 @@ class Tree(object):
 
         """
         self._id = int(root["id"])
-        self._is_leaf = self._id >= 0
+        self.is_leaf = self._id >= 0
         self._depth = -1
         self._len = -1
         self._width = -1
@@ -55,7 +55,7 @@ class Tree(object):
         self.toks = []
         self._root_edus = None
         self.polarity_scores = []
-        if self._is_leaf:
+        if self.is_leaf:
             self._leaves = [self]
             edu = data["edus"][self._id]
             toks = data["toks"]
@@ -66,8 +66,16 @@ class Tree(object):
                             for ch in self._children
                             for leaf in ch.leaves]
 
+    def __iter__(self):
+        """Iterate over all nodes in the tree.
+
+        """
+        for nodes in self.bfs():
+            for node in nodes:
+                yield node
+
     def __len__(self):
-        """Total number of nodes in th
+        """Total number of nodes in the tree.
 
         """
         if self._len < 0:
@@ -158,7 +166,7 @@ class Tree(object):
 
         """
         if self._root_edus is None:
-            if self._is_leaf:
+            if self.is_leaf:
                 self._root_edus = [self]
             else:
                 self._root_edus = [edu
@@ -265,7 +273,7 @@ class Tree(object):
             dg_node = id2dg_node[sat_edu._id]
             rel2par = sat_edu._rel2par
             prnt = sat_edu.parent
-            while prnt is not None and prnt._is_leaf:
+            while prnt is not None and prnt.is_leaf:
                 prnt = prnt.parent
             assert prnt is not None, \
                 "Satellite node {:s} has no parent.".format(sat_edu._id)
@@ -276,7 +284,7 @@ class Tree(object):
     def __repr__(self):
         tree = ("<RSTTree id={} leaf={} rel2par={} n/s={}"
                 " children=[{:s}]>").format(
-                    self._id, self._is_leaf, self._rel2par, self.ns,
+                    self._id, self.is_leaf, self._rel2par, self.ns,
                     ", ".join([repr(ch) for ch in self._children])
                 )
         return tree

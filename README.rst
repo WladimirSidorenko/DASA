@@ -321,7 +321,7 @@ the model:
 
   dasa_sentiment -v train -t r2n2 -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
 
-and then runt:
+and then run:
 
 .. code-block:: shell
 
@@ -373,6 +373,60 @@ Results
 | SB10k     |  0.64  | 0.69 |      0.66     |  0.46  | 0.45 |     0.45      |  0.81  | 0.79 |     0.8     |       0.5592      |      0.7133       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+WANG
+^^^^
+
+To determine the polarity of a message using a linear combination of
+EDU polarities [WANG]_, you can use the following command to create
+the model:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t wang -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+
+and run:
+
+.. code-block:: shell
+
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/wang/wang.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/wang/wang.json
+
+to predict the labels on the test sets and evaluate the quality of the
+resulting model.
+
+
+Results
+~~~~~~~
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.58      0.79      0.67       437
+   negative       0.61      0.21      0.31       209
+   neutral       0.61      0.57      0.59       360
+   avg / total       0.59      0.59      0.57      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 48.72%
+   Micro-Averaged F1-Score (All Classes): 59.0457%
+
+.. comment:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.61      0.63      0.62       190
+   negative       0.46      0.29      0.36       113
+   neutral       0.76      0.82      0.79       447
+   avg / total       0.68      0.69      0.68       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 48.84%
+   Micro-Averaged F1-Score (All Classes): 69.3333%
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.58  | 0.79 |      0.67     |  0.61  | 0.21 |     0.31      |  0.61  | 0.57 |     0.59    |       0.4872      |      0.5905       |
+| SB10k     |  0.61  | 0.63 |      0.62     |  0.46  | 0.29 |     0.36      |  0.76  | 0.82 |     0.79    |       0.4884      |      0.6933       |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf
@@ -402,3 +456,8 @@ References
 	 25th International Conference, GSCL 2013: Proceedings of the
 	 workshop Verarbeitung und Annotation von Sprachdaten aus
 	 Genres internetbasierter Kommunikation , Darmstadt, Germany.
+.. [WANG] Wang, F. and Wu, Y. (2013). Exploiting hierarchical
+	  discourse structure for review sentiment analysis. In 2013
+	  International Conference on Asian Language Processing, IALP
+	  2013, Urumqi, China, August 17-19, 2013 , pages
+	  121--124. IEEE.

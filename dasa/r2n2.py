@@ -23,9 +23,10 @@ from six import iteritems
 from torch.utils.data import DataLoader
 import numpy as np
 import torch.nn as nn
+import torch.nn.functional as F
 import torch
 
-from .constants import CLS2IDX, IDX2CLS, N_POLARITIES
+from .constants import BUFFER_FACTOR, CLS2IDX, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
 from .rst import Tree as RSTTree
@@ -33,7 +34,6 @@ from .rst import Tree as RSTTree
 
 ##################################################################
 # Variables and Constants
-BUFFER_FACTOR = 1.2
 
 
 ##################################################################
@@ -61,9 +61,6 @@ class R2N2(nn.Module):
         self.K = nn.Parameter(K)
         # initialize scalar parameter
         self.gamma = nn.Parameter(torch.tensor(0.5))
-        # initialize custom functions
-        self._tanh = nn.Tanh()
-        self._softmax = nn.Softmax(dim=-1)
 
     @property
     def rel2idx(self):
@@ -88,10 +85,10 @@ class R2N2(nn.Module):
             update_scores = torch.bmm(child_scores, rel_scores).view(
                 (node_scores.shape[0], -1, node_scores.shape[2])
             )
-            update_scores = self._tanh(torch.sum(update_scores, dim=1))
+            update_scores = F.tanh(torch.sum(update_scores, dim=1))
             # add new scores to the existing ones
             node_scores[:, i] += update_scores
-        return self._softmax(self.gamma * msg_scores + node_scores[:, -1])
+        return F.softmax(self.gamma * msg_scores + node_scores[:, -1], dim=-1)
 
 
 class R2N2Analyzer(DLBaseAnalyzer):
@@ -100,24 +97,6 @@ class R2N2Analyzer(DLBaseAnalyzer):
     Attributes:
 
     """
-
-    @staticmethod
-    def get_rels(forrest):
-        """Extract all relations present in forrest of RST trees.
-
-        Args:
-          forrest (list[rst.Tree]): list of RST trees
-
-        """
-        rels = set()
-        for tree in forrest:
-            nodes = [tree]
-            while nodes:
-                node = nodes.pop(0)
-                nodes.extend(node.children)
-                if node.rel2par is not None:
-                    rels.add((node.rel2par, node.ns))
-        return rels
 
     @staticmethod
     def span2nuc(tree):
@@ -215,7 +194,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._logger.info("cls_idx: %r (%s)", cls_idx, IDX2CLS[cls_idx.item()])
         return IDX2CLS[cls_idx.item()]
 
-    def _digitize_data(self, data):
+    def _digitize_data(self, data, train_mode=False):
         forrest = [
             self.span2nuc(
                 RSTTree(

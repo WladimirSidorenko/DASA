@@ -3,12 +3,12 @@
 
 ##################################################################
 # Documentation
-"""Module providing a class for predicting polarity of a tweet based on the
-    polarity of the root EDU(s).
+"""Module providing a class for predicting polarity of a tweet based on
+discourse-depth reweighting.
 
 Attributes:
-  DASRootAnalyzer (class): class for predicting polarity of a tweet based on
-    the polarity of the root EDU(s)
+  DDRAnalyzer (class): class for predicting polarity of a tweet based on the
+    polarity of the root EDU(s)
 
 """
 
@@ -20,9 +20,10 @@ from torch import eye
 from torch.utils.data import DataLoader
 import numpy as np
 import torch.nn as nn
+import torch.nn.functional as F
 import torch
 
-from .constants import CLS2IDX, DFLT_DTYPE, IDX2CLS
+from .constants import CLS2IDX, IDX2CLS
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
 from .rst import Tree as RSTTree
@@ -42,11 +43,10 @@ class DDR(nn.Linear):
         n = len(CLS2IDX)
         super(DDR, self).__init__(n, n)
         self.weight.data.copy_(eye(n))
-        self._softmax = nn.Softmax(dim=-1)
 
     def forward(self, x):
         ret = super(DDR, self).forward(x)
-        return self._softmax(ret)
+        return F.softmax(ret, dim=-1)
 
 
 class DDRAnalyzer(DLBaseAnalyzer):
@@ -73,7 +73,7 @@ class DDRAnalyzer(DLBaseAnalyzer):
         self._compute_scores(self._wbench[0, :], instance)
         with torch.no_grad():
             out = self._model(
-                torch.from_numpy(self._wbench).to(DFLT_DTYPE)
+                torch.from_numpy(self._wbench)
             )
         _, cls_idx = torch.max(out, 1)
         return IDX2CLS[cls_idx.item()]
@@ -86,7 +86,7 @@ class DDRAnalyzer(DLBaseAnalyzer):
         self._logger.info("* wbench: %r", self._wbench)
         with torch.no_grad():
             out = self._model(
-                torch.from_numpy(self._wbench).to(DFLT_DTYPE)
+                torch.from_numpy(self._wbench)
             )
         self._logger.info("out: %r", out)
         _, cls_idx = torch.max(out, 1)
@@ -94,7 +94,7 @@ class DDRAnalyzer(DLBaseAnalyzer):
                           cls_idx, IDX2CLS[cls_idx.item()])
         return IDX2CLS[cls_idx.item()]
 
-    def _digitize_data(self, data):
+    def _digitize_data(self, data, train_mode=False):
         n = len(data)
         m = len(CLS2IDX)
         digitized_input = np.zeros((n, m), dtype="float32")

@@ -17,12 +17,14 @@ from __future__ import absolute_import, print_function, unicode_literals
 from builtins import range
 from copy import deepcopy
 from datetime import datetime
+from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.metrics import f1_score
 import abc
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import warnings
 
 from .base import DASBaseAnalyzer
 from .constants import CLS2IDX
@@ -34,6 +36,7 @@ DATALOADER_KWARGS = {
     "batch_size": 16,
     "shuffle": True
 }
+warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
 
 ##################################################################
@@ -45,6 +48,24 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
 
     """
     __metaclass__ = abc.ABCMeta
+
+    @staticmethod
+    def get_rels(forrest):
+        """Extract all relations present in forrest of RST trees.
+
+        Args:
+          forrest (list[rst.Tree]): list of RST trees
+
+        """
+        rels = set()
+        for tree in forrest:
+            nodes = [tree]
+            while nodes:
+                node = nodes.pop(0)
+                nodes.extend(node.children)
+                if node.rel2par is not None:
+                    rels.add((node.rel2par, node.ns))
+        return rels
 
     def __init__(self, *args, **kwargs):
         """Class constructor.
@@ -61,14 +82,14 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
         self._dev_criterion = nn.MultiMarginLoss(margin=3e-3)
         self._optim_cls = optim.RMSprop
         self._n_cls = len(CLS2IDX)
-        self._wbench = np.zeros((1, self._n_cls))
+        self._wbench = np.zeros((1, self._n_cls), dtype="float32")
 
     def train(self, train_set, dev_set=None,
               grid_search=True, balance=False):
         """Train specified model(s) on the provided data.
 
         Args:
-          train_set (list or None):
+          train_set (list):
             training set
           dev_set (list or None):
             development set
@@ -79,12 +100,25 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
             for all classes (via downsampling)
 
         Returns:
-          void:
+          float: best macro-averaged F1 observed on the dev set
 
         """
         self._logger.debug("Preparing data...")
         train_set, dev_set = self._prepare_data(train_set, dev_set)
         self._logger.debug("Data prepared...")
+        return self._train(train_set, dev_set)
+
+    def _train(self, train_set, dev_set):
+        """Train specified model(s) on the provided data.
+
+        Args:
+          train_set (list): training set
+          dev_set (list): development set
+
+        Returns:
+          float: best macro-averaged F1 observed on the dev set
+
+        """
         self._logger.debug("Training model...")
         optimizer = self._optim_cls(self._model.parameters())
         # prepare matrices for storing gold and predicted labels on training
@@ -143,7 +177,7 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
                 best_f1 = dev_macro_f1
                 selected = True
                 best_model = deepcopy(self._model)
-            self._logger.info(
+            self._logger.debug(
                 "Epoch %d finished in %d sec [train loss:"
                 " %f, train macro-F1: %f, dev loss: %f, dev macro-F1: %f]%s",
                 epoch_i, (epoch_end - epoch_start).total_seconds(),
@@ -152,6 +186,7 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
             )
         self._model = best_model
         self._logger.debug("Model trained...")
+        return best_f1
 
     def _prepare_data(self, train_set, dev_set):
         """Provide train/test split and digitize the data.
@@ -170,10 +205,10 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
             train_set = get_split(train_set, idcs[n_dev:])
 
         # convert tweets to word indices
-        train_set = self._digitize_data(train_set)
-        dev_set = self._digitize_data(dev_set)
+        train_set = self._digitize_data(train_set, train_mode=True)
+        dev_set = self._digitize_data(dev_set, train_mode=False)
         return (train_set, dev_set)
 
     @abc.abstractmethod
-    def _digitize_data(self, data):
+    def _digitize_data(self, data, train_mode=False):
         raise NotImplementedError
