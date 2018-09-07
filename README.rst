@@ -456,8 +456,8 @@ References
 	 25th International Conference, GSCL 2013: Proceedings of the
 	 workshop Verarbeitung und Annotation von Sprachdaten aus
 	 Genres internetbasierter Kommunikation , Darmstadt, Germany.
-.. [WANG] Wang, F. and Wu, Y. (2013). Exploiting hierarchical
-	  discourse structure for review sentiment analysis. In 2013
-	  International Conference on Asian Language Processing, IALP
-	  2013, Urumqi, China, August 17-19, 2013 , pages
-	  121--124. IEEE.
+.. [WANG] Fei Wang, Yunfang Wu and Likun Qiu. (2013). Exploiting
+	  hierarchical discourse structure for review sentiment
+	  analysis. In 2013 International Conference on Asian Language
+	  Processing, IALP 2013, Urumqi, China, August 17-19, 2013 ,
+	  pages 121--124. IEEE.
