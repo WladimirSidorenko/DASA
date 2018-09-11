@@ -84,12 +84,17 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._n_cls = len(CLS2IDX)
         self._wbench = np.zeros((1, self._n_cls), dtype="float32")
 
-    def _train(self, train_set, dev_set):
+    def _train(self, train_set, dev_set, grid_search=True, balance=False):
         """Train specified model(s) on the provided data.
 
         Args:
           train_set (list): training set
           dev_set (list): development set
+          grid_search (bool):
+            use grid search in order to determine hyper-paramaters of
+            the model
+          balance (bool): balance dataset to get equal number of instances
+            for all classes (via downsampling)
 
         Returns:
           float: best macro-averaged F1 observed on the dev set

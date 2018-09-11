@@ -445,14 +445,14 @@ Results
 .. comment: PotTS
    .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
    .. current results: macro-F1: 0.6545; micro-F1: 0.7018;
-   .. Grid Search:
+   .. Grid Search: macro-F1: 0.668; micro-F1: 0.7028;
    .. Edge Features:
    .. Binary States:
 
 .. comment: SB10k
    .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
    .. current results: macro-F1: 0.56; micro-F1: 0.7146;
-   .. Grid Search:
+   .. Grid Search: macro-F1: 0.5602; micro-F1: 0.7146;
    .. Edge Features:
    .. Binary States:
 

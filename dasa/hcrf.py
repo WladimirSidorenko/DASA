@@ -7,7 +7,7 @@
 hidden-variable CRF.
 
 Attributes:
-  XXXAnalyzer (class): class for predicting polarity of a tweet using
+  HCRFAnalyzer (class): class for predicting polarity of a tweet using
     hidden-variable CRF
 
 """
@@ -20,6 +20,7 @@ from collections import namedtuple
 from pystruct.learners import FrankWolfeSSVM
 from pystruct.models import LatentNodeCRF
 from sklearn.metrics import f1_score
+from sklearn.model_selection import GridSearchCV
 import numpy as np
 
 from .constants import CLS2IDX, IDX2CLS, N_POLARITIES
@@ -30,6 +31,7 @@ from .rst import Tree as RSTTree
 ##################################################################
 # Variables and Constants
 Dataset = namedtuple("Dataset", ['X', 'Y'])
+PARAM_GRID = {'C': np.linspace(0, 1.5, 11)}
 
 
 ##################################################################
@@ -54,17 +56,32 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                               n_features=N_POLARITIES,
                               n_hidden_states=N_POLARITIES,
                               latent_node_features=True)
-
-        self._model = FrankWolfeSSVM(model=model, C=.1, max_iter=100)
+        # best C: 1.05 on PotTS and 1.05 on SB10k
+        self._model = FrankWolfeSSVM(model=model, C=1.05)
         # we use `_restore` to set up the model's logger
         self._restore(None)
 
-    def _train(self, train_set, dev_set):
+    def _train(self, train_set, dev_set, grid_search=True, balance=False):
+        def score(y_gold, y_pred):
+            return f1_score([y[0] for y in y_gold],
+                            [y[0] for y in y_pred], average="macro")
+
+        if grid_search:
+            def cv_scorer(estimator, X_test, y_test):
+                return score(y_test, estimator.predict(X_test))
+
+            self._model = GridSearchCV(self._model, PARAM_GRID,
+                                       scoring=cv_scorer)
         self._model.fit(*train_set)
-        y_pred = [y[0]
-                  for y in self._model.predict(dev_set.X)]
-        dev_macro_f1 = f1_score([y[0] for y in dev_set.Y], y_pred,
-                                average="macro")
+        if grid_search:
+            cv_results = self._model.cv_results_
+            for mean, std, params in zip(cv_results["mean_test_score"],
+                                         cv_results["std_test_score"],
+                                         cv_results["params"]):
+                self._logger.info("CV results: %f (+/-%f) (%r)",
+                                  mean, std, params)
+            self._logger.info("Best parameters: %s", self._model.best_params_)
+        dev_macro_f1 = score(dev_set.Y, self._model.predict(dev_set.X))
         self._logger.info("Macro F1-score on dev set: %.2f", dev_macro_f1)
 
     def predict(self, instance):
@@ -116,7 +133,12 @@ class HCRFAnalyzer(MLBaseAnalyzer):
 
     def _reset(self):
         super(HCRFAnalyzer, self)._reset()
-        self._model._logger = None
+        if isinstance(self._model, GridSearchCV):
+            self._model.estimator._logger = None
+            self._model.scoring = None
+            self._model.scorer_ = None
+        else:
+            self._model._logger = None
 
     def _restore(self, a_path):
         if a_path is not None:
@@ -125,4 +147,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         def logger(x, *args, **kwargs):
             self._logger.debug(*args, **kwargs)
 
-        self._model._logger = logger
+        if isinstance(self._model, GridSearchCV):
+            self._model.estimator._logger = logger
+        else:
+            self._model._logger = logger
