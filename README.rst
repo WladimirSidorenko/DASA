@@ -445,10 +445,16 @@ Results
 .. comment: PotTS
    .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
    .. current results: macro-F1: 0.6545; micro-F1: 0.7018;
+   .. Grid Search:
+   .. Edge Features:
+   .. Binary States:
 
 .. comment: SB10k
    .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
    .. current results: macro-F1: 0.56; micro-F1: 0.7146;
+   .. Grid Search:
+   .. Edge Features:
+   .. Binary States:
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
