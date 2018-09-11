@@ -33,6 +33,7 @@ ROOT = "root"
 R2N2 = "r2n2"
 DDR = "ddr"
 WANG = "wang"
+HCRF = "hcrf"
 NO_DISCOURSE = "no-discourse"
 
 # Relation Schemes

@@ -427,6 +427,38 @@ Results
 | SB10k     |  0.61  | 0.63 |      0.62     |  0.46  | 0.29 |     0.36      |  0.76  | 0.82 |     0.79    |       0.4884      |      0.6933       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+HCRF
+^^^^
+
+In the same way, you can use the ``-t xxx`` option, to train and evaluate the ``xxx`` classifier:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t hcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hcrf/hcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hcrf/hcrf.json
+
+
+Results
+~~~~~~~
+
+.. comment: PotTS
+   .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
+   .. current results: macro-F1: 0.6545; micro-F1: 0.7018;
+
+.. comment: SB10k
+   .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
+   .. current results: macro-F1: 0.56; micro-F1: 0.7146;
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
+| SB10k     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf

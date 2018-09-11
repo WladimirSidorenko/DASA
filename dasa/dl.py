@@ -26,7 +26,7 @@ import torch.nn as nn
 import torch.optim as optim
 import warnings
 
-from .base import DASBaseAnalyzer
+from .ml import MLBaseAnalyzer
 from .constants import CLS2IDX
 
 ##################################################################
@@ -41,7 +41,7 @@ warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
 ##################################################################
 # Classes
-class DLBaseAnalyzer(DASBaseAnalyzer):
+class DLBaseAnalyzer(MLBaseAnalyzer):
     """Main class for coarse-grained sentiment analyzer.
 
     Attributes:
@@ -83,30 +83,6 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
         self._optim_cls = optim.RMSprop
         self._n_cls = len(CLS2IDX)
         self._wbench = np.zeros((1, self._n_cls), dtype="float32")
-
-    def train(self, train_set, dev_set=None,
-              grid_search=True, balance=False):
-        """Train specified model(s) on the provided data.
-
-        Args:
-          train_set (list):
-            training set
-          dev_set (list or None):
-            development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
-
-        Returns:
-          float: best macro-averaged F1 observed on the dev set
-
-        """
-        self._logger.debug("Preparing data...")
-        train_set, dev_set = self._prepare_data(train_set, dev_set)
-        self._logger.debug("Data prepared...")
-        return self._train(train_set, dev_set)
 
     def _train(self, train_set, dev_set):
         """Train specified model(s) on the provided data.
@@ -187,28 +163,3 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
         self._model = best_model
         self._logger.debug("Model trained...")
         return best_f1
-
-    def _prepare_data(self, train_set, dev_set):
-        """Provide train/test split and digitize the data.
-
-        """
-        if not dev_set and len(train_set) > 1:
-            n = len(train_set)
-            n_dev = max(1, n // 15)
-            idcs = list(range(n))
-            np.random.shuffle(idcs)
-
-            def get_split(data, idcs):
-                return [data[i] for i in idcs]
-
-            dev_set = get_split(train_set, idcs[:n_dev])
-            train_set = get_split(train_set, idcs[n_dev:])
-
-        # convert tweets to word indices
-        train_set = self._digitize_data(train_set, train_mode=True)
-        dev_set = self._digitize_data(dev_set, train_mode=False)
-        return (train_set, dev_set)
-
-    @abc.abstractmethod
-    def _digitize_data(self, data, train_mode=False):
-        raise NotImplementedError

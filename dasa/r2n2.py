@@ -7,8 +7,8 @@
     polarity of the root EDU(s).
 
 Attributes:
-  DASRootAnalyzer (class): class for predicting polarity of a tweet based on
-    the polarity of the root EDU(s)
+  R2N2Analyzer (class): class for predicting polarity of a tweet using
+    rhetorical recursive neural network
 
 """
 
@@ -17,7 +17,6 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from builtins import range
-from copy import deepcopy
 from math import ceil
 from six import iteritems
 from torch.utils.data import DataLoader
@@ -97,35 +96,6 @@ class R2N2Analyzer(DLBaseAnalyzer):
     Attributes:
 
     """
-
-    @staticmethod
-    def span2nuc(tree):
-        """Translate all span relations to nucleus rels.
-
-        Args:
-          forrest (list[rst.Tree]): list of RST trees
-
-        """
-        nodes = [tree]
-        while nodes:
-            node = nodes.pop(0)
-            if node.rel2par == "span":
-                siblings = node.parent.children
-                assert len(siblings) == 2, \
-                    "Multiple siblings found for a span node."
-                idx2delete = -100
-                nodes2add = []
-                for i, sib_i in enumerate(siblings):
-                    if sib_i.id == node.id:
-                        idx2delete = i
-                    else:
-                        node = deepcopy(node)
-                        node.rel2par = sib_i.rel2par
-                        nodes2add.append(node)
-                siblings.pop(idx2delete)
-                siblings.extend(nodes2add)
-            nodes.extend(node.children)
-        return tree
 
     def __init__(self, relation_scheme, *args, **kwargs):
         """Class constructor.
@@ -268,7 +238,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         node_scores *= 0
         children *= 0
         rels *= 0
-        nodes = [node for nodes in tree.bfs() for node in nodes]
+        nodes = [node for node in tree]
         # mapping from node id to node
         n_nodes = len(nodes)
         assert n_nodes < self._max_nodes, (

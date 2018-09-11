@@ -12,11 +12,11 @@ import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   LastAnalyzer, RootAnalyzer, R2N2Analyzer,
-                  WangAnalyzer)
+                  WangAnalyzer, HCRFAnalyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH,
                             LAST, ROOT, NO_DISCOURSE, R2N2, DDR, WANG,
-                            BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU,
+                            HCRF, BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU,
                             POSITIVE, NEGATIVE, NEUTRAL)
 
 
@@ -110,7 +110,7 @@ def main(argv):
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
                               choices=(DDR, LAST, ROOT, R2N2, WANG,
-                                       NO_DISCOURSE),
+                                       NO_DISCOURSE, HCRF),
                               required=True, type=str)
     _add_cmn_options(parser_train)
 
@@ -152,6 +152,8 @@ def main(argv):
             analyzer = R2N2Analyzer(args.relation_scheme)
         elif args.type == WANG:
             analyzer = WangAnalyzer(args.relation_scheme)
+        elif args.type == HCRF:
+            analyzer = HCRFAnalyzer(args.relation_scheme)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(

@@ -302,10 +302,43 @@ class DepDT(object):
           _id (int): id of the given node.
         """
         self._id = _id
+        self._len = -1
         self._prnt = None
         self._rel2par = None
         self._children = []
         self.polarity_scores = polarity_scores
+
+    def __iter__(self):
+        """Iterate over all nodes in the tree.
+
+        """
+        for nodes in self.bfs():
+            for node in nodes:
+                yield node
+
+    def __len__(self):
+        """Total number of nodes in the tree.
+
+        """
+        if self._len < 0:
+            self._len = sum(len(ch) for ch in self._children) + 1
+        return self._len
+
+    def __repr__(self):
+        tree = ("<DepDT id={} rel2par={} polarity_score={!r}"
+                " children=[{}]>").format(
+                    self._id, self._rel2par, self.polarity_scores,
+                    ", ".join([repr(ch) for ch in self._children])
+                )
+        return tree
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def parent(self):
+        return self._prnt
 
     def add_child(self, dg_node, rel2par=None):
         """Add child to the given node.
@@ -364,11 +397,3 @@ edge [fontsize=24, labelfontsize=20, fontname=fixed];
 node [fontsize=24, labelfontsize=20, fontname=fixed,
 style=filled, fillcolor=lightskyblue];""" + ret + "}"
         return ret
-
-    def __repr__(self):
-        tree = ("<DepDT id={} rel2par={} polarity_score={!r}"
-                " children=[{}]>").format(
-                    self._id, self._rel2par, self.polarity_scores,
-                    ", ".join([repr(ch) for ch in self._children])
-                )
-        return tree
