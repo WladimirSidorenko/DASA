@@ -18,7 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from collections import namedtuple
 from pystruct.learners import FrankWolfeSSVM
-from pystruct.models import LatentNodeCRF
+from pystruct.models import EdgeFeatureLatentNodeCRF
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 import numpy as np
@@ -31,7 +31,7 @@ from .rst import Tree as RSTTree
 ##################################################################
 # Variables and Constants
 Dataset = namedtuple("Dataset", ['X', 'Y'])
-PARAM_GRID = {'C': np.linspace(0, 1.5, 11)}
+PARAM_GRID = {'C': np.linspace(0, 1.5, 5)}
 
 
 ##################################################################
@@ -40,6 +40,22 @@ class HCRFAnalyzer(MLBaseAnalyzer):
     """Discourse-aware sentiment analysis using hidden-variable CRF.
 
     """
+    @staticmethod
+    def get_rels(forrest):
+        """Extract all relations present in forrest of RST trees.
+
+        Args:
+          forrest (list[rst.Tree]): list of RST trees
+
+        """
+        rels = set()
+        for tree in forrest:
+            nodes = [tree]
+            while nodes:
+                node = nodes.pop(0)
+                nodes.extend(node.children)
+                rels.add(node.rel2par)
+        return rels
 
     def __init__(self, relation_scheme, *args, **kwargs):
         """Class constructor.
@@ -52,14 +68,9 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         super(HCRFAnalyzer, self).__init__(*args, **kwargs)
         self._name = "HCRF"
         self._relation_scheme = relation_scheme
-        model = LatentNodeCRF(n_labels=N_POLARITIES,
-                              n_features=N_POLARITIES,
-                              n_hidden_states=N_POLARITIES,
-                              latent_node_features=True)
-        # best C: 1.05 on PotTS and 1.05 on SB10k
-        self._model = FrankWolfeSSVM(model=model, C=1.05)
-        # we use `_restore` to set up the model's logger
-        self._restore(None)
+        self._model = None      # model will be initialized at training time
+        self._rel2idx = {}
+        self._n_rels = -1
 
     def _train(self, train_set, dev_set, grid_search=True, balance=False):
         def score(y_gold, y_pred):
@@ -85,13 +96,18 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         self._logger.info("Macro F1-score on dev set: %.2f", dev_macro_f1)
 
     def predict(self, instance):
-        x, _ = self._digitize_instance(instance)
+        tree = RSTTree(instance,
+                       instance["rst_trees"][self._relation_scheme]).to_deps()
+        x, _ = self._digitize_instance(instance, tree, train_mode=False)
         cls_idx = self._model.predict([x])[0][0]
         return IDX2CLS[cls_idx]
 
     def debug(self, instance):
+        tree = RSTTree(instance,
+                       instance["rst_trees"][self._relation_scheme]).to_deps()
         self._logger.debug("instance: %r", instance)
-        x, _ = self._digitize_instance(instance)
+        self._logger.debug("tree: %r", tree)
+        x, _ = self._digitize_instance(instance, tree, train_mode=False)
         self._logger.debug("features: %r", x)
         cls_idx = self._model.predict([x])[0][0]
         cls = IDX2CLS[cls_idx]
@@ -101,35 +117,60 @@ class HCRFAnalyzer(MLBaseAnalyzer):
     def _digitize_data(self, data, train_mode=False):
         n = len(data)
         dataset = Dataset([None] * n, [None] * n)
-        for i, instance_i in enumerate(data):
-            dataset.X[i], dataset.Y[i] = self._digitize_instance(instance_i)
+        forrest = [
+            RSTTree(instance,
+                    instance["rst_trees"][self._relation_scheme]).to_deps()
+            for instance in data
+        ]
+        if train_mode:
+            self._rel2idx = {
+                rel_i: i
+                for i, rel_i in enumerate(set(
+                        [rel
+                         for tree in forrest
+                         for rel in self.get_rels(tree)]
+                ))
+            }
+
+            self._n_rels = len(self._rel2idx)
+            model = EdgeFeatureLatentNodeCRF(n_labels=N_POLARITIES,
+                                             n_features=N_POLARITIES,
+                                             n_edge_features=self._n_rels,
+                                             n_hidden_states=N_POLARITIES,
+                                             latent_node_features=True)
+            # best C: 1.05 on PotTS and 1.05 on SB10k
+            self._model = FrankWolfeSSVM(model=model, C=1.05)
+            # we use `_restore` to set up the model's logger
+            self._restore(None)
+
+        for i, (instance_i, tree_i) in enumerate(zip(data, forrest)):
+            dataset.X[i], dataset.Y[i] = self._digitize_instance(
+                instance_i, tree_i, train_mode=True
+            )
         return dataset
 
-    def _digitize_instance(self, instance, train_mode=True):
-        self._logger.debug("instance: %r", instance)
+    def _digitize_instance(self, instance, tree, train_mode=True):
         n_edus = len(instance["edus"])
         feats = np.zeros((1 + n_edus, N_POLARITIES), dtype=np.float32)
         feats[0, :] = instance["polarity_scores"]
         for i, edu_i in enumerate(instance["edus"], 1):
             feats[i, :] = edu_i["polarity_scores"]
-        self._logger.debug("feats: %r", feats)
-        tree = RSTTree(instance,
-                       instance["rst_trees"][self._relation_scheme]).to_deps()
-        self._logger.debug("tree: %r", tree)
         edges = np.zeros((len(tree) - 1, 2), dtype=np.uint8)
+        edge_feats = np.zeros((len(tree) - 1, self._n_rels))
         i = 0
         for node in tree:
             if node.parent is not None:
                 edges[i, 0] = node.parent.id + 1
                 edges[i, 1] = node.id + 1
+                edge_idx = self._rel2idx[node.rel2par]
+                edge_feats[i, edge_idx] = 1
                 i += 1
-        self._logger.debug("edges: %r", edges)
         if train_mode:
             labels = np.argmax(feats, axis=1)
             labels[0] = CLS2IDX[instance["label"]]
         else:
             labels = None
-        return ((feats, edges, n_edus), labels)
+        return ((feats, edges, edge_feats, n_edus), labels)
 
     def _reset(self):
         super(HCRFAnalyzer, self)._reset()

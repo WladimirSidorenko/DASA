@@ -333,12 +333,20 @@ class DepDT(object):
         return tree
 
     @property
+    def children(self):
+        return self._children
+
+    @property
     def id(self):
         return self._id
 
     @property
     def parent(self):
         return self._prnt
+
+    @property
+    def rel2par(self):
+        return self._rel2par
 
     def add_child(self, dg_node, rel2par=None):
         """Add child to the given node.

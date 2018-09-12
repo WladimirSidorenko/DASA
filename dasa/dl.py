@@ -49,24 +49,6 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
     """
     __metaclass__ = abc.ABCMeta
 
-    @staticmethod
-    def get_rels(forrest):
-        """Extract all relations present in forrest of RST trees.
-
-        Args:
-          forrest (list[rst.Tree]): list of RST trees
-
-        """
-        rels = set()
-        for tree in forrest:
-            nodes = [tree]
-            while nodes:
-                node = nodes.pop(0)
-                nodes.extend(node.children)
-                if node.rel2par is not None:
-                    rels.add((node.rel2par, node.ns))
-        return rels
-
     def __init__(self, *args, **kwargs):
         """Class constructor.
 
