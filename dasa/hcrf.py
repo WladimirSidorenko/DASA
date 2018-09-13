@@ -31,7 +31,7 @@ from .rst import Tree as RSTTree
 ##################################################################
 # Variables and Constants
 Dataset = namedtuple("Dataset", ['X', 'Y'])
-PARAM_GRID = {'C': np.linspace(0, 1.5, 5)}
+PARAM_GRID = {'C': np.linspace(0, 3, 5)}
 
 
 ##################################################################

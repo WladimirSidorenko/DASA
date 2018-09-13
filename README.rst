@@ -446,14 +446,16 @@ Results
    .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
    .. current results: macro-F1: 0.6545; micro-F1: 0.7018;
    .. Grid Search: macro-F1: 0.668; micro-F1: 0.7028;
-   .. Edge Features: macro-F1: 0.6564; micro-F1: 0.6918; (no grid search)
+   .. Edge Features: macro-F1: 0.6564; micro-F1: 0.6918; (w/o grid search)
+   .. Edge Features: macro-F1: 0.643; micro-F1: 0.6928; (w grid search)
    .. Binary States:
 
 .. comment: SB10k
    .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
    .. current results: macro-F1: 0.56; micro-F1: 0.7146;
    .. Grid Search: macro-F1: 0.5602; micro-F1: 0.7146;
-   .. Edge Features: macro-F1: 0.5572; micro-F1: 0.7133; (no grid search)
+   .. Edge Features: macro-F1: 0.5572; micro-F1: 0.7133; (w/o grid search)
+   .. Edge Features: macro-F1: 0.5498; micro-F1: 0.708; (w grid search)
    .. Binary States:
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
