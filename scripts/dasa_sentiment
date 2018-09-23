@@ -124,7 +124,7 @@ def main(argv):
     _add_cmn_options(parser_debug)
     args = argparser.parse_args()
 
-    if args.verbose:
+    if args.verbose or args.mode == DEBUG:
         log_lvl = logging.DEBUG
         LOGGER.setLevel(log_lvl)
         for handler_i in LOGGER.handlers:

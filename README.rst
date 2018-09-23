@@ -444,19 +444,27 @@ Results
 
 .. comment: PotTS
    .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
-   .. current results: macro-F1: 0.6545; micro-F1: 0.7018;
+   .. current results: macro-F1: 0.6728; micro-F1: 0.7097;
    .. Grid Search: macro-F1: 0.668; micro-F1: 0.7028;
-   .. Edge Features: macro-F1: 0.6564; micro-F1: 0.6918; (w/o grid search)
+   .. Edge Features: macro-F1: 0.6749; micro-F1: 0.7117; (w/o grid search)
    .. Edge Features: macro-F1: 0.643; micro-F1: 0.6928; (w grid search)
    .. Binary States:
 
 .. comment: SB10k
    .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
-   .. current results: macro-F1: 0.56; micro-F1: 0.7146;
+   .. current results: macro-F1: 0.5572; micro-F1: 0.7133;
    .. Grid Search: macro-F1: 0.5602; micro-F1: 0.7146;
    .. Edge Features: macro-F1: 0.5572; micro-F1: 0.7133; (w/o grid search)
    .. Edge Features: macro-F1: 0.5498; micro-F1: 0.708; (w grid search)
    .. Binary States:
+
+      analyzing message 362864204631793664
+      evaluation results on the dev set after training on the train data:
+      Macro-Averaged F1-Score (Positive and Negative Classes): 70.43%
+      Micro-Averaged F1-Score (All Classes): 80.2111%
+      evaluation results on the dev set after training on the train data (no message scores):
+      Macro-Averaged F1-Score (Positive and Negative Classes): 11.22%
+      Micro-Averaged F1-Score (All Classes): 54.0897%
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |

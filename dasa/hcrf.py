@@ -17,8 +17,9 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from collections import namedtuple
-from pystruct.learners import FrankWolfeSSVM
-from pystruct.models import EdgeFeatureLatentNodeCRF
+from pystruct.learners import FrankWolfeSSVM as FFSVM
+from pystruct.models import EdgeFeatureLatentNodeCRF as EFLNCRF
+from pystruct.utils import expand_sym
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 import numpy as np
@@ -32,10 +33,20 @@ from .rst import Tree as RSTTree
 # Variables and Constants
 Dataset = namedtuple("Dataset", ['X', 'Y'])
 PARAM_GRID = {'C': np.linspace(0, 3, 5)}
+N_FEATS = N_POLARITIES + 1
 
 
 ##################################################################
 # Class
+class FrankWolfeSSVM(FFSVM):
+    pass
+
+
+class EdgeFeatureLatentNodeCRF(EFLNCRF):
+    def loss(self, h, h_hat):
+        return super(EdgeFeatureLatentNodeCRF, self).loss(h, h_hat)
+
+
 class HCRFAnalyzer(MLBaseAnalyzer):
     """Discourse-aware sentiment analysis using hidden-variable CRF.
 
@@ -68,9 +79,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         super(HCRFAnalyzer, self).__init__(*args, **kwargs)
         self._name = "HCRF"
         self._relation_scheme = relation_scheme
-        self._model = None      # model will be initialized at training time
-        self._rel2idx = {}
-        self._n_rels = -1
+        self._model = None
 
     def _train(self, train_set, dev_set, grid_search=True, balance=False):
         def score(y_gold, y_pred):
@@ -84,6 +93,13 @@ class HCRFAnalyzer(MLBaseAnalyzer):
             self._model = GridSearchCV(self._model, PARAM_GRID,
                                        scoring=cv_scorer)
         self._model.fit(*train_set)
+        w = self._model.w
+        lncrf = self._model.model
+        unary_params = w[:lncrf.n_input_states * lncrf.n_features].reshape(
+            lncrf.n_input_states, lncrf.n_features)
+        self._logger.info("unary params: %r", unary_params)
+        pairwise_params = w[lncrf.n_input_states * lncrf.n_features:]
+        self._logger.info("pairwise params: %r", pairwise_params)
         if grid_search:
             cv_results = self._model.cv_results_
             for mean, std, params in zip(cv_results["mean_test_score"],
@@ -134,12 +150,12 @@ class HCRFAnalyzer(MLBaseAnalyzer):
 
             self._n_rels = len(self._rel2idx)
             model = EdgeFeatureLatentNodeCRF(n_labels=N_POLARITIES,
-                                             n_features=N_POLARITIES,
+                                             n_features=N_FEATS,
                                              n_edge_features=self._n_rels,
                                              n_hidden_states=N_POLARITIES,
                                              latent_node_features=True)
             # best C: 1.05 on PotTS and 1.05 on SB10k
-            self._model = FrankWolfeSSVM(model=model, C=1.05)
+            self._model = FrankWolfeSSVM(model=model, C=1.05, verbose=1)
             # we use `_restore` to set up the model's logger
             self._restore(None)
 
@@ -151,10 +167,14 @@ class HCRFAnalyzer(MLBaseAnalyzer):
 
     def _digitize_instance(self, instance, tree, train_mode=True):
         n_edus = len(instance["edus"])
-        feats = np.zeros((1 + n_edus, N_POLARITIES), dtype=np.float32)
-        feats[0, :] = instance["polarity_scores"]
+        feats = np.zeros((n_edus + 1, N_FEATS), dtype=np.float32)
+        feats[0, :-1] = instance["polarity_scores"]
+        feats[0, -1] = 1
         for i, edu_i in enumerate(instance["edus"], 1):
-            feats[i, :] = edu_i["polarity_scores"]
+            feats[i, :-1] = edu_i["polarity_scores"]
+            feats[i, -1] = 1
+        self._logger.debug("feats: %r", feats)
+        self._logger.debug("tree: %r", tree)
         edges = np.zeros((len(tree) - 1, 2), dtype=np.uint8)
         edge_feats = np.zeros((len(tree) - 1, self._n_rels))
         i = 0
@@ -166,7 +186,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                 edge_feats[i, edge_idx] = 1
                 i += 1
         if train_mode:
-            labels = np.argmax(feats, axis=1)
+            labels = np.argmax(feats[:, :-1], axis=1) + N_POLARITIES
             labels[0] = CLS2IDX[instance["label"]]
         else:
             labels = None
