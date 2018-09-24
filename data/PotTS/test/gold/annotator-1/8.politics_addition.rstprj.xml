@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE rstprj SYSTEM "rstprj.dtd">
+
+<rstprj>
+  <relscheme>../scheme/PCC.xml</relscheme>
+  <erelscheme>../scheme/R-PCC.xml</erelscheme>
+  <basedata>../basedata/8.politics_addition.xml</basedata>
+  <annotation>markables/8.politics_addition.rst.xml</annotation>
+</rstprj>
