@@ -1,0 +1,29 @@
+<!--
+    rstprj
+	format: (rs3m|lisp|tsv): EMPTY;
+	relscheme: (PCC): EMPTY;
+	erelscheme?: (r-PCC): EMPTY;
+	basedata: #PCDATA;
+	annotation: #PCDATA;
+  -->
+
+
+<! ELEMENT rstprj (format, relscheme, erelscheme?, basedata, annotation) >
+
+<! ELEMENT format EMPTY>
+<! ATTLIST format
+   type (pc3m|lisp|tsv) #REQUIRED
+   >
+
+<! ELEMENT relscheme EMPTY >
+<! ATTLIST relscheme
+   type (PCC)  #REQUIRED
+   >
+
+<! ELEMENT erelscheme EMPTY >
+<! ATTLIST relscheme
+   type (r-PCC)  #REQUIRED
+   >
+
+<! ELEMENT basedata (#PCDATA) >
+<! ELEMENT annotation (#PCDATA) >

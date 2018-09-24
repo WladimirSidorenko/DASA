@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE relations SYSTEM "relations.dtd">
+
+<relations>
+  <relation name="Circumstance" type="hyp">
+    <description>
+    </description>
+    <satellite>A (non-hypothetical) state of affairs.
+    </satellite>
+    <nucsat>S sets a framework in the subject matter within which R is intended to interpret N.
+    </nucsat>
+    <effect>R recognizes that S provides the framework for interpreting N.
+    </effect>
+    <connectives>when; while; ...; wenn; waehrend; ... for temporal circum- stantials
+    </connectives>
+    <example>[Als die Veag wegen der Liberalisierung des Strommarktes unter Druck geriet,]S [hielt sie sich bei ihren Lieferanten schadlos.]N (maz-5297)
+    </example>
+  </relation>
+
+  <relation name="Condition" type="hyp">
+    <description>
+    </description>
+    <satellite>A hypothetical, future, or otherwise unrealized situation (relative to the situational context of S).
+    </satellite>
+    <nucsat>Realization of N depends on realization of S.
+    </nucsat>
+    <effect>R recognizes how the realization of N depends on the realization of S.
+    </effect>
+    <connectives>if .. then; ... / wenn .. dann; sofern; ...
+    </connectives>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="Otherwise" type="hyp">
+    <description>
+    </description>
+    <nucleus>A hypothetical, future or in some other way unrealized state of affairs.
+    </nucleus>
+    <satellite>A hypothetical, future or in some other way unrealized state of affairs.
+    </satellite>
+    <nucsat>The realization of N prevents realization of S.
+    </nucsat>
+    <effect>R recognizes the dependency relation of prevention between the realization of N and the realization of S.
+    </effect>
+    <connectives>otherwise; ... / ehe; bevor; sonst; ...
+    </connectives>
+  </relation>
+
+  <relation name="Unless" type="hyp">
+    <description>
+    </description>
+    <nucleus>A hypothetical, future or in some other way unrealized state of affairs.
+    </nucleus>
+    <satellite>A hypothetical, future or in some other way unrealized state of affairs.
+    </satellite>
+    <nucsat>S affects the realization of N; N is realized provided that S is not realized.
+    </nucsat>
+    <effect>R recognizes that N is realized provided that S is not realized.
+    </effect>
+    <connectives>unless; ... / es sei denn; ...
+    </connectives>
+    <example>[Morgen wird der Satellit in den Pazifik stuerzen.]N [Es sei denn, er verglueht doch noch vollstaendig in der Erdatmosphaere.]S
+    </example>
+  </relation>
+
+  <relation name="Elaboration" type="hyp">
+    <description>
+    </description>
+    <nucsat>S presents additional detail about the situation (not about an individual entity – cf. E-Elaboration below) that is presented in N or inferentially accessible in N. Some typical relations between N and S are abstraction–instance, event–subevent.
+    </nucsat>
+    <effect>R recognizes S as providing additional detail for N.
+    </effect>
+    <connectives>in particular; for example; ... / besonders; beispielsweise; ...
+    </connectives>
+    <example>[Diepensee siedelt um.]N [Ohne Wenn und Aber.]S (maz-6993)
+    </example>
+  </relation>
+
+  <relation name="E-Elaboration" type="hyp">
+    <description>
+    </description>
+    <nucsat>S presents additional detail about an entity mentioned in N. N precedes S in the text. Some typical relations between N and S are set–member and whole–part.
+    </nucsat>
+    <effect>R recognizes S as providing additional detail about an entity mentioned in N.
+    </effect>
+    <connectives>(rarely marked by connectives)
+    </connectives>
+    <example>[Heute wollen Tausende das Flair eines historischen Klassenzimmers kennen lernen,]N [wie sie nur noch wenige in Deutschland existieren.]S (maz-6728)
+    </example>
+    <comment>In the example, the wie minor clause (S) does not relate to the whole event of acquainting but only to the class room, i.e., an entity within N. .
+    </comment>
+  </relation>
+
+  <relation name="Interpretation" type="hyp">
+    <description>
+    </description>
+    <nucsat>S relates N to a framework of ideas not involved in N itself and not concerned with W’s positive regard; or at least, positive regard is not the important point. In the text, N precedes S.
+    </nucsat>
+    <effect>R recognizes the interpreting function of S for N.
+    </effect>
+    <connectives>thus; ... / so; damit; mithin; ...
+    </connectives>
+    <example>[In Potsdam findet heute der große Festzug zu Ehren von Friedrich II. statt.]N [Damit sind die diesjaehrigen “Preußen-Tage” beendet.]S
+    </example>
+    <comment>If the main point of S is to assess N on a scale, the suitable relation is not Interpretation but Evaluation-N/Evaluation-S.
+    </comment>
+  </relation>
+
+  <relation name="Means" type="hyp">
+    <description>
+    </description>
+    <nucleus>An activity.
+    </nucleus>
+    <nucsat>S presents a method or instrument which tends to make realization of N more likely.
+    </nucsat>
+    <effect>R recognizes that the method or instrument in S tends to make realization of N more likely.
+    </effect>
+    <connectives>to this end; ... / dazu; damit; ...
+    </connectives>
+  </relation>
+
+  <relation name="Cause" type="hyp">
+    <description>
+    </description>
+    <nucleus>A state of affairs holding in the world. This state has been caused by the situation presented in S.
+    </nucleus>
+    <satellite>A state of affairs holding in the world.
+    </satellite>
+    <nucsat>The state of affairs in N is being caused by the state of affairs in S.
+    </nucsat>
+    <effect>R recognizes the causal relationship between the two states of affairs.
+    </effect>
+    <connectives>because; since; ... / weil; da; deshalb; ...
+    </connectives>
+    <example>Unerwartete Pressemeldung zur Verlegung des Ortes Diepensee. [ueberrascht reagierte auch Buergermeister Jochen Wagner.]N [Schließlich gaben die Stadtverord- neten erst Montagabend gruenes Licht fuer die weitere Erschließung des neuen Ortsteils Diepensee.]S (maz-6993)
+    </example>
+  </relation>
+
+  <relation name="Result" type="hyp">
+    <description>
+    </description>
+    <nucleus>A state of affairs holding in the world. This state provides the reason for the situation presented in S.
+    </nucleus>
+    <satellite>A state of affairs holding in the world.
+    </satellite>
+    <nucsat>The state of affairs in S is being caused by the state of affairs in N.
+    </nucsat>
+    <effect>R recognizes the causal relationship between the two states of affairs.
+    </effect>
+    <connectives>because; since; ... / weil; da; deshalb; ...
+    </connectives>
+    <comment>Dual of Cause. The choice between Cause and Result is made solely on the grounds of relative importance for the tweet.
+    </comment>
+  </relation>
+
+  <relation name="Purpose" type="hyp">
+    <description>
+    </description>
+    <nucleus>An activity.
+    </nucleus>
+    <satellite>A hypothetical, future or in some other way unrealized state of affairs. This state is expected to be achieved after the activity described in N is fulfilled.
+    </satellite>
+    <nucsat>S is to be realized through the activity in N.
+    </nucsat>
+    <effect>R recognizes that the activity in N is initiated in order to realize S.
+    </effect>
+    <connectives>by means of; in order to; ... / durch; um .. zu; ...
+    </connectives>
+    <example>[Um ihre Soldaten zu schuetzen,]S [aeußern sich die USA nicht zu Berichten ueber den Beginn der Boden-Operation in Afghanistan.]N (maz-5701)
+    </example>
+    <comment>There is, in a wide sense, a causal relation between S and N. The difference to the relations Cause/Result is that for Purpose, S is an unrealized state of affairs that is the intention of the actor.
+    </comment>
+  </relation>
+
+  <relation name="Solutionhood" type="hyp">
+    <description>
+    </description>
+    <satellite>S presents a problem.
+    </satellite>
+    <nucsat>N is a solution to the problem presented in S. In the text, S usually precedes N.
+    </nucsat>
+    <effect>R recognizes N as a solution to the problem presented in S
+    </effect>
+    <connectives>(rarely marked by connectives)
+    </connectives>
+    <example>[Mit der Verabschiedung des Nichtraucherschutzgesetzes sitzen viele Kneipen in der Falle.]S [Es empfiehlt sich, frueh genug auf die Einrichtung abtrennbarer Raeume zu achten.]N
+    </example>
+  </relation>
+
+  <relation name="Contrast" type="par">
+    <description>
+    </description>
+    <nucleus>No more than two nuclei; the situations in these two nuclei are (a) comprehended as the same in many respects (b) comprehended as differing in a few respects and (c) compared with respect to one or more of these differences.
+    </nucleus>
+    <effect>R recognizes the comparability and the difference(s) yielded by the compar- ison is being made.
+    </effect>
+    <connectives>on the other hand; but; while; ... / demgegenueber; hingegen; waehrend; aber; ...
+    </connectives>
+    <example>[Mein erstes Auto war ein Kleinwagen.]N [Das zweite hingegen ein aus- gewachsener Kombi.]N
+    </example>
+  </relation>
+
+  <relation name="Sequence" type="par">
+    <description>
+    </description>
+    <nucleus>The nuclei describe states of affairs in the world that take place in a temporal order.
+    </nucleus>
+    <effect>R recognizes the temporal succession relationships among the nuclei..
+    </effect>
+    <connectives>then; afterwards; before; ... / dann; anschließend; und; zuvor, ...
+    </connectives>
+    <example>[Um neun betrat die Lehrerin den Klassenraum.]N [Fuenf Minuten spaeter verkuendete sie, dass ein Test geschrieben wird.]N
+    </example>
+    <comment>The presentation of the states of affairs in the text can be in the ”real” order (dann) or in reversed order (before).
+    </comment>
+  </relation>
+
+  <relation name="Background" type="hyp">
+    <description>
+    </description>
+    <nucsat>S increases the ability of R to comprehend an element in N. S contains orienting background information, in whose absence N would be hard to understand. In a tweet, S usually precedes N, but not always.
+    </nucsat>
+    <effect>R’s ability to comprehend N increases.
+    </effect>
+    <connectives>(rarely marked by connectives)
+    </connectives>
+    <example>[Burkina Faso hieß bis 1984 noch Obervolta.]S [Nach einer EMNID- Umfrage glauben viele Europaeer bis heute, dass es sich um zwei verschiedene Laender handelt.]N
+    </example>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="Antithesis" type="hyp">
+    <description>
+    </description>
+    <nucleus>W has positive regard for N.
+    </nucleus>
+    <satellite>In comparison to N, W regards the content of S as less positive or less important.
+    </satellite>
+    <nucsat>N and S are in contrast (see the Contrast relation); because of the incom- patibility that arises from the contrast, one cannot have positive regard for both of those situations. One subgroup is corrections of the kind ”Not A happened, but B.” In a tweet, S usually precedes N.
+    </nucsat>
+    <effect>R’s positive regard for N is increased.
+    </effect>
+    <connectives>but; while; instead; ... / aber; stattdessen; ...
+    </connectives>
+    <comment>Similar relations are Concession and multinuclear Contrast. See Section 3.6.
+    </comment>
+  </relation>
+
+  <relation name="Concession" type="hyp">
+    <description>
+    </description>
+    <nucleus>W has positive regard for N.
+    </nucleus>
+    <satellite>In comparison to N, W regards the content of S as less positive or less important but acknowledges its truth (in a wide sense).
+    </satellite>
+    <nucsat>W acknowledges that N and S in general are potentially incompatible; but in the current described situation, both hold.
+    </nucsat>
+    <effect>R’s positive regard for N is increased
+    </effect>
+    <connectives>although; but; nonetheless; still; ... / obwohl; trotzdem; aber; ...
+    </connectives>
+    <example>[Sanitaere Anlagen gehoeren heute zum Standard großer Liegeplaetze.]S [Doch mit der Nachruestung tut sich Radewege schwer.]N (maz-6488)
+    </example>
+  </relation>
+
+  <relation name="Evidence" type="hyp">
+    <description>
+    </description>
+    <nucleus>A subjective statetement or assessment that R might not believe to a degree satisfactory to W.
+    </nucleus>
+    <satellite>A statement that R will find credible; often the description of an ‘objective fact’.
+    </satellite>
+    <nucsat>R’s comprehending S increases R’s belief of N.
+    </nucsat>
+    <effect>R’s belief in N is increased.
+    </effect>
+    <connectives>(causal connectives)
+    </connectives>
+    <example>Streit um das Nebeneinander der Schulfaecher Religion und LER [Und nun scheint sogar unsere Landesregierung entschlossen, diese scheinbare Gleichbe- handlung der beiden Faecher zu beseitigen.]N [Stolpe, Reiche und Co. sagen zwar Ja zu einem moeglichen Kompromissangebot aus Karlsruhe, dekretieren aber: Einen Wahlpflichtbereich LER/Religion kann es nicht geben.]S (maz-6159)
+    </example>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="Reason" type="hyp">
+    <description>
+    </description>
+    <nucleus>A subjective statement/thesis that R might not accept or regard as positive/important.
+    </nucleus>
+    <satellite>A subjective statement/thesis.
+    </satellite>
+    <nucsat>R’s comprehending S increases R’s readiness to accept N or to share the ex- pressed opinion of W.
+    </nucsat>
+    <effect>R’s belief in N is increased.
+    </effect>
+    <connectives>(causal connectives)
+    </connectives>
+    <example>[Die Militaerschlaege der USA verlieren mit jedem Tag weiteren Bombarde- ments schleichend an Glaubwuerdigkeit.]N [Mit flaechenhafter Zerstoerung sind weder die Taliban noch bin Laden zu treffen.]S (maz-5701)
+    </example>
+    <comment>Reason is more specific than Evidence: the difference is in whether W presents S as ‘objective fact’ (Evidence) or as a subjective assessment (Reason).
+    </comment>
+  </relation>
+
+  <relation name="Reason-N" type="hyp">
+    <description>
+    </description>
+    <nucleus>A subjective statement/thesis.
+    </nucleus>
+    <nucsat>R’s comprehending N increases R’s readiness to accept S or to share the ex- pressed opinion of W.
+    </nucsat>
+    <effect>R’s belief in S is increased.
+    </effect>
+    <connectives>(causal connectives)
+    </connectives>
+    <comment>Dual of Reason.
+    </comment>
+  </relation>
+
+  <relation name="Justify" type="hyp">
+    <description>
+    </description>
+    <nucleus>A subjective statetement or assessment that R might not accept.
+    </nucleus>
+    <satellite>A subjective statement of a general (for example moral) attitude or position of the acting person.
+    </satellite>
+    <nucsat>R’s comprehending S increases R’s readiness to accept W’s right to present N.
+    </nucsat>
+    <effect>R’s inclination for accepting W’s presentation of N is increased.
+    </effect>
+    <connectives>(causal connectives)
+    </connectives>
+    <example>[Dieses Gericht werde ich niemals essen.]S [Ich bin Vegetarier.]N
+    </example>
+  </relation>
+
+  <relation name="Evaluation-S" type="hyp">
+    <description>
+    </description>
+    <nucleus>Description of a state of affairs, or a subjective statement (but not from the perspective of W).
+    </nucleus>
+    <satellite>A subjective evaluation (positive/negative, desirable/not desirable) from W’s per- spective.
+    </satellite>
+    <nucsat>S evaluates N.
+    </nucsat>
+    <effect>R recognizes the evaluation relationship between S and N.
+    </effect>
+    <connectives>(rarely marked by connectives)
+    </connectives>
+    <example>[Seine Vergangenheit schien wie ein Fluch b ̈er dem Hotelkomplex zu liegen.]S [Jahrelang hatte das Amtsgericht Potsdam umsonst versucht, es an den Mann zu bringen.]N (maz-6193)
+    </example>
+    <comment>In most cases the evaluating statement follows the one being evaluated.
+    </comment>
+  </relation>
+
+  <relation name="Evaluation-N" type="hyp">
+    <description>
+    </description>
+    <nucleus>A subjective evaluation (positive/negative, desirable/not desirable) from W’s perspective.
+    </nucleus>
+    <satellite>Description of a state of affairs, or a subjective statement (but not from the perspective of W).
+    </satellite>
+    <nucsat>N evaluates S
+    </nucsat>
+    <effect>R recognizes the evaluation relationship between S and N.
+    </effect>
+    <connectives>(rarely marked by connectives)
+    </connectives>
+    <comment>Dual of Evaluation-S.
+    </comment>
+  </relation>
+
+  <relation name="Motivation" type="hyp">
+    <description>
+    </description>
+    <nucleus>An action in which R is the actor.
+    </nucleus>
+    <nucsat>S provides an incentive/motivation/reason for performing the action in N.
+    </nucsat>
+    <effect>R’s desire to perform action in N is increased.
+    </effect>
+    <connectives>(causal connectives)
+    </connectives>
+    <example>[Olympische Spiele stellen fuer jeden Austragungsort einen großen Gewinn dar.]S [Berlin muss sich jetzt um die Spiele 2016 bewerben!]N
+    </example>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="Enablement" type="hyp">
+    <description>
+    </description>
+    <nucleus>An action in which R is the actor.
+    </nucleus>
+    <nucsat>R comprehending S increases R’s potential ability to perform the action in N.
+    </nucsat>
+    <effect>R’s potential ability to perform the action in N increases.
+    </effect>
+    <connectives>so that; ... / damit; so dass; ...
+    </connectives>
+    <example>[Wechseln Sie die Zuendkerzen aus.]N [Ein Vierkantschluessel befindet sich unter der Abdeckung.]S
+    </example>
+  </relation>
+
+  <relation name="Attribution" type="hyp">
+    <satellite>The satellite describes the fact that the author
+    expresses the information which is presented in N.
+    </satellite>
+    <nucsat>S specifies the original author of information presented
+    in N.
+    </nucsat>
+    <connectives>(rarely marked by connectives; usually delimited by
+    dash or colon)
+    </connectives>
+    <example>Friedrich gegen doppelte Staatsangeh\"origkeit: [”Waere
+    integrationshemmend”,]N [sagt er #berlindirekt.]S
+    </example>
+  </relation>
+
+  <relation name="Address" type="hyp">
+    <description>
+    </description>
+    <satellite>The satellite contains (a list of) syntactically independent names or @-mentions that are being addressed by the given message.
+    </satellite>
+    <effect>R understands who is being addressed by the message.
+    </effect>
+    <connectives>none
+    </connectives>
+    <comment>You should link the @-mention to the highest possible level of the dis- course tree which contains information relevant for addressee.
+    </comment>
+  </relation>
+
+  <relation name="Hashtag" type="hyp">
+    <description>
+    </description>
+    <satellite>The satellite contains (a list of) syntactically independent @-mention(s). These mentions show to which user the given message is addressed.
+    </satellite>
+    <effect>R can proceed to the information pointed by the URI.
+    </effect>
+    <connectives>none
+    </connectives>
+    <comment>You should link the @-mention to the highest possible level of the dis- course tree for which it still provides relevant information.
+    </comment>
+  </relation>
+
+  <relation name="List" type="par">
+    <description>
+    </description>
+    <nucleus>The nuclei provide information that play identical roles for the tweet, in the way of an enumeration.
+    </nucleus>
+    <effect>R recognizes the comparability of thenlinked items.
+    </effect>
+    <connectives>(conjunctions)
+    </connectives>
+    <example>Was ich gestern getan habe? [Essen kochen,]N [Kinder versorgen,]N [Bad putzen.]N
+    </example>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="Joint" type="par">
+    <description>
+    </description>
+    <nucleus>The nuclei give different kinds of information, hence there is no List enumeration; at the same time they are not in any clearly recognizable semantic or pragmatic relation. Yet there is coherence by contributing to the overall function of the tweet.
+    </nucleus>
+    <effect>R recognizes the distinct functions of the nuclei.
+    </effect>
+    <connectives>additive connectives such as also, further / zudem, auch
+    </connectives>
+    <comment>Joint is to be used when a multinuclear relation is in order but none of the ”stronger” relations hold.
+    </comment>
+  </relation>
+
+  <relation name="OTHER" type="hyp">
+    <description>
+    </description>
+    <nucleus>Any.
+    </nucleus>
+    <satellite>Any.
+    </satellite>
+    <nucsat>The relationship.
+    </nucsat>
+    <connectives>none
+    </connectives>
+    <comment>This relation has the lowest precedence in our relation hierarchy and should only be applied when none of the existing relations seems to be appropriate.
+    </comment>
+  </relation>
+
+  <relation name="Preparation" type="hyp">
+    <description>
+    </description>
+    <nucsat>S precedes N in the text; S tends to make R more ready, interested or oriented for reading N. However, S does not provide information that makes understanding the content of N easier (cf. Background).
+    </nucsat>
+    <effect>R is more ready, interested or oriented for reading N.
+    </effect>
+    <connectives>(rarely marked by connectives; sometimes by colon)
+    </connectives>
+    <example>[Denn eines ist klar:]S [Die Militaerschlaege der USA verlieren mit jedem Tag weiteren Bombardements schleichend an Glaubwuerdigkeit.]N (maz-5701)
+    </example>
+    <comment>This relation applies when S does not have any stronger role than setting the topic of N or playing a similarly preparatory role. Thus S must not transmit a full unit of information.
+    </comment>
+  </relation>
+
+  <relation name="Restatement" type="hyp">
+    <description>
+    </description>
+    <nucsat>S restates N, where S and N are of comparable bulk; N is more central to W’s purposes than S is.
+    </nucsat>
+    <effect>R recognizes S as a restatement of N.
+    </effect>
+    <connectives>in other words; ... / anders ausgedrueckt; ...
+    </connectives>
+    <example>[Der Buergermeister hat den Stadtverordneten alle Informationen gegeben,]N [also gewissermaßen die Karten auf den Tisch gelegt.]S
+    </example>
+  </relation>
+
+  <relation name="Same" type="par">
+    <description>
+    </description>
+    <nucsat>Used for two parts of the same segment if they were split apart by a parenthetical construction.
+    </nucsat>
+    <effect>.
+    </effect>
+    <connectives>(rarely marked by connectives; sometimes by colon)
+    </connectives>
+    <example>[@Schaf reloaded] [da]N [wo noch O ̈l ist ,]S [riecht es noch...]N
+    </example>
+    <comment>
+    </comment>
+  </relation>
+
+  <relation name="URI" type="hyp">
+    <description>
+    </description>
+    <satellite>The satellite contains a URI which is not syntactically embedded in any clause but possibly links to a resource with further relevant information.
+    </satellite>
+    <effect>R can proceed to the information pointed by the URI.
+    </effect>
+    <connectives>none
+    </connectives>
+    <comment>You should link the URI to the highest possible level of the discourse tree for which it still provides relevant information.
+    </comment>
+  </relation>
+</relations>

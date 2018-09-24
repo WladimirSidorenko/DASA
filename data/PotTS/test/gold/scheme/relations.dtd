@@ -1,0 +1,25 @@
+<!-- DTD for Description of Rhethorical Structure Relations -->
+<!-- Created by Uladzimir Sidarenka <sidarenk@uni-potsdam.de> -->
+
+<!-- Relations -->
+<!ELEMENT relations (relations+)>
+
+<!ATTLIST relations
+	scheme	CDATA	#REQUIRED>
+
+<!-- Relation -->
+<!ENTITY % reltype "(par|hyp)">
+<!ELEMENT relation (description,nucleus?,satellite?,nucsat?,effect?,connectives?,example?,comment?)>
+<!ATTLIST relation
+	  name	CDATA	#REQUIRED
+	  type	(%reltype) #REQUIRED>
+
+<!-- Relation Description -->
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT nucleus (#PCDATA)>
+<!ELEMENT satellite (#PCDATA)>
+<!ELEMENT nucsat (#PCDATA)>
+<!ELEMENT effect (#PCDATA)>
+<!ELEMENT connectives (#PCDATA)>
+<!ELEMENT example (#PCDATA)>
+<!ELEMENT comment (#PCDATA)>

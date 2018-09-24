@@ -1,0 +1,15 @@
+<!--
+    rstprj
+	relscheme: (PCC): EMPTY;
+	erelscheme?: (r-PCC): EMPTY;
+	basedata: #PCDATA;
+	annotation: #PCDATA;
+  -->
+
+
+<! ELEMENT rstprj (relscheme, erelscheme?, basedata, annotation) >
+
+<! ELEMENT relscheme (#PCDATA) >
+<! ELEMENT erelscheme (#PCDATA) >
+<! ELEMENT basedata (#PCDATA) >
+<! ELEMENT annotation (#PCDATA) >
