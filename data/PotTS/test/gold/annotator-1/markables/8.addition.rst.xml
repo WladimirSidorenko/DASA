@@ -1,9 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-	    <!DOCTYPE annotation SYSTEM "annotation.dtd">
+<annotation>
+    <segments>
+        <segment id="0" msgid="327420855728615424" start="0" end="41" name="0" external="0" etype=""/>
+        <segment id="1" msgid="327420855728615424" start="41" end="78" name="1" external="0" etype=""/>
+        <segment id="2" msgid="327420855728615424" start="78" end="89" name="2" external="0" etype=""/>
+        <segment id="3" msgid="327420855728615424" start="89" end="115" name="3" external="0" etype=""/>
+        <segment id="4" msgid="327420855728615424" start="115" end="121" name="4" external="0" etype=""/>
+        <segment id="5" msgid="328176155398135808" start="0" end="35" name="0" external="0" etype=""/>
+        <segment id="6" msgid="328176155398135808" start="35" end="70" name="1" external="0" etype=""/>
+        <segment id="7" msgid="328176155398135808" start="70" end="81" name="2" external="0" etype=""/>
+        <segment id="8" msgid="328176155398135808" start="81" end="87" name="3" external="0" etype=""/>
+        <segment id="10" msgid="328167538091511809" start="50" end="55" name="1" external="0" etype=""/>
+        <segment id="9" msgid="328167538091511809" start="0" end="50" name="0" external="0" etype=""/>
+        <segment id="11" msgid="328167538091511809" start="55" end="67" name="2" external="0" etype=""/>
+        <segment id="12" msgid="328167538091511809" start="66" end="77" name="3" external="0" etype=""/>
+    </segments>
+    <spans>
+        <span id="-10" msgid="328167538091511809" start="9" end="11" external="0" etype=""/>
+        <span id="-11" msgid="328176155398135808" start="5" end="6" external="0" etype=""/>
+        <span id="-2" msgid="327420855728615424" start="0" end="1" external="0" etype=""/>
+        <span id="-12" msgid="328176155398135808" start="5" end="7" external="0" etype=""/>
+        <span id="-3" msgid="327420855728615424" start="0" end="2" external="0" etype=""/>
+        <span id="-13" msgid="328176155398135808" start="5" end="8" external="1" etype="text"/>
+        <span id="-4" msgid="327420855728615424" start="0" end="3" external="0" etype=""/>
+        <span id="-5" msgid="327420855728615424" start="0" end="4" external="1" etype="text"/>
+        <span id="-9" msgid="328167538091511809" start="9" end="10" external="0" etype=""/>
+    </spans>
+    <relations>
+        <hypRelation relname="Elaboration">
+            <spannode idref="-2"/>
+            <nucleus idref="0"/>
+            <satellite idref="1"/>
+        </hypRelation>
+        <parRelation relname="Sequence">
+            <spannode idref="-11"/>
+            <nucleus idref="5"/>
+            <nucleus idref="6"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-12"/>
+            <nucleus idref="-11"/>
+            <satellite idref="7"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-3"/>
+            <nucleus idref="-2"/>
+            <satellite idref="2"/>
+        </hypRelation>
+        <hypRelation relname="URI">
+            <spannode idref="-13"/>
+            <nucleus idref="-12"/>
+            <satellite idref="8"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-4"/>
+            <nucleus idref="-3"/>
+            <satellite idref="3"/>
+        </hypRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-9"/>
+            <nucleus idref="9"/>
+            <satellite idref="10"/>
+        </hypRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-5"/>
+            <nucleus idref="-4"/>
+            <satellite idref="4"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-10"/>
+            <nucleus idref="-9"/>
+            <satellite idref="11"/>
+        </hypRelation>
+    </relations>
+</annotation>
 
-	    <annotation>
-	    <segments></segments>
-	    <spans></spans>
-	    <relations></relations>
-	    </annotation>
-	
