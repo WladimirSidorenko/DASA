@@ -297,7 +297,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                                              latent_node_features=True,
                                              inference_method="max-product")
             # best C: 1.05 on PotTS and 1.05 on SB10k
-            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=100,
+            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=1000,
                                          verbose=1)
             # we use `_restore` to set up the model's logger
             self._restore(None)
