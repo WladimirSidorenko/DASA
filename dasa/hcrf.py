@@ -19,7 +19,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 from collections import namedtuple
 from pystruct.learners import FrankWolfeSSVM as FFSVM
 from pystruct.models import EdgeFeatureLatentNodeCRF as EFLNCRF
-from pystruct.utils import expand_sym
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 import numpy as np
@@ -43,8 +42,150 @@ class FrankWolfeSSVM(FFSVM):
 
 
 class EdgeFeatureLatentNodeCRF(EFLNCRF):
-    def loss(self, h, h_hat):
-        return super(EdgeFeatureLatentNodeCRF, self).loss(h, h_hat)
+    def marginal_loss(self, x, y, y_hat, w):
+        """Compute the difference between marginal probs of correct and guessed
+        labelings.
+
+        Parameters
+        ----------
+        x : tuple
+            Unary evidence.
+
+        y : ndarray
+            true labeling for x
+
+        y_hat : ndarray
+            predicted labeling for x
+
+        Returns
+        -------
+        d : float
+          difference between the marginal distributions of true and predicted
+          labelings
+
+        """
+        if self.label_from_latent(y) == self.label_from_latent(y_hat):
+            return 0.
+        unary_potentials = self._get_unary_potentials(x, w)
+        pairwise_potentials = self._get_pairwise_potentials(x, w)
+        edges = self._get_edges(x)
+        mask = np.ones(unary_potentials.shape, dtype=np.bool)
+        _, Z = self.compute_alpha(unary_potentials, pairwise_potentials,
+                                  edges, mask)
+        n_visible = unary_potentials.shape[0] - self._get_n_hidden(x)
+        mask[:n_visible] = 0
+        mask[np.arange(n_visible), y[:n_visible]] = True
+        _, Z_y = self.compute_alpha(
+            unary_potentials, pairwise_potentials, edges, mask
+        )
+        mask[:n_visible] = 0
+        mask[np.arange(n_visible), y_hat[:n_visible]] = 1
+        _, Z_y_hat = self.compute_alpha(
+            unary_potentials, pairwise_potentials, edges, mask
+        )
+        return np.exp(Z_y - Z) - np.exp(Z_y_hat - Z)
+
+    def compute_alpha(self, unary_potentials, pairwise_potentials,
+                      edges, mask):
+        """Compute forward BP scores.
+
+        Args:
+          unary_potentials (np.array): node features
+          pairwise_potentials (np.array): edge features
+          edges (list): list of edges
+          mask (np.array): boolean mask of allowed paths
+
+        Returns:
+          np.array, float: table of (normalized) forward scores, total energy
+
+        """
+        unary_potentials = np.exp(unary_potentials)
+        pairwise_potentials = np.exp(pairwise_potentials)
+        n_vertices, n_states = unary_potentials.shape
+        neighbors = [[] for i in range(n_vertices)]
+        pairwise_weights = [[] for i in range(n_vertices)]
+        for pw, edge in zip(pairwise_potentials, edges):
+            neighbors[edge[0]].append(edge[1])
+            pairwise_weights[edge[0]].append(pw)
+            neighbors[edge[1]].append(edge[0])
+            pairwise_weights[edge[1]].append(pw.T)
+
+        # build BFS traversal over the tree
+        traversal, parents, pw_forward = self.top_order(
+            n_vertices, n_states, neighbors, pairwise_weights
+        )
+        alpha = np.ones((n_vertices, n_states))
+        scale = np.zeros(n_vertices)
+        # messages from leaves to the root
+        for node in traversal[::-1]:
+            # compute the unnormalized potential at the current node
+            alpha[node] *= unary_potentials[node]
+            alpha *= mask[node]
+            scale[node] = np.sum(alpha[node])
+            alpha[node] /= scale[node]
+            parent = parents[node]
+            if parent != -1:
+                # propagate belief to the parent
+                alpha[parent] *= np.dot(alpha[node], pw_forward[node])
+        Z = np.sum(np.log(scale))
+        return alpha, Z
+
+    def _compute_z(self, unary_potentials, pairwise_potentials, edges):
+        unary_potentials = np.exp(unary_potentials)
+        pairwise_potentials = np.exp(pairwise_potentials)
+        n_vertices, n_states = unary_potentials.shape
+        neighbors = [[] for i in range(n_vertices)]
+        pairwise_weights = [[] for i in range(n_vertices)]
+        for pw, edge in zip(pairwise_potentials, edges):
+            neighbors[edge[0]].append(edge[1])
+            pairwise_weights[edge[0]].append(pw)
+            neighbors[edge[1]].append(edge[0])
+            pairwise_weights[edge[1]].append(pw.T)
+
+        # build BFS traversal over the tree
+        traversal, parents, pw_forward = self.top_order(
+            n_vertices, n_states, neighbors, pairwise_weights
+        )
+        alpha = np.ones((n_vertices, n_states))
+        # messages from leaves to the root
+        for node in traversal[::-1]:
+            alpha[node] *= unary_potentials[node]
+            parent = parents[node]
+            if parent != -1:
+                # propagate belief to the parent
+                alpha[parent] *= np.dot(alpha[node], pw_forward[node])
+        return np.sum(alpha[traversal[0]])
+
+    def top_order(self, n_vertices, n_states, neighbors, pairwise_weights):
+        visited = np.zeros(n_vertices, dtype=np.bool)
+        parents = -np.ones(n_vertices, dtype=np.int)
+        pw_forward = np.zeros((n_vertices, n_states, n_states))
+        # build a breadth first search of the tree
+        traversal = []
+        lonely = 0
+        while lonely < n_vertices:
+            for i in range(lonely, n_vertices):
+                if not visited[i]:
+                    queue = [i]
+                    lonely = i + 1
+                    visited[i] = True
+                    break
+                lonely = n_vertices
+
+            while queue:
+                node = queue.pop(0)
+                traversal.append(node)
+                for pw, neighbor in zip(pairwise_weights[node],
+                                        neighbors[node]):
+                    if not visited[neighbor]:
+                        parents[neighbor] = node
+                        queue.append(neighbor)
+                        visited[neighbor] = True
+                        pw_forward[neighbor] = pw
+
+                    elif not parents[node] == neighbor:
+                        raise ValueError("Graph not a tree")
+        return traversal, parents, pw_forward
 
 
 class HCRFAnalyzer(MLBaseAnalyzer):
@@ -153,9 +294,11 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                                              n_features=N_FEATS,
                                              n_edge_features=self._n_rels,
                                              n_hidden_states=N_POLARITIES,
-                                             latent_node_features=True)
+                                             latent_node_features=True,
+                                             inference_method="max-product")
             # best C: 1.05 on PotTS and 1.05 on SB10k
-            self._model = FrankWolfeSSVM(model=model, C=1.05, verbose=1)
+            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=100,
+                                         verbose=1)
             # we use `_restore` to set up the model's logger
             self._restore(None)
 
@@ -190,6 +333,8 @@ class HCRFAnalyzer(MLBaseAnalyzer):
             labels[0] = CLS2IDX[instance["label"]]
         else:
             labels = None
+        self._logger.debug("edge_feats: %r", edge_feats)
+        self._logger.debug("labels: %r", labels)
         return ((feats, edges, edge_feats, n_edus), labels)
 
     def _reset(self):
