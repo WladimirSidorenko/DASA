@@ -269,6 +269,20 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         cls_idx = self._model.predict([x])[0][0]
         cls = IDX2CLS[cls_idx]
         self._logger.debug("cls_idx: %r (%s)", cls_idx, cls)
+        model = self._model.model
+        w = self._model.w
+        unary_potentials = model._get_unary_potentials(x, w)
+        self._logger.debug("unary_potentials: %r", unary_potentials)
+        pairwise_potentials = model._get_pairwise_potentials(x, w)
+        self._logger.debug("pairwise_potentials: %r",
+                           pairwise_potentials)
+        edges = model._get_edges(x)
+        mask = np.ones(unary_potentials.shape, dtype=np.bool)
+        alpha, Z = model.compute_alpha(
+            unary_potentials, pairwise_potentials, edges, mask
+        )
+        self._logger.debug("alpha: %r", alpha)
+        self._logger.debug("Z: %r", Z)
         return cls
 
     def _digitize_data(self, data, train_mode=False):
