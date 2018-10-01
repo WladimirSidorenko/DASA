@@ -64,7 +64,8 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
           labelings
 
         """
-        if self.label_from_latent(y) == self.label_from_latent(y_hat):
+        n_visible = x[0].shape[0] - self._get_n_hidden(x)
+        if np.all(y[:n_visible] == y_hat[:n_visible]):
             return 0.
         unary_potentials = self._get_unary_potentials(x, w)
         pairwise_potentials = self._get_pairwise_potentials(x, w)
@@ -72,7 +73,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         mask = np.ones(unary_potentials.shape, dtype=np.bool)
         _, Z = self.compute_alpha(unary_potentials, pairwise_potentials,
                                   edges, mask)
-        n_visible = unary_potentials.shape[0] - self._get_n_hidden(x)
         mask[:n_visible] = 0
         mask[np.arange(n_visible), y[:n_visible]] = True
         _, Z_y = self.compute_alpha(
