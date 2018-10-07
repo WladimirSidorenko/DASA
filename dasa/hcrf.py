@@ -60,7 +60,7 @@ class InfiniteDict(defaultdict):
     def __init__(self):
         defaultdict.__init__(self, self.__class__)
 
-    def getitems(self, ret, prfx=None):
+    def getitems(self, ret, pos2node, prfx=None):
         if ret is None:
             ret = []
         if prfx is None:
@@ -68,9 +68,12 @@ class InfiniteDict(defaultdict):
         for k, v in iteritems(self):
             prfx.append(k)
             if isinstance(v, InfiniteDict):
-                v.getitems(ret, prfx)
+                v.getitems(ret, pos2node, prfx)
             else:
-                ret.append((tuple(prfx), v))
+                key = [-1] * len(prfx)
+                for i, label in enumerate(prfx):
+                    key[pos2node[i]] = label
+                ret.append((tuple(key), v))
             prfx.pop()
 
 
@@ -230,7 +233,7 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
           np.array, float: table of (normalized) forward scores, total energy
 
         """
-        node_marginals = alpha * beta / scale[:, None]  # None adds a new axis
+        node_marginals = alpha * beta * scale[:, None]  # None adds a new axis
         n_labels = unary_potentials.shape[-1]
         edge_marginals = np.zeros((edges.shape[0], n_labels, n_labels))
         # messages from leaves to root
@@ -264,15 +267,15 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         alpha = np.ones((n_vertices, n_states))
         child_alpha = np.zeros((n_vertices, n_states))
         scale = np.zeros(n_vertices)
-        # messages from leaves to root
+        # messages from leaves to the root
         for node in traversal[::-1]:
             # compute the unnormalized potential at the current node
             alpha[node] *= unary_potentials[node]
             alpha *= mask[node]
-            scale[node] = np.sum(alpha[node])
+            scale[node] = np.sum(alpha[node]) or 1.
             alpha[node] /= scale[node]
             parent = parents[node]
-            if parent != -1:
+            if parent >= 0:
                 # estimate the belief
                 child_alpha[node] = np.dot(alpha[node], pw_forward[node])
                 # propagate belief to the parent
@@ -310,25 +313,20 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             # compute the unnormalized potential at the current node
             prnt = parents[node]
             # simply assign the scale factor to the root node
-            if prnt < 0:
-                crnt_beta /= crnt_scale
-                continue
-            else:
-                prnt_beta = beta[prnt]
+            if prnt >= 0:
                 # if the parent has more than one children, we need to remove
                 # the alpha score that from this node
                 if child_cnt[prnt] > 1:
                     crnt_beta *= alpha[prnt]
-                    prnt_scale = scale[prnt]
-                    if prnt_scale:
-                        crnt_beta /= alpha[prnt]
+                    # yes, we multiply with the parent scale
+                    crnt_beta *= scale[prnt]
                     crnt_beta /= child_alpha[node]
                 else:
                     crnt_beta *= unary_potentials[prnt]
-                crnt_beta *= prnt_beta
-                crnt_beta[:] = np.dot(beta[node], pw_forward[node].T)
-                crnt_beta /= crnt_scale
-                crnt_beta *= mask[node]
+                crnt_beta *= beta[prnt]
+                crnt_beta[:] = np.dot(pw_forward[node], crnt_beta)
+            crnt_beta /= crnt_scale
+            crnt_beta *= mask[node]
         return beta
 
     def _check_marginals(self, node_marginals, edge_marginals,
@@ -345,7 +343,8 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             traversal, 0, unary_potentials, pw_forward, parents, mask
         )
         items = []
-        tag_seq2score.getitems(items)
+        tag_seq2score.getitems(items,
+                               {i: n for i, n in enumerate(traversal)})
         tag_seq2score = dict(items)
         Z = sum(itervalues(tag_seq2score))
         # normalize probabilities
@@ -354,13 +353,33 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         # find marginal probabilities of the states
         _node_marginals = np.empty(unary_potentials.shape)
         self._compute_node_marginals(_node_marginals, tag_seq2score)
+        node_marginals_sum = np.sum(node_marginals, axis=1)
+        node_marginals_checksum = np.ones_like(node_marginals_sum)
+        assert np.all(np.isclose(node_marginals_checksum,
+                                 node_marginals_sum)), (
+            "Automatically computed node marginals do not sum to 1:"
+            "\n{!r} "
+            ).format(node_marginals_sum)
+        _node_marginals_sum = np.sum(_node_marginals, axis=1)
+        assert np.all(np.isclose(node_marginals_checksum,
+                                 _node_marginals_sum)), (
+            "Brute-force node marginals do not sum to 1:"
+            "\n{!r} "
+            ).format(node_marginals_sum)
+        print("edges:", edges)
+        print("traversal:", traversal)
         assert np.all(np.isclose(node_marginals, _node_marginals)), (
             "Automatically and brute-force computed node marginals diverged:"
-            "\n{!r}\nvs.\n{!r} "
-        ).format(node_marginals, _node_marginals)
+            "\n{!r}\nvs.\n{!r} (edges: {!r})"
+        ).format(node_marginals, _node_marginals, edges)
         n_labels = unary_potentials.shape[1]
         _edge_marginals = np.empty((edges.shape[0], n_labels, n_labels))
         self._compute_edge_marginals(_edge_marginals, tag_seq2score, edges)
+        print("_edge_marginals:", _edge_marginals)
+        print("np.sum(_edge_marginals, axis=1)", np.sum(np._edge_marginals,
+                                                        axis=1), axis=1)
+        print("np.sum(_edge_marginals, axis=2)", np.sum(_edge_marginals,
+                                                        axis=2))
         assert np.all(np.isclose(edge_marginals, _edge_marginals)), \
             "Manually and automatically computed edge marginals diverged."
 
@@ -368,8 +387,8 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
                                 traversal, idx, unary_potentials, pw_forward,
                                 parents, mask):
         crnt_node = traversal[idx]
-        crnt_unary = unary_potentials[crnt_node]
-        crnt_forward = pw_forward[crnt_node] * mask[crnt_node]
+        crnt_unary = unary_potentials[crnt_node] * mask[crnt_node]
+        crnt_forward = pw_forward[crnt_node]
         prnt_node = parents[crnt_node]
         label_j = None
         if prnt_node >= 0:
