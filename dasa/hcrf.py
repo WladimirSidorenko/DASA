@@ -28,6 +28,7 @@ import numpy as np
 from .constants import CLS2IDX, IDX2CLS, N_POLARITIES
 from .ml import MLBaseAnalyzer
 from .rst import Tree as RSTTree
+from .utils import LOGGER
 
 
 ##################################################################
@@ -133,7 +134,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
                 unary_potentials, pw_forward,
                 traversal, edges, parents, child_cnt, mask
             )
-        raise NotImplementedError
         self._check_marginals(node_marginals, edge_marginals,
                               unary_potentials, pw_forward, edges,
                               traversal, parents, neighbors, mask)
@@ -202,24 +202,23 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         alpha, child_alpha, scale, Z = self.compute_alpha(
             unary_potentials, pw_forward, traversal, parents, mask
         )
-        print("alpha:", repr(alpha))
-        print("child_alpha:", repr(child_alpha))
-        print("Z:", repr(Z))
+        LOGGER.debug("alpha: %r", alpha)
+        LOGGER.debug("child_alpha: %r", child_alpha)
+        LOGGER.debug("Z: %r", Z)
         beta = self.compute_beta(
             alpha, child_alpha, scale,
             unary_potentials, pw_forward, traversal, parents, child_cnt, mask
         )
-        print("beta:", repr(beta))
+        LOGGER.debug("beta:", repr(beta))
         node_marginals, edge_marginals = self._compute_marginals(
             alpha, child_alpha, beta, scale, unary_potentials, pw_forward,
             traversal, edges, parents, child_cnt, mask
         )
-        print("node_marginals:", repr(node_marginals))
-        print("edge_marginals:", repr(edge_marginals))
+        LOGGER.debug("node_marginals:", repr(node_marginals))
+        LOGGER.debug("edge_marginals:", repr(edge_marginals))
         self._check_marginals(node_marginals, edge_marginals,
                               unary_potentials, pw_forward, edges,
                               traversal, parents, mask)
-        raise NotImplementedError
         return alpha, beta, node_marginals, edge_marginals, Z
 
     def _compute_marginals(self, alpha, chld_alpha, beta, scale,
@@ -233,23 +232,26 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
           np.array, float: table of (normalized) forward scores, total energy
 
         """
+        # node marginals are easy
         node_marginals = alpha * beta * scale[:, None]  # None adds a new axis
+        # edge marginals are a bit trickier
         n_labels = unary_potentials.shape[-1]
         edge_marginals = np.zeros((edges.shape[0], n_labels, n_labels))
         # messages from leaves to root
         for ((node1, node2), marginal) in zip(edges, edge_marginals):
             chld, prnt = get_prnt(node1, node2, parents)
-            bwd = beta[prnt]
-            fwd = alpha[chld]
-            state = unary_potentials[prnt]
             if child_cnt[prnt] > 1:
                 marginal[:] = alpha[prnt]
-                marginal /= scale[prnt]
+                marginal *= scale[prnt]
                 marginal /= chld_alpha[chld]
             else:
-                marginal[:] = state
-            marginal *= bwd
-            marginal += fwd[:, None] * pw_forward[chld].T
+                marginal[:] = unary_potentials[prnt]
+            marginal *= beta[prnt]
+            LOGGER.debug("alpha[chld]: %r", alpha[chld])
+            LOGGER.debug("pw_forward[chld]: %r", pw_forward[chld])
+            LOGGER.debug("edge marginal: %r", marginal)
+            marginal[:] = alpha[chld, None].T * pw_forward[chld] * marginal
+            LOGGER.debug("* edge marginal: %r", marginal)
         return node_marginals, edge_marginals
 
     def compute_alpha(self, unary_potentials, pw_forward,
@@ -366,22 +368,31 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             "Brute-force node marginals do not sum to 1:"
             "\n{!r} "
             ).format(node_marginals_sum)
-        print("edges:", edges)
-        print("traversal:", traversal)
         assert np.all(np.isclose(node_marginals, _node_marginals)), (
             "Automatically and brute-force computed node marginals diverged:"
-            "\n{!r}\nvs.\n{!r} (edges: {!r})"
-        ).format(node_marginals, _node_marginals, edges)
+            "\n{!r}\nvs.\n{!r}"
+        ).format(node_marginals, _node_marginals)
         n_labels = unary_potentials.shape[1]
         _edge_marginals = np.empty((edges.shape[0], n_labels, n_labels))
-        self._compute_edge_marginals(_edge_marginals, tag_seq2score, edges)
-        print("_edge_marginals:", _edge_marginals)
-        print("np.sum(_edge_marginals, axis=1)", np.sum(np._edge_marginals,
-                                                        axis=1), axis=1)
-        print("np.sum(_edge_marginals, axis=2)", np.sum(_edge_marginals,
-                                                        axis=2))
-        assert np.all(np.isclose(edge_marginals, _edge_marginals)), \
-            "Manually and automatically computed edge marginals diverged."
+        self._compute_edge_marginals(_edge_marginals, tag_seq2score,
+                                     edges, parents)
+        edge_marginals_sum = np.sum(edge_marginals, axis=(1, 2))
+        edge_marginals_checksum = np.ones_like(edge_marginals_sum)
+        assert np.all(np.isclose(edge_marginals_checksum,
+                                 edge_marginals_sum)), (
+            "Automatically computed edge marginals do not sum to 1:"
+                                     "\n{!r}\n{!r}"
+            ).format(edge_marginals_sum, edge_marginals)
+        _edge_marginals_sum = np.sum(_edge_marginals, axis=(1, 2))
+        assert np.all(np.isclose(edge_marginals_checksum,
+                                 _edge_marginals_sum)), (
+            "Brute-force computed edge marginals do not sum to 1:"
+            "\n{!r} "
+            ).format(node_marginals_sum)
+        assert np.all(np.isclose(edge_marginals, _edge_marginals)), (
+            "Automatically and brute-force computed edge marginals diverged."
+            "\n{!r}\nvs.\n{!r}"
+        ).format(edge_marginals, _edge_marginals)
 
     def _check_marginals_helper(self, tag_seq2score, accum_score, tag_seq,
                                 traversal, idx, unary_potentials, pw_forward,
@@ -423,16 +434,18 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
                 )
         return marginals
 
-    def _compute_edge_marginals(self, marginals, tag_seq2score, edges):
+    def _compute_edge_marginals(self, marginals, tag_seq2score,
+                                edges, parents):
         n_labels = marginals.shape[-1]
         # iterate over each node
         for marginal_k, (idx1, idx2) in zip(marginals, edges):
+            chld, prnt = get_prnt(idx1, idx2, parents)
             # for each node, estimate the marginal probability of each label
             for i in range(n_labels):
                 for j in range(n_labels):
                     marginal_k[i][j] = sum(
                         v for k, v in iteritems(tag_seq2score)
-                        if k[idx1] == i and k[idx2] == j
+                        if k[chld] == i and k[prnt] == j
                     )
         return marginals
 
