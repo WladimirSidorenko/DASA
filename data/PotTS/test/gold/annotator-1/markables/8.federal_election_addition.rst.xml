@@ -5,11 +5,10 @@
         <segment id="287" msgid="350168232822452224" start="86" end="101" name="5" external="0" etype=""/>
         <segment id="36" msgid="374221327705837568" start="50" end="82" name="2" external="0" etype=""/>
         <segment id="288" msgid="350168232822452224" start="101" end="106" name="6" external="0" etype=""/>
-        <segment id="37" msgid="374221327705837568" start="82" end="123" name="3" external="0" etype=""/>
         <segment id="300" msgid="379693516324368384" start="63" end="76" name="2" external="0" etype=""/>
         <segment id="290" msgid="368065461469999104" start="19" end="79" name="1" external="0" etype=""/>
         <segment id="289" msgid="368065461469999104" start="0" end="19" name="0" external="0" etype=""/>
-        <segment id="38" msgid="374221327705837568" start="123" end="134" name="4" external="0" etype=""/>
+        <segment id="38" msgid="374221327705837568" start="82" end="134" name="3" external="0" etype=""/>
         <segment id="301" msgid="371589777587716096" start="0" end="58" name="0" external="0" etype=""/>
         <segment id="291" msgid="368065461469999104" start="79" end="85" name="2" external="0" etype=""/>
         <segment id="40" msgid="350023552730284032" start="51" end="62" name="1" external="0" etype=""/>
@@ -21,22 +20,18 @@
         <segment id="293" msgid="368065461469999104" start="91" end="97" name="4" external="0" etype=""/>
         <segment id="42" msgid="373917180515344384" start="22" end="78" name="1" external="0" etype=""/>
         <segment id="294" msgid="368065461469999104" start="97" end="101" name="5" external="0" etype=""/>
-        <segment id="43" msgid="373917180515344384" start="78" end="100" name="2" external="0" etype=""/>
         <segment id="305" msgid="381744156655517696" start="40" end="111" name="1" external="0" etype=""/>
         <segment id="295" msgid="370562508383608832" start="0" end="20" name="0" external="0" etype=""/>
-        <segment id="44" msgid="373917180515344384" start="100" end="111" name="3" external="0" etype=""/>
+        <segment id="44" msgid="373917180515344384" start="78" end="111" name="2" external="0" etype=""/>
         <segment id="306" msgid="381847580483010560" start="0" end="63" name="0" external="0" etype=""/>
         <segment id="45" msgid="356488182482747392" start="0" end="6" name="0" external="0" etype=""/>
         <segment id="307" msgid="381847580483010560" start="63" end="87" name="1" external="0" etype=""/>
         <segment id="297" msgid="370562508383608832" start="20" end="114" name="1" external="0" etype=""/>
-        <segment id="46" msgid="356488182482747392" start="6" end="32" name="1" external="0" etype=""/>
         <segment id="308" msgid="381847580483010560" start="87" end="93" name="2" external="0" etype=""/>
         <segment id="298" msgid="379693516324368384" start="0" end="57" name="0" external="0" etype=""/>
-        <segment id="47" msgid="356488182482747392" start="32" end="114" name="2" external="0" etype=""/>
         <segment id="310" msgid="348855142193442816" start="27" end="66" name="1" external="0" etype=""/>
         <segment id="309" msgid="348855142193442816" start="0" end="27" name="0" external="0" etype=""/>
         <segment id="299" msgid="379693516324368384" start="57" end="63" name="1" external="0" etype=""/>
-        <segment id="48" msgid="356488182482747392" start="114" end="130" name="3" external="0" etype=""/>
         <segment id="311" msgid="348855142193442816" start="66" end="119" name="2" external="0" etype=""/>
         <segment id="49" msgid="370634464826630144" start="0" end="48" name="0" external="0" etype=""/>
         <segment id="50" msgid="370634464826630144" start="48" end="98" name="1" external="0" etype=""/>
@@ -66,16 +61,27 @@
         <segment id="62" msgid="381163135677112320" start="60" end="68" name="1" external="0" etype=""/>
         <segment id="324" msgid="347254029727985664" start="109" end="123" name="4" external="0" etype=""/>
         <segment id="63" msgid="381163135677112320" start="68" end="91" name="2" external="0" etype=""/>
+        <segment id="325" msgid="358473287250100224" start="0" end="20" name="0" external="0" etype=""/>
         <segment id="64" msgid="381163135677112320" start="91" end="102" name="3" external="0" etype=""/>
+        <segment id="326" msgid="358473287250100224" start="20" end="58" name="1" external="0" etype=""/>
         <segment id="65" msgid="375423401604968448" start="0" end="58" name="0" external="0" etype=""/>
+        <segment id="327" msgid="358473287250100224" start="58" end="69" name="2" external="0" etype=""/>
         <segment id="66" msgid="375423401604968448" start="58" end="104" name="1" external="0" etype=""/>
+        <segment id="328" msgid="358473287250100224" start="69" end="75" name="3" external="0" etype=""/>
         <segment id="67" msgid="375423401604968448" start="104" end="115" name="2" external="0" etype=""/>
+        <segment id="330" msgid="356488182482747392" start="32" end="65" name="2" external="0" etype=""/>
+        <segment id="329" msgid="356488182482747392" start="6" end="32" name="1" external="0" etype=""/>
         <segment id="68" msgid="380252115949879296" start="0" end="37" name="0" external="0" etype=""/>
+        <segment id="331" msgid="356488182482747392" start="65" end="114" name="3" external="0" etype=""/>
         <segment id="69" msgid="380252115949879296" start="37" end="48" name="1" external="0" etype=""/>
         <segment id="70" msgid="384304373373095936" start="0" end="26" name="0" external="0" etype=""/>
+        <segment id="332" msgid="356488182482747392" start="114" end="130" name="4" external="0" etype=""/>
         <segment id="71" msgid="384304373373095936" start="26" end="37" name="1" external="0" etype=""/>
+        <segment id="333" msgid="382992944786968576" start="0" end="3" name="0" external="0" etype=""/>
         <segment id="72" msgid="384304373373095936" start="37" end="77" name="2" external="0" etype=""/>
+        <segment id="334" msgid="382992944786968576" start="3" end="47" name="1" external="0" etype=""/>
         <segment id="73" msgid="384304373373095936" start="77" end="127" name="3" external="0" etype=""/>
+        <segment id="335" msgid="382992944786968576" start="47" end="58" name="2" external="0" etype=""/>
         <segment id="74" msgid="354603594156212224" start="0" end="44" name="0" external="0" etype=""/>
         <segment id="75" msgid="354603594156212224" start="44" end="53" name="1" external="0" etype=""/>
         <segment id="76" msgid="354603594156212224" start="53" end="81" name="2" external="0" etype=""/>
@@ -107,9 +113,7 @@
         <segment id="95" msgid="357486459495784453" start="65" end="91" name="2" external="0" etype=""/>
         <segment id="7" msgid="356534754046255104" start="59" end="70" name="2" external="0" etype=""/>
         <segment id="96" msgid="357486459495784453" start="91" end="102" name="3" external="0" etype=""/>
-        <segment id="8" msgid="358473287250100224" start="0" end="58" name="0" external="0" etype=""/>
         <segment id="97" msgid="357486459495784453" start="102" end="107" name="4" external="0" etype=""/>
-        <segment id="9" msgid="358473287250100224" start="58" end="69" name="1" external="0" etype=""/>
         <segment id="98" msgid="367697664789725184" start="0" end="47" name="0" external="0" etype=""/>
         <segment id="99" msgid="367697664789725184" start="47" end="58" name="1" external="0" etype=""/>
         <segment id="100" msgid="367697664789725184" start="58" end="93" name="2" external="0" etype=""/>
@@ -134,8 +138,6 @@
         <segment id="119" msgid="378750422477197312" start="57" end="68" name="1" external="0" etype=""/>
         <segment id="120" msgid="378750422477197312" start="68" end="75" name="2" external="0" etype=""/>
         <segment id="121" msgid="378750422477197312" start="75" end="81" name="3" external="0" etype=""/>
-        <segment id="122" msgid="382992944786968576" start="0" end="47" name="0" external="0" etype=""/>
-        <segment id="123" msgid="382992944786968576" start="47" end="58" name="1" external="0" etype=""/>
         <segment id="124" msgid="353524128508157952" start="0" end="49" name="0" external="0" etype=""/>
         <segment id="125" msgid="353524128508157952" start="49" end="63" name="1" external="0" etype=""/>
         <segment id="126" msgid="353524128508157952" start="63" end="74" name="2" external="0" etype=""/>
@@ -272,7 +274,6 @@
         <segment id="260" msgid="382727807618387968" start="20" end="56" name="1" external="0" etype=""/>
         <segment id="259" msgid="382727807618387968" start="0" end="20" name="0" external="0" etype=""/>
         <segment id="261" msgid="382727807618387968" start="56" end="110" name="2" external="0" etype=""/>
-        <segment id="10" msgid="358473287250100224" start="69" end="75" name="2" external="0" etype=""/>
         <segment id="262" msgid="366430825648103424" start="0" end="41" name="0" external="0" etype=""/>
         <segment id="11" msgid="372500223936831488" start="0" end="11" name="0" external="0" etype=""/>
         <segment id="263" msgid="366430825648103424" start="41" end="69" name="1" external="0" etype=""/>
@@ -321,7 +322,610 @@
         <segment id="285" msgid="350168232822452224" start="70" end="73" name="3" external="0" etype=""/>
         <segment id="34" msgid="374221327705837568" start="0" end="9" name="0" external="0" etype=""/>
     </segments>
-    <spans/>
-    <relations/>
+    <spans>
+        <span id="-10" msgid="358473287250100224" start="325" end="328" external="1" etype="text"/>
+        <span id="-11" msgid="372500223936831488" start="11" end="12" external="0" etype=""/>
+        <span id="-12" msgid="372500223936831488" start="11" end="13" external="0" etype=""/>
+        <span id="-13" msgid="372500223936831488" start="11" end="14" external="0" etype=""/>
+        <span id="-14" msgid="372500223936831488" start="11" end="15" external="1" etype="text"/>
+        <span id="-15" msgid="380350950512533504" start="17" end="18" external="0" etype=""/>
+        <span id="-16" msgid="380350950512533504" start="16" end="18" external="0" etype=""/>
+        <span id="-18" msgid="380350950512533504" start="19" end="20" external="0" etype=""/>
+        <span id="-20" msgid="379332851218792448" start="21" end="24" external="0" etype=""/>
+        <span id="-19" msgid="380350950512533504" start="16" end="20" external="1" etype="text"/>
+        <span id="-22" msgid="379332851218792448" start="21" end="23" external="0" etype=""/>
+        <span id="-23" msgid="379332851218792448" start="23" end="24" external="0" etype=""/>
+        <span id="-24" msgid="379332851218792448" start="21" end="25" external="1" etype="text"/>
+        <span id="-25" msgid="346025682951880705" start="26" end="27" external="0" etype=""/>
+        <span id="-26" msgid="346025682951880705" start="26" end="28" external="1" etype="text"/>
+        <span id="-27" msgid="368048616604459008" start="29" end="30" external="0" etype=""/>
+        <span id="-28" msgid="368048616604459008" start="29" end="31" external="0" etype=""/>
+        <span id="-30" msgid="368048616604459008" start="29" end="33" external="1" etype="text"/>
+        <span id="-29" msgid="368048616604459008" start="29" end="32" external="0" etype=""/>
+        <span id="-35" msgid="374221327705837568" start="34" end="35" external="0" etype=""/>
+        <span id="-36" msgid="374221327705837568" start="34" end="36" external="0" etype=""/>
+        <span id="-37" msgid="374221327705837568" start="34" end="38" external="1" etype="text"/>
+        <span id="-38" msgid="350023552730284032" start="39" end="40" external="1" etype="text"/>
+        <span id="-40" msgid="373917180515344384" start="41" end="44" external="1" etype="text"/>
+        <span id="-39" msgid="373917180515344384" start="41" end="42" external="0" etype=""/>
+        <span id="-41" msgid="356488182482747392" start="329" end="331" external="0" etype=""/>
+        <span id="-42" msgid="356488182482747392" start="329" end="330" external="0" etype=""/>
+        <span id="-43" msgid="356488182482747392" start="329" end="332" external="0" etype=""/>
+        <span id="-44" msgid="356488182482747392" start="45" end="332" external="1" etype="text"/>
+        <span id="-45" msgid="370634464826630144" start="49" end="50" external="0" etype=""/>
+        <span id="-46" msgid="359315949926629377" start="57" end="59" external="0" etype=""/>
+        <span id="-47" msgid="359315949926629377" start="56" end="59" external="0" etype=""/>
+        <span id="-48" msgid="359315949926629377" start="56" end="60" external="1" etype="text"/>
+        <span id="-50" msgid="381163135677112320" start="61" end="63" external="0" etype=""/>
+        <span id="-49" msgid="381163135677112320" start="62" end="63" external="0" etype=""/>
+        <span id="-51" msgid="381163135677112320" start="61" end="64" external="1" etype="text"/>
+        <span id="-52" msgid="375423401604968448" start="65" end="66" external="0" etype=""/>
+        <span id="-53" msgid="375423401604968448" start="65" end="67" external="1" etype="text"/>
+        <span id="-54" msgid="380252115949879296" start="68" end="69" external="1" etype="text"/>
+        <span id="-55" msgid="384304373373095936" start="70" end="71" external="0" etype=""/>
+        <span id="-56" msgid="384304373373095936" start="70" end="73" external="0" etype=""/>
+        <span id="-57" msgid="354603594156212224" start="75" end="76" external="0" etype=""/>
+        <span id="-58" msgid="354603594156212224" start="75" end="77" external="0" etype=""/>
+        <span id="-62" msgid="354603594156212224" start="74" end="77" external="0" etype=""/>
+        <span id="-63" msgid="354603594156212224" start="74" end="78" external="1" etype="text"/>
+        <span id="-64" msgid="378170137670873088" start="79" end="80" external="0" etype=""/>
+        <span id="-65" msgid="378170137670873088" start="79" end="81" external="0" etype=""/>
+        <span id="-66" msgid="378170137670873088" start="79" end="82" external="0" etype=""/>
+        <span id="-67" msgid="378170137670873088" start="79" end="83" external="1" etype="text"/>
+        <span id="-68" msgid="373396384025546753" start="84" end="85" external="0" etype=""/>
+        <span id="-70" msgid="373396384025546753" start="84" end="87" external="1" etype="text"/>
+        <span id="-69" msgid="373396384025546753" start="86" end="87" external="0" etype=""/>
+        <span id="-71" msgid="364029057656422400" start="88" end="89" external="1" etype="text"/>
+        <span id="-72" msgid="382807292108079104" start="90" end="91" external="0" etype=""/>
+        <span id="-73" msgid="382807292108079104" start="90" end="92" external="1" etype="text"/>
+        <span id="-74" msgid="357486459495784453" start="93" end="95" external="0" etype=""/>
+        <span id="-77" msgid="357486459495784453" start="96" end="97" external="0" etype=""/>
+        <span id="-78" msgid="357486459495784453" start="93" end="97" external="1" etype="text"/>
+        <span id="-80" msgid="367697664789725184" start="98" end="100" external="0" etype=""/>
+        <span id="-79" msgid="367697664789725184" start="98" end="99" external="0" etype=""/>
+        <span id="-81" msgid="367697664789725184" start="98" end="101" external="1" etype="text"/>
+        <span id="-82" msgid="381845258008813568" start="102" end="103" external="1" etype="text"/>
+        <span id="-83" msgid="370176403259801600" start="104" end="105" external="0" etype=""/>
+        <span id="-84" msgid="370176403259801600" start="104" end="106" external="1" etype="text"/>
+        <span id="-85" msgid="377069167834566656" start="107" end="108" external="0" etype=""/>
+        <span id="-86" msgid="377069167834566656" start="107" end="109" external="0" etype=""/>
+        <span id="-87" msgid="377069167834566656" start="107" end="110" external="0" etype=""/>
+        <span id="-88" msgid="377069167834566656" start="107" end="111" external="1" etype="text"/>
+        <span id="-90" msgid="381508227386855424" start="112" end="114" external="1" etype="text"/>
+        <span id="-89" msgid="381508227386855424" start="112" end="113" external="0" etype=""/>
+        <span id="-91" msgid="378750422477197312" start="118" end="119" external="0" etype=""/>
+        <span id="-92" msgid="378750422477197312" start="120" end="121" external="0" etype=""/>
+        <span id="-93" msgid="378750422477197312" start="118" end="121" external="1" etype="text"/>
+        <span id="-94" msgid="382992944786968576" start="333" end="334" external="0" etype=""/>
+        <span id="-95" msgid="382992944786968576" start="333" end="335" external="1" etype="text"/>
+        <span id="-96" msgid="353524128508157952" start="124" end="125" external="0" etype=""/>
+        <span id="-97" msgid="353524128508157952" start="124" end="126" external="0" etype=""/>
+        <span id="-98" msgid="353524128508157952" start="124" end="127" external="1" etype="text"/>
+        <span id="-99" msgid="379496319616045056" start="128" end="129" external="0" etype=""/>
+        <span id="-100" msgid="379496319616045056" start="128" end="130" external="1" etype="text"/>
+        <span id="-101" msgid="381383440580743168" start="131" end="132" external="0" etype=""/>
+        <span id="-102" msgid="381383440580743168" start="131" end="133" external="1" etype="text"/>
+        <span id="-103" msgid="380044689124368384" start="134" end="135" external="0" etype=""/>
+        <span id="-104" msgid="380044689124368384" start="134" end="136" external="1" etype="text"/>
+        <span id="-105" msgid="350149000206360578" start="137" end="138" external="1" etype="text"/>
+        <span id="-106" msgid="350343109630111744" start="140" end="141" external="0" etype=""/>
+        <span id="-107" msgid="350343109630111744" start="139" end="141" external="0" etype=""/>
+        <span id="-108" msgid="382500637982064640" start="144" end="145" external="0" etype=""/>
+        <span id="-109" msgid="382500637982064640" start="144" end="146" external="0" etype=""/>
+        <span id="-111" msgid="382500637982064640" start="143" end="146" external="0" etype=""/>
+        <span id="-112" msgid="372302190293303296" start="147" end="148" external="1" etype="text"/>
+        <span id="-2" msgid="381694495433457664" start="0" end="1" external="0" etype=""/>
+        <span id="-3" msgid="381694495433457664" start="0" end="2" external="0" etype=""/>
+        <span id="-4" msgid="381694495433457664" start="3" end="4" external="0" etype=""/>
+        <span id="-5" msgid="381694495433457664" start="0" end="4" external="1" etype="text"/>
+        <span id="-6" msgid="356534754046255104" start="5" end="6" external="0" etype=""/>
+        <span id="-7" msgid="356534754046255104" start="5" end="7" external="1" etype="text"/>
+        <span id="-8" msgid="358473287250100224" start="325" end="326" external="0" etype=""/>
+        <span id="-9" msgid="358473287250100224" start="325" end="327" external="0" etype=""/>
+    </spans>
+    <relations>
+        <hypRelation relname="Background">
+            <spannode idref="-35"/>
+            <nucleus idref="35"/>
+            <satellite idref="34"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-38"/>
+            <nucleus idref="39"/>
+            <satellite idref="40"/>
+        </hypRelation>
+        <hypRelation relname="E-Elaboration">
+            <spannode idref="-39"/>
+            <nucleus idref="41"/>
+            <satellite idref="42"/>
+        </hypRelation>
+        <parRelation relname="Joint">
+            <spannode idref="-44"/>
+            <nucleus idref="45"/>
+            <nucleus idref="-43"/>
+        </parRelation>
+        <hypRelation relname="Cause">
+            <spannode idref="-45"/>
+            <nucleus idref="50"/>
+            <satellite idref="49"/>
+        </hypRelation>
+        <parRelation relname="Sequence">
+            <spannode idref="-46"/>
+            <nucleus idref="57"/>
+            <nucleus idref="58"/>
+            <nucleus idref="59"/>
+        </parRelation>
+        <hypRelation relname="Concession">
+            <spannode idref="-49"/>
+            <nucleus idref="63"/>
+            <satellite idref="62"/>
+        </hypRelation>
+        <hypRelation relname="Elaboration">
+            <spannode idref="-8"/>
+            <nucleus idref="325"/>
+            <satellite idref="326"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-52"/>
+            <nucleus idref="65"/>
+            <satellite idref="66"/>
+        </hypRelation>
+        <hypRelation relname="Elaboration">
+            <spannode idref="-42"/>
+            <nucleus idref="330"/>
+            <satellite idref="329"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-54"/>
+            <nucleus idref="68"/>
+            <satellite idref="69"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-41"/>
+            <nucleus idref="331"/>
+            <satellite idref="-42"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-55"/>
+            <nucleus idref="70"/>
+            <satellite idref="71"/>
+        </hypRelation>
+        <parRelation relname="Joint">
+            <spannode idref="-56"/>
+            <nucleus idref="-55"/>
+            <nucleus idref="72"/>
+            <nucleus idref="73"/>
+        </parRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-94"/>
+            <nucleus idref="334"/>
+            <satellite idref="333"/>
+        </hypRelation>
+        <parRelation relname="Joint">
+            <spannode idref="-62"/>
+            <nucleus idref="74"/>
+            <nucleus idref="-58"/>
+        </parRelation>
+        <hypRelation relname="Background">
+            <spannode idref="-57"/>
+            <nucleus idref="76"/>
+            <satellite idref="75"/>
+        </hypRelation>
+        <parRelation relname="Sequence">
+            <spannode idref="-58"/>
+            <nucleus idref="-57"/>
+            <nucleus idref="77"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-12"/>
+            <nucleus idref="-11"/>
+            <satellite idref="13"/>
+        </hypRelation>
+        <hypRelation relname="URI">
+            <spannode idref="-13"/>
+            <nucleus idref="-12"/>
+            <satellite idref="14"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-64"/>
+            <nucleus idref="80"/>
+            <satellite idref="79"/>
+        </hypRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-14"/>
+            <nucleus idref="-13"/>
+            <satellite idref="15"/>
+        </hypRelation>
+        <hypRelation relname="Circumstance">
+            <spannode idref="-65"/>
+            <nucleus idref="81"/>
+            <satellite idref="-64"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-19"/>
+            <nucleus idref="-16"/>
+            <satellite idref="-18"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-68"/>
+            <nucleus idref="84"/>
+            <satellite idref="85"/>
+        </hypRelation>
+        <hypRelation relname="Means">
+            <spannode idref="-69"/>
+            <nucleus idref="86"/>
+            <satellite idref="87"/>
+        </hypRelation>
+        <hypRelation relname="Motivation">
+            <spannode idref="-22"/>
+            <nucleus idref="-20"/>
+            <satellite idref="-23"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-71"/>
+            <nucleus idref="88"/>
+            <satellite idref="89"/>
+        </hypRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-24"/>
+            <nucleus idref="-22"/>
+            <satellite idref="25"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-2"/>
+            <nucleus idref="1"/>
+            <satellite idref="0"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-72"/>
+            <nucleus idref="90"/>
+            <satellite idref="91"/>
+        </hypRelation>
+        <parRelation relname="List">
+            <spannode idref="-4"/>
+            <nucleus idref="3"/>
+            <nucleus idref="4"/>
+        </parRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-26"/>
+            <nucleus idref="-25"/>
+            <satellite idref="28"/>
+        </hypRelation>
+        <hypRelation relname="OTHER">
+            <spannode idref="-74"/>
+            <nucleus idref="94"/>
+            <satellite idref="93"/>
+        </hypRelation>
+        <hypRelation relname="Result">
+            <spannode idref="-74"/>
+            <nucleus idref="94"/>
+            <satellite idref="95"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-28"/>
+            <nucleus idref="-27"/>
+            <satellite idref="31"/>
+        </hypRelation>
+        <hypRelation relname="Background">
+            <spannode idref="-6"/>
+            <nucleus idref="6"/>
+            <satellite idref="5"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-29"/>
+            <nucleus idref="-28"/>
+            <satellite idref="32"/>
+        </hypRelation>
+        <parRelation relname="List">
+            <spannode idref="-77"/>
+            <nucleus idref="96"/>
+            <nucleus idref="97"/>
+        </parRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-30"/>
+            <nucleus idref="-29"/>
+            <satellite idref="33"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-79"/>
+            <nucleus idref="98"/>
+            <satellite idref="99"/>
+        </hypRelation>
+        <hypRelation relname="E-Elaboration">
+            <spannode idref="-36"/>
+            <nucleus idref="-35"/>
+            <satellite idref="36"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-37"/>
+            <nucleus idref="-36"/>
+            <satellite idref="38"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-40"/>
+            <nucleus idref="-39"/>
+            <satellite idref="44"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-43"/>
+            <nucleus idref="-41"/>
+            <satellite idref="332"/>
+        </hypRelation>
+        <hypRelation relname="Circumstance">
+            <spannode idref="-47"/>
+            <nucleus idref="-46"/>
+            <satellite idref="56"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-48"/>
+            <nucleus idref="-47"/>
+            <satellite idref="60"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-51"/>
+            <nucleus idref="-50"/>
+            <satellite idref="64"/>
+        </hypRelation>
+        <hypRelation relname="Justify">
+            <spannode idref="-50"/>
+            <nucleus idref="-49"/>
+            <satellite idref="61"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-53"/>
+            <nucleus idref="-52"/>
+            <satellite idref="67"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-63"/>
+            <nucleus idref="-62"/>
+            <satellite idref="78"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-66"/>
+            <nucleus idref="-65"/>
+            <satellite idref="82"/>
+        </hypRelation>
+        <hypRelation relname="URI">
+            <spannode idref="-67"/>
+            <nucleus idref="-66"/>
+            <satellite idref="83"/>
+        </hypRelation>
+        <parRelation relname="Joint">
+            <spannode idref="-70"/>
+            <nucleus idref="-68"/>
+            <nucleus idref="-69"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-73"/>
+            <nucleus idref="-72"/>
+            <satellite idref="92"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-78"/>
+            <nucleus idref="-74"/>
+            <satellite idref="-77"/>
+        </hypRelation>
+        <parRelation relname="Joint">
+            <spannode idref="-80"/>
+            <nucleus idref="-79"/>
+            <nucleus idref="100"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-82"/>
+            <nucleus idref="102"/>
+            <satellite idref="103"/>
+        </hypRelation>
+        <hypRelation relname="Background">
+            <spannode idref="-81"/>
+            <nucleus idref="-80"/>
+            <satellite idref="101"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-83"/>
+            <nucleus idref="105"/>
+            <satellite idref="104"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-84"/>
+            <nucleus idref="-83"/>
+            <satellite idref="106"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-85"/>
+            <nucleus idref="107"/>
+            <satellite idref="108"/>
+        </hypRelation>
+        <hypRelation relname="Means">
+            <spannode idref="-86"/>
+            <nucleus idref="109"/>
+            <satellite idref="-85"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-87"/>
+            <nucleus idref="-86"/>
+            <satellite idref="110"/>
+        </hypRelation>
+        <hypRelation relname="URI">
+            <spannode idref="-88"/>
+            <nucleus idref="-87"/>
+            <satellite idref="111"/>
+        </hypRelation>
+        <hypRelation relname="Concession">
+            <spannode idref="-89"/>
+            <nucleus idref="112"/>
+            <satellite idref="113"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-90"/>
+            <nucleus idref="-89"/>
+            <satellite idref="114"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-93"/>
+            <nucleus idref="-91"/>
+            <satellite idref="-92"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-95"/>
+            <nucleus idref="-94"/>
+            <satellite idref="335"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-91"/>
+            <nucleus idref="118"/>
+            <satellite idref="119"/>
+        </hypRelation>
+        <parRelation relname="List">
+            <spannode idref="-92"/>
+            <nucleus idref="120"/>
+            <nucleus idref="121"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-97"/>
+            <nucleus idref="-96"/>
+            <satellite idref="126"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-98"/>
+            <nucleus idref="-97"/>
+            <satellite idref="127"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-100"/>
+            <nucleus idref="-99"/>
+            <satellite idref="130"/>
+        </hypRelation>
+        <hypRelation relname="Result">
+            <spannode idref="-96"/>
+            <nucleus idref="124"/>
+            <satellite idref="125"/>
+        </hypRelation>
+        <hypRelation relname="Background">
+            <spannode idref="-99"/>
+            <nucleus idref="129"/>
+            <satellite idref="128"/>
+        </hypRelation>
+        <parRelation relname="Contrast">
+            <spannode idref="-101"/>
+            <nucleus idref="131"/>
+            <nucleus idref="132"/>
+        </parRelation>
+        <hypRelation relname="Condition">
+            <spannode idref="-103"/>
+            <nucleus idref="135"/>
+            <satellite idref="134"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-104"/>
+            <nucleus idref="136"/>
+            <satellite idref="-103"/>
+        </hypRelation>
+        <hypRelation relname="Evidence">
+            <spannode idref="-105"/>
+            <nucleus idref="137"/>
+            <satellite idref="138"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-107"/>
+            <nucleus idref="139"/>
+            <satellite idref="-106"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-106"/>
+            <nucleus idref="140"/>
+            <satellite idref="141"/>
+        </hypRelation>
+        <hypRelation relname="Result">
+            <spannode idref="-102"/>
+            <nucleus idref="-101"/>
+            <satellite idref="133"/>
+        </hypRelation>
+        <hypRelation relname="Elaboration">
+            <spannode idref="-108"/>
+            <nucleus idref="144"/>
+            <satellite idref="145"/>
+        </hypRelation>
+        <parRelation relname="Contrast">
+            <spannode idref="-109"/>
+            <nucleus idref="-108"/>
+            <nucleus idref="146"/>
+        </parRelation>
+        <hypRelation relname="E-Elaboration">
+            <spannode idref="-112"/>
+            <nucleus idref="147"/>
+            <satellite idref="148"/>
+        </hypRelation>
+        <hypRelation relname="Preparation">
+            <spannode idref="-111"/>
+            <nucleus idref="-109"/>
+            <satellite idref="143"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-3"/>
+            <nucleus idref="-2"/>
+            <satellite idref="2"/>
+        </hypRelation>
+        <hypRelation relname="Hashtag">
+            <spannode idref="-5"/>
+            <nucleus idref="-3"/>
+            <satellite idref="-4"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-7"/>
+            <nucleus idref="-6"/>
+            <satellite idref="7"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-9"/>
+            <nucleus idref="-8"/>
+            <satellite idref="327"/>
+        </hypRelation>
+        <hypRelation relname="Address">
+            <spannode idref="-10"/>
+            <nucleus idref="-9"/>
+            <satellite idref="328"/>
+        </hypRelation>
+        <hypRelation relname="Cause">
+            <spannode idref="-11"/>
+            <nucleus idref="11"/>
+            <satellite idref="12"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-16"/>
+            <nucleus idref="16"/>
+            <satellite idref="-15"/>
+        </hypRelation>
+        <hypRelation relname="Reason">
+            <spannode idref="-15"/>
+            <nucleus idref="18"/>
+            <satellite idref="17"/>
+        </hypRelation>
+        <parRelation relname="List">
+            <spannode idref="-18"/>
+            <nucleus idref="19"/>
+            <nucleus idref="20"/>
+        </parRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-20"/>
+            <nucleus idref="21"/>
+            <satellite idref="22"/>
+        </hypRelation>
+        <hypRelation relname="Elaboration">
+            <spannode idref="-23"/>
+            <nucleus idref="23"/>
+            <satellite idref="24"/>
+        </hypRelation>
+        <hypRelation relname="Evaluation-S">
+            <spannode idref="-25"/>
+            <nucleus idref="26"/>
+            <satellite idref="27"/>
+        </hypRelation>
+        <hypRelation relname="Antithesis">
+            <spannode idref="-27"/>
+            <nucleus idref="30"/>
+            <satellite idref="29"/>
+        </hypRelation>
+    </relations>
 </annotation>
 
