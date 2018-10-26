@@ -31,6 +31,7 @@ from .constants import CLS2IDX
 
 ##################################################################
 # Variables and Constants
+OPTIM_PARAM = {}
 N_EPOCHS = 100
 DATALOADER_KWARGS = {
     "batch_size": 16,
@@ -120,7 +121,7 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
 
         """
         self._logger.debug("Training model...")
-        optimizer = self._optim_cls(self._model.parameters())
+        optimizer = self._optim_cls(self._model.parameters(), **OPTIM_PARAM)
         # prepare matrices for storing gold and predicted labels on training
         # and test sets
         n_train = len(train_set.dataset)

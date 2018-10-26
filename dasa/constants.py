@@ -32,6 +32,7 @@ LAST = "last"
 ROOT = "root"
 R2N2 = "r2n2"
 DDR = "ddr"
+VAR_INF = "varinf"
 WANG = "wang"
 NO_DISCOURSE = "no-discourse"
 
@@ -42,7 +43,7 @@ HEERSCHOP = "heerschop"
 PCC = "pcc"
 ZHOU = "zhou"
 
-# mapping from polarity classes to indices nad vice versa
+# mapping from polarity classes to indices and vice versa
 POSITIVE = "positive"
 NEGATIVE = "negative"
 UNKNOWN = "unknown"
@@ -53,3 +54,9 @@ IDX2CLS = {v: k for k, v in iteritems(CLS2IDX)}
 N_POLARITIES = len(CLS2IDX)
 
 BUFFER_FACTOR = 1.2
+
+CONTRASTIVE_RELS = {
+    "antithesis", "antithesis-e", "concession", "otherwise",
+    "contrast", "comparison", "consequence-s", "problem-solution",
+    "contrastive"
+}
