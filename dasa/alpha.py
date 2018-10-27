@@ -17,6 +17,7 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from six import iteritems, string_types
+from torch.distributions import constraints
 import numpy as np
 import pyro.distributions as dist
 import pyro
@@ -76,53 +77,60 @@ class AlphaModel(AlphaBase):
                 mu_i[[0, 2]] = mu_i[[2, 0]]
         self.rel_mu = torch.tensor(MU)
         self.rel_sigma = torch.tensor(
-            np.ones((n_rels, n_polarities, n_polarities), dtype="float32"))
-        self.p = 15. * torch.tensor(np.ones(n_rels, dtype="float32"))
-        self.q = 15. * torch.tensor(np.ones(n_rels, dtype="float32"))
+            np.ones((n_rels, n_polarities, n_polarities),
+                    dtype="float32")
+        )
+        self.beta_p = 15. * torch.tensor(np.ones(n_rels, dtype="float32"))
+        self.beta_q = 15. * torch.tensor(np.ones(n_rels, dtype="float32"))
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
-        # This vector will consist of either 0's or 1's, depending on whether
-        # the child is a real or auxiliary node.  In the latter case, we don't
-        # want the child to affect the probability of the parent vector.
-        child_sum = child_probs.sum(dim=-1, keepdim=True)
-        if child_sum.sum() == 0:
-            return None
-        # sample relation matrices `M_ij` for each unique relation `i-j` (these
-        # matrices will be responsible for swapping the context)
-        M = pyro.sample("M_{}".format(var_sfx), dist.Normal(
-            self.rel_mu[rels], self.rel_sigma[rels]).independent(2))
-        # print("M: ", repr(M))
-        # batch-multiply sampled relation matrices with the correponding child
-        # scores
-        child_probs.unsqueeze_(-1)
-        # print("child_probs [f]: ", repr(child_probs), child_probs.shape)
-        child_probs = self.softmax(torch.bmm(M, child_probs))
-        child_probs.squeeze_()
-        # print("child_probs [f]: ", repr(child_probs))
-        # print("self.p[rels] [f]: ", repr(self.p[rels]), self.p[rels].shape)
-        # print("self.q[rels] [f]: ", repr(self.q[rels]), self.q[rels].shape)
-        beta = pyro.sample(
-            "beta_{}".format(var_sfx),
-            dist.Beta(self.p[rels], self.q[rels]).independent(1)
-        ).unsqueeze(-1)
-        print("beta [f]: ", repr(beta), beta.shape)
-        scaled_beta = beta * child_sum
-        # print("child_sum [f]: ", repr(child_sum), child_sum.shape)
-        # print("1. - beta [f]: ", repr(1. - beta), (1. - beta).shape)
-        # print("prnt_probs [f]: ", repr(prnt_probs), prnt_probs.shape)
-        # print("child_probs [f]: ", repr(child_probs), child_probs.shape)
-        # take a convex combination of the parent and child scores as new
-        # values for alpha (since some of the vect)
-        prnt_sum = prnt_probs.sum(dim=-1, keepdim=True)
-        alpha = (1. - scaled_beta) * prnt_sum * prnt_probs \
-            + scaled_beta * child_probs
-        scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
-        # print("alpha mu [f]:", repr(alpha), alpha.shape)
-        # print("scale [f]:", repr(scale), scale.shape)
-        alpha *= scale
-        # print("alpha scaled [f]:", repr(alpha))
-        return alpha
+        # The vector `nz_chld_indices` will contain indices of the child_probs
+        # which are not zero.
+        nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
+        if nz_chld_indices.nelement() == 0:
+            return None, None, None, None
+        # Only leave `parent`, `child`, and `rels` elements for which
+        # `child_probs` are not zero.
+        child_probs = child_probs[nz_chld_indices].unsqueeze_(-1)
+        rels = rels[nz_chld_indices]
+        # Sample relation matrices `M_ij` for each unique relation `i-j` (these
+        # matrices will be responsible for swapping the context).
+        M = pyro.sample(
+            "M_{}".format(var_sfx),
+            dist.Normal(self.rel_mu[rels], self.rel_sigma[rels]).independent(2)
+        )
+        # Batch-multiply sampled relation matrices with the correponding child
+        # scores.
+        child_probs = self.softmax(torch.bmm(M, child_probs).squeeze_(-1))
+        # We will only take a convex combination of the means if the parent
+        # probs are also non-zero, otherwise we will assign the child probs to
+        # the parents as is.
+        prnt_probs = prnt_probs[nz_chld_indices]
+        prnt_probs_sum = prnt_probs.sum(dim=-1)
+        z_prnt_indices = (prnt_probs_sum == 0.).nonzero().squeeze_(-1)
+        # indices of instances whose child scores are non-zero, but parent
+        # scores are zero
+        copy_indices = nz_chld_indices[z_prnt_indices]
+        child_probs2copy = child_probs[z_prnt_indices]
+        nz_prnt_indices = prnt_probs_sum.nonzero().squeeze(-1)
+        alpha_indices = nz_chld_indices[nz_prnt_indices]
+        if alpha_indices.numel() == 0:
+            alpha = None
+        else:
+            child_probs = child_probs[nz_prnt_indices]
+            rels = rels[nz_prnt_indices]
+            prnt_probs = prnt_probs[nz_prnt_indices]
+            beta = pyro.sample(
+                "beta_{}".format(var_sfx),
+                dist.Beta(self.beta_p[rels], self.beta_q[rels]).independent(1)
+            ).unsqueeze(-1)
+            # take a convex combination of the parent and child scores as new
+            # values for alpha (since some of the vect)
+            alpha = (1. - beta) * prnt_probs + beta * child_probs
+            scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
+            alpha *= scale
+        return copy_indices, child_probs2copy, alpha_indices, alpha
 
     def scale(self, prnt_probs, child_probs):
         min_score = self.z_epsilon * torch.ones(prnt_probs.shape)
@@ -151,4 +159,12 @@ class AlphaModel(AlphaBase):
 
 
 class AlphaGuide(AlphaModel):
-    pass
+    def __init__(self, rel2idx, n_polarities=3):
+        super(AlphaGuide, self).__init__(rel2idx, n_polarities)
+        self.rel_mu = pyro.param("rel_mu", self.rel_mu)
+        self.rel_sigma = pyro.param("rel_sigma", self.rel_sigma,
+                                    constraint=constraints.positive)
+        self.beta_p = pyro.param("beta_p", self.beta_p,
+                                 constraint=constraints.positive)
+        self.beta_q = pyro.param("beta_q", self.beta_q,
+                                 constraint=constraints.positive)

@@ -74,9 +74,6 @@ class VarInfModel(nn.Module):
         # since we will modify `node_scores` in-place, we would like to
         # preserver the original variant of it to pass it safely to model
         node_scores = deepcopy(node_scores)
-        # print("node_scores [m]:", repr(node_scores))
-        # print("children [m]:", repr(children))
-        # print("rels [m]:", repr(rels))
         # process minibatch
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
@@ -84,44 +81,37 @@ class VarInfModel(nn.Module):
         pyro.module("alpha_model [m]:", self.alpha_model)
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
-            # print("inst_indices", repr(inst_indices))
             # iterate over each node of the tree in the bottom-up fashion
             for i in range(max_t):
-                # print("inst_indices [m]:", repr(inst_indices))
                 prnt_scores_i = node_scores[inst_indices, i]
-                # print("prnt_scores_i [m]:", repr(prnt_scores_i))
                 rels_i = rels[inst_indices, i]
-                # print("rels_i", repr(rels_i))
                 child_scores_i = self._get_child_scores(
                     node_scores, children, inst_indices, i,
                     n_instances, max_children
                 )
-                # print("child_scores_i [m]", repr(child_scores_i))
                 # iterate over each child of that node
                 for j in range(max_children):
                     child_scores_ij = child_scores_i[inst_indices, j]
-                    # print("child_scores_ij [m]:", repr(child_scores_ij))
                     var_sfx = "{}_{}".format(i, j)
-                    alpha = self.alpha_model(var_sfx, prnt_scores_i,
-                                             child_scores_ij,
-                                             rels_i[inst_indices, j])
-                    if alpha is None:
-                        continue
-                    # print("alpha", repr(alpha))
-                    z_ij = pyro.sample(
-                        "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
-                    # print("updated parent nodes (z_ij) [m]:", repr(z_ij))
-                    node_scores[inst_indices, i] = z_ij
-            pyro.sample("y", dist.Categorical(z_ij), obs=labels[inst_indices])
+                    copy_indices, probs2copy, alpha_indices, alpha = \
+                        self.alpha_model(
+                            var_sfx, prnt_scores_i,
+                            child_scores_ij, rels_i[inst_indices, j]
+                        )
+                    if probs2copy is not None:
+                        node_scores[inst_indices[copy_indices], i] = probs2copy
+                    if alpha is not None:
+                        z_ij = pyro.sample(
+                            "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
+                        node_scores[inst_indices[alpha_indices], i] = z_ij
+            return pyro.sample("y", dist.Categorical(z_ij),
+                               obs=labels[inst_indices])
 
     # the guide (i.e., variational distribution): q(z|x)
     def guide(self, node_scores, children, rels, labels):
         # since we will modify `node_scores` in-place, we would like to
         # preserver the original variant of it to pass it safely to model
         node_scores = deepcopy(node_scores)
-        # print("* node_scores [g]:", repr(node_scores))
-        # print("children [g]:", repr(children))
-        # print("rels [g]:", repr(rels))
         # process minibatch
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
@@ -129,39 +119,29 @@ class VarInfModel(nn.Module):
         pyro.module("alpha_guide", self.alpha_guide)
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
-            # print("inst_indices", repr(inst_indices))
             # iterate over each node of the tree in the bottom-up fashion
             for i in range(max_t):
-                # print("i:", repr(i))
-                # print("inst_indices [g]:", repr(inst_indices))
                 prnt_scores_i = node_scores[inst_indices, i]
-                # print("prnt_scores_i [g]:", repr(prnt_scores_i))
                 rels_i = rels[inst_indices, i]
-                # print("rels_i [g]:", repr(rels_i))
                 child_scores_i = self._get_child_scores(
                     node_scores, children, inst_indices, i,
                     n_instances, max_children
                 )
-                # print("child_scores_i [g]:", repr(child_scores_i))
                 # iterate over each child of that node
                 for j in range(max_children):
-                    # print("j:", repr(j))
                     child_scores_ij = child_scores_i[inst_indices, j]
-                    # print("child_scores_ij [g]:", repr(child_scores_ij))
                     var_sfx = "{}_{}".format(i, j)
-                    alpha = self.alpha_guide(var_sfx,
-                                             prnt_scores_i, child_scores_ij,
-                                             rels_i[inst_indices, j])
-                    if alpha is None:
-                        continue
-                    # print("alpha [g]", repr(alpha))
-                    z_ij = pyro.sample(
-                        "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
-                    # if var_sfx == "7_0":
-                    #     print("z_7_0", repr(z_ij))
-                    #     raise NotImplementedError
-                    # print("updated parent nodes (z_ij) [g]::", repr(z_ij))
-                    node_scores[inst_indices, i] = z_ij
+                    copy_indices, probs2copy, alpha_indices, alpha = \
+                        self.alpha_model(
+                            var_sfx, prnt_scores_i,
+                            child_scores_ij, rels_i[inst_indices, j]
+                        )
+                    if probs2copy is not None:
+                        node_scores[inst_indices[copy_indices], i] = probs2copy
+                    if alpha is not None:
+                        z_ij = pyro.sample(
+                            "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
+                        node_scores[inst_indices[alpha_indices], i] = z_ij
             return node_scores[inst_indices, -1]
 
     def _get_child_scores(self, node_scores, children, inst_indices, i,
@@ -187,7 +167,6 @@ class VarInfModel(nn.Module):
         loss = 0.
         for batch_j in data:
             loss += self._svi.step(*batch_j)
-        # print("loss", repr(loss))
         return loss
 
     def predict(self, x, trg_y):
@@ -293,34 +272,33 @@ class VarInfAnalyzer(R2N2Analyzer):
         Y_dev[0, :] = X_dev[-1]
         # optimize model on the training set
         best_f1 = -1.
+        best_dev_loss = np.Inf
         best_model = None
         pyro.clear_param_store()
         for epoch_i in range(N_EPOCHS):
             selected = False
             epoch_start = datetime.utcnow()
             train_loss = self._model.step(train_set)
-            # print("Y_train[1]: ", repr(Y_train[1]))
             self._model.predict(X_train, Y_train[1])
-            # print("* Y_train[1]: ", repr(Y_train[1]))
             train_macro_f1 = f1_score(Y_train[0], Y_train[1], average="macro")
             dev_loss = self._model.loss(X_dev)
-            # print("Y_dev[1]: ", repr(Y_dev[1]))
             self._model.predict(X_dev, Y_dev[1])
-            # print("Y_dev[1]: ", repr(Y_dev[1]))
             dev_macro_f1 = f1_score(Y_dev[0], Y_dev[1], average="macro")
             epoch_end = datetime.utcnow()
-            if best_f1 < dev_macro_f1:
+            if best_f1 < dev_macro_f1 or (best_f1 == dev_macro_f1
+                                          and dev_loss < best_dev_loss):
                 best_f1 = dev_macro_f1
+                best_dev_loss = dev_loss
                 selected = True
-                best_model = deepcopy(self._model)
+                best_model = deepcopy(self._model.state_dict())
             self._logger.info(
-                "Epoch %d finished in %d sec [train loss:"
-                " %f, train macro-F1: %f, dev loss: %f, dev macro-F1: %f]%s",
+                "Epoch %d finished in %d sec [train loss: %f, "
+                "train macro-F1: %f, dev loss: %f, dev macro-F1: %f]%s",
                 epoch_i, (epoch_end - epoch_start).total_seconds(),
                 train_loss, train_macro_f1, dev_loss, dev_macro_f1,
                 "*" if selected else ""
             )
-        self._model = best_model
+        self._model.load_state_dict(best_model)
         self._logger.debug("Model trained...")
         return best_f1
 
