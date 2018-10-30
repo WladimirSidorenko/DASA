@@ -21,6 +21,7 @@ from copy import deepcopy
 from datetime import datetime
 from pyro.infer import SVI, Trace_ELBO
 from pyro.optim import RMSprop
+from six import iteritems, string_types
 from sklearn.metrics import f1_score
 import numpy as np
 import pyro
@@ -30,8 +31,38 @@ import torch.nn as nn
 import torch
 
 from .alpha import AlphaGuide, AlphaModel
+from .constants import CONTRASTIVE_RELS
 from .dl import N_EPOCHS, OPTIM_PARAM
 from .r2n2 import R2N2Analyzer
+
+
+##################################################################
+# Constants
+TEST_EPOCHS = 20
+N_EPOCHS = 5
+
+
+##################################################################
+# Methods
+def check_rel(rel, rel_set):
+    """Check whether given relation is present in contrastive rel set.
+
+    Args:
+      rel (str or tuple): relation to check
+      rel_set (set[str]): relation to check
+
+    Returns:
+      bool: true if the given relation is present in contrastive rels
+
+    """
+    if rel is None:
+        return False
+    if isinstance(rel, tuple):
+        return check_rel(rel[0], rel_set)
+    if isinstance(rel, string_types):
+        return rel.lower() in rel_set
+    raise TypeError("Unsupported type {} of relation {!r}.".format(
+        type(rel), rel))
 
 
 ##################################################################
@@ -53,17 +84,20 @@ class VarInfModel(nn.Module):
         # initialize mapping from relations to indices
         self._rel2idx = {rel_i: i for i, rel_i in enumerate(rels, 1)}
         self._rel2idx[None] = 0
-        # initialize internal model
-        self.alpha_model = AlphaModel(self._rel2idx)
-        self.alpha_guide = AlphaGuide(self._rel2idx)
-        self._svi = SVI(self.model, self.guide, optim=RMSprop(OPTIM_PARAM),
-                        loss=Trace_ELBO())
-        self._test_epochs = 10
-        self._max_test_instances = 10
+        self.n_rels = len(self._rel2idx)
         self.n_polarities = n_polarities
+        # setup testing variables
+        self._test_epochs = TEST_EPOCHS
+        self._max_test_instances = 10
         self._test_wbench = np.empty((self._test_epochs,
                                       self._max_test_instances,
                                       self.n_polarities))
+        # initialize the internal model
+        self.alpha_model = AlphaModel(self.n_rels)
+        self.alpha_guide = AlphaGuide(self.n_rels)
+        self.softplus = nn.Softplus()
+        self._svi = SVI(self.model, self.guide, optim=RMSprop(OPTIM_PARAM),
+                        loss=Trace_ELBO())
 
     @property
     def rel2idx(self):
@@ -78,7 +112,8 @@ class VarInfModel(nn.Module):
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
         max_children = children.shape[-1]
-        pyro.module("alpha_model [m]:", self.alpha_model)
+        pyro.random_module("alpha_model [m]:", self.alpha_model,
+                           self._get_priors(guide_mode=False))
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
@@ -116,7 +151,8 @@ class VarInfModel(nn.Module):
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
         max_children = children.shape[-1]
-        pyro.module("alpha_guide", self.alpha_guide)
+        pyro.random_module("alpha_guide", self.alpha_guide,
+                           self._get_priors(guide_mode=True))
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
@@ -143,16 +179,6 @@ class VarInfModel(nn.Module):
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
             return node_scores[inst_indices, -1]
-
-    def _get_child_scores(self, node_scores, children, inst_indices, i,
-                          n_instances, max_children):
-        child_indices = children[inst_indices, i].reshape(-1)
-        inst_indices.repeat(max_children, 1).t().reshape(-1)
-        child_scores = node_scores[
-            inst_indices.repeat(max_children, 1).t().reshape(-1),
-            child_indices
-        ].reshape(n_instances, max_children, -1)
-        return child_scores
 
     def step(self, data):
         """Perform a training step on a single epoch.
@@ -215,6 +241,75 @@ class VarInfModel(nn.Module):
                  self.n_polarities)
             )
 
+    def _get_child_scores(self, node_scores, children, inst_indices, i,
+                          n_instances, max_children):
+        child_indices = children[inst_indices, i].reshape(-1)
+        inst_indices.repeat(max_children, 1).t().reshape(-1)
+        child_scores = node_scores[
+            inst_indices.repeat(max_children, 1).t().reshape(-1),
+            child_indices
+        ].reshape(n_instances, max_children, -1)
+        return child_scores
+
+    def _get_priors(self, guide_mode=False):
+        """Initialize priors for alpha guide and model parameters.
+
+        Args:
+          guide_mode (bool): create priors for guide (i.e., wrap relevant
+            parameters into `pyro.param`)
+
+        Returns:
+          dict: dictionary of priors
+
+        """
+        # relation transformation matrix
+        M_mu = np.eye(self.n_polarities, dtype="float32")
+        M_mu[1, :] = [-0.25, 0.5, -0.25]
+        M_mu = np.tile(M_mu, (self.n_rels, 1)).reshape(
+            self.n_rels, self.n_polarities, self.n_polarities
+        )
+        for rel, rel_idx in iteritems(self.rel2idx):
+            # swap axes for contrastive relations
+            if check_rel(rel, CONTRASTIVE_RELS):
+                mu_i = M_mu[rel_idx]
+                mu_i[[0, 2]] = mu_i[[2, 0]]
+        M_mu = torch.tensor(M_mu)
+        M_sigma = torch.tensor(
+            np.ones((self.n_rels, self.n_polarities, self.n_polarities),
+                    dtype="float32")
+        )
+        # beta
+        beta_p = 15. * torch.tensor(np.ones(self.n_rels, dtype="float32"))
+        beta_q = 15. * torch.tensor(np.ones(self.n_rels, dtype="float32"))
+        # z_epsilon
+        z_epsilon_p = torch.tensor(1.)
+        z_epsilon_q = torch.tensor(15.)
+        # scale factor
+        scale_factor = torch.tensor(42.)
+        # wrap parameters into `pyro.param` for the guide
+        if guide_mode:
+            M_mu = pyro.param("M_mu", M_mu)
+            M_sigma = pyro.param("M_sigma", M_sigma)
+            beta_p = pyro.param("beta_p", beta_p)
+            beta_q = pyro.param("beta_q", beta_q)
+            z_epsilon_p = pyro.param("z_epsilon_p", z_epsilon_p)
+            z_epsilon_q = pyro.param("z_epsilon_p", z_epsilon_p)
+            scale_factor = pyro.param("scale_factor", scale_factor)
+        # ensure positivity of certain parameters
+        M_sigma = self.softplus(M_sigma)
+        beta_p = self.softplus(beta_p)
+        beta_q = self.softplus(beta_q)
+        z_epsilon_p = self.softplus(z_epsilon_p)
+        z_epsilon_q = self.softplus(z_epsilon_q)
+        scale_factor = self.softplus(scale_factor)
+        # sample the variables from their corresponding distributions
+        M = dist.Normal(M_mu, M_sigma).independent(2)
+        beta = dist.Beta(beta_p, beta_q).independent(1)
+        z_epsilon = dist.Beta(z_epsilon_p, z_epsilon_q)
+        scale_factor = dist.Chi2(scale_factor)
+        return {"M": M, "beta": beta, "z_epsilon": z_epsilon,
+                "scale_factor": scale_factor}
+
 
 class VarInfAnalyzer(R2N2Analyzer):
     """Discourse-aware sentiment analysis using variational inference.
@@ -276,6 +371,8 @@ class VarInfAnalyzer(R2N2Analyzer):
         best_model = None
         pyro.clear_param_store()
         for epoch_i in range(N_EPOCHS):
+            # print("alpha_model.M:", repr(self._model.alpha_model.M))
+            # print("alpha_guide.M:", repr(self._model.alpha_guide.M))
             selected = False
             epoch_start = datetime.utcnow()
             train_loss = self._model.step(train_set)
@@ -298,7 +395,10 @@ class VarInfAnalyzer(R2N2Analyzer):
                 train_loss, train_macro_f1, dev_loss, dev_macro_f1,
                 "*" if selected else ""
             )
+        # print("best_model", repr(best_model))
         self._model.load_state_dict(best_model)
+        # for name in pyro.get_param_store().get_all_param_names():
+        #     self._logger.info("Param [%s]: %r", name, pyro.param(name).data.numpy())
         self._logger.debug("Model trained...")
         return best_f1
 
