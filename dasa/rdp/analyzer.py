@@ -4,11 +4,11 @@
 ##################################################################
 # Documentation
 """Module providing a class for predicting polarity of a tweet using
-variational inference.
+recursive Dirichlet process.
 
 Attributes:
-  VarInfAnalyzer (class): class for predicting polarity of a tweet using
-    variational inference
+  RDPAnalyzer (class): class for predicting polarity of a tweet using
+    a recursive Dirichlet process
 
 """
 
@@ -25,14 +25,14 @@ import torch
 
 from ..constants import IDX2CLS
 from ..dl import N_EPOCHS
-from .model import VarInfModel
+from .model import RDPModel
 from ..rst import Tree as RSTTree
 from ..r2n2 import R2N2Analyzer
 
 
 ##################################################################
 # Class
-class VarInfAnalyzer(R2N2Analyzer):
+class RDPAnalyzer(R2N2Analyzer):
     """Discourse-aware sentiment analysis using variational inference.
 
     Attributes:
@@ -47,9 +47,9 @@ class VarInfAnalyzer(R2N2Analyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(VarInfAnalyzer, self).__init__(*args, **kwargs)
+        super(RDPAnalyzer, self).__init__(*args, **kwargs)
         self._wbench_y = None
-        self._name = "VarInf"
+        self._name = "RDP"
 
     def predict(self, instance):
         tree = self.span2nuc(
@@ -78,10 +78,10 @@ class VarInfAnalyzer(R2N2Analyzer):
 
         """
         rels = self.get_rels(forrest)
-        self._model = VarInfModel(rels)
+        self._model = RDPModel(rels)
 
     def _init_wbenches(self):
-        super(VarInfAnalyzer, self)._init_wbenches()
+        super(RDPAnalyzer, self)._init_wbenches()
         self._wbench_y = np.zeros(1, dtype="long")
 
     def _train(self, train_set, dev_set):
@@ -138,7 +138,7 @@ class VarInfAnalyzer(R2N2Analyzer):
         return best_f1
 
     def _digitize_data(self, data, train_mode=False):
-        dataloader = super(VarInfAnalyzer, self)._digitize_data(
+        dataloader = super(RDPAnalyzer, self)._digitize_data(
             data, train_mode
         )
         # remove message scores as they will be incorporated as regular priors
@@ -149,8 +149,8 @@ class VarInfAnalyzer(R2N2Analyzer):
         return dataloader
 
     def tree2mtx(self, node_scores, children, rels, tree, instance):
-        super(VarInfAnalyzer, self).tree2mtx(node_scores, children, rels,
-                                             tree, instance)
+        super(RDPAnalyzer, self).tree2mtx(node_scores, children, rels,
+                                          tree, instance)
         assert np.sum(node_scores[-1, :]) == 0, \
             "Scores of the root node are not equal 0."
         node_scores[-1, :] = instance["polarity_scores"]
@@ -160,11 +160,11 @@ class VarInfAnalyzer(R2N2Analyzer):
 
         """
         self._model._reset()
-        super(VarInfAnalyzer, self)._reset()
+        super(RDPAnalyzer, self)._reset()
 
     def _restore(self, a_path):
         """Remove members which cannot be serialized.
 
         """
-        super(VarInfAnalyzer, self)._restore(a_path)
+        super(RDPAnalyzer, self)._restore(a_path)
         self._model._restore()

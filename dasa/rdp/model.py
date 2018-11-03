@@ -64,7 +64,7 @@ def check_rel(rel, rel_set):
 
 ##################################################################
 # Class
-class VarInfModel(nn.Module):
+class RDPModel(nn.Module):
     """Network for predicting tweet sentiment using variational inference.
 
     """
@@ -77,7 +77,7 @@ class VarInfModel(nn.Module):
           n_polarities (int): number of polarities to predict
 
         """
-        super(VarInfModel, self).__init__()
+        super(RDPModel, self).__init__()
         # initialize mapping from relations to indices
         self._logger = LOGGER
         self._rel2idx = {rel_i: i for i, rel_i in enumerate(rels, 1)}

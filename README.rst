@@ -373,6 +373,52 @@ Results
 | SB10k     |  0.64  | 0.69 |      0.66     |  0.46  | 0.45 |     0.45      |  0.81  | 0.79 |     0.8     |       0.5592      |      0.7133       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+RDP
+^^^
+
+To determine the polarity of a tweet using a recursive Dirichlet
+process (RDP), you can use the following command to train the model:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t rdp -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+
+and then run:
+
+.. code-block:: shell
+
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/rdp/rdp.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/rdp/rdp.json
+
+to predict the labels on the test sets and evaluate the quality of the
+resulting model.
+
+Equivalently, you can run the following commands to check the
+performance of this approach on the SB10k_ corpus:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t rdp -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
+  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/rdp/rdp.json
+  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/rdp/rdp.json
+
+
+Results
+~~~~~~~
+
+.. comment:
+
+.. comment:
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
+| SB10k     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
 WANG
 ^^^^
 
