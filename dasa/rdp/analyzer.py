@@ -23,9 +23,9 @@ import numpy as np
 import pyro
 import torch
 
+from .model import RDPModel
 from ..constants import IDX2CLS
 from ..dl import N_EPOCHS
-from .model import RDPModel
 from ..rst import Tree as RSTTree
 from ..r2n2 import R2N2Analyzer
 
