@@ -353,9 +353,13 @@ class RDPModel(nn.Module):
           dict[str -> Dist]: dictionary of prior probabilities
 
         """
-        M = dist.Normal(params["M_mu"], params["M_sigma"]).independent(2)
-        beta = dist.Beta(params["beta_p"], params["beta_q"]).independent(1)
-        z_epsilon = dist.Beta(params["z_epsilon_p"], params["z_epsilon_q"])
+        M = dist.Normal(params["M_mu"],
+                        self.softplus(params["M_sigma"])).independent(2)
+        beta = dist.Beta(self.softplus(params["beta_p"]),
+                         self.softplus(params["beta_q"])).independent(1)
+        z_epsilon = dist.Beta(
+            self.softplus(params["z_epsilon_p"]),
+            self.softplus(params["z_epsilon_q"]))
         scale_factor = dist.Chi2(params["scale_factor"])
         return {"M": M, "beta": beta, "z_epsilon": z_epsilon,
                 "scale_factor": scale_factor}
