@@ -26,10 +26,10 @@ class AlphaModel(nn.Module):
     def __init__(self, n_rels, n_polarities=3):
         super(AlphaModel, self).__init__()
         # create separate prior for every relation
-        self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
-        self.scale_factor = nn.Parameter(torch.tensor(42.))
         self.M = nn.Parameter(torch.ones(n_rels, n_polarities, n_polarities))
         self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
+        self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
+        self.scale_factor = nn.Parameter(torch.tensor(42.))
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
@@ -75,21 +75,16 @@ class AlphaModel(nn.Module):
     def scale(self, prnt_probs, child_probs):
         min_score = self.z_epsilon * torch.ones(prnt_probs.shape)
         z = torch.max(min_score, prnt_probs + child_probs)
-        z_norm = 1./torch.sum(z, dim=-1)
+        z_norm = 1. / torch.sum(z, dim=-1)
         z_norm.unsqueeze_(-1)
-        # print("z_norm", repr(z_norm), z_norm.shape)
         z *= z_norm
         entropy = -torch.sum(z * torch.log(z), dim=-1)
-        # print("entropy:", repr(entropy))
         cos = torch.sum(prnt_probs * child_probs, dim=-1)
-        # print("unnormalized cosine:", repr(cos))
         norm = torch.norm(prnt_probs, dim=-1) * torch.norm(child_probs, dim=-1)
         # replace 0's with 1's to prevent division by 0, since cosine in
         # this case will be 0 anyway
         norm = torch.where(norm == 0, torch.ones(norm.shape), norm)
-        # print("norm:", repr(norm))
         cos = 1.1 + cos / norm
-        # print("normalized cosine:", repr(cos))
         scale = self.scale_factor * cos / entropy
         return scale
 

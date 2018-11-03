@@ -3,7 +3,7 @@
 
 ##################################################################
 # Documentation
-"""Module providing a class for predicting polarity of a tweet using
+"""Module providing a model for predicting polarity of a tweet using
 variational inference.
 
 Attributes:
@@ -18,11 +18,9 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from builtins import range
 from copy import deepcopy
-from datetime import datetime
 from pyro.infer import SVI, Trace_ELBO
 from pyro.optim import RMSprop
 from six import iteritems, string_types
-from sklearn.metrics import f1_score
 import numpy as np
 import pyro
 import pyro.distributions as dist
@@ -31,15 +29,14 @@ import torch.nn as nn
 import torch
 
 from .alpha import AlphaGuide, AlphaModel
-from .constants import CONTRASTIVE_RELS
-from .dl import N_EPOCHS, OPTIM_PARAM
-from .r2n2 import R2N2Analyzer
+from ..constants import CONTRASTIVE_RELS
+from ..dl import OPTIM_PARAM
+from ..utils import LOGGER
 
 
 ##################################################################
 # Constants
-TEST_EPOCHS = 20
-N_EPOCHS = 5
+TEST_EPOCHS = 40
 
 
 ##################################################################
@@ -82,6 +79,7 @@ class VarInfModel(nn.Module):
         """
         super(VarInfModel, self).__init__()
         # initialize mapping from relations to indices
+        self._logger = LOGGER
         self._rel2idx = {rel_i: i for i, rel_i in enumerate(rels, 1)}
         self._rel2idx[None] = 0
         self.n_rels = len(self._rel2idx)
@@ -92,16 +90,24 @@ class VarInfModel(nn.Module):
         self._test_wbench = np.empty((self._test_epochs,
                                       self._max_test_instances,
                                       self.n_polarities))
-        # initialize the internal model
-        self.alpha_model = AlphaModel(self.n_rels)
-        self.alpha_guide = AlphaGuide(self.n_rels)
         self.softplus = nn.Softplus()
+        # initialize internal models
+        self.alpha_model = AlphaModel(self.n_rels)
+        self._alpha_model_priors = None
+        self.alpha_guide = AlphaGuide(self.n_rels)
+        self._alpha_guide_prior_params = None
+        self._param_store = pyro.get_param_store()
+        self._best_params = None
         self._svi = SVI(self.model, self.guide, optim=RMSprop(OPTIM_PARAM),
                         loss=Trace_ELBO())
 
     @property
     def rel2idx(self):
         return self._rel2idx
+
+    @property
+    def best_params(self):
+        return self._best_params
 
     # the model: p(x, z) = p(x|z)p(z)
     def model(self, node_scores, children, rels, labels):
@@ -112,8 +118,9 @@ class VarInfModel(nn.Module):
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
         max_children = children.shape[-1]
-        pyro.random_module("alpha_model [m]:", self.alpha_model,
-                           self._get_priors(guide_mode=False))
+        alpha_model = pyro.random_module(
+            "alpha_model", self.alpha_model, self._get_model_priors()
+        )()
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
@@ -129,7 +136,7 @@ class VarInfModel(nn.Module):
                     child_scores_ij = child_scores_i[inst_indices, j]
                     var_sfx = "{}_{}".format(i, j)
                     copy_indices, probs2copy, alpha_indices, alpha = \
-                        self.alpha_model(
+                        alpha_model(
                             var_sfx, prnt_scores_i,
                             child_scores_ij, rels_i[inst_indices, j]
                         )
@@ -151,8 +158,9 @@ class VarInfModel(nn.Module):
         n_instances = node_scores.shape[0]
         max_t = node_scores.shape[1]
         max_children = children.shape[-1]
-        pyro.random_module("alpha_guide", self.alpha_guide,
-                           self._get_priors(guide_mode=True))
+        priors = self._get_guide_priors()
+        alpha_guide = pyro.random_module("alpha_guide", self.alpha_guide,
+                                         priors)()
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
@@ -168,7 +176,7 @@ class VarInfModel(nn.Module):
                     child_scores_ij = child_scores_i[inst_indices, j]
                     var_sfx = "{}_{}".format(i, j)
                     copy_indices, probs2copy, alpha_indices, alpha = \
-                        self.alpha_model(
+                        alpha_guide(
                             var_sfx, prnt_scores_i,
                             child_scores_ij, rels_i[inst_indices, j]
                         )
@@ -195,6 +203,15 @@ class VarInfModel(nn.Module):
             loss += self._svi.step(*batch_j)
         return loss
 
+    def loss(self, x):
+        """Evaluate the loss function on the given data.
+
+        Args:
+          x (tuple[tensors]): tensors with input data
+
+        """
+        return self._svi.evaluate_loss(*x)
+
     def predict(self, x, trg_y):
         """Predict labels.
 
@@ -215,31 +232,29 @@ class VarInfModel(nn.Module):
             with torch.no_grad():
                 for wbench_i in self._test_wbench:
                     wbench_i[:n_instances] = self.guide(*x)
-        # print("* self._test_wbench:", repr(self._test_wbench))
         mean = np.mean(self._test_wbench, axis=0)
-        # print("predict trg_y: ", repr(trg_y))
-        # print("predict mean: ", repr(mean[:n_instances]))
         trg_y[:] = np.argmax(mean[:n_instances], axis=-1)
-        # print("evaluate labels: ", repr(labels))
         return trg_y
 
-    def loss(self, x):
-        """Evaluate the loss function on the given data.
-
-        Args:
-          x (tuple[tensors]): tensors with input data
+    def inspect_state(self):
+        """Output current pyro parameters.
 
         """
-        return self._svi.evaluate_loss(*x)
+        for name in self._param_store.get_all_param_names():
+            self._logger.info("Param [%s]: %r", name,
+                              pyro.param(name).data.numpy())
 
-    def _resize_wbench(self, n_instances):
-        if n_instances > self._max_test_instances:
-            self._max_test_instances = n_instances
-            self._test_wbench = np.resize(
-                self._test_wbench,
-                (self._test_epochs, self._max_test_instances,
-                 self.n_polarities)
-            )
+    def remember_state(self):
+        """Remember current pyro parameters.
+
+        """
+        self._best_params = deepcopy(self._param_store.get_state())
+
+    def set_state(self, params):
+        """Set current pyro parameters.
+
+        """
+        self._param_store.set_state(self.best_params)
 
     def _get_child_scores(self, node_scores, children, inst_indices, i,
                           n_instances, max_children):
@@ -251,15 +266,11 @@ class VarInfModel(nn.Module):
         ].reshape(n_instances, max_children, -1)
         return child_scores
 
-    def _get_priors(self, guide_mode=False):
-        """Initialize priors for alpha guide and model parameters.
-
-        Args:
-          guide_mode (bool): create priors for guide (i.e., wrap relevant
-            parameters into `pyro.param`)
+    def _get_prior_params(self):
+        """Initialize priors which are common for model and guide.
 
         Returns:
-          dict: dictionary of priors
+          dict[str -> np.array]: dictionary of distribution parameters
 
         """
         # relation transformation matrix
@@ -279,143 +290,102 @@ class VarInfModel(nn.Module):
                     dtype="float32")
         )
         # beta
-        beta_p = 15. * torch.tensor(np.ones(self.n_rels, dtype="float32"))
-        beta_q = 15. * torch.tensor(np.ones(self.n_rels, dtype="float32"))
+        beta_p = 15. * torch.tensor(np.ones((self.n_rels, 1),
+                                            dtype="float32"))
+        beta_q = 15. * torch.tensor(np.ones((self.n_rels, 1),
+                                            dtype="float32"))
         # z_epsilon
         z_epsilon_p = torch.tensor(1.)
         z_epsilon_q = torch.tensor(15.)
         # scale factor
         scale_factor = torch.tensor(42.)
-        # wrap parameters into `pyro.param` for the guide
-        if guide_mode:
-            M_mu = pyro.param("M_mu", M_mu)
-            M_sigma = pyro.param("M_sigma", M_sigma)
-            beta_p = pyro.param("beta_p", beta_p)
-            beta_q = pyro.param("beta_q", beta_q)
-            z_epsilon_p = pyro.param("z_epsilon_p", z_epsilon_p)
-            z_epsilon_q = pyro.param("z_epsilon_p", z_epsilon_p)
-            scale_factor = pyro.param("scale_factor", scale_factor)
-        # ensure positivity of certain parameters
-        M_sigma = self.softplus(M_sigma)
-        beta_p = self.softplus(beta_p)
-        beta_q = self.softplus(beta_q)
-        z_epsilon_p = self.softplus(z_epsilon_p)
-        z_epsilon_q = self.softplus(z_epsilon_q)
-        scale_factor = self.softplus(scale_factor)
+        return {"M_mu": M_mu, "M_sigma": M_sigma, "beta_p": beta_p,
+                "beta_q": beta_q, "z_epsilon_p": z_epsilon_p,
+                "z_epsilon_q": z_epsilon_q, "scale_factor": scale_factor}
+
+    def _get_model_priors(self):
+        """Initialize priors for alpha model.
+
+        Returns:
+          dict: dictionary of priors
+
+        """
+        if self._alpha_model_priors:
+            return self._alpha_model_priors
         # sample the variables from their corresponding distributions
-        M = dist.Normal(M_mu, M_sigma).independent(2)
-        beta = dist.Beta(beta_p, beta_q).independent(1)
-        z_epsilon = dist.Beta(z_epsilon_p, z_epsilon_q)
-        scale_factor = dist.Chi2(scale_factor)
+        params = self._get_prior_params()
+        self._alpha_model_priors = self._params2probs(params)
+        return self._alpha_model_priors
+
+    def _get_guide_priors(self):
+        """Initialize priors for alpha guide.
+
+        Args:
+          guide_mode (bool): create priors for guide (i.e., wrap relevant
+            parameters into `pyro.param`)
+
+        Returns:
+          dict: dictionary of priors
+
+        """
+        if not self._alpha_guide_prior_params:
+            # create initial parameters
+            params = self._get_prior_params()
+            # register all parameters in pyro
+            for p, v in iteritems(params):
+                pyro.param(p, v)
+            self._alpha_guide_prior_params = dict(
+                self._param_store.named_parameters()
+            )
+        else:
+            # register all parameters in pyro
+            for p, v in iteritems(self._alpha_guide_prior_params):
+                pyro.param(p, v)
+        return self._params2probs(self._alpha_guide_prior_params)
+
+    def _params2probs(self, params):
+        """Convert parameters to probability distributions.
+
+        Args:
+          params (dict[str -> np.array]): dictionary of distribution parameters
+
+        Returns:
+          dict[str -> Dist]: dictionary of prior probabilities
+
+        """
+        M = dist.Normal(params["M_mu"], params["M_sigma"]).independent(2)
+        beta = dist.Beta(params["beta_p"], params["beta_q"]).independent(1)
+        z_epsilon = dist.Beta(params["z_epsilon_p"], params["z_epsilon_q"])
+        scale_factor = dist.Chi2(params["scale_factor"])
         return {"M": M, "beta": beta, "z_epsilon": z_epsilon,
                 "scale_factor": scale_factor}
 
-
-class VarInfAnalyzer(R2N2Analyzer):
-    """Discourse-aware sentiment analysis using variational inference.
-
-    Attributes:
-
-    """
-
-    def __init__(self, *args, **kwargs):
-        """Class constructor.
-
-        Args:
-          args (list[str]): arguments to use for initializing models
-          kwargs (dict): keyword arguments to use for initializing models
-
-        """
-        super(VarInfAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "VarInf"
-
-    def predict(self, instances):
-        raise NotImplementedError
-
-    def debug(self, instance):
-        raise NotImplementedError
-
-    def _init_model(self, forrest):
-        """Initialize the model that will be used for prediction.
-
-        Args:
-          forrest (list[RSTTree]): list of all training RST trees
-
-        """
-        rels = self.get_rels(forrest)
-        self._model = VarInfModel(rels)
-
-    def _train(self, train_set, dev_set):
-        """Train specified model(s) on the provided data.
-
-        Args:
-          train_set (list): training set
-          dev_set (list): development set
-
-        Returns:
-          float: best macro-averaged F1 observed on the dev set
-
-        """
-        self._logger.debug("Training model...")
-        # prepare matrices for storing gold and predicted labels of the
-        # training and development sets
-        X_train = train_set.dataset.tensors
-        Y_train = np.empty((2, len(train_set.dataset)), dtype="int32")
-        Y_train[0, :] = X_train[-1]
-        X_dev = dev_set.dataset.tensors
-        Y_dev = np.empty((2, len(dev_set.dataset)), dtype="int32")
-        Y_dev[0, :] = X_dev[-1]
-        # optimize model on the training set
-        best_f1 = -1.
-        best_dev_loss = np.Inf
-        best_model = None
-        pyro.clear_param_store()
-        for epoch_i in range(N_EPOCHS):
-            # print("alpha_model.M:", repr(self._model.alpha_model.M))
-            # print("alpha_guide.M:", repr(self._model.alpha_guide.M))
-            selected = False
-            epoch_start = datetime.utcnow()
-            train_loss = self._model.step(train_set)
-            self._model.predict(X_train, Y_train[1])
-            train_macro_f1 = f1_score(Y_train[0], Y_train[1], average="macro")
-            dev_loss = self._model.loss(X_dev)
-            self._model.predict(X_dev, Y_dev[1])
-            dev_macro_f1 = f1_score(Y_dev[0], Y_dev[1], average="macro")
-            epoch_end = datetime.utcnow()
-            if best_f1 < dev_macro_f1 or (best_f1 == dev_macro_f1
-                                          and dev_loss < best_dev_loss):
-                best_f1 = dev_macro_f1
-                best_dev_loss = dev_loss
-                selected = True
-                best_model = deepcopy(self._model.state_dict())
-            self._logger.info(
-                "Epoch %d finished in %d sec [train loss: %f, "
-                "train macro-F1: %f, dev loss: %f, dev macro-F1: %f]%s",
-                epoch_i, (epoch_end - epoch_start).total_seconds(),
-                train_loss, train_macro_f1, dev_loss, dev_macro_f1,
-                "*" if selected else ""
+    def _resize_wbench(self, n_instances):
+        if n_instances > self._max_test_instances:
+            self._max_test_instances = n_instances
+            self._test_wbench = np.resize(
+                self._test_wbench,
+                (self._test_epochs, self._max_test_instances,
+                 self.n_polarities)
             )
-        # print("best_model", repr(best_model))
-        self._model.load_state_dict(best_model)
-        # for name in pyro.get_param_store().get_all_param_names():
-        #     self._logger.info("Param [%s]: %r", name, pyro.param(name).data.numpy())
-        self._logger.debug("Model trained...")
-        return best_f1
 
-    def _digitize_data(self, data, train_mode=False):
-        dataloader = super(VarInfAnalyzer, self)._digitize_data(
-            data, train_mode
+    def _reset(self):
+        """Remove members which cannot be serialized.
+
+        """
+        self._logger.info("Parameters before saving.")
+        self.inspect_state()
+        self._alpha_guide_prior_params = None
+        self._param_store = None
+        self._logger = None
+
+    def _restore(self):
+        """Remove members which cannot be serialized.
+
+        """
+        self._logger = LOGGER
+        self._param_store = pyro.get_param_store()
+        self.set_state(self.best_params)
+        self._alpha_guide_prior_params = dict(
+            self._param_store.named_parameters()
         )
-        # remove message scores as they will be incorporated as regular priors
-        # of the root node
-        tensors = list(dataloader.dataset.tensors)
-        tensors.pop(-2)
-        dataloader.dataset.tensors = tuple(tensors)
-        return dataloader
-
-    def tree2mtx(self, node_scores, children, rels, tree, instance):
-        super(VarInfAnalyzer, self).tree2mtx(node_scores, children, rels,
-                                             tree, instance)
-        assert np.sum(node_scores[-1, :]) == 0, \
-            "Scores of the root node are not equal 0."
-        node_scores[-1, :] = instance["polarity_scores"]

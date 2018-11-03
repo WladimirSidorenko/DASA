@@ -22,8 +22,7 @@ except ImportError:
 import abc
 import os
 
-from .constants import CLS2IDX
-from .utils import LOGGER, balance_data
+from .utils import LOGGER
 
 
 ##################################################################
