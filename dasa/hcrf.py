@@ -468,7 +468,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
     """
     @staticmethod
     def get_rels(forrest):
-        """Extract all relations present in forrest of RST trees.
+        """Extract all relations present in the forrest of RST trees.
 
         Args:
           forrest (list[rst.Tree]): list of RST trees

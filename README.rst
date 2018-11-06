@@ -443,28 +443,26 @@ Results
 ~~~~~~~
 
 .. comment: PotTS
-   .. targeted results: macro-F1: 0.677; micro-F1: 0.706;
-   .. current results: macro-F1: 0.6728; micro-F1: 0.7097;
-   .. Grid Search: macro-F1: 0.668; micro-F1: 0.7028;
-   .. Edge Features: macro-F1: 0.6749; micro-F1: 0.7117; (w/o grid search)
-   .. Edge Features: macro-F1: 0.643; micro-F1: 0.6928; (w grid search)
-   .. Binary States:
+   Current Results
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.76      0.79      0.77       437
+   negative       0.61      0.54      0.58       209
+   neutral       0.70      0.71      0.70       360
+   avg / total       0.71      0.71      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.47%
+   Micro-Averaged F1-Score (All Classes): 70.9742%
 
 .. comment: SB10k
-   .. targeted results: macro-F1: 0.559; micro-F1: 0.713;
-   .. current results: macro-F1: 0.5572; micro-F1: 0.7133;
-   .. Grid Search: macro-F1: 0.5602; micro-F1: 0.7146;
-   .. Edge Features: macro-F1: 0.5572; micro-F1: 0.7133; (w/o grid search)
-   .. Edge Features: macro-F1: 0.5498; micro-F1: 0.708; (w grid search)
-   .. Binary States:
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
 
-      analyzing message 362864204631793664
-      evaluation results on the dev set after training on the train data:
-      Macro-Averaged F1-Score (Positive and Negative Classes): 70.43%
-      Micro-Averaged F1-Score (All Classes): 80.2111%
-      evaluation results on the dev set after training on the train data (no message scores):
-      Macro-Averaged F1-Score (Positive and Negative Classes): 11.22%
-      Micro-Averaged F1-Score (All Classes): 54.0897%
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
