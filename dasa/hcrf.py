@@ -23,6 +23,7 @@ from pystruct.models import EdgeFeatureLatentNodeCRF as EFLNCRF
 from six import iteritems, itervalues
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.utils import check_random_state
 import numpy as np
 
 from .constants import CLS2IDX, IDX2CLS, N_POLARITIES
@@ -79,10 +80,309 @@ class InfiniteDict(defaultdict):
 
 
 class FrankWolfeSSVM(FFSVM):
-    pass
+    def _frank_wolfe_bc(self, X, Y):
+        """Block-Coordinate Frank-Wolfe learning.
+
+        Compare Algorithm 3 in the reference paper.
+        """
+        n_samples = len(X)
+        # w = np.random.rand(*self.w.shape)
+        w = self.w.copy()
+        w_mat = np.zeros((n_samples, self.model.size_joint_feature))
+        l_mat = np.zeros(n_samples)
+        l = 0.0
+        k = 0
+
+        rng = check_random_state(self.random_state)
+        for iteration in range(self.max_iter):
+            if self.verbose > 0:
+                print(("Iteration %d" % iteration))
+
+            total_loss = 0.
+            total_aux_loss = 0.
+            perm = np.arange(n_samples)
+            if self.sample_method == 'perm':
+                rng.shuffle(perm)
+            elif self.sample_method == 'rnd':
+                perm = rng.randint(low=0, high=n_samples, size=n_samples)
+
+            for j in range(n_samples):
+                i = perm[j]
+                x, y = X[i], Y[i]
+                y_hat, delta_joint_feature, slack, loss, aux_loss = \
+                    self.model.find_constraint(
+                        x, y, w
+                    )
+                total_loss += loss
+                total_aux_loss += aux_loss
+                # ws and ls
+                ws = delta_joint_feature * self.C
+                ls = loss / n_samples
+
+                # line search
+                if self.line_search:
+                    eps = 1e-15
+                    w_diff = w_mat[i] - ws
+                    gamma = ((w_diff.T.dot(w)
+                             - (self.C * n_samples) * (l_mat[i] - ls))
+                             / (np.sum(w_diff ** 2) + eps))
+                    gamma = max(0.0, min(1.0, gamma))
+                else:
+                    gamma = 2.0 * n_samples / (k + 2.0 * n_samples)
+
+                w -= w_mat[i]
+                w_mat[i] = (1.0 - gamma) * w_mat[i] + gamma * ws
+                w += w_mat[i]
+
+                l -= l_mat[i]
+                l_mat[i] = (1.0 - gamma) * l_mat[i] + gamma * ls
+                l += l_mat[i]
+
+                if self.do_averaging:
+                    rho = 2. / (k + 2.)
+                    self.w = (1. - rho) * self.w + rho * w
+                    self.l = (1. - rho) * self.l + rho * l
+                else:
+                    self.w = w
+                    self.l = l
+                k += 1
+
+            if self.verbose > 0:
+                print("loss: {:f}; aux loss: {:f}".format(
+                    total_loss, total_aux_loss)
+                )
+
+            if self.logger is not None:
+                self.logger(self, iteration)
+            self.primal_objective_curve_.append(0.)
+            self.objective_curve_.append(0.)
+
+    def _objective(self, X, Y):
+        return 0.
 
 
 class EdgeFeatureLatentNodeCRF(EFLNCRF):
+    def find_constraint(self, x, y, w,
+                        y_hat=None, relaxed=True, compute_difference=True):
+        """Find most violated constraint, or, given y_hat,
+        find slack and djoint_feature for this constraing.
+
+        As for finding the most violated constraint, it is enough to compute
+        joint_feature(x, y_hat), not djoint_feature, we can optionally skip
+        computing joint_feature(x, y) using compute_differences=False
+        """
+        assert not getattr(self, 'rescale_C', False), \
+            "`find_constraint` does not support rescale_C."
+        assert y_hat is None, \
+            "`find_constraint` does not support provided `y_hat`."
+        assert compute_difference is True, \
+            "`find_constraint` does not support `compute_difference == False`."
+        assert not isinstance(y_hat, tuple), \
+            "`find_constraint` does not support continuous loss."
+        # print("x: ", repr(x))
+        unary_potentials = np.exp(self._get_unary_potentials(x, w))
+        pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w))
+        edges = self._get_edges(x)
+        n_vertices, n_states = unary_potentials.shape
+        neighbors = [[] for i in range(n_vertices)]
+        pairwise_weights = [[] for i in range(n_vertices)]
+        # `pairwise_weights` is a list of lists, holding a transition matrix
+        # for each node `i` which has an outgoing link to node `j`
+        for pw, edge in zip(pairwise_potentials, edges):
+            neighbors[edge[0]].append(edge[1])
+            pairwise_weights[edge[0]].append(pw)
+            neighbors[edge[1]].append(edge[0])
+            pairwise_weights[edge[1]].append(pw.T)
+        traversal, parents, child_cnt, pw_forward = self.top_order(
+            n_vertices, n_states, neighbors, pairwise_weights
+        )
+        y_prime = self.label_from_latent(y)
+        self._check_size_w(w)
+        y_hat = self.loss_augmented_inference(
+            y_prime, unary_potentials, pw_forward, traversal, parents
+        )
+        delta, aux_loss, ratio = self.delta(x, y, y_hat, unary_potentials,
+                                            pw_forward, traversal, edges,
+                                            parents, child_cnt)
+        slack = None
+        loss = self.loss(y, y_hat)
+        # print("Target ratio: ", ratio)
+        # EPSILON = 1e-4
+        # if loss == 0.:
+        #     return y_hat, delta, slack, loss, aux_loss
+        # gradient checking
+        # approx_delta = np.zeros(*delta.shape)
+        # node_features = self._get_features(x)
+        # node_features = np.tile(np.expand_dims(node_features, axis=1),
+        #                         (1, self.n_input_states, 1))
+        # edge_features = x[2]
+        # edge_features = np.repeat(edge_features,
+        #                           self.n_input_states ** 2,
+        #                           axis=1)
+        # for i, delta_i in enumerate(delta):
+        #     # if np.abs(delta_i) < 1e-6:
+        #     #     print("Skipping gradient {:f} (too small).".format(delta_i))
+        #     #     continue
+        #     w_ = w.copy()
+        #     # obtain first ratio
+        #     w_[i] += EPSILON
+        #     unary_potentials = np.exp(self._get_unary_potentials(x, w_))
+        #     pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w_))
+        #     pairwise_weights = [[] for i in range(n_vertices)]
+        #     for pw, edge in zip(pairwise_potentials, edges):
+        #         pairwise_weights[edge[0]].append(pw)
+        #         pairwise_weights[edge[1]].append(pw.T)
+        #     traversal, parents, child_cnt, pw_forward = self.top_order(
+        #         n_vertices, n_states, neighbors, pairwise_weights
+        #     )
+        #     delta_y, Z_y = self._delta_helper(
+        #         y, node_features, edge_features, unary_potentials, pw_forward,
+        #         traversal, edges, parents, child_cnt
+        #     )
+        #     delta_y_hat, Z_y_hat = self._delta_helper(
+        #         y_hat, node_features, edge_features, unary_potentials,
+        #         pw_forward, traversal, edges, parents, child_cnt
+        #     )
+        #     new_ratio1 = Z_y / Z_y_hat
+        #     # obtain second ratio
+        #     w_[i] -= 2 * EPSILON
+        #     unary_potentials = np.exp(self._get_unary_potentials(x, w_))
+        #     pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w_))
+        #     pairwise_weights = [[] for i in range(n_vertices)]
+        #     for pw, edge in zip(pairwise_potentials, edges):
+        #         pairwise_weights[edge[0]].append(pw)
+        #         pairwise_weights[edge[1]].append(pw.T)
+        #     traversal, parents, child_cnt, pw_forward = self.top_order(
+        #         n_vertices, n_states, neighbors, pairwise_weights
+        #     )
+        #     delta_y, Z_y = self._delta_helper(
+        #         y, node_features, edge_features,
+        #         unary_potentials, pw_forward,
+        #         traversal, edges, parents, child_cnt
+        #     )
+        #     delta_y_hat, Z_y_hat = self._delta_helper(
+        #         y_hat, node_features, edge_features,
+        #         unary_potentials, pw_forward,
+        #         traversal, edges, parents, child_cnt
+        #     )
+        #     new_ratio2 = Z_y / Z_y_hat
+        #     # compute approximate derivative
+        #     print("New ratio1: ", new_ratio1)
+        #     print("New ratio2: ", new_ratio2)
+        #     approx_delta[i] = (new_ratio1 - new_ratio2) / (2. * EPSILON)
+        #     print("Approximate delta[{}]: {}".format(i, approx_delta))
+        #     print("Actual delta[{}]: {}".format(i, delta_i))
+        # assert np.all(np.abs(delta - approx_delta) < 1e-3), (
+        #     "Gradient is different from its approximation: {} vs.\n{}\n{}.".format(
+        #         delta, approx_delta, np.abs(delta - approx_delta)
+        #     )
+        # )
+        # raise NotImplementedError
+        return y_hat, delta, slack, loss, aux_loss
+
+    def loss_augmented_inference(self, y, unary_potentials,
+                                 pw_forward, traversal, parents):
+        self.inference_calls += 1
+        n_vertices, n_states = unary_potentials.shape
+        # do loss-augmentation
+        unary_potentials = unary_potentials.copy()
+        for l in np.arange(self.n_labels):
+            # for each class, decrement features
+            # for loss-agumention
+            inds = np.where(y != l)[0]
+            unary_potentials[inds, l] += self.class_weight[y][inds]
+        mask = np.ones(unary_potentials.shape, dtype=np.bool)
+        alpha, child_alpha, scale, Z = self.compute_alpha(
+            unary_potentials, pw_forward, traversal, parents, mask
+        )
+        return np.argmax(alpha, axis=-1)
+
+    def delta(self, x, y, y_hat, unary_potentials, pw_forward,
+              traversal, edges, parents, child_cnt):
+        """Compute gradient of the objective function.
+
+        Args:
+          y (np.array): correct label assignment
+          y_hat (np.array): guessed abel assignment
+
+        Retuns:
+          np.array:
+
+        """
+        node_features = self._get_features(x)
+        node_features = np.tile(np.expand_dims(node_features, axis=1),
+                                (1, self.n_input_states, 1))
+        edge_features = x[2]
+        edge_features = np.repeat(edge_features,
+                                  repeats=self.n_input_states ** 2,
+                                  axis=1)
+        delta_y, Z_y = self._delta_helper(
+            y, node_features, edge_features, unary_potentials,
+            pw_forward, traversal, edges, parents, child_cnt
+        )
+        delta_y_hat, Z_y_hat = self._delta_helper(
+            y_hat, node_features, edge_features, unary_potentials,
+            pw_forward, traversal, edges, parents, child_cnt
+        )
+        delta = ((delta_y * Z_y_hat - delta_y_hat * Z_y)
+                 / np.power(Z_y_hat or 1e10, 2))
+        # print("delta", repr(delta))
+        ratio = Z_y / Z_y_hat
+        aux_loss = np.maximum(1.3 - ratio, 0.)
+        return delta, aux_loss, ratio
+
+    def _delta_helper(self, y, node_features, edge_features, unary_potentials,
+                      pw_forward, traversal, edges, parents, child_cnt):
+        """Function for finding the derivatives and marginal prob of single assignment.
+
+        Retuns:
+          np.array, float: partial derivatives of the parameters, unnormalize
+            marginal probability of the label assignment
+
+        """
+        y_mask = self.labels2mask(y)
+        delta_y = np.zeros(self.size_joint_feature)
+        _, _, node_marginals_y, edge_marginals_y, Z_y = self.compute_marginals(
+            unary_potentials, pw_forward, traversal, edges,
+            parents, child_cnt, y_mask
+        )
+        Z_y = np.exp(Z_y)
+        # unnormalize marginals
+        node_gradients = node_marginals_y * Z_y
+        node_gradients = (np.expand_dims(node_gradients, axis=-1)
+                          * node_features)
+        node_gradients = np.ravel(node_gradients.sum(axis=0))
+        n_state_features = self.n_input_states * self.n_features
+        delta_y[:n_state_features] = node_gradients
+        edge_marginals_y *= Z_y
+        edge_gradients = edge_marginals_y.reshape(
+            edge_marginals_y.shape[0], -1
+        )
+        edge_gradients = np.tile(edge_gradients, (1, self.n_edge_features))
+        edge_gradients = edge_gradients * edge_features
+        edge_gradients = edge_gradients.sum(axis=0)
+        delta_y[n_state_features:] = edge_gradients
+        return delta_y, Z_y
+
+    def labels2mask(self, y):
+        """Create binary mask which hides all observed labels except for that in `y`.
+
+        Args:
+          y (np.array): label sequence whose observed labels should not be hid
+
+        Returns:
+          np.array: boolean matrix which hides all observed labels except for
+            the ones
+
+        """
+        mask = np.ones((len(y), self.n_states), dtype=np.bool)
+        # determine indices of observed states
+        observed_states = np.nonzero(y < self.n_labels)
+        observed_labels = y[observed_states]
+        mask[observed_states] = False
+        mask[observed_states, observed_labels] = True
+        return mask
+
     def marginal_loss(self, x, y, y_hat, w):
         """Compute difference between marginal probs of correct and guessed
         assignments.
@@ -198,6 +498,7 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
           np.array, float: table of (normalized) forward scores, total energy
 
         """
+        LOGGER.debug("unary potentials: %r", unary_potentials)
         n_vertices, n_states = unary_potentials.shape
         alpha, child_alpha, scale, Z = self.compute_alpha(
             unary_potentials, pw_forward, traversal, parents, mask
@@ -209,21 +510,21 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             alpha, child_alpha, scale,
             unary_potentials, pw_forward, traversal, parents, child_cnt, mask
         )
-        LOGGER.debug("beta:", repr(beta))
+        LOGGER.debug("beta: %r", beta)
         node_marginals, edge_marginals = self._compute_marginals(
             alpha, child_alpha, beta, scale, unary_potentials, pw_forward,
-            traversal, edges, parents, child_cnt, mask
+            traversal, edges, parents, child_cnt
         )
-        LOGGER.debug("node_marginals:", repr(node_marginals))
-        LOGGER.debug("edge_marginals:", repr(edge_marginals))
-        self._check_marginals(node_marginals, edge_marginals,
-                              unary_potentials, pw_forward, edges,
-                              traversal, parents, mask)
+        LOGGER.debug("node_marginals: %r", node_marginals)
+        LOGGER.debug("edge_marginals: %r", edge_marginals)
+        # self._check_marginals(node_marginals, edge_marginals,
+        #                       unary_potentials, pw_forward, edges,
+        #                       traversal, parents, mask)
         return alpha, beta, node_marginals, edge_marginals, Z
 
     def _compute_marginals(self, alpha, chld_alpha, beta, scale,
                            unary_potentials, pw_forward, traversal, edges,
-                           parents, child_cnt, mask):
+                           parents, child_cnt):
         """Compute forward-backward scores and marginal probabilities.
 
         Args:
@@ -273,7 +574,7 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         for node in traversal[::-1]:
             # compute the unnormalized potential at the current node
             alpha[node] *= unary_potentials[node]
-            alpha *= mask[node]
+            alpha[node] *= mask[node]
             scale[node] = np.sum(alpha[node]) or 1.
             alpha[node] /= scale[node]
             parent = parents[node]
@@ -330,6 +631,81 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             crnt_beta /= crnt_scale
             crnt_beta *= mask[node]
         return beta
+
+    def _check_node_gradients(self, gradients, features, traversal,
+                              unary_potentials, pw_forward,
+                              parents, mask):
+        print("Checking gradient:", repr(gradients), gradients.shape)
+        gradients = gradients.reshape(self.n_input_states, self.n_features)
+        print("Gradient (reshaped):", repr(gradients), gradients.shape)
+        check_marginals = np.zeros(unary_potentials.shape)
+        print("Check marginals:", repr(check_marginals), check_marginals.shape)
+        tag_seq2score = InfiniteDict()
+        self._check_marginals_helper(
+            tag_seq2score, 1., [None] * unary_potentials.shape[0],
+            traversal, 0, unary_potentials, pw_forward, parents, mask
+        )
+        items = []
+        tag_seq2score.getitems(items,
+                               {i: n for i, n in enumerate(traversal)})
+        tag_seq2score = dict(items)
+        # populate check gradients with unnormalized marginals
+        for i in range(check_marginals.shape[0]):
+            for j in range(check_marginals.shape[1]):
+                for tag_seq, score in iteritems(tag_seq2score):
+                    if tag_seq[i] == j:
+                        check_marginals[i][j] += score
+        print("* Check marginals:", repr(check_marginals),
+              check_marginals.shape)
+        print("Features", repr(features), features.shape)
+        check_gradients = np.zeros((self.n_input_states, self.n_features))
+        for i in range(features.shape[0]):
+            for j in range(self.n_input_states):
+                print("check_gradients[j, :]", repr(check_gradients[j, :]))
+                print("features[i]", repr(features[i]))
+                check_gradients[j, :] += check_marginals[i][j] * features[i][0]
+        print("gradients", repr(gradients))
+        print("check_gradients", repr(check_gradients))
+        print("check_gradients / gradients",
+              repr(np.divide(check_gradients, gradients)))
+        assert np.all(np.isclose(check_gradients, gradients)), \
+            ("Manually and automatically computed"
+             " state gradients diverged: {} vs. {}").format(
+                 check_gradients, gradients
+            )
+        print("Node gradients check passed")
+
+    def _check_edge_gradients(self, gradients, features, edges,
+                              traversal, unary_potentials, pw_forward,
+                              parents, mask):
+        print("Checking edge gradients")
+        print("Edge features:", repr(features), features.shape)
+        tag_seq2score = InfiniteDict()
+        self._check_marginals_helper(
+            tag_seq2score, 1., [None] * unary_potentials.shape[0],
+            traversal, 0, unary_potentials, pw_forward, parents, mask
+        )
+        items = []
+        tag_seq2score.getitems(items,
+                               {i: n for i, n in enumerate(traversal)})
+        tag_seq2score = dict(items)
+        n_labels = self.n_input_states
+        _edge_marginals = np.empty((edges.shape[0], n_labels, n_labels))
+        self._compute_edge_marginals(_edge_marginals, tag_seq2score,
+                                     edges, parents)
+        _edge_marginals = np.tile(
+            _edge_marginals.reshape(_edge_marginals.shape[0], -1),
+            (1, self.n_edge_features))
+        print("Edge marginals:", repr(_edge_marginals), _edge_marginals.shape)
+        check_gradients = np.sum(_edge_marginals * features, axis=0)
+        print("check_gradients:", repr(check_gradients), check_gradients.shape)
+        print("Edge gradients:", repr(gradients), gradients.shape)
+        assert np.all(np.isclose(check_gradients, gradients)), \
+            ("Manually and automatically computed"
+             " edge gradients diverged: {} vs. {}").format(
+                 check_gradients, gradients
+            )
+        print("Edge gradients check passed")
 
     def _check_marginals(self, node_marginals, edge_marginals,
                          unary_potentials, pw_forward, edges,
@@ -500,7 +876,6 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         def score(y_gold, y_pred):
             return f1_score([y[0] for y in y_gold],
                             [y[0] for y in y_pred], average="macro")
-
         if grid_search:
             def cv_scorer(estimator, X_test, y_test):
                 return score(y_test, estimator.predict(X_test))
@@ -585,7 +960,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                                              latent_node_features=True,
                                              inference_method="max-product")
             # best C: 1.05 on PotTS and 1.05 on SB10k
-            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=1000,
+            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=100,
                                          verbose=1)
             # we use `_restore` to set up the model's logger
             self._restore(None)

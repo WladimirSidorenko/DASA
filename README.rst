@@ -453,6 +453,26 @@ Results
    Macro-Averaged F1-Score (Positive and Negative Classes): 67.47%
    Micro-Averaged F1-Score (All Classes): 70.9742%
 
+   Marginalization (random initialization)
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.82      0.70      0.75       437
+   negative       0.57      0.59      0.58       209
+   neutral       0.67      0.78      0.72       360
+   avg / total       0.71      0.70      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 66.67%
+   Micro-Averaged F1-Score (All Classes): 70.3777%
+
+   Marginalization (zero initialization):
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.76      0.79      0.77       437
+   negative       0.62      0.52      0.56       209
+   neutral       0.69      0.73      0.71       360
+   avg / total       0.71      0.71      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 66.94%
+   Micro-Averaged F1-Score (All Classes): 71.1730%
+
 .. comment: SB10k
    General Statistics:
    precision    recall  f1-score   support
@@ -462,6 +482,10 @@ Results
    avg / total       0.72      0.71      0.71       750
    Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
    Micro-Averaged F1-Score (All Classes): 71.3333%
+
+   Marginalization (random initialization)
+
+   General Statistics (zero initialization):
 
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
