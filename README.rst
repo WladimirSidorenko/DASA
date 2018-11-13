@@ -490,6 +490,95 @@ Results
 | SB10k     |  0.61  | 0.63 |      0.62     |  0.46  | 0.29 |     0.36      |  0.76  | 0.82 |     0.79    |       0.4884      |      0.6933       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
+HCRF
+^^^^
+
+In the same way, you can use the ``-t hmcrf`` option, to train and
+evaluate hidden CRFs:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t hcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hcrf/hcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hcrf/hcrf.json
+
+
+Results
+~~~~~~~
+
+.. comment: PotTS
+   precision    recall  f1-score   support
+   positive       0.76      0.79      0.77       437
+   negative       0.61      0.53      0.57       209
+   neutral       0.70      0.71      0.70       360
+   avg / total       0.70      0.71      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.02%
+   Micro-Averaged F1-Score (All Classes): 70.7753%
+
+.. comment: SB10k
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.76  | 0.79 |      0.77     |  0.61  | 0.53 |     0.57      |  0.7   | 0.71 |     0.7     |       0.67        |      0.708        |
+| SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.557       |      0.713        |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
+HMCRF
+^^^^^
+
+In the same way, you can use the ``-t hmcrf`` option, to train and
+evaluate hidden marginalized CRFs:
+
+.. code-block:: shell
+
+  dasa_sentiment -v train -t hmcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hmcrf/hmcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hmcrf/hmcrf.json
+
+
+Results
+~~~~~~~
+
+.. comment: PotTS
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.76      0.79      0.77       437
+   negative       0.63      0.49      0.55       209
+   neutral       0.69      0.75      0.72       360
+   avg / total       0.71      0.71      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 66.23%
+   Micro-Averaged F1-Score (All Classes): 71.2724%
+
+.. comment: SB10k
+   General Statistics
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.44      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.62%
+   Micro-Averaged F1-Score (All Classes): 71.2000%
+
++-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
+| **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
++           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
+|           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+| PotTS     |  0.76  | 0.79 |      0.77     |  0.63  | 0.49 |     0.55      |  0.69  | 0.75 |     0.72    |       0.662       |      0.713        |
+| SB10k     |  0.64  | 0.69 |      0.66     |  0.44  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.556       |      0.712        |
++-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
+
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
 .. _SB10k: http://aclweb.org/anthology/W17-1106
 .. _text normalization pipeline: https://www-archiv.tu-darmstadt.de/gscl2013/images/sidarenka_scheffler_stede.pdf

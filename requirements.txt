@@ -2,3 +2,6 @@ future~=0.16.0
 pandas~=0.20.3
 scikit-learn~=0.19.1
 torch~=0.4.1
+cvxopt~=1.2.1
+pystruct~=0.3.1
+# -e git+git://github.com/WladimirSidorenko/pystruct@master#egg=pystruct
