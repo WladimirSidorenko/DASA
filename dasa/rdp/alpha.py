@@ -29,7 +29,7 @@ class AlphaModel(nn.Module):
         self.M = nn.Parameter(torch.ones(n_rels, n_polarities, n_polarities))
         self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
         self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
-        self.scale_factor = nn.Parameter(torch.tensor(42.))
+        self.scale_factor = nn.Parameter(torch.tensor(21.))
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
