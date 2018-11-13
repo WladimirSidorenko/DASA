@@ -18,7 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from builtins import range
 from collections import defaultdict, namedtuple
-from pystruct.learners import FrankWolfeSSVM as FFSVM
+from pystruct.learners import FrankWolfeSSVM as FWSSVM
 from pystruct.models import EdgeFeatureLatentNodeCRF as EFLNCRF
 from six import iteritems
 from sklearn.metrics import f1_score
@@ -81,8 +81,9 @@ class InfiniteDict(defaultdict):
             prfx.pop()
 
 
-class FrankWolfeSSVM(FFSVM):
-    def fit(self, X_train, Y_train, X_dev, Y_dev, constraints=None, initialize=True):
+class FrankWolfeSSVM(FWSSVM):
+    def fit(self, X_train, Y_train, X_dev, Y_dev, constraints=None,
+            initialize=True):
         """Learn parameters using (block-coordinate) Frank-Wolfe learning.
 
         Parameters
@@ -634,10 +635,12 @@ class HCRFAnalyzer(MLBaseAnalyzer):
                 rels.add(node.rel2par)
         return rels
 
-    def __init__(self, relation_scheme, *args, **kwargs):
+    def __init__(self, relation_scheme, marginalized, *args, **kwargs):
         """Class constructor.
 
         Args:
+          relation_scheme (str): relations to use
+          marginalized (bool): use marginal CRFs
           args (list[str]): arguments to use for initializing models
           kwargs (dict): keyword arguments to use for initializing models
 
@@ -645,6 +648,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         super(HCRFAnalyzer, self).__init__(*args, **kwargs)
         self._name = "HCRF"
         self._relation_scheme = relation_scheme
+        self._marginalized = marginalized
         self._model = None
 
     def _train(self, train_set, dev_set, grid_search=True, balance=False):
@@ -728,15 +732,26 @@ class HCRFAnalyzer(MLBaseAnalyzer):
             }
 
             self._n_rels = len(self._rel2idx)
-            model = EdgeFeatureLatentNodeCRF(n_labels=N_POLARITIES,
-                                             n_features=N_FEATS,
-                                             n_edge_features=self._n_rels,
-                                             n_hidden_states=N_POLARITIES,
-                                             latent_node_features=True,
-                                             inference_method="max-product")
+            if self._marginalized:
+                model_cls = EdgeFeatureLatentNodeCRF
+                optimizer_cls = FrankWolfeSSVM
+                max_iter = 100
+                C = 0.3
+            else:
+                model_cls = EFLNCRF
+                optimizer_cls = FWSSVM
+                max_iter = 1000
+                C = 1.05
+            model = model_cls(n_labels=N_POLARITIES,
+                              n_features=N_FEATS,
+                              n_edge_features=self._n_rels,
+                              n_hidden_states=N_POLARITIES,
+                              latent_node_features=True,
+                              inference_method="max-product")
             # best C: 1.05 on PotTS and 1.05 on SB10k
-            self._model = FrankWolfeSSVM(model=model, C=1.05, max_iter=100,
-                                         verbose=1)
+            self._model = optimizer_cls(
+                model=model, C=C, max_iter=max_iter, verbose=1
+            )
             # we use `_restore` to set up the model's logger
             self._restore(None)
 
