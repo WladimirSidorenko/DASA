@@ -20,11 +20,13 @@ from builtins import range
 from collections import defaultdict, namedtuple
 from pystruct.learners import FrankWolfeSSVM as FFSVM
 from pystruct.models import EdgeFeatureLatentNodeCRF as EFLNCRF
-from six import iteritems, itervalues
+from six import iteritems
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.utils import check_random_state
+from time import time
 import numpy as np
+import sys
 
 from .constants import CLS2IDX, IDX2CLS, N_POLARITIES
 from .ml import MLBaseAnalyzer
@@ -80,20 +82,63 @@ class InfiniteDict(defaultdict):
 
 
 class FrankWolfeSSVM(FFSVM):
-    def _frank_wolfe_bc(self, X, Y):
+    def fit(self, X_train, Y_train, X_dev, Y_dev, constraints=None, initialize=True):
+        """Learn parameters using (block-coordinate) Frank-Wolfe learning.
+
+        Parameters
+        ----------
+        X : iterable
+            Traing instances. Contains the structured input objects.
+            No requirement on the particular form of entries of X is made.
+
+        Y : iterable
+            Training labels. Contains the strctured labels for inputs in X.
+            Needs to have the same length as X.
+
+        contraints : ignored
+
+        initialize : boolean, default=True
+            Whether to initialize the model for the data.
+            Leave this true except if you really know what you are doing.
+        """
+        if initialize:
+            self.model.initialize(X_train, Y_train)
+        self.objective_curve_, self.primal_objective_curve_ = [], []
+        self.timestamps_ = [time()]
+        self.w = getattr(self, "w", np.zeros(self.model.size_joint_feature))
+        self.l = getattr(self, "l", 0)
+        try:
+            if self.batch_mode:
+                self._frank_wolfe_batch(X_train, Y_train)
+            else:
+                self._frank_wolfe_bc(X_train, Y_train, X_dev, Y_dev)
+        except KeyboardInterrupt:
+            pass
+        if self.verbose:
+            print("Calculating final objective.")
+        self.timestamps_.append(time() - self.timestamps_[0])
+        self.primal_objective_curve_.append(self._objective(X_train, Y_train))
+        self.objective_curve_.append(self.objective_curve_[-1])
+        if self.logger is not None:
+            self.logger(self, 'final')
+        return self
+
+    def _frank_wolfe_bc(self, X_train, Y_train, X_dev, Y_dev):
         """Block-Coordinate Frank-Wolfe learning.
 
         Compare Algorithm 3 in the reference paper.
         """
-        n_samples = len(X)
-        # w = np.random.rand(*self.w.shape)
-        w = self.w.copy()
+        n_samples = len(X_train)
+        n_dev_samples = len(X_dev)
+        # w = np.random.rand(*self.w.shape) # random initialization
+        w = self.w.copy()       # zero initialization
         w_mat = np.zeros((n_samples, self.model.size_joint_feature))
         l_mat = np.zeros(n_samples)
         l = 0.0
         k = 0
 
         rng = check_random_state(self.random_state)
+        min_dev_loss = sys.float_info.max
         for iteration in range(self.max_iter):
             if self.verbose > 0:
                 print(("Iteration %d" % iteration))
@@ -108,7 +153,7 @@ class FrankWolfeSSVM(FFSVM):
 
             for j in range(n_samples):
                 i = perm[j]
-                x, y = X[i], Y[i]
+                x, y = X_train[i], Y_train[i]
                 y_hat, delta_joint_feature, slack, loss, aux_loss = \
                     self.model.find_constraint(
                         x, y, w
@@ -147,15 +192,27 @@ class FrankWolfeSSVM(FFSVM):
                     self.l = l
                 k += 1
 
+            total_dev_loss = 0.
+            for i in range(n_dev_samples):
+                x, y = X_dev[i], Y_dev[i]
+                y_hat, delta_joint_feature, slack, loss, aux_loss = \
+                    self.model.find_constraint(
+                        x, y, w
+                    )
+                total_dev_loss += loss
+            if total_dev_loss < min_dev_loss:
+                min_dev_loss = total_dev_loss
+                best_w = self.w.copy()
             if self.verbose > 0:
-                print("loss: {:f}; aux loss: {:f}".format(
-                    total_loss, total_aux_loss)
+                print("loss: {:f}; aux loss: {:f}; dev_loss: {:f}".format(
+                    total_loss, total_aux_loss, total_dev_loss)
                 )
 
             if self.logger is not None:
                 self.logger(self, iteration)
             self.primal_objective_curve_.append(0.)
             self.objective_curve_.append(0.)
+        self.w = best_w
 
     def _objective(self, X, Y):
         return 0.
@@ -179,7 +236,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             "`find_constraint` does not support `compute_difference == False`."
         assert not isinstance(y_hat, tuple), \
             "`find_constraint` does not support continuous loss."
-        # print("x: ", repr(x))
         unary_potentials = np.exp(self._get_unary_potentials(x, w))
         pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w))
         edges = self._get_edges(x)
@@ -206,78 +262,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
                                             parents, child_cnt)
         slack = None
         loss = self.loss(y, y_hat)
-        # print("Target ratio: ", ratio)
-        # EPSILON = 1e-4
-        # if loss == 0.:
-        #     return y_hat, delta, slack, loss, aux_loss
-        # gradient checking
-        # approx_delta = np.zeros(*delta.shape)
-        # node_features = self._get_features(x)
-        # node_features = np.tile(np.expand_dims(node_features, axis=1),
-        #                         (1, self.n_input_states, 1))
-        # edge_features = x[2]
-        # edge_features = np.repeat(edge_features,
-        #                           self.n_input_states ** 2,
-        #                           axis=1)
-        # for i, delta_i in enumerate(delta):
-        #     # if np.abs(delta_i) < 1e-6:
-        #     #     print("Skipping gradient {:f} (too small).".format(delta_i))
-        #     #     continue
-        #     w_ = w.copy()
-        #     # obtain first ratio
-        #     w_[i] += EPSILON
-        #     unary_potentials = np.exp(self._get_unary_potentials(x, w_))
-        #     pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w_))
-        #     pairwise_weights = [[] for i in range(n_vertices)]
-        #     for pw, edge in zip(pairwise_potentials, edges):
-        #         pairwise_weights[edge[0]].append(pw)
-        #         pairwise_weights[edge[1]].append(pw.T)
-        #     traversal, parents, child_cnt, pw_forward = self.top_order(
-        #         n_vertices, n_states, neighbors, pairwise_weights
-        #     )
-        #     delta_y, Z_y = self._delta_helper(
-        #         y, node_features, edge_features, unary_potentials, pw_forward,
-        #         traversal, edges, parents, child_cnt
-        #     )
-        #     delta_y_hat, Z_y_hat = self._delta_helper(
-        #         y_hat, node_features, edge_features, unary_potentials,
-        #         pw_forward, traversal, edges, parents, child_cnt
-        #     )
-        #     new_ratio1 = Z_y / Z_y_hat
-        #     # obtain second ratio
-        #     w_[i] -= 2 * EPSILON
-        #     unary_potentials = np.exp(self._get_unary_potentials(x, w_))
-        #     pairwise_potentials = np.exp(self._get_pairwise_potentials(x, w_))
-        #     pairwise_weights = [[] for i in range(n_vertices)]
-        #     for pw, edge in zip(pairwise_potentials, edges):
-        #         pairwise_weights[edge[0]].append(pw)
-        #         pairwise_weights[edge[1]].append(pw.T)
-        #     traversal, parents, child_cnt, pw_forward = self.top_order(
-        #         n_vertices, n_states, neighbors, pairwise_weights
-        #     )
-        #     delta_y, Z_y = self._delta_helper(
-        #         y, node_features, edge_features,
-        #         unary_potentials, pw_forward,
-        #         traversal, edges, parents, child_cnt
-        #     )
-        #     delta_y_hat, Z_y_hat = self._delta_helper(
-        #         y_hat, node_features, edge_features,
-        #         unary_potentials, pw_forward,
-        #         traversal, edges, parents, child_cnt
-        #     )
-        #     new_ratio2 = Z_y / Z_y_hat
-        #     # compute approximate derivative
-        #     print("New ratio1: ", new_ratio1)
-        #     print("New ratio2: ", new_ratio2)
-        #     approx_delta[i] = (new_ratio1 - new_ratio2) / (2. * EPSILON)
-        #     print("Approximate delta[{}]: {}".format(i, approx_delta))
-        #     print("Actual delta[{}]: {}".format(i, delta_i))
-        # assert np.all(np.abs(delta - approx_delta) < 1e-3), (
-        #     "Gradient is different from its approximation: {} vs.\n{}\n{}.".format(
-        #         delta, approx_delta, np.abs(delta - approx_delta)
-        #     )
-        # )
-        # raise NotImplementedError
         return y_hat, delta, slack, loss, aux_loss
 
     def loss_augmented_inference(self, y, unary_potentials,
@@ -326,7 +310,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         )
         delta = ((delta_y * Z_y_hat - delta_y_hat * Z_y)
                  / np.power(Z_y_hat or 1e10, 2))
-        # print("delta", repr(delta))
         ratio = Z_y / Z_y_hat
         aux_loss = np.maximum(1.3 - ratio, 0.)
         return delta, aux_loss, ratio
@@ -517,9 +500,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         )
         LOGGER.debug("node_marginals: %r", node_marginals)
         LOGGER.debug("edge_marginals: %r", edge_marginals)
-        # self._check_marginals(node_marginals, edge_marginals,
-        #                       unary_potentials, pw_forward, edges,
-        #                       traversal, parents, mask)
         return alpha, beta, node_marginals, edge_marginals, Z
 
     def _compute_marginals(self, alpha, chld_alpha, beta, scale,
@@ -632,211 +612,6 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
             crnt_beta *= mask[node]
         return beta
 
-    def _check_node_gradients(self, gradients, features, traversal,
-                              unary_potentials, pw_forward,
-                              parents, mask):
-        print("Checking gradient:", repr(gradients), gradients.shape)
-        gradients = gradients.reshape(self.n_input_states, self.n_features)
-        print("Gradient (reshaped):", repr(gradients), gradients.shape)
-        check_marginals = np.zeros(unary_potentials.shape)
-        print("Check marginals:", repr(check_marginals), check_marginals.shape)
-        tag_seq2score = InfiniteDict()
-        self._check_marginals_helper(
-            tag_seq2score, 1., [None] * unary_potentials.shape[0],
-            traversal, 0, unary_potentials, pw_forward, parents, mask
-        )
-        items = []
-        tag_seq2score.getitems(items,
-                               {i: n for i, n in enumerate(traversal)})
-        tag_seq2score = dict(items)
-        # populate check gradients with unnormalized marginals
-        for i in range(check_marginals.shape[0]):
-            for j in range(check_marginals.shape[1]):
-                for tag_seq, score in iteritems(tag_seq2score):
-                    if tag_seq[i] == j:
-                        check_marginals[i][j] += score
-        print("* Check marginals:", repr(check_marginals),
-              check_marginals.shape)
-        print("Features", repr(features), features.shape)
-        check_gradients = np.zeros((self.n_input_states, self.n_features))
-        for i in range(features.shape[0]):
-            for j in range(self.n_input_states):
-                print("check_gradients[j, :]", repr(check_gradients[j, :]))
-                print("features[i]", repr(features[i]))
-                check_gradients[j, :] += check_marginals[i][j] * features[i][0]
-        print("gradients", repr(gradients))
-        print("check_gradients", repr(check_gradients))
-        print("check_gradients / gradients",
-              repr(np.divide(check_gradients, gradients)))
-        assert np.all(np.isclose(check_gradients, gradients)), \
-            ("Manually and automatically computed"
-             " state gradients diverged: {} vs. {}").format(
-                 check_gradients, gradients
-            )
-        print("Node gradients check passed")
-
-    def _check_edge_gradients(self, gradients, features, edges,
-                              traversal, unary_potentials, pw_forward,
-                              parents, mask):
-        print("Checking edge gradients")
-        print("Edge features:", repr(features), features.shape)
-        tag_seq2score = InfiniteDict()
-        self._check_marginals_helper(
-            tag_seq2score, 1., [None] * unary_potentials.shape[0],
-            traversal, 0, unary_potentials, pw_forward, parents, mask
-        )
-        items = []
-        tag_seq2score.getitems(items,
-                               {i: n for i, n in enumerate(traversal)})
-        tag_seq2score = dict(items)
-        n_labels = self.n_input_states
-        _edge_marginals = np.empty((edges.shape[0], n_labels, n_labels))
-        self._compute_edge_marginals(_edge_marginals, tag_seq2score,
-                                     edges, parents)
-        _edge_marginals = np.tile(
-            _edge_marginals.reshape(_edge_marginals.shape[0], -1),
-            (1, self.n_edge_features))
-        print("Edge marginals:", repr(_edge_marginals), _edge_marginals.shape)
-        check_gradients = np.sum(_edge_marginals * features, axis=0)
-        print("check_gradients:", repr(check_gradients), check_gradients.shape)
-        print("Edge gradients:", repr(gradients), gradients.shape)
-        assert np.all(np.isclose(check_gradients, gradients)), \
-            ("Manually and automatically computed"
-             " edge gradients diverged: {} vs. {}").format(
-                 check_gradients, gradients
-            )
-        print("Edge gradients check passed")
-
-    def _check_marginals(self, node_marginals, edge_marginals,
-                         unary_potentials, pw_forward, edges,
-                         traversal, parents, mask):
-        """Compare automatically computed marginals with brute-force estimated ones.
-
-        """
-        # compute scores for all possible tag sequences
-        # place to store the scores
-        tag_seq2score = InfiniteDict()
-        self._check_marginals_helper(
-            tag_seq2score, 1., [None] * unary_potentials.shape[0],
-            traversal, 0, unary_potentials, pw_forward, parents, mask
-        )
-        items = []
-        tag_seq2score.getitems(items,
-                               {i: n for i, n in enumerate(traversal)})
-        tag_seq2score = dict(items)
-        Z = sum(itervalues(tag_seq2score))
-        # normalize probabilities
-        for tag_seq, score in iteritems(tag_seq2score):
-            tag_seq2score[tag_seq] = score / Z
-        # find marginal probabilities of the states
-        _node_marginals = np.empty(unary_potentials.shape)
-        self._compute_node_marginals(_node_marginals, tag_seq2score)
-        node_marginals_sum = np.sum(node_marginals, axis=1)
-        node_marginals_checksum = np.ones_like(node_marginals_sum)
-        assert np.all(np.isclose(node_marginals_checksum,
-                                 node_marginals_sum)), (
-            "Automatically computed node marginals do not sum to 1:"
-            "\n{!r} "
-            ).format(node_marginals_sum)
-        _node_marginals_sum = np.sum(_node_marginals, axis=1)
-        assert np.all(np.isclose(node_marginals_checksum,
-                                 _node_marginals_sum)), (
-            "Brute-force node marginals do not sum to 1:"
-            "\n{!r} "
-            ).format(node_marginals_sum)
-        assert np.all(np.isclose(node_marginals, _node_marginals)), (
-            "Automatically and brute-force computed node marginals diverged:"
-            "\n{!r}\nvs.\n{!r}"
-        ).format(node_marginals, _node_marginals)
-        n_labels = unary_potentials.shape[1]
-        _edge_marginals = np.empty((edges.shape[0], n_labels, n_labels))
-        self._compute_edge_marginals(_edge_marginals, tag_seq2score,
-                                     edges, parents)
-        edge_marginals_sum = np.sum(edge_marginals, axis=(1, 2))
-        edge_marginals_checksum = np.ones_like(edge_marginals_sum)
-        assert np.all(np.isclose(edge_marginals_checksum,
-                                 edge_marginals_sum)), (
-            "Automatically computed edge marginals do not sum to 1:"
-                                     "\n{!r}\n{!r}"
-            ).format(edge_marginals_sum, edge_marginals)
-        _edge_marginals_sum = np.sum(_edge_marginals, axis=(1, 2))
-        assert np.all(np.isclose(edge_marginals_checksum,
-                                 _edge_marginals_sum)), (
-            "Brute-force computed edge marginals do not sum to 1:"
-            "\n{!r} "
-            ).format(node_marginals_sum)
-        assert np.all(np.isclose(edge_marginals, _edge_marginals)), (
-            "Automatically and brute-force computed edge marginals diverged."
-            "\n{!r}\nvs.\n{!r}"
-        ).format(edge_marginals, _edge_marginals)
-
-    def _check_marginals_helper(self, tag_seq2score, accum_score, tag_seq,
-                                traversal, idx, unary_potentials, pw_forward,
-                                parents, mask):
-        crnt_node = traversal[idx]
-        crnt_unary = unary_potentials[crnt_node] * mask[crnt_node]
-        crnt_forward = pw_forward[crnt_node]
-        prnt_node = parents[crnt_node]
-        label_j = None
-        if prnt_node >= 0:
-            label_j = tag_seq[prnt_node]
-        # If we have arrived at the final node, we are ready to calculate the
-        # unnormalized probabilities of the whole label sequence.
-        next_idx = idx + 1
-        is_terminal = (next_idx >= len(traversal))
-        for label_i in range(unary_potentials.shape[-1]):
-            score = accum_score * crnt_unary[label_i]
-            if prnt_node >= 0:
-                score *= crnt_forward[label_i][label_j]
-            if is_terminal:
-                tag_seq2score[label_i] = score
-            else:
-                tag_seq[crnt_node] = label_i
-                self._check_marginals_helper(
-                    tag_seq2score[label_i], score, tag_seq,
-                    traversal, next_idx, unary_potentials, pw_forward,
-                    parents, mask
-                )
-
-    def _compute_node_marginals(self, marginals, tag_seq2score):
-        n_nodes, n_labels = marginals.shape
-        # iterate over each node
-        for i in range(n_nodes):
-            # for each node, estimate the marginal probability of each label
-            for j in range(n_labels):
-                marginals[i][j] = sum(
-                    v for k, v in iteritems(tag_seq2score)
-                    if k[i] == j
-                )
-        return marginals
-
-    def _compute_edge_marginals(self, marginals, tag_seq2score,
-                                edges, parents):
-        n_labels = marginals.shape[-1]
-        # iterate over each node
-        for marginal_k, (idx1, idx2) in zip(marginals, edges):
-            chld, prnt = get_prnt(idx1, idx2, parents)
-            # for each node, estimate the marginal probability of each label
-            for i in range(n_labels):
-                for j in range(n_labels):
-                    marginal_k[i][j] = sum(
-                        v for k, v in iteritems(tag_seq2score)
-                        if k[chld] == i and k[prnt] == j
-                    )
-        return marginals
-
-    def _compute_z(self, unary_potentials, pw_forward,
-                   traversal, parents, mask):
-        alpha = np.ones(unary_potentials.shape)
-        # messages from leaves to the root
-        for node in traversal[::-1]:
-            alpha[node] *= unary_potentials[node] * mask[node]
-            parent = parents[node]
-            if parent != -1:
-                # propagate belief to the parent
-                alpha[parent] *= np.dot(alpha[node], pw_forward[node])
-        return alpha, np.sum(alpha[traversal[0]])
-
 
 class HCRFAnalyzer(MLBaseAnalyzer):
     """Discourse-aware sentiment analysis using hidden-variable CRF.
@@ -882,7 +657,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
 
             self._model = GridSearchCV(self._model, PARAM_GRID,
                                        scoring=cv_scorer)
-        self._model.fit(*train_set)
+        self._model.fit(train_set[0], train_set[1], dev_set[0], dev_set[1])
         w = self._model.w
         lncrf = self._model.model
         unary_params = w[:lncrf.n_input_states * lncrf.n_features].reshape(

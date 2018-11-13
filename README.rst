@@ -427,16 +427,17 @@ Results
 | SB10k     |  0.61  | 0.63 |      0.62     |  0.46  | 0.29 |     0.36      |  0.76  | 0.82 |     0.79    |       0.4884      |      0.6933       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
-HCRF
-^^^^
+HMCRF
+^^^^^
 
-In the same way, you can use the ``-t xxx`` option, to train and evaluate the ``xxx`` classifier:
+In the same way, you can use the ``-t hmcrf`` option, to train and
+evaluate the hidden marginalized CRF classifier:
 
 .. code-block:: shell
 
-  dasa_sentiment -v train -t hcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hcrf/hcrf.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hcrf/hcrf.json
+  dasa_sentiment -v train -t hmcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hmcrf/hmcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hmcrf/hmcrf.json
 
 
 Results
@@ -456,22 +457,22 @@ Results
    Marginalization (random initialization)
    General Statistics:
    precision    recall  f1-score   support
-   positive       0.82      0.70      0.75       437
-   negative       0.57      0.59      0.58       209
-   neutral       0.67      0.78      0.72       360
-   avg / total       0.71      0.70      0.71      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 66.67%
-   Micro-Averaged F1-Score (All Classes): 70.3777%
+   positive       0.79      0.75      0.77       437
+   negative       0.45      0.70      0.55       209
+   neutral       0.73      0.54      0.62       360
+   avg / total       0.70      0.67      0.67      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 65.95%
+   Micro-Averaged F1-Score (All Classes): 66.6004%
 
    Marginalization (zero initialization):
    General Statistics:
    precision    recall  f1-score   support
-   positive       0.76      0.79      0.77       437
-   negative       0.62      0.52      0.56       209
-   neutral       0.69      0.73      0.71       360
+   positive       0.77      0.77      0.77       437
+   negative       0.59      0.56      0.58       209
+   neutral       0.70      0.72      0.71       360
    avg / total       0.71      0.71      0.71      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 66.94%
-   Micro-Averaged F1-Score (All Classes): 71.1730%
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.36%
+   Micro-Averaged F1-Score (All Classes): 70.9742%
 
 .. comment: SB10k
    General Statistics:
@@ -484,17 +485,31 @@ Results
    Micro-Averaged F1-Score (All Classes): 71.3333%
 
    Marginalization (random initialization)
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.62      0.63       190
+   negative       0.41      0.48      0.44       113
+   neutral       0.82      0.80      0.81       447
+   avg / total       0.71      0.70      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 53.50%
+   Micro-Averaged F1-Score (All Classes): 70.4000%
 
    General Statistics (zero initialization):
-
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
 +           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
 |           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
-| SB10k     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
+| PotTS     |  0.77  | 0.77 |      0.77     |  0.59  | 0.56 |     0.58      |  0.7   | 0.72 |     0.71    |       0.674       |      0.71         |
+| SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.557       |      0.713        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf
