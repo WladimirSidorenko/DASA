@@ -146,8 +146,10 @@ class RDPModel(nn.Module):
                         z_ij = pyro.sample(
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
-            return pyro.sample("y", dist.Categorical(z_ij),
-                               obs=labels[inst_indices])
+            z_ij = node_scores[inst_indices, -1]
+            y = pyro.sample("y", dist.Categorical(z_ij),
+                            obs=labels[inst_indices])
+            return y
 
     # the guide (i.e., variational distribution): q(z|x)
     def guide(self, node_scores, children, rels, labels):

@@ -23,7 +23,43 @@ from .constants import IDX2CLS
 
 ##################################################################
 # Classes
-class Tree(object):
+class TreeMixin(object):
+    def __len__(self):
+        """Total number of nodes in the tree.
+
+        """
+        if self._len < 0:
+            self._len = sum(len(ch) for ch in self._children) + 1
+        return self._len
+
+    @property
+    def children(self):
+        return self._children
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def parent(self):
+        return self._prnt
+
+    @property
+    def rel2par(self):
+        return self._rel2par
+
+    @rel2par.setter
+    def rel2par(self, value):
+        self._rel2par = value
+
+    @property
+    def width(self):
+        if self._width < 0:
+            self._width = len(self.children)
+        return self._width
+
+
+class Tree(TreeMixin):
     @staticmethod
     def _find_nuc_prnt(self, node, heads, prnt=None):
         """Find parent of nucleus EDU.
@@ -74,14 +110,6 @@ class Tree(object):
             for node in nodes:
                 yield node
 
-    def __len__(self):
-        """Total number of nodes in the tree.
-
-        """
-        if self._len < 0:
-            self._len = sum(len(ch) for ch in self._children) + 1
-        return self._len
-
     def bfs(self):
         """Iterate over all tree nodes.
 
@@ -113,10 +141,6 @@ class Tree(object):
                 yield grandchild
 
     @property
-    def children(self):
-        return self._children
-
-    @property
     def depth(self):
         if self._depth < 0:
             if len(self._children) == 0:
@@ -126,34 +150,12 @@ class Tree(object):
         return self._depth
 
     @property
-    def id(self):
-        return self._id
-
-    @property
     def leaves(self):
         return self._leaves
 
     @property
     def ns(self):
         return self._ns
-
-    @property
-    def parent(self):
-        return self._prnt
-
-    @property
-    def rel2par(self):
-        return self._rel2par
-
-    @rel2par.setter
-    def rel2par(self, value):
-        self._rel2par = value
-
-    @property
-    def width(self):
-        if self._width < 0:
-            self._width = len(self.children)
-        return self._width
 
     @property
     def root_edus(self):
@@ -290,7 +292,7 @@ class Tree(object):
         return tree
 
 
-class DepDT(object):
+class DepDT(TreeMixin):
     """Dependency-based discourse tree (Hirao et al., 2013).
 
     """
@@ -303,6 +305,7 @@ class DepDT(object):
         """
         self._id = _id
         self._len = -1
+        self._width = -1
         self._prnt = None
         self._rel2par = None
         self._children = []
@@ -316,37 +319,13 @@ class DepDT(object):
             for node in nodes:
                 yield node
 
-    def __len__(self):
-        """Total number of nodes in the tree.
-
-        """
-        if self._len < 0:
-            self._len = sum(len(ch) for ch in self._children) + 1
-        return self._len
-
     def __repr__(self):
-        tree = ("<DepDT id={} rel2par={} polarity_score={!r}"
+        tree = ("<DepDT id={} rel2par={} polarity_scores={!r}"
                 " children=[{}]>").format(
                     self._id, self._rel2par, self.polarity_scores,
                     ", ".join([repr(ch) for ch in self._children])
                 )
         return tree
-
-    @property
-    def children(self):
-        return self._children
-
-    @property
-    def id(self):
-        return self._id
-
-    @property
-    def parent(self):
-        return self._prnt
-
-    @property
-    def rel2par(self):
-        return self._rel2par
 
     def add_child(self, dg_node, rel2par=None):
         """Add child to the given node.
