@@ -769,8 +769,6 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         for i, edu_i in enumerate(instance["edus"], 1):
             feats[i, :-1] = edu_i["polarity_scores"]
             feats[i, -1] = 1
-        self._logger.debug("feats: %r", feats)
-        self._logger.debug("tree: %r", tree)
         edges = np.zeros((len(tree) - 1, 2), dtype=np.uint8)
         edge_feats = np.zeros((len(tree) - 1, self._n_rels))
         i = 0
@@ -786,8 +784,6 @@ class HCRFAnalyzer(MLBaseAnalyzer):
             labels[0] = CLS2IDX[instance["label"]]
         else:
             labels = None
-        self._logger.debug("edge_feats: %r", edge_feats)
-        self._logger.debug("labels: %r", labels)
         return ((feats, edges, edge_feats, n_edus), labels)
 
     def _reset(self):
