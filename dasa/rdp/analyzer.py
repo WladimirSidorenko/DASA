@@ -31,6 +31,11 @@ from ..r2n2 import R2N2Analyzer
 
 
 ##################################################################
+# Setup
+torch.set_printoptions(precision=8)
+
+
+##################################################################
 # Class
 class RDPAnalyzer(R2N2Analyzer):
     """Discourse-aware sentiment analysis using variational inference.
@@ -68,7 +73,27 @@ class RDPAnalyzer(R2N2Analyzer):
         return IDX2CLS[self._wbench_y[0]]
 
     def debug(self, instance):
-        return self.predict(instance)
+        tree = self.span2nuc(
+            RSTTree(
+                instance, instance["rst_trees"][self._relation_scheme])
+        )
+        self._logger.debug("tree: %r", tree)
+        self.tree2mtx(self._wbench_node_scores[0, :],
+                      self._wbench_children[0, :],
+                      self._wbench_rels[0, :],
+                      tree, instance)
+        self._logger.debug("node_scores: %r", self._wbench_node_scores)
+        self._logger.debug("children: %r", self._wbench_children)
+        self._logger.debug("rels: %r", self._wbench_rels)
+        self._model.debug([torch.from_numpy(self._wbench_node_scores),
+                           torch.from_numpy(self._wbench_children),
+                           torch.from_numpy(self._wbench_rels),
+                           None],
+                          self._wbench_y)
+        self._logger.debug("prediction: %r", self._wbench_y)
+        pred = IDX2CLS[self._wbench_y[0]]
+        self._logger.debug("predicted class: %r", pred)
+        return pred
 
     def _init_model(self, forrest):
         """Initialize the model that will be used for prediction.
@@ -153,6 +178,7 @@ class RDPAnalyzer(R2N2Analyzer):
                                           tree, instance)
         assert np.sum(node_scores[-1, :]) == 0, \
             "Scores of the root node are not equal 0."
+        # node_scores[-1, :] = 1. / len(instance["polarity_scores"])
         node_scores[-1, :] = instance["polarity_scores"]
 
     def _reset(self):

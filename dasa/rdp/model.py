@@ -146,6 +146,7 @@ class RDPModel(nn.Module):
                         z_ij = pyro.sample(
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
+                        prnt_scores_i = node_scores[inst_indices, i]
             z_ij = node_scores[inst_indices, -1]
             y = pyro.sample("y", dist.Categorical(z_ij),
                             obs=labels[inst_indices])
@@ -161,33 +162,50 @@ class RDPModel(nn.Module):
         max_t = node_scores.shape[1]
         max_children = children.shape[-1]
         priors = self._get_guide_priors()
+        self._logger.debug("guide priors: %r", priors)
         alpha_guide = pyro.random_module("alpha_guide", self.alpha_guide,
                                          priors)()
+        self._logger.debug("alpha_guide.z_epsilon: %r", alpha_guide.z_epsilon)
+        self._logger.debug("alpha_guide.M: %r", alpha_guide.M)
+        self._logger.debug("alpha_guide.beta: %r", alpha_guide.beta)
+        self._logger.debug("alpha_guide.scale_factor: %r", alpha_guide.scale_factor)
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
             for i in range(max_t):
+                self._logger.debug("Considering time step %d", max_t)
                 prnt_scores_i = node_scores[inst_indices, i]
+                self._logger.debug("prnt_scores[%d]: %r", max_t, prnt_scores_i)
                 rels_i = rels[inst_indices, i]
+                self._logger.debug("rels[%d]: %r", max_t, rels_i)
                 child_scores_i = self._get_child_scores(
                     node_scores, children, inst_indices, i,
                     n_instances, max_children
                 )
+                self._logger.debug("child_scores_i: %r", child_scores_i)
+                self._logger.debug("child_scores[%d]: %r", max_t, rels_i)
                 # iterate over each child of that node
                 for j in range(max_children):
+                    self._logger.debug("Considering child %d", j)
                     child_scores_ij = child_scores_i[inst_indices, j]
                     var_sfx = "{}_{}".format(i, j)
+                    self._logger.debug("sampling variable %s", var_sfx)
+                    self._logger.debug("prnt_scores_i: %r", prnt_scores_i)
+                    self._logger.debug("child_scores_ij: %r", child_scores_ij)
                     copy_indices, probs2copy, alpha_indices, alpha = \
                         alpha_guide(
                             var_sfx, prnt_scores_i,
                             child_scores_ij, rels_i[inst_indices, j]
                         )
+                    self._logger.debug("alpha %r", alpha)
+                    self._logger.debug("probs2copy %r", probs2copy)
                     if probs2copy is not None:
                         node_scores[inst_indices[copy_indices], i] = probs2copy
                     if alpha is not None:
                         z_ij = pyro.sample(
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
+                        prnt_scores_i = node_scores[inst_indices, i]
             return node_scores[inst_indices, -1]
 
     def step(self, data):
@@ -235,6 +253,34 @@ class RDPModel(nn.Module):
                 for wbench_i in self._test_wbench:
                     wbench_i[:n_instances] = self.guide(*x)
         mean = np.mean(self._test_wbench, axis=0)
+        trg_y[:] = np.argmax(mean[:n_instances], axis=-1)
+        return trg_y
+
+    def debug(self, x, trg_y):
+        """Predict labels.
+
+        Args:
+          x (torch.utils.data.DataLoader):
+          trg_y (np.array): array for storing the predicted labels
+
+        Returns:
+          float: loss
+
+        """
+        # resize `self._test_wbench` if necessary
+        n_instances = x[0].shape[0]
+        self._resize_wbench(n_instances)
+        self._test_wbench *= 0
+        # print("self._test_wbench:", repr(self._test_wbench))
+        with poutine.block():
+            with torch.no_grad():
+                for wbench_i in self._test_wbench:
+                    wbench_i[:n_instances] = self.guide(*x)
+                    break
+        self._logger.debug("self._test_wbench: %r",
+                           self._test_wbench)
+        mean = np.mean(self._test_wbench, axis=0)
+        self._logger.debug("self._test_wbench (mean): %r", mean)
         trg_y[:] = np.argmax(mean[:n_instances], axis=-1)
         return trg_y
 
@@ -292,15 +338,15 @@ class RDPModel(nn.Module):
                     dtype="float32")
         )
         # beta
-        beta_p = 15. * torch.tensor(np.ones((self.n_rels, 1),
-                                            dtype="float32"))
-        beta_q = 15. * torch.tensor(np.ones((self.n_rels, 1),
-                                            dtype="float32"))
+        beta_p = 5. * torch.tensor(np.ones((self.n_rels, self.n_polarities),
+                                           dtype="float32"))
+        beta_q = 5. * torch.tensor(np.ones((self.n_rels, self.n_polarities),
+                                           dtype="float32"))
         # z_epsilon
         z_epsilon_p = torch.tensor(1.)
         z_epsilon_q = torch.tensor(15.)
         # scale factor
-        scale_factor = torch.tensor(42.)
+        scale_factor = torch.tensor(21.)
         return {"M_mu": M_mu, "M_sigma": M_sigma, "beta_p": beta_p,
                 "beta_q": beta_q, "z_epsilon_p": z_epsilon_p,
                 "z_epsilon_q": z_epsilon_q, "scale_factor": scale_factor}

@@ -418,6 +418,13 @@ Results
 
 .. comment:
    General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.67       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.72       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.88%
+   Micro-Averaged F1-Score (All Classes): 71.4667%
 
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
