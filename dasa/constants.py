@@ -34,8 +34,8 @@ R2N2 = "r2n2"
 DDR = "ddr"
 RDP = "rdp"
 WANG = "wang"
-HCRF = "hcrf"
-HMCRF = "hmcrf"
+LCRF = "lcrf"
+LMCRF = "lmcrf"
 NO_DISCOURSE = "no-discourse"
 
 # Relation Schemes

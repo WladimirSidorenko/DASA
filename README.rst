@@ -490,17 +490,17 @@ Results
 | SB10k     |  0.61  | 0.63 |      0.62     |  0.46  | 0.29 |     0.36      |  0.76  | 0.82 |     0.79    |       0.4884      |      0.6933       |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
-HCRF
+LCRF
 ^^^^
 
-In the same way, you can use the ``-t hmcrf`` option, to train and
-evaluate hidden CRFs:
+In the same way, you can use the ``-t lcrf`` option, to train and
+evaluate latent CRFs:
 
 .. code-block:: shell
 
-  dasa_sentiment -v train -t hcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hcrf/hcrf.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hcrf/hcrf.json
+  dasa_sentiment -v train -t lcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/lcrf/lcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/lcrf/lcrf.json
 
 
 Results
@@ -534,17 +534,17 @@ Results
 | SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.557       |      0.713        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
-HMCRF
+LMCRF
 ^^^^^
 
-In the same way, you can use the ``-t hmcrf`` option, to train and
+In the same way, you can use the ``-t lmcrf`` option, to train and
 evaluate hidden marginalized CRFs:
 
 .. code-block:: shell
 
-  dasa_sentiment -v train -t hmcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/hmcrf/hmcrf.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/hmcrf/hmcrf.json
+  dasa_sentiment -v train -t lmcrf -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/lmcrf/lmcrf.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/lmcrf/lmcrf.json
 
 
 Results

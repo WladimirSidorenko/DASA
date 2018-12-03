@@ -7,7 +7,7 @@
 hidden-variable CRF.
 
 Attributes:
-  HCRFAnalyzer (class): class for predicting polarity of a tweet using
+  LCRFAnalyzer (class): class for predicting polarity of a tweet using
     hidden-variable CRF
 
 """
@@ -614,7 +614,7 @@ class EdgeFeatureLatentNodeCRF(EFLNCRF):
         return beta
 
 
-class HCRFAnalyzer(MLBaseAnalyzer):
+class LCRFAnalyzer(MLBaseAnalyzer):
     """Discourse-aware sentiment analysis using hidden-variable CRF.
 
     """
@@ -645,8 +645,8 @@ class HCRFAnalyzer(MLBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(HCRFAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "HCRF"
+        super(LCRFAnalyzer, self).__init__(*args, **kwargs)
+        self._name = "LCRF"
         self._relation_scheme = relation_scheme
         self._marginalized = marginalized
         self._model = None
@@ -787,7 +787,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
         return ((feats, edges, edge_feats, n_edus), labels)
 
     def _reset(self):
-        super(HCRFAnalyzer, self)._reset()
+        super(LCRFAnalyzer, self)._reset()
         if isinstance(self._model, GridSearchCV):
             self._model.estimator._logger = None
             self._model.scoring = None
@@ -797,7 +797,7 @@ class HCRFAnalyzer(MLBaseAnalyzer):
 
     def _restore(self, a_path):
         if a_path is not None:
-            super(HCRFAnalyzer, self)._restore(a_path)
+            super(LCRFAnalyzer, self)._restore(a_path)
 
         def logger(x, *args, **kwargs):
             self._logger.debug(*args, **kwargs)

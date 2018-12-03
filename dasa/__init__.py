@@ -19,7 +19,7 @@ from .root import RootAnalyzer
 from .r2n2 import R2N2Analyzer
 from .rdp.analyzer import RDPAnalyzer
 from .wang import WangAnalyzer
-from .hcrf import HCRFAnalyzer
+from .lcrf import LCRFAnalyzer
 
 
 ##################################################################
@@ -27,7 +27,7 @@ from .hcrf import HCRFAnalyzer
 __name__ = "dasa"
 __all__ = ["DASBaseAnalyzer", "DDRAnalyzer", "DUSAnalyzer", "LastAnalyzer",
            "RootAnalyzer", "R2N2Analyzer", "RDPAnalyzer", "WangAnalyzer",
-           "HCRFAnalyzer"]
+           "LCRFAnalyzer"]
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.1.0a0"

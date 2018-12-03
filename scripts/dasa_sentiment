@@ -12,10 +12,10 @@ import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   LastAnalyzer, RootAnalyzer, R2N2Analyzer,
-                  RDPAnalyzer, WangAnalyzer, HCRFAnalyzer)
+                  RDPAnalyzer, WangAnalyzer, LCRFAnalyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
-                            DDR, WANG, RDP, HCRF, HMCRF, BHATIA, CHENLO,
+                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO,
                             HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL)
 
 
@@ -109,7 +109,7 @@ def main(argv):
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
                               choices=(DDR, LAST, ROOT, R2N2, RDP, WANG,
-                                       NO_DISCOURSE, HCRF, HMCRF),
+                                       NO_DISCOURSE, LCRF, LMCRF),
                               required=True, type=str)
     _add_cmn_options(parser_train)
 
@@ -153,10 +153,10 @@ def main(argv):
             analyzer = RDPAnalyzer(args.relation_scheme)
         elif args.type == WANG:
             analyzer = WangAnalyzer(args.relation_scheme)
-        elif args.type == HCRF:
-            analyzer = HCRFAnalyzer(args.relation_scheme, marginalized=False)
-        elif args.type == HMCRF:
-            analyzer = HCRFAnalyzer(args.relation_scheme, marginalized=True)
+        elif args.type == LCRF:
+            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=False)
+        elif args.type == LMCRF:
+            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=True)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
