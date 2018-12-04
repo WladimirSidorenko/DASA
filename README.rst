@@ -409,31 +409,30 @@ Results
 .. comment:
    General Statistics:
    precision    recall  f1-score   support
-   positive       0.71      0.83      0.77       437
-   negative       0.60      0.55      0.58       209
-   neutral       0.73      0.62      0.67       360
-   avg / total       0.70      0.70      0.69      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 67.03%
-   Micro-Averaged F1-Score (All Classes): 69.6819%
+   positive       0.67      0.85      0.75       437
+   negative       0.60      0.50      0.55       209
+   neutral       0.73      0.58      0.65       360
+   avg / total       0.68      0.68      0.67      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 64.75%
+   Micro-Averaged F1-Score (All Classes): 67.7932%
 
 .. comment:
    General Statistics:
    precision    recall  f1-score   support
-   positive       0.64      0.69      0.67       190
-   negative       0.45      0.45      0.45       113
+   positive       0.65      0.71      0.68       190
+   negative       0.46      0.45      0.45       113
    neutral       0.82      0.79      0.80       447
-   avg / total       0.72      0.71      0.72       750
-   Macro-Averaged F1-Score (Positive and Negative Classes): 55.88%
-   Micro-Averaged F1-Score (All Classes): 71.4667%
-
+   avg / total       0.72      0.72      0.72       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 56.42%
+   Micro-Averaged F1-Score (All Classes): 71.7333%
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
 +           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
 |           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.71  | 0.83 |      0.77     |  0.59  | 0.55 |     0.57      |  0.73  | 0.61 |     0.66    |       0.667       |      0.693        |
-| SB10k     |  0.64  | 0.69 |      0.67     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.559       |      0.715        |
+| PotTS     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
+| SB10k     |  0.    | 0.   |      0.       |  0.    | 0.   |     0.        |  0.    | 0.   |     0.      |       0.          |      0.           |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 WANG
@@ -509,14 +508,13 @@ Results
 .. comment: PotTS
    precision    recall  f1-score   support
    positive       0.76      0.79      0.77       437
-   negative       0.61      0.53      0.57       209
-   neutral       0.70      0.71      0.70       360
-   avg / total       0.70      0.71      0.71      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 67.02%
-   Micro-Averaged F1-Score (All Classes): 70.7753%
+   negative       0.61      0.53      0.56       209
+   neutral       0.70      0.71      0.71       360
+   avg / total       0.71      0.71      0.71      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 66.95%
+   Micro-Averaged F1-Score (All Classes): 70.8748%
 
 .. comment: SB10k
-   General Statistics:
    precision    recall  f1-score   support
    positive       0.64      0.69      0.66       190
    negative       0.45      0.45      0.45       113
@@ -530,7 +528,7 @@ Results
 +           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
 |           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.76  | 0.79 |      0.77     |  0.61  | 0.53 |     0.57      |  0.7   | 0.71 |     0.7     |       0.67        |      0.708        |
+| PotTS     |  0.76  | 0.79 |      0.77     |  0.61  | 0.53 |     0.56      |  0.71  | 0.71 |     0.71    |       0.67        |      0.709        |
 | SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.557       |      0.713        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
@@ -553,30 +551,30 @@ Results
 .. comment: PotTS
    General Statistics:
    precision    recall  f1-score   support
-   positive       0.76      0.79      0.77       437
-   negative       0.63      0.49      0.55       209
-   neutral       0.69      0.75      0.72       360
+   positive       0.77      0.77      0.77       437
+   negative       0.61      0.54      0.57       209
+   neutral       0.69      0.74      0.72       360
    avg / total       0.71      0.71      0.71      1006
-   Macro-Averaged F1-Score (Positive and Negative Classes): 66.23%
-   Micro-Averaged F1-Score (All Classes): 71.2724%
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.05%
+   Micro-Averaged F1-Score (All Classes): 71.1730%
 
 .. comment: SB10k
    General Statistics
    precision    recall  f1-score   support
-   positive       0.64      0.69      0.66       190
-   negative       0.44      0.45      0.45       113
+   positive       0.64      0.69      0.67       190
+   negative       0.45      0.45      0.45       113
    neutral       0.82      0.79      0.80       447
-   avg / total       0.72      0.71      0.71       750
-   Macro-Averaged F1-Score (Positive and Negative Classes): 55.62%
-   Micro-Averaged F1-Score (All Classes): 71.2000%
+   avg / total       0.72      0.71      0.72       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.98%
+   Micro-Averaged F1-Score (All Classes): 71.4667%
 
 +-----------+-------------------------------+-------------------------------+-----------------------------+-------------------+-------------------+
 | **Data**  |          **Positive**         |           **Negative**        |          **Neutral**        | :math:`Macro F_1` | :math:`Micro F_1` |
 +           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
 |           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.76  | 0.79 |      0.77     |  0.63  | 0.49 |     0.55      |  0.69  | 0.75 |     0.72    |       0.662       |      0.713        |
-| SB10k     |  0.64  | 0.69 |      0.66     |  0.44  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.556       |      0.712        |
+| PotTS     |  0.77  | 0.77 |      0.77     |  0.61  | 0.54 |     0.57      |  0.69  | 0.74 |     0.72    |       0.671       |      0.712        |
+| SB10k     |  0.64  | 0.69 |      0.67     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.56        |      0.715        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 
 .. _PotTS: http://www.lrec-conf.org/proceedings/lrec2016/pdf/97_Paper.pdf

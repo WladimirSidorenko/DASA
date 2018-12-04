@@ -735,7 +735,7 @@ class LCRFAnalyzer(MLBaseAnalyzer):
             if self._marginalized:
                 model_cls = EdgeFeatureLatentNodeCRF
                 optimizer_cls = FrankWolfeSSVM
-                max_iter = 100
+                max_iter = 1000
                 C = 0.3
             else:
                 model_cls = EFLNCRF
