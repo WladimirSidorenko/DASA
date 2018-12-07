@@ -427,6 +427,17 @@ Results
    Macro-Averaged F1-Score (Positive and Negative Classes): 67.09%
    Micro-Averaged F1-Score (All Classes): 70.3777%
 
+   SparseMax (no contrastive)
+   --------------------------
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.73      0.82      0.77       437
+   negative       0.61      0.56      0.58       209
+   neutral       0.73      0.65      0.69       360
+   avg / total       0.70      0.71      0.70      1006
+   Macro-Averaged F1-Score (Positive and Negative Classes): 67.77%
+   Micro-Averaged F1-Score (All Classes): 70.5765%
+
    SoftMax
    ---------
    General Statistics:
@@ -470,6 +481,17 @@ Results
    Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
    Micro-Averaged F1-Score (All Classes): 71.3333%
 
+   SparseMax (no contrastive)
+   --------------------------
+   General Statistics:
+   precision    recall  f1-score   support
+   positive       0.64      0.69      0.66       190
+   negative       0.45      0.45      0.45       113
+   neutral       0.82      0.79      0.80       447
+   avg / total       0.72      0.71      0.71       750
+   Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
+   Micro-Averaged F1-Score (All Classes): 71.3333%
+
    SoftMax
    ---------
    General Statistics:
@@ -497,7 +519,7 @@ Results
 +           +--------+------+---------------+--------+------+---------------+--------+------+-------------+                   +                   +
 |           |    P   |   R  |  :math:`F_1`  |   P    |   R  |  :math:`F_1`  |    P   |   R  | :math:`F_1` |                   |                   |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
-| PotTS     |  0.73  | 0.82 |      0.77     |  0.61  | 0.54 |     0.57      |  0.72  | 0.66 |     0.69    |       0.671       |      0.704        |
+| PotTS     |  0.73  | 0.82 |      0.77     |  0.61  | 0.56 |     0.58      |  0.73  | 0.65 |     0.69    |       0.678       |      0.706        |
 | SB10k     |  0.64  | 0.69 |      0.66     |  0.45  | 0.45 |     0.45      |  0.82  | 0.79 |     0.8     |       0.557       |      0.713        |
 +-----------+--------+------+---------------+--------+------+---------------+--------+------+-------------+-------------------+-------------------+
 

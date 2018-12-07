@@ -327,11 +327,11 @@ class RDPModel(nn.Module):
         M_mu = np.tile(M_mu, (self.n_rels, 1)).reshape(
             self.n_rels, self.n_polarities, self.n_polarities
         )
-        for rel, rel_idx in iteritems(self.rel2idx):
-            # swap axes for contrastive relations
-            if check_rel(rel, CONTRASTIVE_RELS):
-                mu_i = M_mu[rel_idx]
-                mu_i[[0, 2]] = mu_i[[2, 0]]
+        # for rel, rel_idx in iteritems(self.rel2idx):
+        #     # swap axes for contrastive relations
+        #     if check_rel(rel, CONTRASTIVE_RELS):
+        #         mu_i = M_mu[rel_idx]
+        #         mu_i[[0, 2]] = mu_i[[2, 0]]
         M_mu = torch.tensor(M_mu)
         M_sigma = torch.tensor(
             np.ones((self.n_rels, self.n_polarities, self.n_polarities),
