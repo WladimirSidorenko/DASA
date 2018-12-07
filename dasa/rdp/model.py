@@ -112,7 +112,7 @@ class RDPModel(nn.Module):
     # the model: p(x, z) = p(x|z)p(z)
     def model(self, node_scores, children, rels, labels):
         # since we will modify `node_scores` in-place, we would like to
-        # preserver the original variant of it to pass it safely to model
+        # preserve the original variant of it to pass it safely to model
         node_scores = deepcopy(node_scores)
         # process minibatch
         n_instances = node_scores.shape[0]
@@ -323,7 +323,7 @@ class RDPModel(nn.Module):
         """
         # relation transformation matrix
         M_mu = np.eye(self.n_polarities, dtype="float32")
-        M_mu[1, :] = [-0.25, 0.5, -0.25]
+        M_mu[1, :] = [0., 0.3, 0.]
         M_mu = np.tile(M_mu, (self.n_rels, 1)).reshape(
             self.n_rels, self.n_polarities, self.n_polarities
         )
@@ -346,7 +346,7 @@ class RDPModel(nn.Module):
         z_epsilon_p = torch.tensor(1.)
         z_epsilon_q = torch.tensor(15.)
         # scale factor
-        scale_factor = torch.tensor(21.)
+        scale_factor = torch.tensor(34.)
         return {"M_mu": M_mu, "M_sigma": M_sigma, "beta_p": beta_p,
                 "beta_q": beta_q, "z_epsilon_p": z_epsilon_p,
                 "z_epsilon_q": z_epsilon_q, "scale_factor": scale_factor}

@@ -20,6 +20,9 @@ import torch.nn as nn
 import torch
 
 
+from .sparsemax import Sparsemax
+
+
 ##################################################################
 # Classes
 class AlphaModel(nn.Module):
@@ -30,7 +33,9 @@ class AlphaModel(nn.Module):
         self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
         self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
         self.scale_factor = nn.Parameter(torch.tensor(21.))
-        self.softmax = nn.Softmax(dim=-1)
+        self._min_sum = torch.tensor(1e-10)
+        self._sparsemax = Sparsemax(dim=-1)
+        self._softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
         # The vector `nz_chld_indices` will contain indices of the child_probs
@@ -42,9 +47,15 @@ class AlphaModel(nn.Module):
         # `child_probs` are not zero.
         child_probs = child_probs[nz_chld_indices].unsqueeze_(-1)
         rels = rels[nz_chld_indices]
+        child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
         # Batch-multiply the remaining child scores with relation matrices (M).
-        child_probs = self.softmax(torch.bmm(self.M[rels],
-                                             child_probs).squeeze_(-1))
+        # Three different normalization variants:
+        # Softmax
+        # child_probs = self._softmax(child_probs)
+        # Sparsemax
+        child_probs = self._sparsemax(child_probs)
+        # Custom Normalization
+        # child_probs = self._normalize(child_probs)
         # We will only take a convex combination of the means if the parent
         # probs are also non-zero, otherwise we will assign the child probs to
         # the parents unchanged.
@@ -73,8 +84,7 @@ class AlphaModel(nn.Module):
         return copy_indices, child_probs2copy, alpha_indices, alpha
 
     def scale(self, prnt_probs, child_probs):
-        min_score = self.z_epsilon * torch.ones(prnt_probs.shape)
-        z = torch.max(min_score, prnt_probs + child_probs)
+        z = torch.clamp(prnt_probs + child_probs, min=self.z_epsilon.item())
         z_norm = 1. / torch.sum(z, dim=-1)
         z_norm.unsqueeze_(-1)
         z *= z_norm
@@ -83,10 +93,23 @@ class AlphaModel(nn.Module):
         norm = torch.norm(prnt_probs, dim=-1) * torch.norm(child_probs, dim=-1)
         # replace 0's with 1's to prevent division by 0, since cosine in
         # this case will be 0 anyway
-        norm = torch.where(norm == 0, torch.ones(norm.shape), norm)
-        cos = 1.1 + cos / norm
+        norm = torch.clamp(norm, min=self._min_sum)
+        cos = 0.1 + cos / norm
         scale = self.scale_factor * cos / entropy
         return scale
+
+    def _normalize(self, probs):
+        """Normalize probabilities.
+
+        Args:
+          probs (torch.tensor): unnormalized probabilities
+
+        """
+        min_correction = torch.min(probs, dim=1, keepdim=True)[0] - 0.1
+        probs -= min_correction
+        probs /= torch.clamp(probs.sum(dim=1, keepdim=True),
+                             min=self._min_sum)
+        return probs
 
 
 class AlphaGuide(AlphaModel):
