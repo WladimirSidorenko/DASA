@@ -438,6 +438,9 @@ Results
    Macro-Averaged F1-Score (Positive and Negative Classes): 67.77%
    Micro-Averaged F1-Score (All Classes): 70.5765%
 
+   SparseMax (no contrastive, dep rel)
+   -----------------------------------
+
    SoftMax
    ---------
    General Statistics:
@@ -491,6 +494,9 @@ Results
    avg / total       0.72      0.71      0.71       750
    Macro-Averaged F1-Score (Positive and Negative Classes): 55.72%
    Micro-Averaged F1-Score (All Classes): 71.3333%
+
+   SparseMax (no contrastive, dep rel)
+   -----------------------------------
 
    SoftMax
    ---------
