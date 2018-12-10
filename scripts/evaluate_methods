@@ -3,23 +3,25 @@
 set -e -o pipefail
 
 ##################################################################
-CWD=$PWD
+CWD=$(dirname $(dirname $(realpath $0)))
 DATA_DIR=$CWD/data
 
 ##################################################################
+# methods: lcrf lmcrf rdp r2n2 wang
+# relschemes: chenlo heerschop zhou pcc
+# base sentiment classifiers: chenlo heerschop zhou pcc
+# corpus: PotTS SB10k
 for method in lcrf lmcrf rdp r2n2 wang; do
-    echo $method >&2
     for relscheme in chenlo heerschop zhou pcc; do
-	echo $relscheme >&2
 	for corpus in PotTS SB10k; do
-	    echo $corpus >&2
-	    log_file="${method}.${relscheme}.${corpus}.log"
+	    echo "${method} ${relscheme} ${corpus}" >&2
+	    log_file="${CWD}/${method}.${relscheme}.${corpus}.log"
 	    train_data=${DATA_DIR}/$corpus/train/*.json
 	    dev_data=${DATA_DIR}/$corpus/dev/*.json
 	    test_data=${DATA_DIR}/$corpus/test/*.json
 	    output_file=${DATA_DIR}/$corpus/predicted/$method/$method.$relscheme.json
 	    # train
-	    dasa_sentiment train -t $method -r $relscheme $train_data $dev_data > "${log_file}"
+	    dasa_sentiment train -t $method -r $relscheme $train_data $dev_data &> "${log_file}"
 	    # test
 	    dasa_sentiment test $test_data > $output_file 2>> "${log_file}"
 	done
