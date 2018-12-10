@@ -29,7 +29,7 @@ import torch.nn as nn
 import torch
 
 from .alpha import AlphaGuide, AlphaModel
-from ..constants import CONTRASTIVE_RELS
+# from ..constants import CONTRASTIVE_RELS
 from ..dl import OPTIM_PARAM
 from ..utils import LOGGER
 
