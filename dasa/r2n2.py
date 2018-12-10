@@ -271,5 +271,8 @@ class R2N2Analyzer(DLBaseAnalyzer):
                 node_scores[mtx_idx, :] = node.polarity_scores
             for i, ch in enumerate(node.children):
                 children[mtx_idx, i] = node_id2mtx_idx[ch.id]
-                rel_id = self._model.rel2idx[(ch.rel2par, ch.ns)]
+                rel_name = (ch.rel2par, ch.ns)
+                if rel_name not in self._model.rel2idx:
+                    self._logger.warn("Unknown relation %r", rel_name)
+                rel_id = self._model.rel2idx.get(rel_name, 0)
                 rels[mtx_idx, i] = rel_id

@@ -168,7 +168,8 @@ class RDPModel(nn.Module):
         self._logger.debug("alpha_guide.z_epsilon: %r", alpha_guide.z_epsilon)
         self._logger.debug("alpha_guide.M: %r", alpha_guide.M)
         self._logger.debug("alpha_guide.beta: %r", alpha_guide.beta)
-        self._logger.debug("alpha_guide.scale_factor: %r", alpha_guide.scale_factor)
+        self._logger.debug("alpha_guide.scale_factor: %r",
+                           alpha_guide.scale_factor)
         # iterate over each instance of the batch
         with pyro.iarange("batch", size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion

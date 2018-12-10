@@ -776,7 +776,9 @@ class LCRFAnalyzer(MLBaseAnalyzer):
             if node.parent is not None:
                 edges[i, 0] = node.parent.id + 1
                 edges[i, 1] = node.id + 1
-                edge_idx = self._rel2idx[node.rel2par]
+                if node.rel2par not in self._rel2idx:
+                    LOGGER.warn("Unknown relation: %r", node.rel2par)
+                edge_idx = self._rel2idx.get(node.rel2par, 0)
                 edge_feats[i, edge_idx] = 1
                 i += 1
         if train_mode:
