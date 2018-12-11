@@ -13,7 +13,7 @@ import re
 import sys
 
 from cgsa.cgsa import SentimentAnalyzer
-from cgsa.constants import DFLT_MODEL_PATH, DFLT_W2V_PATH
+from cgsa.constants import DFLT_MODEL_PATH
 
 
 ##################################################################
@@ -34,7 +34,7 @@ Y = np.zeros(3)
 
 ##################################################################
 # Class
-Word = namedtuple("Word", ["form", "lemma", "prnt_idx"])
+Word = namedtuple("Word", ["form", "lemma", "tag", "prnt_idx"])
 
 
 class Tweet(object):
@@ -94,6 +94,7 @@ def msg2tweet(msg, toks, prnt_idcs=None):
         prnt_idcs = [msg_toks[t]["prnt"] for t in toks]
     return Tweet([(msg_toks[t]["form"],
                    msg_toks[t]["lemma"],
+                   msg_toks[t]["tag"],
                    prnt_idx)
                   for t, prnt_idx in zip(toks, prnt_idcs)])
 
@@ -130,11 +131,13 @@ def add_scores(analyzer, messages):
       modifies `tweets` in place
 
     """
+    analyzer_name = analyzer.name
     for msg_i in messages:
         tweet = msg2tweet(msg_i, range(len(msg_i["toks"])))
         # debug_tweet(tweet)
         analyzer.predict_proba(tweet, Y)
-        msg_i["polarity_scores"] = Y.tolist()  # will create a copy
+        # `.tolist()` will create a copy
+        msg_i["polarity_scores"][analyzer_name] = Y.tolist()
         # assign polarity scores to each of the segments
         for edu_i in msg_i["edus"]:
             edu_toks = edu_i["toks"]
@@ -143,7 +146,8 @@ def add_scores(analyzer, messages):
             tweet = msg2tweet(msg_i, edu_toks, prnt_idcs)
             # debug_tweet(tweet)
             analyzer.predict_proba(tweet, Y)
-            edu_i["polarity_scores"] = Y.tolist()  # will create a copy
+            # `.tolist()` will create a copy
+            edu_i["polarity_scores"][analyzer_name] = Y.tolist()
 
 
 def main(argv):
@@ -163,7 +167,7 @@ def main(argv):
                            help="path to pre-trained word2vec embeddings"
                            " to use (should better be the same as the ones "
                            "used for training)", type=str,
-                           default=DFLT_W2V_PATH)
+                           default=None)
     argparser.add_argument("-m", "--model",
                            help="path to the main model (if different from"
                            " default)", type=str, default=DFLT_MODEL_PATH)
@@ -190,7 +194,7 @@ def main(argv):
         add_scores(analyzer, data["tweets"])
         # write data
         with open(fname, 'w') as ofile:
-            json.dump(data, ofile)
+            json.dump(data, ofile, sort_keys=True, indent=1)
     return 0
 
 
