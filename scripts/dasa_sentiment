@@ -16,7 +16,8 @@ from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
                             DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO,
-                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL)
+                            HEERSCHOP, PCC, ZHOU, HU_LIU, LBA, MHM,
+                            POSITIVE, NEGATIVE, NEUTRAL)
 
 
 ##################################################################
@@ -106,6 +107,9 @@ def main(argv):
     parser_train.add_argument("-r", "--relation-scheme",
                               help="RST relation scheme to be analyzed",
                               choices=(BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU))
+    parser_train.add_argument("-s", "--sentiment-classifier",
+                              help="RST relation scheme to be analyzed",
+                              choices=(HU_LIU, MHM, LBA), default=LBA)
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
                               choices=(DDR, LAST, ROOT, R2N2, RDP, WANG,
@@ -140,23 +144,34 @@ def main(argv):
         dev_set = [tweet_i for tweet_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
         if args.type == DDR:
-            analyzer = DDRAnalyzer(args.relation_scheme)
+            analyzer = DDRAnalyzer(args.relation_scheme,
+                                   args.sentiment_classifier)
         elif args.type == LAST:
-            analyzer = LastAnalyzer()
+            analyzer = LastAnalyzer(args.sentiment_classifier)
         elif args.type == NO_DISCOURSE:
-            analyzer = DUSAnalyzer()
+            analyzer = DUSAnalyzer(args.sentiment_classifier)
         elif args.type == ROOT:
-            analyzer = RootAnalyzer(args.relation_scheme)
+            analyzer = RootAnalyzer(args.relation_scheme,
+                                    args.sentiment_classifier)
         elif args.type == R2N2:
-            analyzer = R2N2Analyzer(args.relation_scheme)
+            analyzer = R2N2Analyzer(args.relation_scheme,
+                                    args.sentiment_classifier)
         elif args.type == RDP:
-            analyzer = RDPAnalyzer(args.relation_scheme)
+            analyzer = RDPAnalyzer(args.relation_scheme,
+                                   args.sentiment_classifier)
         elif args.type == WANG:
-            analyzer = WangAnalyzer(args.relation_scheme)
+            analyzer = WangAnalyzer(args.relation_scheme,
+                                    args.sentiment_classifier)
         elif args.type == LCRF:
-            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=False)
+            analyzer = LCRFAnalyzer(
+                args.relation_scheme,
+                marginalized=False,
+                sentiment_classifier=args.sentiment_classifier)
         elif args.type == LMCRF:
-            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=True)
+            analyzer = LCRFAnalyzer(
+                args.relation_scheme,
+                marginalized=True,
+                sentiment_classifier=args.sentiment_classifier)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(

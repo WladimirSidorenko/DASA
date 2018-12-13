@@ -74,7 +74,8 @@ class RootAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme])
+        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme],
+                       self._sentiment_classifier)
         roots = tree.root_edus
         scores = np.sum(r.polarity_scores for r in roots)
         cls_idx = np.argmax(scores)
@@ -93,7 +94,8 @@ class RootAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme])
+        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme],
+                       self._sentiment_classifier)
         roots = tree.root_edus
         self._logger.info("Root EDUs: %r.", roots)
         scores = [r.polarity_scores for r in roots]

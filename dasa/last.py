@@ -72,7 +72,9 @@ class LastAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        return IDX2CLS[np.argmax(instance["edus"][-1]["polarity_scores"])]
+        return IDX2CLS[np.argmax(
+            instance["edus"][-1]["polarity_scores"][self._sentiment_classifier]
+        )]
 
     def debug(self, instance):
         """Explain predictions of each classifier.
@@ -87,13 +89,21 @@ class LastAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
+        clf = self._sentiment_classifier
         print("Polarity scores of all EDUs: %r.",
-              [edu["polarity_scores"] for edu in instance["edus"]])
-        self._logger.info("Polarity scores of the last EDU: %r",
-                          instance["edus"][-1]["polarity_scores"])
-        cls_idx = np.argmax(instance["edus"][-1]["polarity_scores"])
+              [edu["polarity_scores"][clf]
+               for edu in instance["edus"]])
+        self._logger.info(
+            "Polarity scores of the last EDU: %r",
+            instance["edus"][-1]["polarity_scores"][clf]
+        )
+        cls_idx = np.argmax(
+            instance["edus"][-1]["polarity_scores"][clf]
+        )
         self._logger.info("cls_idx: %r", cls_idx)
         self._logger.info("label: %s", IDX2CLS[cls_idx])
-        self._logger.info("score: %f",
-                          instance["edus"][-1]["polarity_scores"][cls_idx])
+        self._logger.info(
+            "score: %f",
+            instance["edus"][-1]["polarity_scores"][clf][cls_idx]
+        )
         return IDX2CLS[cls_idx]

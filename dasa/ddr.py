@@ -107,7 +107,8 @@ class DDRAnalyzer(DLBaseAnalyzer):
 
     def _compute_scores(self, scores, instance):
         rst_tree = RSTTree(instance,
-                           instance["rst_trees"][self._relation_scheme])
+                           instance["rst_trees"][self._relation_scheme],
+                           self._sentiment_classifier)
         dep_tree = rst_tree.to_deps()
         for i, nodes_i in enumerate(dep_tree.bfs(), -1):
             if i < 0:

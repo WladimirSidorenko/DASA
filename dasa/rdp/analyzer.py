@@ -59,7 +59,9 @@ class RDPAnalyzer(R2N2Analyzer):
     def predict(self, instance):
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][self._relation_scheme],
+                self._sentiment_classifier
+            )
         )
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
@@ -75,7 +77,9 @@ class RDPAnalyzer(R2N2Analyzer):
     def debug(self, instance):
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][self._relation_scheme],
+                self._sentiment_classifier
+            )
         )
         self._logger.debug("tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
@@ -179,7 +183,8 @@ class RDPAnalyzer(R2N2Analyzer):
         assert np.sum(node_scores[-1, :]) == 0, \
             "Scores of the root node are not equal 0."
         # node_scores[-1, :] = 1. / len(instance["polarity_scores"])
-        node_scores[-1, :] = instance["polarity_scores"]
+        node_scores[-1, :] = \
+            instance["polarity_scores"][self._sentiment_classifier]
 
     def _reset(self):
         """Remove members which cannot be serialized.

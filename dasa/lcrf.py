@@ -682,14 +682,16 @@ class LCRFAnalyzer(MLBaseAnalyzer):
 
     def predict(self, instance):
         tree = RSTTree(instance,
-                       instance["rst_trees"][self._relation_scheme]).to_deps()
+                       instance["rst_trees"][self._relation_scheme],
+                       self._sentiment_classifier).to_deps()
         x, _ = self._digitize_instance(instance, tree, train_mode=False)
         cls_idx = self._model.predict([x])[0][0]
         return IDX2CLS[cls_idx]
 
     def debug(self, instance):
         tree = RSTTree(instance,
-                       instance["rst_trees"][self._relation_scheme]).to_deps()
+                       instance["rst_trees"][self._relation_scheme],
+                       self._sentiment_classifier).to_deps()
         self._logger.debug("instance: %r", instance)
         self._logger.debug("tree: %r", tree)
         x, _ = self._digitize_instance(instance, tree, train_mode=False)
@@ -718,7 +720,8 @@ class LCRFAnalyzer(MLBaseAnalyzer):
         dataset = Dataset([None] * n, [None] * n)
         forrest = [
             RSTTree(instance,
-                    instance["rst_trees"][self._relation_scheme]).to_deps()
+                    instance["rst_trees"][self._relation_scheme],
+                    self._sentiment_classifier).to_deps()
             for instance in data
         ]
         if train_mode:
@@ -762,12 +765,13 @@ class LCRFAnalyzer(MLBaseAnalyzer):
         return dataset
 
     def _digitize_instance(self, instance, tree, train_mode=True):
+        base_clf = self._sentiment_classifier
         n_edus = len(instance["edus"])
         feats = np.zeros((n_edus + 1, N_FEATS), dtype=np.float32)
-        feats[0, :-1] = instance["polarity_scores"]
+        feats[0, :-1] = instance["polarity_scores"][base_clf]
         feats[0, -1] = 1
         for i, edu_i in enumerate(instance["edus"], 1):
-            feats[i, :-1] = edu_i["polarity_scores"]
+            feats[i, :-1] = edu_i["polarity_scores"][base_clf]
             feats[i, -1] = 1
         edges = np.zeros((len(tree) - 1, 2), dtype=np.uint8)
         edge_feats = np.zeros((len(tree) - 1, self._n_rels))

@@ -37,9 +37,11 @@ class AlphaModel(nn.Module):
         self._softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
-        # The vector `nz_chld_indices` will contain indices of the child_probs
-        # which are not zero.
-        nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
+        # The vector `nz_chld_indices` will contain indices of child_probs
+        # which are not all zero.
+        n = child_probs.shape[1]
+        nz_chld_indices = (
+            (child_probs == 0).sum(1) != n).nonzero().squeeze(-1)
         if nz_chld_indices.nelement() == 0:
             return None, None, None, None
         # Only leave `parent`, `child`, and `rels` elements for which
@@ -59,19 +61,24 @@ class AlphaModel(nn.Module):
         # probs are also non-zero, otherwise we will assign the child probs to
         # the parents unchanged.
         prnt_probs = prnt_probs[nz_chld_indices]
-        prnt_probs_sum = prnt_probs.sum(dim=-1)
-        z_prnt_indices = (prnt_probs_sum == 0.).nonzero().squeeze_(-1)
+        m = prnt_probs.shape[1]
+        z_prnt_indices = ((prnt_probs == 0).sum(1) == m).nonzero().squeeze_(-1)
         # indices of instances whose child scores are non-zero, but parent
         # scores are zero
         copy_indices = nz_chld_indices[z_prnt_indices]
-        child_probs2copy = child_probs[z_prnt_indices]
-        nz_prnt_indices = prnt_probs_sum.nonzero().squeeze(-1)
+        if len(z_prnt_indices):
+            child_probs2copy = self._sparsemax(child_probs[z_prnt_indices])
+        else:
+            child_probs2copy = child_probs[z_prnt_indices]
+        nz_prnt_indices = ((prnt_probs == 0).sum(1) != m).nonzero().squeeze_(
+            -1
+        )
         alpha_indices = nz_chld_indices[nz_prnt_indices]
         if alpha_indices.nelement() == 0:
             alpha = None
         else:
-            child_probs = child_probs[nz_prnt_indices]
-            prnt_probs = prnt_probs[nz_prnt_indices]
+            child_probs = self._sparsemax(child_probs[nz_prnt_indices])
+            prnt_probs = self._sparsemax(prnt_probs[nz_prnt_indices])
             rels = rels[nz_prnt_indices]
             # take a convex combination of the parent and child scores as new
             # values for alpha and scale the resulting alpha scores with the
@@ -80,6 +87,7 @@ class AlphaModel(nn.Module):
             alpha = (1. - beta) * prnt_probs + beta * child_probs
             scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
             alpha *= scale
+            alpha = torch.clamp(alpha, min=1e-3)
         return copy_indices, child_probs2copy, alpha_indices, alpha
 
     def scale(self, prnt_probs, child_probs):

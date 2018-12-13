@@ -147,6 +147,7 @@ class RDPModel(nn.Module):
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
                         prnt_scores_i = node_scores[inst_indices, i]
+            # print("node_scores", node_scores)
             z_ij = node_scores[inst_indices, -1]
             y = pyro.sample("y", dist.Categorical(z_ij),
                             obs=labels[inst_indices])
@@ -248,7 +249,6 @@ class RDPModel(nn.Module):
         n_instances = x[0].shape[0]
         self._resize_wbench(n_instances)
         self._test_wbench *= 0
-        # print("self._test_wbench:", repr(self._test_wbench))
         with poutine.block():
             with torch.no_grad():
                 for wbench_i in self._test_wbench:
@@ -272,7 +272,6 @@ class RDPModel(nn.Module):
         n_instances = x[0].shape[0]
         self._resize_wbench(n_instances)
         self._test_wbench *= 0
-        # print("self._test_wbench:", repr(self._test_wbench))
         with poutine.block():
             with torch.no_grad():
                 for wbench_i in self._test_wbench:

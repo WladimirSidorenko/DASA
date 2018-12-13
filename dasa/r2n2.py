@@ -120,13 +120,15 @@ class R2N2Analyzer(DLBaseAnalyzer):
     def predict(self, instance):
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][self._relation_scheme],
+                self._sentiment_classifier)
         )
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
                       tree, instance)
-        self._wbench_msg_scores[0, :] = instance["polarity_scores"]
+        self._wbench_msg_scores[0, :] = \
+            instance["polarity_scores"][self._sentiment_classifier]
         with torch.no_grad():
             out = self._model(
                 torch.from_numpy(self._wbench_node_scores),
@@ -138,9 +140,12 @@ class R2N2Analyzer(DLBaseAnalyzer):
         return IDX2CLS[cls_idx.item()]
 
     def debug(self, instance):
+        base_clf = self._sentiment_classifier
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][self._relation_scheme],
+                base_clf
+            )
         )
         self._logger.info("RST tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
@@ -150,7 +155,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._logger.info("node_scores: %r", self._wbench_node_scores)
         self._logger.info("children: %r", self._wbench_children)
         self._logger.info("rels: %r", self._wbench_rels)
-        self._wbench_msg_scores[0, :] = instance["polarity_scores"]
+        self._wbench_msg_scores[0, :] = instance["polarity_scores"][base_clf]
         self._logger.info("msg_scores: %r", self._wbench_msg_scores)
         with torch.no_grad():
             out = self._model(
@@ -169,7 +174,9 @@ class R2N2Analyzer(DLBaseAnalyzer):
         forrest = [
             self.span2nuc(
                 RSTTree(
-                    instance, instance["rst_trees"][self._relation_scheme])
+                    instance, instance["rst_trees"][self._relation_scheme],
+                    self._sentiment_classifier
+                )
             )
             for instance in data]
         if self._max_nodes < 0:
@@ -188,10 +195,11 @@ class R2N2Analyzer(DLBaseAnalyzer):
         rels = np.zeros((n, self._max_nodes, self._max_width),
                         dtype="long")
         labels = np.zeros(n, dtype="long")
+        base_clf = self._sentiment_classifier
         for i, (tree_i, instance_i) in enumerate(zip(forrest, data)):
             self.tree2mtx(node_scores[i, :], children[i, :],
                           rels[i, :], tree_i, instance_i)
-            msg_scores[i] = instance_i["polarity_scores"]
+            msg_scores[i] = instance_i["polarity_scores"][base_clf]
             labels[i] = CLS2IDX[instance_i["label"]]
         dataset = Dataset(node_scores, children, rels, msg_scores, labels)
         return DataLoader(dataset, **DATALOADER_KWARGS)

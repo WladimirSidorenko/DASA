@@ -45,6 +45,11 @@ HEERSCHOP = "heerschop"
 PCC = "pcc"
 ZHOU = "zhou"
 
+# Base Classifiers
+HU_LIU = "hu-liu"
+LBA = "lba"
+MHM = "mohammad"
+
 # mapping from polarity classes to indices and vice versa
 POSITIVE = "positive"
 NEGATIVE = "negative"
@@ -55,7 +60,7 @@ CLS2IDX = {NEGATIVE: 0, NEUTRAL: 1, POSITIVE: 2}
 IDX2CLS = {v: k for k, v in iteritems(CLS2IDX)}
 N_POLARITIES = len(CLS2IDX)
 
-BUFFER_FACTOR = 1.4
+BUFFER_FACTOR = 1.5
 
 CONTRASTIVE_RELS = {
     "antithesis", "antithesis-e", "concession", "otherwise",

@@ -221,7 +221,8 @@ class WangAnalyzer(DLBaseAnalyzer):
         leaves = [n
                   for n in
                   RSTTree(instance,
-                          instance["rst_trees"][self._relation_scheme])
+                          instance["rst_trees"][self._relation_scheme],
+                          self._sentiment_classifier)
                   if n.is_leaf]
         if len(leaves) > self._max_nodes:
             self._max_nodes = len(leaves)
@@ -232,7 +233,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         edus = instance["edus"]
         for i, leaf in enumerate(leaves):
             self._wbench_node_scores[0, i, :] = \
-                edus[leaf.id]["polarity_scores"]
+                edus[leaf.id]["polarity_scores"][self._sentiment_classifier]
             rel = (leaf.rel2par, leaf.ns)
             self._wbench_rels[0, i] = self._rel2idx.get(rel, IRD_IDX)
         with torch.no_grad():
@@ -249,7 +250,8 @@ class WangAnalyzer(DLBaseAnalyzer):
         leaves = [n
                   for n in
                   RSTTree(instance,
-                          instance["rst_trees"][self._relation_scheme])
+                          instance["rst_trees"][self._relation_scheme],
+                          self._sentiment_classifier)
                   if n.is_leaf]
         self._logger.debug("leaves: %r", leaves)
         if len(leaves) > self._max_nodes:
@@ -261,7 +263,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         edus = instance["edus"]
         for i, leaf in enumerate(leaves):
             self._wbench_node_scores[0, i, :] = \
-                edus[leaf.id]["polarity_scores"]
+                edus[leaf.id]["polarity_scores"][self._sentiment_classifier]
             rel = (leaf.rel2par, leaf.ns)
             self._wbench_rels[0, i] = self._rel2idx.get(rel, IRD_IDX)
         self._logger.debug("rels: %r", self._wbench_rels)
@@ -278,16 +280,18 @@ class WangAnalyzer(DLBaseAnalyzer):
         return cls
 
     def _digitize_data(self, data, train_mode=False):
+        base_clf = self._sentiment_classifier
         rst_leaves = [
             [
                 (
-                    instance["edus"][node.id]["polarity_scores"],
+                    instance["edus"][node.id]["polarity_scores"][base_clf],
                     (node.rel2par, node.ns)
                 )
                 for node in
                 RSTTree(
                     instance,
-                    instance["rst_trees"][self._relation_scheme]
+                    instance["rst_trees"][self._relation_scheme],
+                    base_clf
                 )
                 if node.is_leaf
             ]

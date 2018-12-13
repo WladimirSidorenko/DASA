@@ -71,12 +71,13 @@ class Tree(TreeMixin):
         if False:
             pass
 
-    def __init__(self, data, root, prnt=None):
+    def __init__(self, data, root, base_clf, prnt=None):
         """Class constructor.
 
         Args:
           data (dict): data pertaining to the discourse tree
           root (dict): attributes of the root node
+          base_clf (str): name of base sentiment classifier
 
         """
         self._id = int(root["id"])
@@ -87,7 +88,8 @@ class Tree(TreeMixin):
         self._rel2par = root["rel2par"]
         self._ns = root["n/s"]
         self._prnt = prnt
-        self._children = [Tree(data, ch, self) for ch in root["children"]]
+        self._children = [Tree(data, ch, base_clf, self)
+                          for ch in root["children"]]
         self.toks = []
         self._root_edus = None
         self.polarity_scores = []
@@ -96,7 +98,7 @@ class Tree(TreeMixin):
             edu = data["edus"][self._id]
             toks = data["toks"]
             self.toks = [toks[t] for t in edu["toks"]]
-            self.polarity_scores = np.array(edu["polarity_scores"])
+            self.polarity_scores = np.array(edu["polarity_scores"][base_clf])
         else:
             self._leaves = [leaf
                             for ch in self._children

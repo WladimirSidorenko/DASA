@@ -57,7 +57,7 @@ class DASBaseAnalyzer(object):
         analyzer._restore(a_path)
         return analyzer
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, sentiment_classifier, *args, **kwargs):
         """Class constructor.
 
         Args:
@@ -69,6 +69,7 @@ class DASBaseAnalyzer(object):
         self._n_cls = 0
         self._wbench = None
         self._logger = LOGGER
+        self._sentiment_classifier = sentiment_classifier
 
     @abc.abstractmethod
     def train(self, train_set, dev_set=None,
