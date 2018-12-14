@@ -7,11 +7,11 @@ CWD=$(dirname $(dirname $(realpath $0)))
 DATA_DIR=$CWD/data
 
 ##################################################################
-# methods: ddr last lcrf lmcrf rdp r2n2 root wang
+# methods: ddr last lcrf lmcrf rdp r2n2 root wang no-discourse
 # relschemes: chenlo heerschop zhou pcc
 # base classifiers: hu-liu mohammad lba
 # corpus: PotTS SB10k
-for method in ddr last lcrf lmcrf rdp r2n2 root wang; do
+for method in ddr last lcrf lmcrf rdp r2n2 root wang no-discourse; do
     for base_classifier in hu-liu mohammad; do
 	for corpus in PotTS SB10k; do
 	    echo "${method} ${base_classifier} ${corpus}" >&2
