@@ -29,7 +29,6 @@ sh = logging.StreamHandler()
 sh.setLevel(LOG_LVL)
 sh.setFormatter(formatter)
 LOGGER.addHandler(sh)
-Y = np.zeros(3)
 
 
 ##################################################################
@@ -132,12 +131,14 @@ def add_scores(analyzer, messages):
 
     """
     analyzer_name = analyzer.name
+    Y = np.zeros(3)
     for msg_i in messages:
         tweet = msg2tweet(msg_i, range(len(msg_i["toks"])))
         # debug_tweet(tweet)
         analyzer.predict_proba(tweet, Y)
         # `.tolist()` will create a copy
         msg_i["polarity_scores"][analyzer_name] = Y.tolist()
+        Y *= 0
         # assign polarity scores to each of the segments
         for edu_i in msg_i["edus"]:
             edu_toks = edu_i["toks"]
@@ -148,6 +149,7 @@ def add_scores(analyzer, messages):
             analyzer.predict_proba(tweet, Y)
             # `.tolist()` will create a copy
             edu_i["polarity_scores"][analyzer_name] = Y.tolist()
+            Y *= 0
 
 
 def main(argv):

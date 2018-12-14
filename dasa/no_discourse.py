@@ -71,7 +71,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        scores = instance["polarity_scores"]
+        scores = instance["polarity_scores"][self._sentiment_classifier]
         cls_idx = np.argmax(scores)
         return IDX2CLS[cls_idx]
 
@@ -88,7 +88,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        scores = instance["polarity_scores"]
+        scores = instance["polarity_scores"][[self._sentiment_classifier]]
         self._logger.info("Polarity scores: %r", scores)
         cls_idx = np.argmax(scores)
         self._logger.info("cls_idx: %r", cls_idx)
