@@ -7,8 +7,8 @@
     polarity of the root EDU(s).
 
 Attributes:
-  DASRootAnalyzer (class): class for predicting polarity of a tweet based on
-    the polarity of the root EDU(s)
+  R2N2Analyzer (class): class for predicting polarity of a tweet using
+    rhetorical recursive neural network
 
 """
 
@@ -17,7 +17,6 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from builtins import range
-from copy import deepcopy
 from math import ceil
 from six import iteritems
 from torch.utils.data import DataLoader
@@ -98,35 +97,6 @@ class R2N2Analyzer(DLBaseAnalyzer):
 
     """
 
-    @staticmethod
-    def span2nuc(tree):
-        """Translate all span relations to nucleus rels.
-
-        Args:
-          forrest (list[rst.Tree]): list of RST trees
-
-        """
-        nodes = [tree]
-        while nodes:
-            node = nodes.pop(0)
-            if node.rel2par == "span":
-                siblings = node.parent.children
-                assert len(siblings) == 2, \
-                    "Multiple siblings found for a span node."
-                idx2delete = -100
-                nodes2add = []
-                for i, sib_i in enumerate(siblings):
-                    if sib_i.id == node.id:
-                        idx2delete = i
-                    else:
-                        node = deepcopy(node)
-                        node.rel2par = sib_i.rel2par
-                        nodes2add.append(node)
-                siblings.pop(idx2delete)
-                siblings.extend(nodes2add)
-            nodes.extend(node.children)
-        return tree
-
     def __init__(self, relation_scheme, *args, **kwargs):
         """Class constructor.
 
@@ -145,6 +115,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._wbench_children = None
         self._wbench_rels = None
         self._wbench_msg_scores = None
+        self.root_offset = 1
 
     def predict(self, instance):
         tree = self.span2nuc(
@@ -154,7 +125,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
-                      tree)
+                      tree, instance)
         self._wbench_msg_scores[0, :] = instance["polarity_scores"]
         with torch.no_grad():
             out = self._model(
@@ -175,7 +146,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
-                      tree)
+                      tree, instance)
         self._logger.info("node_scores: %r", self._wbench_node_scores)
         self._logger.info("children: %r", self._wbench_children)
         self._logger.info("rels: %r", self._wbench_rels)
@@ -206,8 +177,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
                                    * BUFFER_FACTOR)
             self._max_nodes = ceil(max([len(t) for t in forrest])
                                    * BUFFER_FACTOR + 1)
-            rels = self.get_rels(forrest)
-            self._model = R2N2(rels)
+            self._init_model(forrest)
             self._init_wbenches()
         n = len(data)
         node_scores = np.zeros((n, self._max_nodes, N_POLARITIES),
@@ -220,11 +190,21 @@ class R2N2Analyzer(DLBaseAnalyzer):
         labels = np.zeros(n, dtype="long")
         for i, (tree_i, instance_i) in enumerate(zip(forrest, data)):
             self.tree2mtx(node_scores[i, :], children[i, :],
-                          rels[i, :], tree_i)
+                          rels[i, :], tree_i, instance_i)
             msg_scores[i] = instance_i["polarity_scores"]
             labels[i] = CLS2IDX[instance_i["label"]]
         dataset = Dataset(node_scores, children, rels, msg_scores, labels)
         return DataLoader(dataset, **DATALOADER_KWARGS)
+
+    def _init_model(self, forrest):
+        """Initialize the model that will be used for prediction.
+
+        Args:
+          forrest (list[RSTTree]): list of all training RST trees
+
+        """
+        rels = self.get_rels(forrest)
+        self._model = R2N2(rels)
 
     def _init_wbenches(self):
         """Initialize workbenches that will be used at prediction time.
@@ -247,14 +227,15 @@ class R2N2Analyzer(DLBaseAnalyzer):
             dtype="float32"
         )
 
-    def tree2mtx(self, node_scores, children, rels, tree):
-        """Convert RST tree to a matrix of scores and node indices.
+    def tree2mtx(self, node_scores, children, rels, tree, instance):
+        """Convert an RST tree to a matrix of scores and node indices.
 
         Args:
           node_scores (np.array): target matrix of node scores
           children (np.array): target matrix of child indices
           rels (np.array): target matrix of relation indices
           tree (rst.Tree): source RST tree
+          instance (dict): tweet instance whose tree is being converted
 
         Returns:
           None
@@ -263,28 +244,35 @@ class R2N2Analyzer(DLBaseAnalyzer):
           modifies `scores` and `children` in place
 
         """
-        assert self._model is not None, \
+        assert self._model is not None, (
             "Model must be initialized before digitizing the dataset."
+        )
         node_scores *= 0
         children *= 0
         rels *= 0
-        nodes = [node for nodes in tree.bfs() for node in nodes]
+        nodes = [node for node in tree]
         # mapping from node id to node
         n_nodes = len(nodes)
         assert n_nodes < self._max_nodes, (
             "Number of nodes in RST tree ({:d}) exceeds"
-            " maximum allowed node number ({:d})."
+            " the maximum allowed node number ({:d})."
         ).format(n_nodes, self._max_nodes)
         # establish mapping from node id's to array indices
-        node_id2mtx_idx = {n.id: mtx_idx
-                           for n, mtx_idx
-                           in zip(nodes, range(self._max_nodes - 1, -1, -1))}
-        node_id2node = {n.id: n for n in nodes}
+        node_id2node = dict()
+        node_id2mtx_idx = dict()
+        max_T = self._max_nodes - self.root_offset
+        for node, mtx_idx in zip(nodes, range(max_T, -1, -1)):
+            n_id = node.id
+            node_id2node[n_id] = node
+            node_id2mtx_idx[n_id] = mtx_idx
         for node_id, mtx_idx in iteritems(node_id2mtx_idx):
             node = node_id2node[node_id]
             if node_id >= 0:
                 node_scores[mtx_idx, :] = node.polarity_scores
             for i, ch in enumerate(node.children):
                 children[mtx_idx, i] = node_id2mtx_idx[ch.id]
-                rel_id = self._model.rel2idx[(ch.rel2par, ch.ns)]
+                rel_name = (ch.rel2par, ch.ns)
+                if rel_name not in self._model.rel2idx:
+                    self._logger.warn("Unknown relation %r", rel_name)
+                rel_id = self._model.rel2idx.get(rel_name, 0)
                 rels[mtx_idx, i] = rel_id
