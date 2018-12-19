@@ -45,7 +45,10 @@ class DDR(nn.Linear):
         self.weight.data.copy_(eye(n))
 
     def forward(self, x):
-        ret = super(DDR, self).forward(x)
+        try:
+            ret = super(DDR, self).forward(x)
+        except:
+            ret = super(DDR, self).forward(x.float())
         return F.softmax(ret, dim=-1)
 
 
@@ -68,25 +71,25 @@ class DDRAnalyzer(DLBaseAnalyzer):
         self._model = DDR()
         self._relation_scheme = relation_scheme
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
         self._wbench *= 0
-        self._compute_scores(self._wbench[0, :], instance)
+        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
         with torch.no_grad():
             out = self._model(
                 torch.from_numpy(self._wbench)
             )
-        _, cls_idx = torch.max(out, 1)
+            _, cls_idx = torch.max(out, 1)
         return IDX2CLS[cls_idx.item()]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
         self._logger.info("instance: %r", instance)
         self._wbench *= 0
         self._logger.info("wbench: %r", self._wbench)
-        self._compute_scores(self._wbench[0, :], instance)
+        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
         self._logger.info("* wbench: %r", self._wbench)
         with torch.no_grad():
             out = self._model(
-                torch.from_numpy(self._wbench)
+                torch.from_numpy(self._wbench).double()
             )
         self._logger.info("out: %r", out)
         _, cls_idx = torch.max(out, 1)
@@ -105,9 +108,11 @@ class DDRAnalyzer(DLBaseAnalyzer):
         dataset = Dataset(digitized_input, digitized_labels)
         return DataLoader(dataset, **DATALOADER_KWARGS)
 
-    def _compute_scores(self, scores, instance):
+    def _compute_scores(self, scores, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         rst_tree = RSTTree(instance,
-                           instance["rst_trees"][self._relation_scheme])
+                           instance["rst_trees"][relation_scheme])
         dep_tree = rst_tree.to_deps()
         for i, nodes_i in enumerate(dep_tree.bfs(), -1):
             if i < 0:

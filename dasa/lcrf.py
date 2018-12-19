@@ -680,16 +680,20 @@ class LCRFAnalyzer(MLBaseAnalyzer):
         dev_macro_f1 = score(dev_set.Y, self._model.predict(dev_set.X))
         self._logger.info("Macro F1-score on dev set: %.2f", dev_macro_f1)
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = RSTTree(instance,
-                       instance["rst_trees"][self._relation_scheme]).to_deps()
+                       instance["rst_trees"][relation_scheme]).to_deps()
         x, _ = self._digitize_instance(instance, tree, train_mode=False)
         cls_idx = self._model.predict([x])[0][0]
         return IDX2CLS[cls_idx]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = RSTTree(instance,
-                       instance["rst_trees"][self._relation_scheme]).to_deps()
+                       instance["rst_trees"][relation_scheme]).to_deps()
         self._logger.debug("instance: %r", instance)
         self._logger.debug("tree: %r", tree)
         x, _ = self._digitize_instance(instance, tree, train_mode=False)

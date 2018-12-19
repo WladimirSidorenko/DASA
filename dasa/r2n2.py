@@ -69,7 +69,7 @@ class R2N2(nn.Module):
         batch_indices = torch.arange(node_scores.shape[0], dtype=torch.long)
         batch_indices.unsqueeze_(-1)
         batch_indices = batch_indices.expand(
-            (-1, node_scores.shape[2])
+            (-1, children.shape[2])
         ).contiguous().view(-1)
         for i in range(1, node_scores.shape[1]):
             # obtain scores of child nodes
@@ -117,11 +117,14 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._wbench_msg_scores = None
         self.root_offset = 1
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][relation_scheme])
         )
+        self._resize(tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
@@ -137,11 +140,14 @@ class R2N2Analyzer(DLBaseAnalyzer):
         _, cls_idx = torch.max(out, 1)
         return IDX2CLS[cls_idx.item()]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][relation_scheme])
         )
+        self._resize(tree)
         self._logger.info("RST tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
@@ -276,3 +282,25 @@ class R2N2Analyzer(DLBaseAnalyzer):
                     self._logger.warn("Unknown relation %r", rel_name)
                 rel_id = self._model.rel2idx.get(rel_name, 0)
                 rels[mtx_idx, i] = rel_id
+
+    def _restore(self, a_path):
+        """Restore members which could not be serialized.
+
+        """
+        super(R2N2Analyzer, self)._restore(a_path)
+        if not hasattr(self, "root_offset"):
+            self.root_offset = 1
+
+    def _resize(self, tree):
+        """Prepare workbenches for newer bigger instances.
+
+        """
+        wbench_shape = self._wbench_children.shape
+        max_width = max(t.width for t in tree)
+        if max_width > wbench_shape[-1]:
+            self._wbench_children.resize((wbench_shape[0], wbench_shape[1],
+                                          max_width))
+            wbench_rels_shape = self._wbench_rels.shape
+            self._wbench_rels.resize((wbench_rels_shape[0],
+                                      wbench_rels_shape[1],
+                                      max_width))

@@ -56,11 +56,14 @@ class RDPAnalyzer(R2N2Analyzer):
         self._wbench_y = None
         self._name = "RDP"
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][relation_scheme])
         )
+        self._resize(tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
@@ -72,11 +75,14 @@ class RDPAnalyzer(R2N2Analyzer):
                             self._wbench_y)
         return IDX2CLS[self._wbench_y[0]]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = self.span2nuc(
             RSTTree(
-                instance, instance["rst_trees"][self._relation_scheme])
+                instance, instance["rst_trees"][relation_scheme])
         )
+        self._resize(tree)
         self._logger.debug("tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],

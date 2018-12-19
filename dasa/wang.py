@@ -217,11 +217,13 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._model = Wang(n_rels)
         return super(WangAnalyzer, self)._train(train_set, dev_set)
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         leaves = [n
                   for n in
                   RSTTree(instance,
-                          instance["rst_trees"][self._relation_scheme])
+                          instance["rst_trees"][relation_scheme])
                   if n.is_leaf]
         if len(leaves) > self._max_nodes:
             self._max_nodes = len(leaves)
@@ -244,12 +246,14 @@ class WangAnalyzer(DLBaseAnalyzer):
         cls = IDX2CLS[cls_idx.item()]
         return cls
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         self._logger.debug("instance: %r", instance)
         leaves = [n
                   for n in
                   RSTTree(instance,
-                          instance["rst_trees"][self._relation_scheme])
+                          instance["rst_trees"][relation_scheme])
                   if n.is_leaf]
         self._logger.debug("leaves: %r", leaves)
         if len(leaves) > self._max_nodes:

@@ -15,7 +15,7 @@ from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   RDPAnalyzer, WangAnalyzer, LCRFAnalyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
-                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO,
+                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO, GOLD,
                             HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL)
 
 
@@ -43,6 +43,9 @@ def _add_cmn_options(parser):
     parser.add_argument("-m", "--model",
                         help="path to the main model (if different from"
                         " default)", type=str, default=DFLT_MODEL_PATH)
+    parser.add_argument("-r", "--relation-scheme",
+                        help="RST relation scheme to be analyzed",
+                        choices=(BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU))
     parser.add_argument("files", help="input file(s)",
                         type=str, nargs="+")
 
@@ -103,9 +106,6 @@ def main(argv):
     parser_train.add_argument("-g", "--grid-search",
                               help="determine optimal parameters using grid"
                               " search", action="store_true")
-    parser_train.add_argument("-r", "--relation-scheme",
-                              help="RST relation scheme to be analyzed",
-                              choices=(BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU))
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
                               choices=(DDR, LAST, ROOT, R2N2, RDP, WANG,
@@ -176,7 +176,7 @@ def main(argv):
 
         ret = []
         for tweet_i in _read_data(args.files):
-            tweet_i["predicted"] = predict(tweet_i)
+            tweet_i["predicted"] = predict(tweet_i, args.relation_scheme)
             ret.append(tweet_i)
         json.dump({"tweets": ret},
                   sys.stdout, indent=1, separators=[',', ": "])

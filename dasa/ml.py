@@ -67,17 +67,19 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
             node = nodes.pop(0)
             if node.rel2par == "span":
                 siblings = node.parent.children
-                assert len(siblings) == 2, \
-                    "Multiple siblings found for a span node."
+                # assert len(siblings) == 2, \
+                #     "Multiple siblings found for a span node."
                 idx2delete = -100
                 nodes2add = []
+                substituted = False
                 for i, sib_i in enumerate(siblings):
                     if sib_i.id == node.id:
                         idx2delete = i
-                    else:
+                    elif not substituted:
                         node = deepcopy(node)
                         node.rel2par = sib_i.rel2par
                         nodes2add.append(node)
+                        substituted = True
                 siblings.pop(idx2delete)
                 siblings.extend(nodes2add)
             nodes.extend(node.children)
