@@ -61,11 +61,12 @@ class RootAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
         """Predict label of a single input instance.
 
         Args:
           instance (dict): input instance to classify
+          relation_scheme (str): relation scheme to use
 
         Returns:
           str: predicted label
@@ -74,13 +75,15 @@ class RootAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme])
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
+        tree = RSTTree(instance, instance["rst_trees"][relation_scheme])
         roots = tree.root_edus
         scores = np.sum(r.polarity_scores for r in roots)
         cls_idx = np.argmax(scores)
         return IDX2CLS[cls_idx]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
 
         Args:
@@ -88,11 +91,14 @@ class RootAnalyzer(DASBaseAnalyzer):
 
         Returns:
           str: predicted label
+          relation_scheme (str): relation scheme to use
 
         Note:
           modifies input tweet in place
 
         """
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
         tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme])
         roots = tree.root_edus
         self._logger.info("Root EDUs: %r.", roots)

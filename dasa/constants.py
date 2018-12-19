@@ -41,6 +41,7 @@ NO_DISCOURSE = "no-discourse"
 # Relation Schemes
 BHATIA = "bhatia"
 CHENLO = "chenlo"
+GOLD = "gold"
 HEERSCHOP = "heerschop"
 PCC = "pcc"
 ZHOU = "zhou"

@@ -59,11 +59,12 @@ class LastAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
         """Predict label of a single input instance.
 
         Args:
           instance (dict): input instance to classify
+          relation_scheme (str): relation scheme to use
 
         Returns:
           str: predicted label
@@ -74,11 +75,12 @@ class LastAnalyzer(DASBaseAnalyzer):
         """
         return IDX2CLS[np.argmax(instance["edus"][-1]["polarity_scores"])]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
 
         Args:
           instance (dict): input instance to classify
+          relation_scheme (str): relation scheme to use
 
         Returns:
           str: predicted label
