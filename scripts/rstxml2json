@@ -88,7 +88,6 @@ def parse_basedata(basedata_file):
             text = AAMP_RE.sub("& ", text)
             text = GT_RE.sub(r"> ", text)
             text = LT_RE.sub(r"< ", text)
-            print("text", repr(text))
             msgid2text[msg_j.attrib["id"]] = text
     return msgid2text
 
@@ -133,9 +132,7 @@ def compute_tokens(msgid2edus, msgid2text):
         tok_offset = 0
         for edu_i in edus:
             edu_text = text[edu_i.start:edu_i.end]
-            print("edu_text", repr(edu_text))
             edu_tokens = edu_text.split()
-            print("edu_tokens", repr(edu_tokens))
             n = len(edu_tokens)
             edu_i.tokens = list(range(tok_offset, n + tok_offset))
             tok_offset += n
@@ -211,7 +208,9 @@ def parse_annotation(annotation_file):
 
 def translate_rel(rel):
     rel = rel.lower()
-    if rel == "span":
+    if not rel:
+        return None
+    elif rel == "span":
         return rel
     elif rel in CONTRASTIVE_RELS:
         return "contrastive"
