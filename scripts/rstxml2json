@@ -251,7 +251,11 @@ def tree2json(tree, rst_id2json_id, min_node_id):
         node_id = min_node_id
         min_node_id -= 1
     children = []
+    visited_children = set()
     for subtree_i in tree.children:
+        if subtree_i.id in visited_children:
+            continue
+        visited_children.add(subtree_i.id)
         min_node_id, child = tree2json(subtree_i, rst_id2json_id, min_node_id)
         children.append(child)
     ret = {
@@ -291,13 +295,13 @@ def add_trees(data, msg_id2edus, msg_id2tree):
                  tweet_i["toks"], n, edus, edus[-1].tokens[-1]
             )
         rst_id2json_id = {edu_j.id: j for j, edu_j in enumerate(edus)}
-        tweet_i["edus"] = [{"polarity_scores": [],
-                            "type": "HS",
-                            "prnt_edu": None,
-                            "toks": edu_j.tokens
-                            } for edu_j in edus]
+        # tweet_i["edus"] = [{"polarity_scores": [],
+        #                     "type": "HS",
+        #                     "prnt_edu": None,
+        #                     "toks": edu_j.tokens
+        #                     } for edu_j in edus]
         tweet_i["rst_trees"] = {
-            "gold": tree2json(msg_id2tree[msg_id], rst_id2json_id, -1)
+            "gold": tree2json(msg_id2tree[msg_id], rst_id2json_id, -1)[1]
         }
 
 
