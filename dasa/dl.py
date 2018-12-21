@@ -26,11 +26,12 @@ import torch.nn as nn
 import torch.optim as optim
 import warnings
 
-from .base import DASBaseAnalyzer
+from .ml import MLBaseAnalyzer
 from .constants import CLS2IDX
 
 ##################################################################
 # Variables and Constants
+OPTIM_PARAM = {}
 N_EPOCHS = 100
 DATALOADER_KWARGS = {
     "batch_size": 16,
@@ -41,31 +42,13 @@ warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
 ##################################################################
 # Classes
-class DLBaseAnalyzer(DASBaseAnalyzer):
+class DLBaseAnalyzer(MLBaseAnalyzer):
     """Main class for coarse-grained sentiment analyzer.
 
     Attributes:
 
     """
     __metaclass__ = abc.ABCMeta
-
-    @staticmethod
-    def get_rels(forrest):
-        """Extract all relations present in forrest of RST trees.
-
-        Args:
-          forrest (list[rst.Tree]): list of RST trees
-
-        """
-        rels = set()
-        for tree in forrest:
-            nodes = [tree]
-            while nodes:
-                node = nodes.pop(0)
-                nodes.extend(node.children)
-                if node.rel2par is not None:
-                    rels.add((node.rel2par, node.ns))
-        return rels
 
     def __init__(self, *args, **kwargs):
         """Class constructor.
@@ -84,15 +67,12 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
         self._n_cls = len(CLS2IDX)
         self._wbench = np.zeros((1, self._n_cls), dtype="float32")
 
-    def train(self, train_set, dev_set=None,
-              grid_search=True, balance=False):
+    def _train(self, train_set, dev_set, grid_search=True, balance=False):
         """Train specified model(s) on the provided data.
 
         Args:
-          train_set (list):
-            training set
-          dev_set (list or None):
-            development set
+          train_set (list): training set
+          dev_set (list): development set
           grid_search (bool):
             use grid search in order to determine hyper-paramaters of
             the model
@@ -103,24 +83,8 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
           float: best macro-averaged F1 observed on the dev set
 
         """
-        self._logger.debug("Preparing data...")
-        train_set, dev_set = self._prepare_data(train_set, dev_set)
-        self._logger.debug("Data prepared...")
-        return self._train(train_set, dev_set)
-
-    def _train(self, train_set, dev_set):
-        """Train specified model(s) on the provided data.
-
-        Args:
-          train_set (list): training set
-          dev_set (list): development set
-
-        Returns:
-          float: best macro-averaged F1 observed on the dev set
-
-        """
         self._logger.debug("Training model...")
-        optimizer = self._optim_cls(self._model.parameters())
+        optimizer = self._optim_cls(self._model.parameters(), **OPTIM_PARAM)
         # prepare matrices for storing gold and predicted labels on training
         # and test sets
         n_train = len(train_set.dataset)
@@ -187,28 +151,3 @@ class DLBaseAnalyzer(DASBaseAnalyzer):
         self._model = best_model
         self._logger.debug("Model trained...")
         return best_f1
-
-    def _prepare_data(self, train_set, dev_set):
-        """Provide train/test split and digitize the data.
-
-        """
-        if not dev_set and len(train_set) > 1:
-            n = len(train_set)
-            n_dev = max(1, n // 15)
-            idcs = list(range(n))
-            np.random.shuffle(idcs)
-
-            def get_split(data, idcs):
-                return [data[i] for i in idcs]
-
-            dev_set = get_split(train_set, idcs[:n_dev])
-            train_set = get_split(train_set, idcs[n_dev:])
-
-        # convert tweets to word indices
-        train_set = self._digitize_data(train_set, train_mode=True)
-        dev_set = self._digitize_data(dev_set, train_mode=False)
-        return (train_set, dev_set)
-
-    @abc.abstractmethod
-    def _digitize_data(self, data, train_mode=False):
-        raise NotImplementedError

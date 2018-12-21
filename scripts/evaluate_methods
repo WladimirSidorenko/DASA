@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -e -o pipefail
+
+##################################################################
+CWD=$(dirname $(dirname $(realpath $0)))
+DATA_DIR=$CWD/data
+
+##################################################################
+# methods: ddr lcrf lmcrf rdp r2n2 root wang
+# relschemes: chenlo heerschop zhou pcc
+# base sentiment classifiers: chenlo heerschop zhou pcc
+# corpus: PotTS SB10k
+for method in ddr lcrf lmcrf rdp r2n2 root wang; do
+    for relscheme in chenlo heerschop zhou pcc; do
+	for corpus in PotTS SB10k; do
+	    echo "${method} ${relscheme} ${corpus}" >&2
+	    log_file="${CWD}/${method}.${relscheme}.${corpus}.log"
+	    train_data=${DATA_DIR}/$corpus/train/*.json
+	    dev_data=${DATA_DIR}/$corpus/dev/*.json
+	    test_data=${DATA_DIR}/$corpus/test/*.json
+	    output_file=${DATA_DIR}/$corpus/predicted/$method/$method.$relscheme.json
+	    # train
+	    dasa_sentiment train -t $method -r $relscheme $train_data $dev_data &> "${log_file}"
+	    # test
+	    dasa_sentiment test $test_data > $output_file 2>> "${log_file}"
+	done
+    done
+done

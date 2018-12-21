@@ -58,7 +58,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance):
+    def predict(self, instance, relation_scheme=None):
         """Predict label of a single input instance.
 
         Args:
@@ -75,7 +75,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
         cls_idx = np.argmax(scores)
         return IDX2CLS[cls_idx]
 
-    def debug(self, instance):
+    def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
 
         Args:

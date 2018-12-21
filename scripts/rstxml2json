@@ -1,0 +1,342 @@
+#!/usr/bin/env python
+
+"""Script for adding manual RST annotations to JSON.
+
+"""
+
+##################################################################
+# Imports
+from __future__ import absolute_import, print_function, unicode_literals
+from collections import defaultdict
+from six import iteritems
+from xml.etree import ElementTree as ET
+import argparse
+import json
+import logging
+import os
+import re
+import sys
+
+
+##################################################################
+# Constants
+ENCODING = "utf-8"
+SPACE_RE = re.compile('\s+')
+LOG_LVL = logging.INFO
+LOGGER = logging.getLogger("DASA")
+LOGGER.setLevel(LOG_LVL)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+sh = logging.StreamHandler()
+sh.setLevel(LOG_LVL)
+sh.setFormatter(formatter)
+LOGGER.addHandler(sh)
+GT_RE = re.compile(r"&lt; ")
+LT_RE = re.compile(r"&gt; ")
+AMP_RE = re.compile(r"& ")
+AAMP_RE = re.compile(r"&amp; ")
+CONTRASTIVE_RELS = {"antithesis", "antithesis-e", "comparison", "concession",
+                    "consequence-s", "contrast", "problem-solution"}
+
+
+##################################################################
+# Classes
+class Segment(object):
+    def __init__(self, msgid, id, start, end):
+        self.msgid = msgid
+        self.id = id
+        self.start = start
+        self.end = end
+        self.tokens = []
+        self.text = ""
+        self.children = []
+        self.rel2par = ""
+        self.ns = ""
+
+    def __repr__(self):
+        return json.dumps({"id": self.id, "toks": self.tokens})
+
+
+class RSTTree(object):
+    def __init__(self, msgid, id, start, end):
+        self.msgid = msgid
+        self.id = id
+        self.children = []
+        self.rel2par = ""
+        self.ns = ""
+
+
+##################################################################
+# Methods
+def parse_basedata(basedata_file):
+    """Read tweet texts from XML file.
+
+    Args:
+      basedata_file (str): path to the XML file containing tweets
+
+    Returns:
+      dict: mapping from tweet ids to text
+
+    """
+    msgid2text = {}
+    basedata = ET.parse(basedata_file).getroot()
+    for thread_i in basedata.iterfind("./thread"):
+        for msg_j in thread_i.iterfind("./msg"):
+            text = msg_j.find("./text").text
+            text = AMP_RE.sub("&amp; ", text)
+            text = AAMP_RE.sub("& ", text)
+            text = GT_RE.sub(r"> ", text)
+            text = LT_RE.sub(r"< ", text)
+            msgid2text[msg_j.attrib["id"]] = text
+    return msgid2text
+
+
+def get_nodes(msgid2node_ids, node_id2node, nodes, cls):
+    for node_i in nodes:
+        attrib = node_i.attrib
+        node_id = int(attrib["id"])
+        msg_id = attrib["msgid"]
+        assert node_id not in node_id2node, \
+            "Multiple definitions of segment %s".format(node_id)
+        msgid2node_ids[msg_id].add(node_id)
+        node_id2node[node_id] = cls(msg_id, node_id,
+                                    int(attrib["start"]),
+                                    int(attrib["end"]))
+
+
+def add_children(node_ids, id2node, prnt, nodes, rel, node_type):
+    for node_i in nodes:
+        node_id = int(node_i.attrib["idref"])
+        node_ids.discard(node_id)
+        node = id2node[node_id]
+        prnt.children.append(node)
+        node.ns = node_type
+        node.rel2par = rel
+
+
+def compute_tokens(msgid2edus, msgid2text):
+    """Parse segment text into tokens.
+
+    Args:
+      msgid2edus (dict): mapping from message is to the list of EDUs
+      msgid2text (dict): mapping from message is to the list tweet text
+
+    Note:
+      modifies EDUs in-place
+
+    """
+    for msgid, edus in iteritems(msgid2edus):
+        text = msgid2text[msgid]
+        edus.sort(key=lambda edu: edu.start)
+        tok_offset = 0
+        for edu_i in edus:
+            edu_text = text[edu_i.start:edu_i.end]
+            edu_tokens = edu_text.split()
+            n = len(edu_tokens)
+            edu_i.tokens = list(range(tok_offset, n + tok_offset))
+            tok_offset += n
+
+
+def parse_annotation(annotation_file):
+    """Read RST trees from XML file.
+
+    Args:
+      annotation_file (str): path to the XML file containing RST trees
+
+    Returns:
+      dict: mapping from tweet ids to RST trees
+
+    """
+    node_id2node = {}
+    msgid2node_ids = defaultdict(set)
+    annotation = ET.parse(annotation_file).getroot()
+
+    # parse segments and spans
+
+    # parse segments
+    segments = annotation.find("./segments")
+    get_nodes(msgid2node_ids, node_id2node, segments.iterfind("./segment"),
+              Segment)
+    msgid2edus = {k: [node_id2node[n_id] for n_id in v]
+                  for k, v in iteritems(msgid2node_ids)}
+    # parse spans
+    spans = annotation.find("./spans")
+    get_nodes(msgid2node_ids, node_id2node, spans.iterfind("./span"), RSTTree)
+    node_id2msg_id = {v: k
+                      for k, node_ids in iteritems(msgid2node_ids)
+                      for v in node_ids}
+    min_node_id = min(node_id2msg_id or [0]) - 1
+    # parse relations
+    for rel_i in list(annotation.find("./relations")):
+        rel = rel_i.attrib["relname"]
+        prnt_id = int(rel_i.find("./spannode").attrib["idref"])
+        prnt = node_id2node[prnt_id]
+        nuclei = rel_i.findall("./nucleus")
+        satellites = rel_i.iterfind("./satellite")
+        if len(nuclei) == 1:
+            nuc_rel = "span"
+        else:
+            nuc_rel = rel
+        msg_id = node_id2msg_id[prnt_id]
+        node_ids = msgid2node_ids[msg_id]
+        add_children(node_ids, node_id2node, prnt, nuclei,
+                     nuc_rel, "Nucleus")
+        add_children(node_ids, node_id2node, prnt, satellites,
+                     rel, "Satellite")
+    # collect roots
+    msgid2tree = {}
+    for msgid, node_ids in iteritems(msgid2node_ids):
+        if len(node_ids) != 1:
+            LOGGER.warn(
+                "Multiple roots found for message %s: %r",
+                msgid, node_ids
+            )
+            # create a new node and link all present roots to it as JOINT
+            root = RSTTree(msgid, min_node_id, -1, -1)
+            nodes = [node_id2node[n_id] for n_id in node_ids]
+            root.children = nodes
+            for node_i in nodes:
+                node_i.ns = "Nucleus"
+                node_i.rel2par = "Joint"
+            min_node_id -= 1
+            msgid2tree[msgid] = root
+        else:
+            msgid2tree[msgid] = node_id2node[node_ids.pop()]
+    return msgid2edus, msgid2tree
+
+
+def translate_rel(rel):
+    rel = rel.lower()
+    if not rel:
+        return None
+    elif rel == "span":
+        return rel
+    elif rel in CONTRASTIVE_RELS:
+        return "contrastive"
+    return "non-contrastive"
+
+
+def parse_xml(rstprj_file):
+    """Parse XML file containing manual RST trees.
+
+    Args:
+      rstprj_file (str): path to the main XML file
+
+    Returns:
+      dict: path to the main XML file
+
+    """
+    rstprj_dirname = os.path.dirname(rstprj_file)
+    rstprj = ET.parse(rstprj_file).getroot()
+    # parse basedata
+    msgid2text = parse_basedata(
+        os.path.join(rstprj_dirname, rstprj.find("./basedata").text)
+    )
+    # parse annotation
+    msgid2edus, msgid2tree = parse_annotation(
+        os.path.join(rstprj_dirname, rstprj.find("./annotation").text)
+    )
+    # add token information to segments
+    compute_tokens(msgid2edus, msgid2text)
+    return msgid2edus, msgid2tree
+
+
+def tree2json(tree, rst_id2json_id, min_node_id):
+    node_id = tree.id
+    if node_id in rst_id2json_id:
+        node_id = rst_id2json_id[node_id]
+    else:
+        rst_id2json_id[node_id] = min_node_id
+        node_id = min_node_id
+        min_node_id -= 1
+    children = []
+    visited_children = set()
+    for subtree_i in tree.children:
+        if subtree_i.id in visited_children:
+            continue
+        visited_children.add(subtree_i.id)
+        min_node_id, child = tree2json(subtree_i, rst_id2json_id, min_node_id)
+        children.append(child)
+    ret = {
+        "id": node_id,
+        "rel2par": translate_rel(tree.rel2par),
+        "n/s": tree.ns,
+        "children": children
+    }
+    return min_node_id, ret
+
+
+def add_trees(data, msg_id2edus, msg_id2tree):
+    """Add manually annotated RST trees and segments to JSN file.
+
+    Args:
+      data (dict): JSON data to be update
+      msg_id2edus (dict): mapping from message id to EDUs
+      msg_id2tree (dict): mapping from message id to the manual RST tree
+
+    """
+    for tweet_i in data["tweets"]:
+        msg_id = tweet_i["msg_id"]
+        n = len(tweet_i["toks"])
+        if msg_id not in msg_id2edus:
+            tweet_i["edus"] = [{"polarity_scores": [],
+                                "type": "HS",
+                                "prnt_edu": None,
+                                "toks": list(range(n))}]
+            tweet_i["rst_trees"] = {
+                "gold": {"id": 0, "rel2par": None, "n/s": None, "children": []}
+            }
+            continue
+        edus = msg_id2edus[msg_id]
+        assert edus[-1].tokens[-1] + 1 == n, \
+            ("Unequal number of tokens in tweet and EDUs:"
+             " {} ({}) vs {} ({})").format(
+                 tweet_i["toks"], n, edus, edus[-1].tokens[-1]
+            )
+        rst_id2json_id = {edu_j.id: j for j, edu_j in enumerate(edus)}
+        # tweet_i["edus"] = [{"polarity_scores": [],
+        #                     "type": "HS",
+        #                     "prnt_edu": None,
+        #                     "toks": edu_j.tokens
+        #                     } for edu_j in edus]
+        tweet_i["rst_trees"] = {
+            "gold": tree2json(msg_id2tree[msg_id], rst_id2json_id, -1)[1]
+        }
+
+
+def main(argv):
+    """Main method for converting manually labeled RST trees to JSON.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    Retruns:
+      int: 0 on success, non-0 otherwise
+
+    """
+    argparser = argparse.ArgumentParser(
+        description="Script for adding manually labeled RST trees"
+        " to JSON files."
+    )
+    argparser.add_argument("rstprj_file",
+                           help="rstprj file containing links")
+    argparser.add_argument("json_file",
+                           help="file to with discourse segments")
+    args = argparser.parse_args(argv)
+    # parse XML file
+    msgid2edus, msgid2tree = parse_xml(args.rstprj_file)
+    # add trees to JSON file
+    with open(args.json_file) as ifile:
+        data = json.load(ifile)
+        add_trees(data, msgid2edus, msgid2tree)
+        msgid2tweet = {t["msg_id"]: t for t in data["tweets"]}
+    # merge annotations
+    json.dump(data, sys.stdout)
+    return 0
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main(sys.argv[1:])

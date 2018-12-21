@@ -12,12 +12,11 @@ import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   LastAnalyzer, RootAnalyzer, R2N2Analyzer,
-                  WangAnalyzer)
+                  RDPAnalyzer, WangAnalyzer, LCRFAnalyzer)
 from dasa.utils.common import LOGGER
-from dasa.constants import (DFLT_MODEL_PATH,
-                            LAST, ROOT, NO_DISCOURSE, R2N2, DDR, WANG,
-                            BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU,
-                            POSITIVE, NEGATIVE, NEUTRAL)
+from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
+                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO, GOLD,
+                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL)
 
 
 ##################################################################
@@ -44,6 +43,9 @@ def _add_cmn_options(parser):
     parser.add_argument("-m", "--model",
                         help="path to the main model (if different from"
                         " default)", type=str, default=DFLT_MODEL_PATH)
+    parser.add_argument("-r", "--relation-scheme",
+                        help="RST relation scheme to be analyzed",
+                        choices=(BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU))
     parser.add_argument("files", help="input file(s)",
                         type=str, nargs="+")
 
@@ -104,13 +106,10 @@ def main(argv):
     parser_train.add_argument("-g", "--grid-search",
                               help="determine optimal parameters using grid"
                               " search", action="store_true")
-    parser_train.add_argument("-r", "--relation-scheme",
-                              help="RST relation scheme to be analyzed",
-                              choices=(BHATIA, CHENLO, HEERSCHOP, PCC, ZHOU))
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
-                              choices=(DDR, LAST, ROOT, R2N2, WANG,
-                                       NO_DISCOURSE),
+                              choices=(DDR, LAST, ROOT, R2N2, RDP, WANG,
+                                       NO_DISCOURSE, LCRF, LMCRF),
                               required=True, type=str)
     _add_cmn_options(parser_train)
 
@@ -124,7 +123,7 @@ def main(argv):
     _add_cmn_options(parser_debug)
     args = argparser.parse_args()
 
-    if args.verbose:
+    if args.verbose or args.mode == DEBUG:
         log_lvl = logging.DEBUG
         LOGGER.setLevel(log_lvl)
         for handler_i in LOGGER.handlers:
@@ -150,8 +149,14 @@ def main(argv):
             analyzer = RootAnalyzer(args.relation_scheme)
         elif args.type == R2N2:
             analyzer = R2N2Analyzer(args.relation_scheme)
+        elif args.type == RDP:
+            analyzer = RDPAnalyzer(args.relation_scheme)
         elif args.type == WANG:
             analyzer = WangAnalyzer(args.relation_scheme)
+        elif args.type == LCRF:
+            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=False)
+        elif args.type == LMCRF:
+            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=True)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
@@ -159,8 +164,7 @@ def main(argv):
                 )
             )
         LOGGER.debug("Training analyzer...")
-        analyzer.train(train_set, dev_set,
-                       grid_search=args.grid_search)
+        analyzer.train(train_set, dev_set, grid_search=args.grid_search)
         LOGGER.debug("Analyzer trained.")
         analyzer.save(args.model)
     else:
@@ -172,7 +176,7 @@ def main(argv):
 
         ret = []
         for tweet_i in _read_data(args.files):
-            tweet_i["predicted"] = predict(tweet_i)
+            tweet_i["predicted"] = predict(tweet_i, args.relation_scheme)
             ret.append(tweet_i)
         json.dump({"tweets": ret},
                   sys.stdout, indent=1, separators=[',', ": "])
