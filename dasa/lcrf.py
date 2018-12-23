@@ -703,18 +703,33 @@ class LCRFAnalyzer(MLBaseAnalyzer):
         self._logger.debug("cls_idx: %r (%s)", cls_idx, cls)
         model = self._model.model
         w = self._model.w
-        unary_potentials = model._get_unary_potentials(x, w)
-        self._logger.debug("unary_potentials: %r", unary_potentials)
-        pairwise_potentials = model._get_pairwise_potentials(x, w)
-        self._logger.debug("pairwise_potentials: %r",
-                           pairwise_potentials)
-        edges = model._get_edges(x)
-        mask = np.ones(unary_potentials.shape, dtype=np.bool)
-        alpha, Z = model.compute_alpha(
-            unary_potentials, pairwise_potentials, edges, mask
-        )
-        self._logger.debug("alpha: %r", alpha)
-        self._logger.debug("Z: %r", Z)
+        if hasattr(model, "compute_alpha"):
+            unary_potentials = np.exp(model._get_unary_potentials(x, w))
+            self._logger.debug("unary_potentials: %r", unary_potentials)
+            pairwise_potentials = np.exp(model._get_pairwise_potentials(x, w))
+            self._logger.debug("pairwise_potentials: %r",
+                               pairwise_potentials)
+            edges = model._get_edges(x)
+            n_vertices, n_states = unary_potentials.shape
+            neighbors = [[] for i in range(n_vertices)]
+            pairwise_weights = [[] for i in range(n_vertices)]
+            # `pairwise_weights` is a list of lists, holding a transition
+            # matrix for each node `i` which has an outgoing link to node `j`
+            for pw, edge in zip(pairwise_potentials, edges):
+                neighbors[edge[0]].append(edge[1])
+                pairwise_weights[edge[0]].append(pw)
+                neighbors[edge[1]].append(edge[0])
+                pairwise_weights[edge[1]].append(pw.T)
+            traversal, parents, child_cnt, pw_forward = model.top_order(
+                n_vertices, n_states, neighbors, pairwise_weights
+            )
+            mask = np.ones(unary_potentials.shape, dtype=np.bool)
+            alpha, child_alpha, scale, Z = model.compute_alpha(
+                unary_potentials, pw_forward, traversal, parents, mask
+            )
+            self._logger.debug("alpha: %r", alpha)
+            self._logger.debug("child_alpha: %r", child_alpha)
+            self._logger.debug("Z: %r", Z)
         return cls
 
     def _digitize_data(self, data, train_mode=False):
