@@ -49,8 +49,6 @@ setup(
     package_data={},
     install_requires=INSTALL_REQUIRES,
     dependency_links=[
-        r"git+ssh://git@github.com/WladimirSidorenko/CGSA.git"
-
     ],
     setup_requires=["pytest-runner"],
     tests_require=TEST_REQUIRES,
