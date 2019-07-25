@@ -23,19 +23,20 @@ before_install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   # Useful for debugging any issues with conda
-  - conda create --yes -n condaenv python=$TRAVIS_PYTHON_VERSION
-  - conda install --yes -n condaenv pip
-  - source activate condaenv
+  - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
+  - conda activate condaenv
+  - conda install --file requirements.txt
   - conda info -a
 
 # Install packages
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION anaconda-client numpy scipy cython pandas pytorch
-  - pip install -r requirements.txt
   - ./setup.py build install
-  - pip install -r test-requirements.txt
+
 
 # Run test
+before_script:
+  - conda install --file test-requirements.txt
+
 script:
   - ./setup.py test
 
