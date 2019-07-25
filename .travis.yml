@@ -24,7 +24,7 @@ before_install:
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
-  - conda activate condaenv
+  - source activate condaenv
   - conda install --file requirements.txt
   - conda info -a
 
