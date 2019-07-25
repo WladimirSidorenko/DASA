@@ -23,15 +23,14 @@ before_install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   # Useful for debugging any issues with conda
+  - conda info -a
   - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
   - source activate condaenv
   - conda install --file requirements.txt
-  - conda info -a
 
 # Install packages
 install:
   - ./setup.py build install
-
 
 # Run test
 before_script:
