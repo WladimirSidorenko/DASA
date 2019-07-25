@@ -26,10 +26,13 @@ before_install:
   - conda info -a
   - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
   - source activate condaenv
-  - conda install --file requirements.txt
+  - conda install pandas numpy
 
 # Install packages
 install:
+  - pip install -U setuptools
+  - pip uninstall -y distribute
+  - pip install -r requirements.txt
   - ./setup.py build install
 
 # Run test
