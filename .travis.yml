@@ -32,7 +32,8 @@ install:
   - conda install pip pandas numpy cython
   # Useful for debugging any issues with conda
   - conda info -a
-  - conda install --file requirements.txt
+  - pip install -r requirements.txt
+  - pip install -r test-requirements.txt
 
 # Build the package and run tests
 script:

@@ -1,6 +1,6 @@
-future>=0.16.0,<1
-pandas>=0.20.3,<1
-scikit-learn>=0.19.1,<1
-torch>=0.4.1,<1
-cvxopt>=1.2.1,<2
-pystruct>=0.3.1,<1
+future~=0.16.0
+pandas~=0.20.3
+scikit-learn~=0.19.1
+torch~=0.4.1
+cvxopt~=1.2.1
+pystruct~=0.3.1
