@@ -30,7 +30,7 @@ before_install:
 # Install packages
 install:
   - source activate condaenv
-  - conda install pip pandas numpy cython>=0.27.3
+  - conda install pip pandas numpy scipy cython>=0.27.3
   # Useful for debugging any issues with conda
   - conda info -a
   - pip install -r requirements.txt
