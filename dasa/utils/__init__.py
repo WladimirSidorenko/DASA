@@ -50,7 +50,7 @@ def balance_data(x, y):
 ##################################################################
 # Variables and Constants
 __all__ = ["LOGGER", "balance_data"]
-__name__ = "cgsa.utils"
+__name__ = "dasa.utils"
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.0.0"
