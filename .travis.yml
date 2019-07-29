@@ -6,7 +6,7 @@ python:
   - 3.7
 
 git:
-  depth: 3
+  depth: 1
 
 branches:
   only:
@@ -22,24 +22,19 @@ before_install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
   # Useful for debugging any issues with conda
   - conda info -a
-  - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
-  - source activate condaenv
-  - conda install pandas numpy
 
 # Install packages
 install:
-  - pip install -U setuptools
-  - pip uninstall -y distribute
+  - source activate condaenv
+  - conda install pip pandas numpy cython
   - pip install -r requirements.txt
-  - ./setup.py build install
 
-# Run test
-before_script:
-  - conda install --file test-requirements.txt
-
+# Build the package and run tests
 script:
+  - ./setup.py build install
   - ./setup.py test
 
 after_success:
