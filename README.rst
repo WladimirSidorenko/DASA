@@ -9,9 +9,6 @@ Discourse-Aware Sentiment Analysis
    :align: right
    :target: http://opensource.org/licenses/MIT
 
-*This project is currently work in progress.*
-
-
 Description
 -----------
 
