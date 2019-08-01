@@ -6,7 +6,7 @@ Discourse-Aware Sentiment Analysis
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
    :alt: MIT License
-   :align: right
+   :align: left
    :target: http://opensource.org/licenses/MIT
 
 Description
