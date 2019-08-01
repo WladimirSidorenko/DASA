@@ -1,5 +1,6 @@
 Discourse-Aware Sentiment Analysis
 ==================================
+
 .. image:: https://travis-ci.org/WladimirSidorenko/DASA.svg?branch=master
    :alt: Build Status
    :align: right
