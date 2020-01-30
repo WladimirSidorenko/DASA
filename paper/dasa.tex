@@ -6,7 +6,10 @@
 \usepackage{times}
 
 \usepackage{amsmath}
-%% \usepackage[authoryear]{natbib}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}           % for multiple columns in a table
+\usepackage{multirow}
 \usepackage{paralist}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
@@ -70,10 +73,6 @@
 % rating groups. An evaluation on the four-star review corpus
 % of~\newcite{Pang:05} showed an improvement by up to~7\% over the
 % previous state of the art, boosting it to 59.37\% average accuracy.
-
-Now before we use these data in our sentiment experiments, let us
-first revise the most prominent approaches to discourse-aware
-sentiment analysis that exist in the literature nowadays.
 
 As it turns out, even the very first works on opinion mining already
 pointed out the importance of discourse phenomena for classification
@@ -341,18 +340,17 @@ strengths or reversing the polarity of the sentiments, depending on
 the type of the discourse relation that was linking two segments.
 
 In general, however, PDTB- and SDRT-based sentiment systems are much
-less common than RST-inspired solutions.  Because of this fact and due
-to the reasons described in Section~\ref{sec:dasa:theory}, we will
-primarily concentrate on the RST-based of methods.  In particular, for
-the sake of comparison, we replicated the linear combination approach
-of \newcite{Wang:13} and also reimplemented the DDR and R2N2 systems
-of~\newcite{Bhatia:15}.  Furthermore, to see how these techniques would
-perform in comparison with much simpler baselines, we additionally
-created two methods that predicted the polarity of a message by only
-considering its last or topmost nucleus EDU (henceforth \textsc{Last}
-and \textsc{Root}), and also estimated the results of our original LBA
-classifier without any discourse-related modifications (henceforth
-\textsc{No-Discourse}).
+less common than RST-inspired solutions.  Because of this fact, we
+will primarily concentrate on the RST-based of methods.  In
+particular, for the sake of comparison, we replicated the linear
+combination approach of \newcite{Wang:13} and also reimplemented the
+DDR and R2N2 systems of~\newcite{Bhatia:15}.  Furthermore, to see how
+these techniques would perform in comparison with much simpler
+baselines, we additionally created two methods that predicted the
+polarity of a message by only considering its last or topmost nucleus
+EDU (henceforth \textsc{Last} and \textsc{Root}), and also estimated
+the results of our original LBA classifier without any
+discourse-related modifications (henceforth \textsc{No-Discourse}).
 
 Apart from the above baselines and existing methods, we propose
 several novel DASA solutions, which will be briefly described below.
@@ -363,6 +361,21 @@ several novel DASA solutions, which will be briefly described below.
 
 \section{Evaluation}\label{evaluation}
 
+\begin{table}[hbt]
+  \begin{center}
+    \begin{tabular}{p{0.3\columnwidth}%
+        *{2}{>{\centering\arraybackslash}p{0.3\columnwidth}}} % first columm
+      \toprule
+      \multirow{2}*{\bfseries Method} & %
+      \multicolumn{2}{c}{\bfseries Dataset}\\\cmidrule(lr){2-3}
+      & IMDB & SST\\\midrule
+      \bottomrule
+    \end{tabular}
+    \caption{Classification accuracy on IMDB~\cite{Pang:04} and
+      Stanford Sentiment
+      Treebank~\cite{Socher:13}}\label{tbl:accuracy}
+  \end{center}
+\end{table}
 
 \subsection{Conclusion}\label{conclusion}
 
