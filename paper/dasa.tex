@@ -11,6 +11,7 @@
 \usepackage{multicol}           % for multiple columns in a table
 \usepackage{multirow}
 \usepackage{paralist}
+\usepackage{rst}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
 %% Commands and Macros
@@ -20,6 +21,7 @@
 \newcommand{\eg}{\textit{e.g.},}
 \newcommand{\ienocomma}{\textit{i.e.}}
 \newcommand{\ie}{\ienocomma,}
+\newcommand{\discrel}[1]{\texttt{#1}}
 
 %% Main
 \title{Discourse-aware Sentiment Analysis Using Recursive Dirichlet
@@ -41,9 +43,44 @@
 \begin{document}
 \maketitle
 \begin{abstract}
+  This paper presents a novel Bayesian approach to sentiment analysis
+  of texts, in which we estimate the overall polarity of a discourse
+  from sentiment scores of its elementary discourse units (EDUs) using
+  a dedicated probabilistic magma.  In particular, we regard the
+  polarity of each text unit as a multinomial random variable, whose
+  conjugate prior is a Dirichlet distribution parameterized by a
+  single vector $\mathbf{\alpha}$; this vector, in turn, is computed
+  from the polarity scores of discourse desendants, taking into
+  account .  We evaluate our proposed method on the IMDB corpus and
+  Stanford Sentiment Treebank, getting\todo{add evaluation numbers}.
 \end{abstract}
 
 \section{Introduction}\label{intro}
+
+Sentiment analysis has admittedly been one of the most popular,
+competitive, and prolific areas of natural language processing since
+its very inception around 2004~\cite[pp.~\todo{add pages}]{Liu:12}.
+However, most of the research done in this field has been primarily
+concentrated either on the analysis of \emph{words}' meaning or
+classification of \emph{sentence} polarity and subjectivity, with
+little attention paid to semantic links between the sentences---\ie{}
+the structure of \emph{discourse}.  Nevertheless, as noted by
+\newcite{Polanyi:06}, discourse relations are one of the most
+influential factors that might significantly change (and completely
+overturn) the semantic orientation of an opinion.
+
+Indeed, if we look at Figure~\ref{fig:rst-tree}, we will see that the
+first passage of the cited IMDB review expresses a strong negative
+attitude of the author towards any kind of TV shows, and especially
+the medical ones.  The second paragraph, however, admits that he/she
+liked the series ``House M.D.''  And it is the pragmatic link of
+\discrel{Antithesis} that tells us how these two parts relate to each
+other, and the higher importance of the second claim that determines
+the overall mood of the whole text.
+
+\begin{figure*}[htb!]\label{fig:rst-tree}
+  \input{rst.tex}
+\end{figure*}
 
 %% \blfootnote{
 %%     % % final paper: en-us version
@@ -359,7 +396,10 @@ several novel DASA solutions, which will be briefly described below.
 \section{Recursive Dirichlet Model}\label{method}
 
 
-\section{Evaluation}\label{evaluation}
+\section{Evaluation}\label{sec:evaluation}
+
+\subsection{Data}\label{subsec:eval:data}
+\subsection{Baselines}\label{subsec:eval:data}
 
 \begin{table}[hbt]
   \begin{center}
@@ -369,10 +409,13 @@ several novel DASA solutions, which will be briefly described below.
       \multirow{2}*{\bfseries Method} & %
       \multicolumn{2}{c}{\bfseries Dataset}\\\cmidrule(lr){2-3}
       & IMDB & SST\\\midrule
+      RD & &\\
+      R2N2~\cite{Bhatia:15} & 84.1 & 85.6\\
+      DDR~\cite{Bhatia:15} & 82.9 & 82.0\\
       \bottomrule
     \end{tabular}
-    \caption{Classification accuracy on IMDB~\cite{Pang:04} and
-      Stanford Sentiment
+    \caption{Accuracy of sentiment classification on IMDB~\cite{Pang:04}
+      and Stanford Sentiment
       Treebank~\cite{Socher:13}}\label{tbl:accuracy}
   \end{center}
 \end{table}

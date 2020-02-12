@@ -1,0 +1,1156 @@
+%%%
+%%% Macros to typeset Rhetorical Structures (RSTs).
+%%%
+%%% Written by David Reitter (reitter at mle.media.mit.edu)
+%%%
+%%% All rights reserved. Usage is free, put please cite or point to the manual.
+%%% Copyright 2003 David Reitter
+%%%
+%%% New versions to be found here: http://www.reitter-it-media.de/compling/
+%%%
+
+%%%
+%%% This package provides the commands \dirrel, \multinuc, \rstsegment
+%%% and the environment rhetoricaltext with the associated commands \unit, \source and \relr.
+%%%
+%%% Please refer to rst.pdf for instructions.
+%%%
+
+%%% revised 11-06: horizontal spacing issues (at least) improved so that relation names 
+%%%                        can be drawn correctly. Still does not work well in some multi-satellite
+%%%                        configurations.
+%%% revised 01-15: rhetoricaltext environment uses better label / reference mechanism now
+%%%                        so TeX won't run out of memory when working with large documents and
+%%%                        many rhetoricaltexts. You always need to compile twice to get the refs right!
+%%% revised 02-12: rhetoricaltext environment does not use \lineheight any more. Margins
+%%%                        before and after rhetoricaltexts may change.
+%%% revised 02-17: provide \rl command to format a relation name (capitalized)
+%%%                        All relation names in diagrams are capitalized now
+
+\ProvidesPackage {rst}
+    [2003/02/17 typeset rhetorical structures v. 1.3]
+
+\RequirePackage{color}
+
+\newlength{\compressionWidth}
+\setlength{\compressionWidth}{0pt}  % set to any length>0 to compress trees horizontally
+
+\newlength{\terminalWidth}
+\setlength{\terminalWidth}{100pt}  % set to any length>0 to compress trees horizontally
+
+\newlength{\rstmargin}          % left and right margin
+\setlength{\rstmargin}{3pt}
+
+\newlength{\rstmiddleskip}          % margin between spans
+
+\setlength{\rstmiddleskip}{1em}
+
+%empty the following two if you wish NOT to use the color package
+\newcommand{\relnamebgcolor}{}%       background color.
+\newcommand{\relnamecolor}{red}%     relation name color
+
+
+%uncomment the following two if you wish NOT to use the color package
+\newcommand{\mycolorbox}{}  % uncommented so that \raisebox may be used
+
+%\newcommand{\mycolor}{}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% no change beyond this point.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\providecommand {\rl}[1]{\textsc{\expandafter\MakeUppercase#1}}
+
+
+
+% internal stuff 
+
+
+
+
+
+
+\newcommand{\nuc}{}
+
+
+
+\providecommand{\mycolorbox}{\colorbox}
+
+\providecommand{\mycolor}{\color}
+
+\newlength{\drwdone}
+\newlength{\drwdtwo}
+\newlength{\drwdthree}
+\newlength{\drwdfour}
+\newlength{\drwdfive}
+\newlength{\drwdtemp}
+\newlength{\drwdtempx}
+\newlength{\drwdtempy}
+
+
+\newlength{\drwdbezleft}
+\newlength{\drwdbezright}
+\newlength{\drwdbezA}
+\newlength{\drwdbezB}
+\newlength{\drwdbezC}
+\newlength{\drwdbezD}
+\newlength{\drwdbezE}
+\newlength{\drwdgraph}
+\newlength{\drwdmiddle}
+\newlength{\drwdmiddleOne}
+\newlength{\drwdmiddleTwo}
+\newlength{\drwdmiddleThree}
+\newlength{\drwdmiddleFour}
+\newlength{\drhegraph}
+\newlength{\drhetext}
+\newlength{\drhetotal}
+%\newlength{\drwdrstrealwidth}% temp (local)
+%\newlength{\rstrealwidth}% global (as return var)
+%\newlength{\rstleftoffset}% global (as return var)
+%\newlength{\rstrightoffset}% global (as return var)
+%\gdef\rstrealwidth{}\gdef\rstleftoffset{}\gdef\rstleftoffset{}% all global
+\newlength{\relnamepos}
+\newlength{\@relnamewd}            
+\newsavebox{\rstboxone}
+\newsavebox{\rstboxtwo}
+\newsavebox{\rstboxthree}
+\newsavebox{\rstboxfour}
+\newsavebox{\rstboxfive}
+\newsavebox{\rstallbox}
+
+\newcommand\@optOne{}
+\newcommand\@optTwo{}
+\newcommand\@optThree{}
+\newcommand\@optFour{}
+\newcommand\@optFive{}
+\newcommand\@relOne{}
+\newcommand\@relTwo{}
+\newcommand\@relThree{}
+\newcommand\@relFour{}
+\newcommand\@relFive{}
+%\makeatletter
+\newcommand{\LenToUnit}[1]{%
+    #1\@gobble
+}
+%\makeatother
+
+\newcommand{\drhspacer}[1]{%
+\setlength{\unitlength}{#1}%    
+\begin{picture}(1,0)(0,0)% spacing
+\end{picture}%
+}
+
+%% This package ...
+
+
+\let\rstvarfont=\it%          Font for variables
+\let\rstcondfont=\rm%         Font for conditions -- no spaces in here!!
+\let\rstseparator=\hline%     Separator between variables and conditions
+
+\newcommand{\relnamefont} [1] {\mycolor\relnamecolor\small\rl{#1}}
+
+  
+\newcount\@rstlevel \@rstlevel=0
+%\def\rst@strut{{\large\strut}}
+%\def\dirrel@strut{{\large\strut}}
+
+\newlength{\myVSpace}% the height of the box
+\setlength{\myVSpace}{1ex}% the default, 
+\newcommand\xstrut{\raisebox{-1\myVSpace}% symmetric behaviour, 
+  {\rule{0pt}{\myVSpace}}%
+}
+
+
+% calc middle position
+\newcommand{\setmiddle}[3]{
+\setlength{#1}{#2}
+\addtolength{#1}{#3}
+\setlength{#1}{.5 #1}
+}
+
+
+\newlength{\@strhtemp}
+\newcommand{\settorealheight}[2]{%
+\settoheight{#1}{#2}%
+\settodepth{\@strhtemp}{#2}%
+\addtolength{#1}{\@strhtemp}%
+}%
+
+\newlength{\drwdemptycheck}
+\newcommand{\ifemptyd}[1]{\settowidth{\drwdemptycheck}{#1}\ifnum\drwdemptycheck<1}% this is stupid, but other variants did not work
+\newcommand{\ifemptydd}[3]{\settowidth{\drwdemptycheck}{#1}\ifnum\drwdemptycheck<1#2\else#3\fi}% this is stupid, but other variants did not work
+
+%for compatibility reasons (old aux files)
+\newcommand{\@definerstlabelu}[2]{}
+\newcommand{\@definerstlabelt}[2]{}
+
+% called from .aux file
+%\newcommand{\@definerstlabelu}[2]{\@ifundefined{c@uu#1}{\newcounter{uu#1}}{}%
+%\setcounter{uu#1}{#2}}
+%\newcommand{\@definerstlabelt}[2]{\@ifundefined{c@tt#1}{\newcounter{tt#1}}{}%
+%\setcounter{tt#1}{#2}}
+%\newcommand{\@definerstlabelu}[2]{\def{\c@rstuu#1}{#2}}%
+%\newcommand{\@definerstlabelt}[2]{\def{\c@rsttt#1}{#2}}%
+% local versions
+%\newcommand{\@definerstlabelintu}[2]{\newcounter{u#1}%
+%\setcounter{u#1}{#2}}
+%\newcommand{\@definerstlabelintt}[2]{\newcounter{t#1}%
+%\setcounter{t#1}{#2}}
+%\newcommand{\@definerstlabelintu}[2]{\def\u#1{#2}}
+%\newcommand{\@definerstlabelintt}[2]{\def\t#1{#2}}
+%
+\def\tmakedef#1#2{\expandafter\xdef\csname #1\endcsname{#2}}%
+\newcounter{rhetoricaltextno}
+\setcounter{rhetoricaltextno}{0}
+\newcounter{rhetoricalunitno}
+\newenvironment{rhetoricaltext}{
+\addtocounter{rhetoricaltextno}{1}\setcounter{rhetoricalunitno}{0}\setlength{\parindent}{0pt}\flushleft\sf}{\vspace{\baselineskip}}
+\newcommand{\unit}[2][]{%
+\ifemptyd{#1}[#2]\else%
+\addtocounter{rhetoricalunitno}{1}%
+%\@ifundefined{uu#1}{}{\typeout{rst-package error: you defined the #1 label for a rst unit twice.}}%
+%\@definerstlabelu{#1}{\value{rhetoricalunitno}}%
+%\@definerstlabelt{#1}{\value{rhetoricaltextno}}%
+%\if@filesw\immediate\write\@auxout{\noexpand\@definerstlabelu{#1}{\arabic{rhetoricalunitno}}}%
+%\immediate\write\@auxout{\noexpand\@definerstlabelt{#1}{\arabic{rhetoricaltextno}}}\fi%
+\if@filesw\immediate\write\@auxout{\noexpand\tmakedef{rstuu#1}{\Alph{rhetoricalunitno}}}%
+\immediate\write\@auxout{\noexpand\tmakedef{rsttt#1}{\arabic{rhetoricaltextno}}}\fi%
+%\def\c@u#1{\Alph{rhetoricalunitno}}%
+%\def\c@t#1{\arabic{rhetoricaltextno}}%
+[#2]$^{\arabic{rhetoricaltextno}\Alph{rhetoricalunitno}}$\fi}
+%\newcommand{\refr}[1]{\@ifundefined{@rstt#1}{\@ifundefined{@rsttt#1}{??}{\csname\@rsttt#1\endcsname\csname\@rstuu#1\endcsname}}{\csname\t#1\endcsname\csname\u#1\endcsname}}
+
+\def\tcallup#1{\csname #1\endcsname}
+\newcommand{\refr}[1]{\tcallup{rsttt#1}\tcallup{rstuu#1}}%
+
+%\newcommand{\refr}[1]{\@ifundefined{\expandafter\csname\@rsttt #1\endcsname}{??}{\csname\@rsttt#1\endcsname\csname\@rstuu#1\endcsname}}%
+%\newcommand{\refr}[1]{\@ifundefined{c@t#1}{\@ifundefined{c@tt#1}{??}{\arabic{tt#1}\Alph{uu#1}}}{\arabic{t#1}\Alph{u#1}}}
+\newcommand{\rstsource}[1]{ {\hfill\small #1}}
+
+
+
+
+\newcommand{\addadditionalspace}%
+{\ifemptydd{\@relOne}%\else% if 1 is the nuc
+{% to 1st right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relTwo\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdone}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\addtolength{\drwdtempx}{0.8\drwdtwo}%most of right
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleOne}{\drwdtemp}%
+\fi%
+% to 2. right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relThree\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdone}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\addtolength{\drwdtempx}{\drwdtwo}%
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{0.8\drwdthree}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleTwo}{\drwdtemp}%
+\fi%
+% to 3. right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFour\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdone}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\addtolength{\drwdtempx}{\drwdtwo}%
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{\drwdthree}% 
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.8\drwdfour}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleThree}{\drwdtemp}%
+\fi%
+% to 4. right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFive\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdone}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\addtolength{\drwdtempx}{\drwdtwo}%
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{\drwdthree}% 
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{\drwdthree}%most of right
+\addtolength{\drwdtempx}{\drwdmiddleFour}%
+\addtolength{\drwdtempx}{0.8\drwdfive}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleFour}{\drwdtemp}%
+\fi%
+}{}%
+\ifnum\drwdtwo>0\ifemptydd{\@relTwo}%\else% if 2 is the nuc
+{% to 1st left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relOne\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdone}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\addtolength{\drwdtempx}{0.5\drwdtwo}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleOne}{\drwdtemp}%
+\fi%
+% to 1st right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relThree\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdtwo}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{0.8\drwdthree}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleTwo}{\drwdtemp}%
+\fi%
+% to 2nd right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFour\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdtwo}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{\drwdthree}% 
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.8\drwdfour}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleThree}{\drwdtemp}%
+\fi%
+% to 4th right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFive\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdtwo}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{\drwdthree}% 
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{\drwdthree}%most of right
+\addtolength{\drwdtempx}{\drwdmiddleFour}%
+\addtolength{\drwdtempx}{0.8\drwdfive}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleFour}{\drwdtemp}%
+\fi%
+}{}\fi%
+\ifnum\drwdthree>0\ifemptydd{\@relThree}%\else% if 3 is the nuc
+{% to 1st left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relTwo\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdtwo}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{0.5\drwdthree}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleTwo}{\drwdtemp}%
+\fi%
+% to 2nd left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relOne\ }}%
+\setlength{\drwdtemp}{\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdone}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\setlength{\drwdtempx}{\drwdtwo}%
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\addtolength{\drwdtempx}{0.5\drwdthree}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleOne}{\drwdtemp}%
+\fi%
+% to 1st right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFour\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdthree}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.8\drwdfour}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleThree}{\drwdtemp}%
+\fi%
+% to 2nd right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFive\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.5\drwdthree}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{\drwdfour}% 
+\addtolength{\drwdtempx}{\drwdmiddleFour}%
+\addtolength{\drwdtempx}{0.8\drwdfive}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleFour}{\drwdtemp}%
+\fi%
+}{}\fi%
+\ifnum\drwdfour>0\ifemptydd{\@relFour}%\else% if 4 is the nuc
+{% to 1st left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relTwo\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdthree}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.5\drwdfour}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleThree}{\drwdtemp}%
+\fi%
+% to 2nd left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relOne\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdtwo}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\setlength{\drwdtempx}{\drwdthree}%
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.5\drwdfour}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleTwo}{\drwdtemp}%
+\fi%
+% to 3rd left
+\settowidth{\drwdtemp}{\relnamefont{\ \@relOne\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\setlength{\drwdtempx}{0.8\drwdone}%most of left
+\addtolength{\drwdtempx}{\drwdmiddleOne}%
+\setlength{\drwdtempx}{\drwdtwo}%
+\addtolength{\drwdtempx}{\drwdmiddleTwo}%
+\setlength{\drwdtempx}{\drwdthree}%
+\addtolength{\drwdtempx}{\drwdmiddleThree}%
+\addtolength{\drwdtempx}{0.5\drwdfour}%half of nuc
+\ifdim\drwdtemp>\drwdtempx%
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleOne}{\drwdtemp}%
+\fi%
+% to 1st right
+\settowidth{\drwdtemp}{\relnamefont{\ \@relFive\ }}%
+\setlength{\drwdtemp}{1.0\drwdtemp}% space that we need
+\addtolength{\drwdtempx}{0.5\drwdfour}%half of nuc
+\addtolength{\drwdtempx}{\drwdmiddleFour}%
+\addtolength{\drwdtempx}{0.8\drwdfive}%most of right
+\ifdim\drwdtemp>\drwdtempx
+\addtolength{\drwdtemp}{-\drwdtempx}%
+\addtolength{\drwdmiddleFour}{\drwdtemp}%
+\fi%
+}{}\fi%
+}%
+
+
+\newcommand{\initrstwidths}{%
+\settowidth{\drwdone}{\@optOne}%
+\settowidth{\drwdtwo}{\@optTwo}%
+\settowidth{\drwdthree}{\@optThree}%
+\settowidth{\drwdfour}{\@optFour}%
+\settowidth{\drwdfive}{\@optFive}%
+%\setlength{\drwdrstrealwidth}{\drwdone}%
+%\addtolength{\drwdrstrealwidth}{\drwdtwo}%
+%\addtolength{\drwdrstrealwidth}{\drwdthree}%
+%\addtolength{\drwdrstrealwidth}{\drwdfour}%
+%\addtolength{\drwdrstrealwidth}{\drwdfive}%
+\ifdim\compressionWidth>0pt\ifdim\drwdone>\compressionWidth\setlength{\drwdone}{\compressionWidth}\fi\fi%
+\ifdim\compressionWidth>0pt\ifdim\drwdtwo>\compressionWidth\setlength{\drwdtwo}{\compressionWidth}\fi\fi%
+\ifdim\compressionWidth>0pt\ifdim\drwdthree>\compressionWidth\setlength{\drwdthree}{\compressionWidth}\fi\fi%
+\ifdim\compressionWidth>0pt\ifdim\drwdfour>\compressionWidth\setlength{\drwdfour}{\compressionWidth}\fi\fi%
+\ifdim\compressionWidth>0pt\ifdim\drwdfive>\compressionWidth\setlength{\drwdfive}{\compressionWidth}\fi\fi%
+\savebox{\rstboxone}[\drwdone]{\@optOne}% returns rstrealwidth -- we just need left and right borders
+%\addtolength{\rstrealwidth}{-\drwdtwo}%
+%\addtolength{\rstleftoffset}{\rstrealwidth}%
+\savebox{\rstboxtwo}[\drwdtwo]{\@optTwo}%
+\savebox{\rstboxthree}[\drwdthree]{\@optThree}%
+\savebox{\rstboxfour}[\drwdfour]{\@optFour}%
+\savebox{\rstboxfive}[\drwdfive]{\@optFive}% one of these returns the right border (others are empty)
+%\ifnum\drwdtwo>0\addtolength{\rstrealwidth}{-\drwdtwo}\fi%
+%\ifnum\drwdthree>0\addtolength{\rstrealwidth}{-\drwdthree}\fi%
+%\ifnum\drwdfour>0\addtolength{\rstrealwidth}{-\drwdfour}\fi%
+%\ifnum\drwdfive>0\addtolength{\rstrealwidth}{-\drwdfive}\fi%
+%\addtolength{\rstrightoffset}{\rstrealwidth}%
+}%
+
+\newcommand{\returnrstrealwidths}{%
+%\setlength{\rstrealwidth}{\drwdrstrealwidth}% this to be returned to calling macro
+%\ifnum\drwdtwo>0\addtolength{\rstrealwidth}{\drwdmiddleOne}\fi%
+%\ifnum\drwdthree>0\addtolength{\rstrealwidth}{\drwdmiddleTwo}\fi%
+%\ifnum\drwdfour>0\addtolength{\rstrealwidth}{\drwdmiddleThree}\fi%
+%\ifnum\drwdfive>0\addtolength{\rstrealwidth}{\drwdmiddleFour}\fi%
+}
+
+
+
+%\long\def\rstbox#1{%
+%\setlength{\rstleftoffset}{0pt}\setlength{\rstrightoffset}{0pt}%
+%\savebox{\rstallbox}{#1}%
+%\frame{a\drhspacer{\rstrealwidth}b\usebox{\rstallbox}\drhspacer{\rstrightoffset}}}%
+
+
+\long\def\dirrel{%
+\dirrela}
+\long\def\dirrela#1{%  
+\@ifnextchar\bgroup{\dirrelb{#1}}{\typeout{dirrel: syntax error. needs at least 3 \{ \} arguments (relname, nucleus-idx, segment+)}\relax}}
+\long\def\dirrelb#1#2{%
+\@ifnextchar\bgroup{\dirrelc{#1}{#2}}{\typeout{dirrel: syntax error. needs at least 3 \{ \} arguments (relname, nucleus-idx, segment+)}\relax}}
+\long\def\dirrelc#1#2#3{%
+\@ifnextchar\bgroup{\dirreld{#1}{#2}{#3}}{\dirrelz{#1}{#2}{#3}{}{}{}{}{}{}\relax}}
+\long\def\dirreld#1#2#3#4{%
+\@ifnextchar\bgroup{\dirrele{#1}{#2}{#3}{#4}}{\dirrelz{#1}{#2}{#3}{#4}{}{}{}{}\relax}}
+\long\def\dirrele#1#2#3#4#5{%
+\@ifnextchar\bgroup{\dirrelf{#1}{#2}{#3}{#4}{#5}}{\dirrelz{#1}{#2}{#3}{#4}{#5}{}{}{}{}\relax}}
+\long\def\dirrelf#1#2#3#4#5#6{%
+\@ifnextchar\bgroup{\dirrelg{#1}{#2}{#3}{#4}{#5}{#6}}{\dirrelz{#1}{#2}{#3}{#4}{#5}{#6}{}{}{}\relax}}
+\long\def\dirrelg#1#2#3#4#5#6#7{%
+\@ifnextchar\bgroup{\dirrelh{#1}{#2}{#3}{#4}{#5}{#6}{#7}}{\dirrelz{#1}{#2}{#3}{#4}{#5}{#6}{#7}{}{}\relax}}
+\long\def\dirrelh#1#2#3#4#5#6#7#8{%
+\@ifnextchar\bgroup{\dirreli{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}}{\dirrelz{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}{}\relax}}
+\long\def\dirreli#1#2#3#4#5#6#7#8#9{%
+\dirrelz{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}{#9}\relax}
+
+
+% syntax: \dirrel{relname}{nucleus-number}{arg1}...{arg5}
+
+ 
+\newcommand{\dirrelz}[9]%
+%\long\def\dirrelz#1#2#3#4#5#6#7#8#9% 
+{%
+\bgroup%
+\advance\@rstlevel by 1%
+\renewcommand\@optOne{\ignorespaces#2}%
+\renewcommand\@optTwo{\ignorespaces#4}%
+\renewcommand\@optThree{\ignorespaces#6}%
+\renewcommand\@optFour{\ignorespaces#8}%
+\renewcommand\@optFive{}%
+\renewcommand\@relOne{\ignorespaces#1}%
+\renewcommand\@relTwo{\ignorespaces#3}%
+\renewcommand\@relThree{\ignorespaces#5}%
+\renewcommand\@relFour{\ignorespaces#7}%
+\renewcommand\@relFive{\ignorespaces#9}%
+\relax%
+{\rstcondfont%
+\def\arraystretch{0}% undefined by default: value for \arraystretch
+\fboxsep0pt%    no space
+\fboxrule0pt%    no space
+\initrstwidths%
+%%%%% calc graph width %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setlength{\drwdmiddle}{\rstmiddleskip}% middle space
+\setlength{\drwdmiddleOne}{\rstmiddleskip}% middle space
+\setlength{\drwdmiddleTwo}{\rstmiddleskip}% middle space
+\setlength{\drwdmiddleThree}{\rstmiddleskip}% middle space
+\setlength{\drwdmiddleFour}{\rstmiddleskip}% middle space
+%%%%%%
+\addadditionalspace%
+\setlength{\drwdgraph}{2\rstmargin}
+\ifnum\drwdone>0\addtolength{\drwdgraph}{\drwdone}\fi%
+\ifnum\drwdtwo>0\addtolength{\drwdgraph}{\drwdtwo}\addtolength{\drwdgraph}{\drwdmiddleOne}\fi%
+\ifnum\drwdthree>0\addtolength{\drwdgraph}{\drwdthree}\addtolength{\drwdgraph}{\drwdmiddleTwo}\fi%
+\ifnum\drwdfour>0\addtolength{\drwdgraph}{\drwdfour}\addtolength{\drwdgraph}{\drwdmiddleThree}\fi%
+\ifnum\drwdfive>0\addtolength{\drwdgraph}{\drwdfive}\addtolength{\drwdgraph}{\drwdmiddleFour}\fi%
+%%%%% calc bezier positions %%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\ifnum\drwdone>0%
+\setlength{\drwdbezA}{\rstmargin}%
+\addtolength{\drwdbezA}{.3333\drwdone}%  
+\fi%
+\ifnum\drwdtwo>0%
+\setlength{\drwdbezB}{\rstmargin}%
+\addtolength{\drwdbezB}{\drwdone}%  
+\addtolength{\drwdbezB}{\drwdmiddleOne}%
+\addtolength{\drwdbezB}{.5\drwdtwo}%
+%\setlength{\drwdbezB}{.5\drwdgraph}% 
+\else%
+\addtolength{\drwdbezA}{.1666\drwdone}% a single branch should go straight down
+\fi%
+\ifnum\drwdthree>0%
+\setlength{\drwdbezC}{\rstmargin}%
+\addtolength{\drwdbezC}{\drwdone}%
+\addtolength{\drwdbezC}{\drwdmiddleOne}%
+\addtolength{\drwdbezC}{\drwdtwo}%
+\addtolength{\drwdbezC}{\drwdmiddleTwo}%
+\addtolength{\drwdbezC}{.5\drwdthree}%
+\else%
+\addtolength{\drwdbezB}{.1666\drwdtwo}% the rightmost branch goes further to the right
+\fi%
+\ifnum\drwdfour>0%
+\setlength{\drwdbezD}{\rstmargin}%
+\addtolength{\drwdbezD}{\drwdone}%  
+\addtolength{\drwdbezD}{\drwdmiddleOne}%
+\addtolength{\drwdbezD}{\drwdtwo}%
+\addtolength{\drwdbezD}{\drwdmiddleTwo}%
+\addtolength{\drwdbezD}{\drwdthree}%
+\addtolength{\drwdbezD}{\drwdmiddleThree}%
+\addtolength{\drwdbezD}{.5\drwdfour}%
+\else%
+\addtolength{\drwdbezC}{.1666\drwdthree}% the rightmost branch goes further to the right
+\fi%
+\ifnum\drwdfive>0%
+\setlength{\drwdbezE}{\rstmargin}%
+\addtolength{\drwdbezE}{\drwdone}%  
+\addtolength{\drwdbezE}{\drwdmiddleOne}%
+\addtolength{\drwdbezE}{\drwdtwo}%
+\addtolength{\drwdbezE}{\drwdmiddleTwo}%
+\addtolength{\drwdbezE}{\drwdthree}%
+\addtolength{\drwdbezE}{\drwdmiddleThree}%
+\addtolength{\drwdbezE}{\drwdfour}%
+\addtolength{\drwdbezE}{\drwdmiddleFour}%
+\addtolength{\drwdbezE}{.6666\drwdfive}%
+\else%
+\addtolength{\drwdbezD}{.1666\drwdfour}% the rightmost branch goes further to the right
+\fi%
+%
+%set nucleus position
+%
+\setlength{\drwdbezleft}{0pt}%
+\ifnum\drwdone>0\ifemptyd{\@relOne}\setlength{\drwdbezleft}{\drwdbezA}\fi\fi%
+\ifnum\drwdtwo>0\ifemptyd{\@relTwo}\setlength{\drwdbezleft}{\drwdbezB}\fi\fi%
+\ifnum\drwdthree>0\ifemptyd{\@relThree}\setlength{\drwdbezleft}{\drwdbezC}\fi\fi%
+\ifnum\drwdfour>0\ifemptyd{\@relFour}\setlength{\drwdbezleft}{\drwdbezD}\fi\fi%
+\ifnum\drwdfive>0\ifemptyd{\@relFive}\setlength{\drwdbezleft}{\drwdbezE}\fi\fi%
+\ifnum\drwdbezleft=0\typeout{dirrel: where's my nucleus?? One of the relation parameters should be empty}\fi%
+%
+%%%%% calc graph height %%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\drhegraph}{.2\drwdgraph}%
+\settorealheight{\drwdtemp}{\relnamefont{\mycolorbox{\relnamebgcolor}{\@relOne}}}%
+\setlength{\drwdtemp}{2.5\drwdtemp}%  1/(0.4) = 2.5
+\addtolength{\drwdtemp}{4pt}%
+\ifnum\drhegraph<\drwdtemp\setlength{\drhegraph}{\drwdtemp}\fi%
+%%%%% calc text height %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\settorealheight{\drhetext}{\usebox{\rstboxone}}%
+\settorealheight{\drwdtemp}{\usebox{\rstboxtwo}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxthree}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxfour}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxfive}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+%%%%% calc total height %%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\drhetotal}{\drhetext}%
+\addtolength{\drhetotal}{\drhegraph}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\baselineskip}{0pt}%
+%\frame{%
+\limparbox{\drwdgraph}{\drhetotal}{%
+% vertical space
+\setlength{\unitlength}{\drhegraph}%
+\begin{picture}(0,1)(0,0)% spacing
+\end{picture}%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\unitlength}{\drwdgraph}%  middle
+\begin{picture}(0,0)(0,0)%
+\ifnum\drwdone>0\ifnum\drwdbezA=\drwdbezleft\else\ifnum\drwdbezA<\drwdbezleft\put(\LenToUnit{\drwdbezleft},0){\vector(1,-1){0}}\else\put(\LenToUnit{\drwdbezleft},0){\vector(-1,-1){0}}\fi\setmiddle{\drwdtempx}{\drwdbezleft}{\drwdbezA}\qbezier(\LenToUnit{\drwdbezA},0)(\LenToUnit{\drwdtempx},\LenToUnit{.2\drwdgraph})(\LenToUnit{\drwdbezleft},.0)\fi\fi%
+\ifnum\drwdtwo>0\ifnum\drwdbezB=\drwdbezleft\else\ifnum\drwdbezB<\drwdbezleft\put(\LenToUnit{\drwdbezleft},0){\vector(1,-1){0}}\else\put(\LenToUnit{\drwdbezleft},0){\vector(-1,-1){0}}\fi\setmiddle{\drwdtempx}{\drwdbezleft}{\drwdbezB}\qbezier(\LenToUnit{\drwdbezB},0)(\LenToUnit{\drwdtempx},\LenToUnit{.2\drwdgraph})(\LenToUnit{\drwdbezleft},.0)\fi\fi%
+\ifnum\drwdthree>0\ifnum\drwdbezC=\drwdbezleft\else\ifnum\drwdbezC<\drwdbezleft\put(\LenToUnit{\drwdbezleft},0){\vector(1,-1){0}}\else\put(\LenToUnit{\drwdbezleft},0){\vector(-1,-1){0}}\fi\setmiddle{\drwdtempx}{\drwdbezleft}{\drwdbezC}\qbezier(\LenToUnit{\drwdbezC},0)(\LenToUnit{\drwdtempx},\LenToUnit{.2\drwdgraph})(\LenToUnit{\drwdbezleft},.0)\fi\fi%
+\ifnum\drwdfour>0\ifnum\drwdbezD=\drwdbezleft\else\ifnum\drwdbezD<\drwdbezleft\put(\LenToUnit{\drwdbezleft},0){\vector(1,-1){0}}\else\put(\LenToUnit{\drwdbezleft},0){\vector(-1,-1){0}}\fi\setmiddle{\drwdtempx}{\drwdbezleft}{\drwdbezD}\qbezier(\LenToUnit{\drwdbezD},0)(\LenToUnit{\drwdtempx},\LenToUnit{.2\drwdgraph})(\LenToUnit{\drwdbezleft},.0)\fi\fi%
+\ifnum\drwdfive>0\ifnum\drwdbezE=\drwdbezleft\else\ifnum\drwdbezE<\drwdbezleft\put(\LenToUnit{\drwdbezleft},0){\vector(1,-1){0}}\else\put(\LenToUnit{\drwdbezleft},0){\vector(-1,-1){0}}\fi\setmiddle{\drwdtempx}{\drwdbezleft}{\drwdbezE}\qbezier(\LenToUnit{\drwdbezE},0)(\LenToUnit{\drwdtempx},\LenToUnit{.2\drwdgraph})(\LenToUnit{\drwdbezleft},.0)\fi\fi%
+% draw vertical line; bezleft contains nucleus position
+\put(\LenToUnit{\drwdbezleft},0){\line(0,1){\LenToUnit{\drhegraph}}}%
+\put(0,\LenToUnit{\drhegraph}){\line(1,0){\LenToUnit{\drwdgraph}}}%
+\end{picture}%
+%
+% draw relation name %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% attention: these picture environments must overlap 100%. no spaces inbetween in source code allowed! 
+%\settowidth{\drwdtemp}{\relnamefont{#1}}%
+\setlength{\unitlength}{1pt}%
+%\addtolength{\unitlength}{.5\drwdtemp}%
+\begin{picture}(0,0)(0,0)%
+\ifemptyd{\@relOne}\else\setmiddle{\drwdtemp}{\drwdbezA}{\drwdbezleft}\settowidth{\drwdtempx}{\relnamefont{\@relOne}}\addtolength{\drwdtemp}{-.5\drwdtempx}\put(\LenToUnit{\drwdtemp},\LenToUnit{.6\drhegraph}){\relnamefont{\mycolorbox{\relnamebgcolor}{\@relOne}}}\fi%
+\ifemptyd{\@relTwo}\else\setmiddle{\drwdtemp}{\drwdbezB}{\drwdbezleft}\settowidth{\drwdtempx}{\relnamefont{\@relTwo}}\addtolength{\drwdtemp}{-.5\drwdtempx}\put(\LenToUnit{\drwdtemp},\LenToUnit{.6\drhegraph}){\relnamefont{\mycolorbox{\relnamebgcolor}{\@relTwo}}}\fi%
+\ifemptyd{\@relThree}\else\setmiddle{\drwdtemp}{\drwdbezC}{\drwdbezleft}\settowidth{\drwdtempx}{\relnamefont{\@relThree}}\addtolength{\drwdtemp}{-.5\drwdtempx}\put(\LenToUnit{\drwdtemp},\LenToUnit{.6\drhegraph}){\relnamefont{\mycolorbox{\relnamebgcolor}{\@relThree}}}\fi%
+\ifemptyd{\@relFour}\else\setmiddle{\drwdtemp}{\drwdbezD}{\drwdbezleft}\settowidth{\drwdtempx}{\relnamefont{\@relFour}}\addtolength{\drwdtemp}{-.5\drwdtempx}\put(\LenToUnit{\drwdtemp},\LenToUnit{.6\drhegraph}){\relnamefont{\mycolorbox{\relnamebgcolor}{\@relFour}}}\fi%
+\ifemptyd{\@relFive}\else\setmiddle{\drwdtemp}{\drwdbezE}{\drwdbezleft}\settowidth{\drwdtempx}{\relnamefont{\@relFive}}\addtolength{\drwdtemp}{-.5\drwdtempx}\put(\LenToUnit{\drwdtemp},\LenToUnit{.6\drhegraph}){\relnamefont{\mycolorbox{\relnamebgcolor}{\@relFive}}}\fi%
+\end{picture}%
+%%%%%% spacing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\drhspacer{\rstmargin}%
+\settoheight{\unitlength}{\usebox{\rstboxone}}%
+\begin{picture}(0,0)(0,0)%
+  %% TODO
+\put(0,-1){\usebox{\rstboxone}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdone}%    left
+\begin{picture}(1,0)(0,0)% spacing
+\put(0,0){\line(1,0){1}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdmiddleOne}%  middle
+\begin{picture}(1,0)(0,0)%
+\end{picture}%
+%
+\settoheight{\unitlength}{\usebox{\rstboxtwo}}% text
+\begin{picture}(0,0)(0,0)%
+  %% TODO
+\put(0,-1){\usebox{\rstboxtwo}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdtwo}%    spacing
+\begin{picture}(1,0)(0,0)%
+  %% TODO
+\put(0,0){\line(1,0){1}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdmiddleTwo}%  middle
+\begin{picture}(1,0)(0,0)%
+\end{picture}%
+%
+\ifnum\drwdthree>0%
+\settoheight{\unitlength}{\usebox{\rstboxthree}}% text
+\begin{picture}(0,0)(0,0)%
+\put(0,-1){\usebox{\rstboxthree}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdthree}%    spacing
+\begin{picture}(1,0)(0,0)%
+\put(0,0){\line(1,0){1}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdmiddleThree}%  middle
+\begin{picture}(1,0)(0,0)%
+\end{picture}%
+\fi%
+%
+\ifnum\drwdfour>0%
+\settoheight{\unitlength}{\usebox{\rstboxfour}}% text
+\begin{picture}(0,0)(0,0)%
+\put(0,-1){\usebox{\rstboxfour}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdfour}%    spacing
+\begin{picture}(1,0)(0,0)%
+\put(0,0){\line(1,0){1}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdmiddleFour}%  middle
+\begin{picture}(1,0)(0,0)%
+\end{picture}%
+\fi%
+%
+\ifnum\drwdfive>0%
+\settoheight{\unitlength}{\usebox{\rstboxfive}}% text
+\begin{picture}(0,0)(0,0)%
+\put(0,-1){\usebox{\rstboxfive}}%
+\end{picture}%
+\setlength{\unitlength}{\drwdfive}%    spacing
+\begin{picture}(1,0)(0,0)%
+\put(0,0){\line(1,0){1}}%
+\end{picture}%
+\fi%
+}%limpar
+%}%frame
+}%
+\egroup%
+}                        % close \dirrel
+
+
+
+
+%########## MULTINUC relations ########################################################################
+%##
+%##
+%##
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\long\def\multirel{%
+\multirela}
+\long\def\multirela#1{%
+\@ifnextchar\bgroup{\expandafter\multirelb{#1}}{\multirelz{#1}{}{}{}{}\relax}}
+\long\def\multirelb#1#2{%
+\@ifnextchar\bgroup{\expandafter\multirelc{#1}{#2}}{\multirelz{#1}{#2}{}{}{}\relax}}
+\long\def\multirelc#1#2#3{%
+\@ifnextchar\bgroup{\expandafter\multireld{#1}{#2}{#3}}{\multirelz{#1}{#2}{#3}{}{}\relax}}
+\long\def\multireld#1#2#3#4{%
+\@ifnextchar\bgroup{\expandafter\multirele{#1}{#2}{#3}{#4}}{\multirelz{#1}{#2}{#3}{#4}{}\relax}}
+
+\long\def\multirele#1#2#3#4#5{%
+\multirelz{#1}{#2}{#3}{#4}{#5}\relax}
+
+%\def\multirelz#1#2#3#4#5{%
+% ( #1-#2-#3-#4-#5 )
+%}
+
+
+\newcommand{\multirelz}[6]{%
+\renewcommand\@optOne{\ignorespaces#2}%
+\renewcommand\@optTwo{\ignorespaces#3}%
+\renewcommand\@optThree{\ignorespaces#4}%
+\renewcommand\@optFour{\ignorespaces#5}%
+\renewcommand\@optFive{\ignorespaces#6}%
+\bgroup%
+\advance\@rstlevel by 1%
+\relax%
+{\raggedleft\rstcondfont%
+\def\arraystretch{0}% undefined by default: value for \arraystretch
+\fboxsep0pt%    no space
+\fboxrule0pt%    no space
+\initrstwidths%
+%%%%% calc graph width %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\drwdmiddle}{\rstmiddleskip}% middle space
+\setlength{\drwdgraph}{2\rstmargin}%
+\ifnum\drwdone>0\addtolength{\drwdgraph}{\drwdone}\fi%
+\ifnum\drwdtwo>0\addtolength{\drwdgraph}{\drwdtwo}\addtolength{\drwdgraph}{\drwdmiddle}\fi%
+\ifnum\drwdthree>0\addtolength{\drwdgraph}{\drwdthree}\addtolength{\drwdgraph}{\drwdmiddle}\fi%
+\ifnum\drwdfour>0\addtolength{\drwdgraph}{\drwdfour}\addtolength{\drwdgraph}{\drwdmiddle}\fi%
+\ifnum\drwdfive>0\addtolength{\drwdgraph}{\drwdfive}\addtolength{\drwdgraph}{\drwdmiddle}\fi%
+\settowidth{\drwdtemp}{\relnamefont{#1}}%
+\setlength{\drwdtemp}{1.3\drwdtemp}%
+\ifdim\drwdgraph<\drwdtemp%
+\ifnum\drwdone>0%
+\addtolength{\drwdtemp}{-\drwdgraph}%                
+\addtolength{\drwdgraph}{\drwdtemp}%  
+\ifnum\drwdtwo>0\setlength{\drwdtemp}{\drwdtemp}\fi%
+\ifnum\drwdthree>0\setlength{\drwdtemp}{.5\drwdtemp}\fi%
+\ifnum\drwdfour>0\setlength{\drwdtemp}{.3333\drwdtemp}\fi%
+\ifnum\drwdfive>0\setlength{\drwdtemp}{.25\drwdtemp}\fi%
+\addtolength{\drwdmiddle}{\drwdtemp}%  
+\fi\fi%
+%%%%% calc bezier positions %%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\setlength{\drwdbezleft}{10pt}%
+%\ifdim\drwdbezleft>0.333\drwdone%
+\setlength{\drwdbezleft}{0.333\drwdone}%
+%\fi%
+%
+\ifnum\drwdtwo>0%
+\setlength{\drwdbezA}{\rstmargin}%
+\addtolength{\drwdbezA}{\drwdone}%  
+\addtolength{\drwdbezA}{\drwdmiddle}%
+\addtolength{\drwdbezA}{.5\drwdtwo}%
+%\setlength{\drwdbezA}{.5\drwdgraph}% uncomment this for nicer (straight) lines in the middle - layout may break! 
+\else%
+\addtolength{\drwdbezC}{.1666\drwdbezleft}% a single branch should go straight down    %%%%%%%%%%%%%% was \drwdleft ???
+\fi%
+\ifnum\drwdthree>0%
+\setlength{\drwdbezB}{\rstmargin}%
+\addtolength{\drwdbezB}{\drwdone}%
+\addtolength{\drwdbezB}{\drwdmiddle}%
+\addtolength{\drwdbezB}{\drwdtwo}%
+\addtolength{\drwdbezB}{\drwdmiddle}%
+\addtolength{\drwdbezB}{.5\drwdthree}%
+\else%
+\addtolength{\drwdbezA}{.1666\drwdtwo}% the rightmost branch goes further to the right
+\fi%
+\ifnum\drwdfour>0%
+\setlength{\drwdbezC}{\rstmargin}%
+\addtolength{\drwdbezC}{\drwdone}%  
+\addtolength{\drwdbezC}{\drwdmiddle}%
+\addtolength{\drwdbezC}{\drwdtwo}%
+\addtolength{\drwdbezC}{\drwdmiddle}%
+\addtolength{\drwdbezC}{\drwdthree}%
+\addtolength{\drwdbezC}{\drwdmiddle}%
+\addtolength{\drwdbezC}{.5\drwdfour}%
+\else%
+\addtolength{\drwdbezB}{.1666\drwdthree}% the rightmost branch goes further to the right
+\fi%
+\ifnum\drwdfive>0%
+\setlength{\drwdbezD}{\rstmargin}%
+\addtolength{\drwdbezD}{\drwdone}%  
+\addtolength{\drwdbezD}{\drwdmiddle}%
+\addtolength{\drwdbezD}{\drwdtwo}%
+\addtolength{\drwdbezD}{\drwdmiddle}%
+\addtolength{\drwdbezD}{\drwdthree}%
+\addtolength{\drwdbezD}{\drwdmiddle}%
+\addtolength{\drwdbezD}{\drwdfour}%
+\addtolength{\drwdbezD}{\drwdmiddle}%
+\addtolength{\drwdbezD}{.6666\drwdfive}%
+\else%
+\addtolength{\drwdbezC}{.1666\drwdfour}% the rightmost branch goes further to the right
+\fi%
+%
+%
+%%%%% calc graph height %%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\drhegraph}{.25\drwdgraph}%
+%%%%% calc text height %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\settorealheight{\drhetext}{\usebox{\rstboxone}}%
+\settorealheight{\drwdtemp}{\usebox{\rstboxtwo}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxthree}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxfour}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+\settorealheight{\drwdtemp}{\usebox{\rstboxfive}}%
+\ifnum\drhetext<\drwdtemp\setlength{\drhetext}{\drwdtemp}\fi%
+%%%%% calc total height %%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\drhetotal}{\drhetext}%
+\addtolength{\drhetotal}{\drhegraph}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\baselineskip}{0pt}%
+%\frame{%
+\limparbox{\drwdgraph}{\drhetotal}{%
+%
+\setlength{\unitlength}{\drhegraph}%
+\begin{picture}(0,1)(0,0)% spacing
+\end{picture}%
+% a \vspace at this point would lead to a line break...
+%
+\setlength{\unitlength}{\drwdgraph}%  middle
+\setlength{\drwdtemp}{.5\drwdgraph}%
+%
+\begin{picture}(0,0)(0,0)%
+%% \qbezier(\LenToUnit{\drwdbezleft},0)(\LenToUnit{\drwdtemp},.25)(\LenToUnit{\drwdtemp},.25)%
+%% \ifnum\drwdtwo>0\qbezier(\LenToUnit{\drwdbezA},0)(\LenToUnit{\drwdtemp},.25)(\LenToUnit{\drwdtemp},.25)\fi%
+%% \ifnum\drwdthree>0\qbezier(\LenToUnit{\drwdbezB},0)(\LenToUnit{\drwdtemp},.25)(\LenToUnit{\drwdtemp},.25)\fi%
+%% \ifnum\drwdfour>0\qbezier(\LenToUnit{\drwdbezC},0)(\LenToUnit{\drwdtemp},.25)(\LenToUnit{\drwdtemp},.25)\fi%
+%% \ifnum\drwdfive>0\qbezier(\LenToUnit{\drwdbezD},0)(\LenToUnit{\drwdtemp},.25)(\LenToUnit{\drwdtemp},.25)\fi%
+%\qbezier(\LenToUnit{\drwdbezleft},0)(.5,.3)(\LenToUnit{\drwdbezright},0)%
+\end{picture}%
+%%%%%%%% spacer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\drhspacer{\rstmargin}%
+%
+% draw relation name %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% attention: these picture environments must overlap 100%. no spaces inbetween in source code allowed!
+\settowidth{\drwdtemp}{\relnamefont{#1}}%
+\setlength{\unitlength}{.5\drwdgraph}%
+\addtolength{\unitlength}{-.5\drwdtemp}%
+%% \begin{picture}(0,0)(0,0)%
+%% % we need to center the relation name...
+%% %\put(\LenToUnit{.5\drwdgraph},0.1025){\colorbox}%
+%% \put(1,\LenToUnit{.2\drhegraph}){\relnamefont{#1}}%
+%% \end{picture}%
+%
+%
+%%%%%% text and horizontal lines %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \settoheight{\unitlength}{\usebox{\rstboxone}}%
+%% \begin{picture}(0,0)(0,0)%
+%% \put(0,-1){\usebox{\rstboxone}}%
+%% \end{picture}%
+%% \setlength{\unitlength}{\drwdone}%    left
+%% \begin{picture}(1,0)(0,0)% spacing
+%% \put(0,0){\line(1,0){1}}%
+%% \end{picture}%
+%% %
+%% \drhspacer{\drwdmiddle}%
+%% %
+%% \settoheight{\unitlength}{\usebox{\rstboxtwo}}% text
+%% \begin{picture}(0,0)(0,0)%
+%% \put(0,-1){\usebox{\rstboxtwo}}%
+%% \end{picture}%
+%% \setlength{\unitlength}{\drwdtwo}%    spacing
+%% \begin{picture}(1,0)(0,0)%
+%% \put(0,0){\line(1,0){1}}%
+%% \end{picture}%
+%% %
+%% \drhspacer{\drwdmiddle}%
+%% %
+%% \ifnum\drwdthree>0%
+%% \settoheight{\unitlength}{\usebox{\rstboxthree}}% text
+%% \begin{picture}(0,0)(0,0)%
+%% \put(0,-1){\usebox{\rstboxthree}}%
+%% \end{picture}%
+%% \setlength{\unitlength}{\drwdthree}%    spacing
+%% \begin{picture}(1,0)(0,0)%
+%% \put(0,0){\line(1,0){1}}%
+%% \end{picture}%
+%% %
+%% \drhspacer{\drwdmiddle}%
+%% \fi%
+%% %
+%% \ifnum\drwdfour>0%
+%% \settoheight{\unitlength}{\usebox{\rstboxfour}}% text
+%% \begin{picture}(0,0)(0,0)%
+%% \put(0,-1){\usebox{\rstboxfour}}%
+%% \end{picture}%
+%% \setlength{\unitlength}{\drwdfour}%    spacing
+%% \begin{picture}(1,0)(0,0)%
+%% \put(0,0){\line(1,0){1}}%
+%% \end{picture}%
+%% %
+%% \drhspacer{\drwdmiddle}%
+%% \fi%
+%% %
+%% \ifnum\drwdfive>0%
+%% \settoheight{\unitlength}{\usebox{\rstboxfive}}% text
+%% \begin{picture}(0,0)(0,0)%
+%% \put(0,-1){\usebox{\rstboxfive}}%
+%% \end{picture}%
+%% \setlength{\unitlength}{\drwdfive}%    spacing
+%% \begin{picture}(1,0)(0,0)%
+%% \put(0,0){\line(1,0){1}}%
+%% \end{picture}%
+%
+%\drhspacer{\drwdmiddle}%
+\fi%
+%\setlength{\unitlength}{\drhetext}%    spacing
+%\begin{picture}(0,1)(0,0)%
+%\end{picture}%
+}%limpar
+%}% frame
+}% font
+% add margins to global width variable (needed for positioning if \compressionWidth works!)
+\returnrstrealwidths%
+\egroup%
+}                        % close \dirrel
+
+
+
+
+\newcommand{\rstsegment}[1]{\ifdim\terminalWidth>0pt\naturalparbox[\terminalWidth]{\vspace{1ex}\setlength{\baselineskip}{11pt}{\raggedright#1}\vspace{1ex}}\else\naturalparbox{\vspace{1ex}\setlength{\baselineskip}{11pt}{\raggedright#1}\vspace{1ex}}\fi%
+}%
+
+ 
+ 
+%\newcommand{\rstsegment}[1]{\vspace{1ex}\setlength{\baselineskip}{11pt}{\raggedright#1}}
+
+
+ 
+\newcommand\limparbox[4][c]{{\mbox{%
+\dimen0=2\fboxrule\advance\dimen0 2\fboxsep%
+\dimen1=#2\advance\dimen1 -\dimen0%
+\dimen2=#3\advance\dimen2 -\dimen0%
+\parbox[#1][\dimen2][t]{\dimen1}{#4}}}}%
+
+\newcommand\limfparbox[4][c]{\mbox{\fbox{%
+\dimen0=0pt%2\fboxrule\advance\dimen0 2\fboxsep%
+\dimen1=#2\advance\dimen1 -\dimen0%
+\dimen2=#3\advance\dimen2 -\dimen0%
+\parbox[#1][\dimen2][t]{\dimen1}{#4}}}}%
+
+
+
+
+% naturalparbox
+%
+% Crude attempt at making parboxes of `natural' width.
+%
+% Author: Stephan Lehmke <Stephan.Lehmke@cs.uni-dortmund.de>
+%
+% Originally, this belongs to the TeXPower package: http://texpower.sourceforge.net/
+
+\NeedsTeXFormat{LaTeX2e}
+
+%\ProvidesPackage{naturalparbox}
+%[2001/11/11 Attempt at making parboxes of `natural' width]
+
+\RequirePackage{ifthen}
+\RequirePackage{calc}
+
+% User-configurable: Which `resolution' should be used when searching for `best' width?
+\newcommand{\optwidthsteps}{100}
+
+% User-configurable: Which badness should be tolerated as `perfect' (stopping the search for a better one).
+\newcommand{\optwidthlinetolerance}{200}
+
+% Internal parameter: Badness of the parbox currently under consideration.
+\let\maxbadness@NPB=\@tempcnta
+
+\newlength{\maxheight@NPB}
+\newlength{\optwidth@NPB}
+\newlength{\tempdima@NPB}
+\newcounter{probe@NPB}
+\newboolean{carryon@NPB}
+\newbox\tempbox@NPB
+
+% \naturalparbox[<max width>][<max height>]{<contents>} will (try to)
+% automatically calculate the `best' width of a \parbox to contain
+% <contents> and then set <contents> into a \parbox of this width.
+%
+% The optional parameters <max width> (default \linewidth) and <max
+% height> (default \textheight) limit the growth of the box. If not
+% both can be respected, <max width> will be respected and <max
+% height> violated.
+%
+% Owing to limitations set by TeX, there are certain limits to the
+% sophistication of the procedure for finding the `optimal' width. For
+% instance, any `whatsits' (specials (like color changes), file
+% accesses (like \label), or hyper anchors) or rules which are
+% inserted directly in the vertical list of the parbox `block' the
+% analysis, so the procedure can't `see' past them (starting at the
+% bottom of the box) when analysing the contents of the parbox. The
+% user should make sure such items are set in horizontal mode (by
+% using \leavevmode or enclosing stuff in boxes). Furthermore, only
+% overfull and underfull hboxes which occur while setting the parbox
+% are considered when judging which width is `best'. This will
+% reliably make the width large enough to contain `wide' objects like
+% tabulars or included graphics, but might not give optimal results
+% for justified text.
+% vboxes occurring directly in the parbox are ignored.
+% Note further that hboxes with fixed width (made by \hbox to...)
+% which occur directly in the vbox may disturb the procedure, because
+% the fixed width cannot be recovered. These hboxes will be
+% reformatted with the width of the vbox, generating an extremely
+% large badness, unsettling the calculation of maximum badness. To
+% avoid this such hboxes should be either contained in a vbox or set
+% in horizontal mode with appropriate glue at the end.
+\newcommand{\naturalparbox}[1][\linewidth]{\def\maxwidth@NPB{#1}\@naturalparbox}
+
+\newcommand{\@naturalparbox}[2][\textheight]
+{%
+% Calculate `best' width of a parbox. The current algorithm will set the textual contents into parboxes of increasing
+% width, starting from 0pt and ending with the maximum width given, in \optwidthsteps steps. The `badness' of every
+% parbox is measured. If it is below the threshold defined by \optwidthlinetolerance, the process is stopped and the
+% found width accepted. If this doesn't happen, the width of the parbox with the least badness is returned.
+  \setcounter{probe@NPB}{0}%                                    Initialize `probe counter' for box width.
+  \let\best@cnt@NPB=\empty%                                     Initialize number of best `probe' so far.
+  \def\bestbadness@NPB{1000000}%                                Initialize badness of best `probe'.
+  \setboolean{carryon@NPB}{true}%                               Flag for breaking out of loop.
+  \setlength{\maxheight@NPB}{#1}%                               Store maximal box height.
+  \whiledo
+  {\value{probe@NPB}<\optwidthsteps\and\boolean{carryon@NPB}}%   Probes done or break of loop?
+  {%
+    \stepcounter{probe@NPB}%                                     Start next probe.
+    \setbox\@tempboxa=\vbox%                                      The trick with vbox/lastbox is to get the vbox
+    {%                                                           produced by \parbox `immediately' into a box register.
+      \parbox[b]{(\maxwidth@NPB)/\optwidthsteps*\value{probe@NPB}}% Make the next parbox.
+      {\hfuzz\maxdimen\hbadness\@M\relax#2}%
+      \global\setbox\tempbox@NPB=\lastbox%                       ... and assign \tempbox@NPB to it.
+      }%
+    \setlength{\tempdima@NPB}{\ht\tempbox@NPB+\dp\tempbox@NPB}%  Measure total height.
+    \ifthenelse{\lengthtest{\tempdima@NPB>\maxheight@NPB}}%      If it exceeds the maximum height given, the box isn't
+    {}%                                                          acceptable anyway.
+    {%
+      \calcmaxbadness@NPB{\maxbadness@NPB}{\tempbox@NPB}%      Calculate `worst badness' of any hbox appearing in parbox.
+      \ifthenelse{\not\maxbadness@NPB>\optwidthlinetolerance}%   Below Threshold?
+      {% Yes. Accept this width.
+        \edef\best@cnt@NPB{\theprobe@NPB}%                       Store this probe number.
+        \setboolean{carryon@NPB}{false}%                         Break loop.
+        }
+      {% No. Carry on.
+        \ifthenelse{\maxbadness@NPB<\bestbadness@NPB}%           Below lowest badness found so far?
+        {% Yes. Store probe number.
+          \edef\bestbadness@NPB{\number\maxbadness@NPB}%         Store badness value.
+          \edef\best@cnt@NPB{\theprobe@NPB}%                     Store probe number.
+          }
+        {}% No. Try next probe.
+        }% matches second argument of \ifthenelse{\not\maxbadness@NPB>\optwidthlinetolerance}%
+      }% matches second argument of \ifthenelse{\lengthtest{\tempdima@NPB>\maxheight@NPB}}%
+    }% matches \whiledo{\value{probe@NPB}<\optwidthsteps\and\boolean{carryon@NPB}}{%
+  \ifx\best@cnt@NPB\empty%                                      Was _any_ badness below the initialization value found?
+    \setlength{\optwidth@NPB}{\maxwidth@NPB}%                   No; return max width.
+   \else
+    \setlength{\optwidth@NPB}{(\maxwidth@NPB)/\optwidthsteps*\best@cnt@NPB}% Yes; return width of best probe.
+  \fi
+  \parbox{\optwidth@NPB}{#2}%
+  }
+
+% Calculate maximal badness of any hbox occurring in a vbox.
+\newcommand{\calcmaxbadness@NPB}[2]
+{%
+  \let\@resultcnt@NPB=#1%           Here we store the result.
+  \global\@resultcnt@NPB=\z@\relax% Just in case no hbox occurs...
+  \setlength{\@tempdima}{\wd#2}%    This is the width to which every hbox is stretched for finding its badness.
+  \setbox\@tempboxa=\vbox%          A dummy vbox for recursively analysing the vbox contents using \lastbox
+  {%
+    \hfuzz\maxdimen\hbadness\@M
+    \unvbox#2%                     `free' the contents of the vbox.
+    \measureboxes@NPB%              Analyse `tail to head' using \lastbox.
+    }%
+  }
+
+
+% Recursively analyse vertical list using \lastbox, to find maximum badness of any contained hbox.
+\newcommand{\measureboxes@NPB}%
+{%
+  \unskip\unpenalty\unkern%    This is a kluge for TeX, because there is no certain way of finding out whether there's a
+  \unskip\unpenalty\unkern%    penalty, glue or kern on the vertical list. \lastpenalty will give its value, but a
+  \unskip\unpenalty\unkern%    value of 0 might mean there was none or there was one of value 0.
+  \unskip\unpenalty\unkern%    This is different in eTeX. I might make a switch to a smarter solution.
+  \unskip\unpenalty\unkern
+  \unskip\unpenalty\unkern
+  \unskip\unpenalty\unkern
+  \unskip\unpenalty\unkern
+  \unskip\unpenalty\unkern
+  \unskip\unpenalty\unkern
+  \setbox\@tempboxa=\lastbox% Grab last box.
+  \ifhbox\@tempboxa%          Was this an hbox?
+    \setbox0=\hb@xt@\@tempdima{\unhbox\@tempboxa}% Yes. Reformat with given width.
+    \ifnum\badness>\@resultcnt@NPB%                 Badness larger than largest recorded badness?
+      \global\@resultcnt@NPB=\badness%              Yes. Memorize.
+    \fi
+    \expandafter\measureboxes@NPB%                  Recursive call.
+   \else
+    \ifvbox\@tempboxa%                                       Was this a vbox?
+      \expandafter\expandafter\expandafter\measureboxes@NPB% Ignore, but execute recursive call.
+    \fi
+  \fi
+  }
