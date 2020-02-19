@@ -11,7 +11,7 @@ from argparse import ArgumentParser, Namespace
 from collections import Counter
 from pandas import read_csv
 from os import path
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Set, Optional
 import json
 import re
 import sys
@@ -255,6 +255,41 @@ Please type correct polarity for this message: {!r} """.format(
             doc_id2label[doc_id] = label
 
 
+def str2tok(form: str, prnt: Optional[int] = None,
+            snt_id: Optional[int] = None):
+    """Generate information on a single token to list.
+
+    """
+    return {"form": form, "prnt": prnt, "lemma": None,
+            "tag": None, "rel": None, "children": [],
+            "feats": {}, "snt_id": snt_id}
+
+
+def add_tokens(doc_id2doc: Int2Dict, doc_id2sentences: Int2StrList,
+               sst_dir: str) -> None:
+    """Add token information to snippets.
+
+    Args:
+      doc_id2doc (dict): mapping from snippet id to snippet
+      doc_id2sentences (dict): mapping from snippet id to snippet's sentences
+      sst_dir (str): path to Stanford Sentiment Treebank
+
+    """
+    # read sentence tokens
+    snt_id2toks = {}
+    with open(path.join(sst_dir, "SOStr.txt")) as ifile:
+        for i, line_i in enumerate(ifile, 1):
+            snt_id2toks[i] = line_i.strip().split('|')
+    for doc_id, doc in doc_id2doc.items():
+        sentences = doc_id2sentences[doc_id]
+        sentences.sort()
+        doc_toks = doc["toks"]
+        for i, snt_id in enumerate(sentences):
+            snt_toks = [str2tok(form_i, snt_id=i)
+                        for form_i in snt_id2toks[snt_id]]
+            doc_toks += snt_toks
+
+
 def main():
     argparser = ArgumentParser(
         description="Script for converting Stanford Sentiment Treebank to JSON"
@@ -311,7 +346,9 @@ def main():
     finally:
         with open(args.docid2label, 'w') as ofile:
             json.dump(doc_id2labels, ofile)
-    print(json.dumps(doc_id2doc))
+    # add token information
+    add_tokens(doc_id2doc, doc_id2snt_ids, args.sst_dir)
+    print(json.dumps({"docs": list(doc_id2doc.values())}))
 
 
 ##################################################################
