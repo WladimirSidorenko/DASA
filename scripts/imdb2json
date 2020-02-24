@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+# -*- coding: utf-8; -*-
+
+"""Script for converting Stanford Sentiment Treebank to a JSON file.
+
+"""
+
+##################################################################
+# Imports
+from argparse import ArgumentParser, Namespace
+from os import path
+import json
+
+
+##################################################################
+# Constants
+DIRNAME2LABEL = {"pos": "positive", "neg": "negative"}
+
+
+##################################################################
+# Methods
+def read_file(fname: str) -> dict:
+    """Convert file data to dict.
+
+    Args:
+      fname (str): path to a corpus file
+
+    Returns:
+      dict: reviews
+
+    """
+    fname = path.abspath(fname)
+    doc_id = path.splitext(path.basename(fname))[0]
+    polarity = DIRNAME2LABEL[path.basename(path.dirname(fname))]
+    data = {"docs": []}
+    docs = data["docs"]
+    with open(fname) as ifile:
+        for i, line_i in enumerate(ifile):
+            toks = [str2tok(t_i) for t_i in line_i.strip().split(' ')]
+            snippet = create_snippet(_id=doc_id + '_' + str(i), snippet=line_i,
+                                     label=polarity, toks=toks)
+            docs.append(snippet)
+    return data
+
+
+def create_snippet(_id, snippet, label, toks):
+    """Convert IMDB snippet to dict."""
+    return {
+        "text": snippet.strip(),
+        "msg_id": _id,
+        "label": label,
+        "toks": toks,
+        "edus": [],
+        "rst_trees": {},
+        "polarity_scores": []
+    }
+
+
+def str2tok(form: str) -> dict:
+    """Generate information on a single token to list.
+
+    """
+    return {"form": form, "prnt": None, "lemma": None,
+            "tag": None, "rel": None, "children": [],
+            "feats": {}, "snt_id": None}
+
+
+def main():
+    argparser = ArgumentParser(
+        description="Script for converting IMDB to JSON format"
+    )
+    argparser.add_argument("imdb_files",
+                           help="files of the Internet Movie Review dataset",
+                           nargs='+')
+    args: Namespace = argparser.parse_args()
+    # read snippets
+    for fname in args.imdb_files:
+        data = read_file(fname)
+        ofname = path.splitext(fname)[0] + ".json"
+        with open(ofname, 'w') as ofile:
+            json.dump(data, ofile)
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main()
