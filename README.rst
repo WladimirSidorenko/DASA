@@ -25,20 +25,12 @@ single EDU, which is most representative of the whole analyzed text
 Data Preparation
 ----------------
 
-We use PotTS_ and SB10k_ as primary data sources for evaluation.
+We use the `IMDB`_ corpus and `Stanford Sentiment Treebank`_ as
+primary data sources for evaluation.
 
-Tagging, Parsing, and Discourse Segmentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Discourse Segmentation
+^^^^^^^^^^^^^^^^^^^^^^
 
-Before using these corpora, we processed all tweets of these datasets
-with the `text normalization pipeline`_ [SIDARENKA]_ and parsed them
-using the `Mate dependency parser`_ [BOHNET]_.  Afterwards, we
-converted the resulting CoNLL files into the TSV format using the
-scipt conll2tsv_, and subsequently exported the resulting TSV into
-JSON with the script tsv2json_.  In addition to that, we also added
-information about discourse segments and automatically predicted
-sentiment scores for each of these segements with the scripts
-`add_segmentation`_ and `add_polarity_scores`_ respectively.
 
 Discourse Parsing
 ^^^^^^^^^^^^^^^^^
