@@ -1,0 +1,428 @@
+% FILE: dasa.tex  Version 0.0
+
+%% Imports
+\documentclass[11pt]{article}
+\usepackage{coling2020/coling2020}
+\usepackage{times}
+
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}           % for multiple columns in a table
+\usepackage{multirow}
+\usepackage{paralist}
+\usepackage{rst}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+%% Commands and Macros
+\newcommand{\F}[0]{$F_1$}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\eg}{\textit{e.g.},}
+\newcommand{\ienocomma}{\textit{i.e.}}
+\newcommand{\ie}{\ienocomma,}
+\newcommand{\discrel}[1]{\texttt{#1}}
+
+%% Main
+\title{Discourse-aware Sentiment Analysis Using Recursive Dirichlet
+  Model}
+
+\author{Anonymous Author\\
+  Affiliation line 1 \\
+  Affiliation line 2 \\
+  Affiliation line 3 \\
+  {\tt email@example.com} \\\And{}
+  Anonymous Author\\
+  Affiliation line 1 \\
+  Affiliation line 2 \\
+  Affiliation line 3 \\
+  {\tt email@example.com} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  This paper presents a novel Bayesian approach to sentiment analysis
+  of texts, in which we estimate the overall polarity of a discourse
+  from sentiment scores of its elementary discourse units (EDUs) using
+  a dedicated probabilistic magma.  In particular, we regard the
+  polarity of each text unit as a multinomial random variable, whose
+  conjugate prior is a Dirichlet distribution parameterized by a
+  single vector $\mathbf{\alpha}$; this vector, in turn, is computed
+  from the polarity scores of discourse desendants, taking into
+  account .  We evaluate our proposed method on the IMDB corpus and
+  Stanford Sentiment Treebank, getting\todo{add evaluation numbers}.
+\end{abstract}
+
+\section{Introduction}\label{intro}
+
+Sentiment analysis has admittedly been one of the most popular,
+competitive, and prolific areas of natural language processing since
+its very inception around 2004~\cite[pp.~\todo{add pages}]{Liu:12}.
+However, most of the research done in this field has been primarily
+concentrated either on the analysis of \emph{words}' meaning or
+classification of \emph{sentence} polarity and subjectivity, with
+little attention paid to semantic links between the sentences---\ie{}
+the structure of \emph{discourse}.  Nevertheless, as noted by
+\newcite{Polanyi:06}, discourse relations are one of the most
+influential factors that might significantly change (and completely
+overturn) the semantic orientation of an opinion.
+
+Indeed, if we look at Figure~\ref{fig:rst-tree}, we will see that the
+first passage of the cited IMDB review expresses a strong negative
+attitude of the author towards any kind of TV shows, and especially
+the medical ones.  The second paragraph, however, admits that he/she
+liked the series ``House M.D.''  And it is the pragmatic link of
+\discrel{Antithesis} that tells us how these two parts relate to each
+other, and the higher importance of the second claim that determines
+the overall mood of the whole text.
+
+\begin{figure*}[htb!]\label{fig:rst-tree}
+  \input{rst.tex}
+\end{figure*}
+
+%% \blfootnote{
+%%     % % final paper: en-us version
+%%     %
+%%     % \hspace{-0.65cm}  % space normally used by the marker
+%%     % This work is licensed under a Creative Commons
+%%     % Attribution 4.0 International License.
+%%     % License details:
+%%     % \url{http://creativecommons.org/licenses/by/4.0/}.
+%% }
+
+\section{Related Work}\label{relwork}
+
+% \done[inline]{\newcite{Bickerstaffe:10}}
+
+% \newcite{Bickerstaffe:10} also considered the rating prediction task,
+% addressing this problem with the minimum-spanning-tree (MST) SVM
+% approach.  In the initial step of this method, they constructed a
+% strongly connected graph whose vertices were associated with the most
+% representative example (determined via the average all-pairs Tanimoto
+% coefficient) of each star rating and the edge weights represented the
+% Tanimoto distances between those nodes.  Afterwards, they determined
+% the MST of this graph using the Kruskal's
+% algorithm~\cite[see][pp.~567--574]{Cormen:09} and, finally,
+% constructed a decision tree from this MST, replacing the MST vertices
+% with binary SVM classifiers, which had to discern the respective
+% rating groups. An evaluation on the four-star review corpus
+% of~\newcite{Pang:05} showed an improvement by up to~7\% over the
+% previous state of the art, boosting it to 59.37\% average accuracy.
+
+As it turns out, even the very first works on opinion mining already
+pointed out the importance of discourse phenomena for classification
+of the overall polarity of a text.  For example, in the seminal paper
+of~\newcite{Pang:02}, where the authors tried to predict the semantic
+orientation of movie reviews, they quickly realized the fact that it
+was insufficient to rely on the mere presence or even the majority of
+polarity clues in the text, because these clues could any time be
+reversed by a single counter-argument of the critic (see
+Example~\ref{disc-snt:exmp-pang02}).  This observation was also
+confirmed by \newcite{Polanyi:06}, who ranked discourse relations among
+the most important factors that could significantly affect the
+intensity and polarity of a sentiment.  To prove this claim, they gave
+several convincing examples, where a concessive statement considerably
+weakened the strength of a polar opinion, and vice versa, an
+elaboration notably increased its persuasiveness.
+
+\newcite{Pang:04} were also among the first who incorporated a
+discourse-aware component into a document-level sentiment classifier.
+For this purpose, they developed a two-stage system in which the first
+predictor distinguished between subjective and objective statements by
+constructing a graph of all sentences (linking each sentence to its
+neighbors and also connecting it to two abstract polarity nodes) and
+then partitioning this graph into two clusters (subjective and
+objective) based on its minimum cut; the second classifier then
+inferred the overall polarity of the text by only looking at the
+sentences from the first (subjective) group.  With this method,
+\newcite{Pang:04} achieved a statistically significant improvement
+(86.2\% versus 85.2\% for the Na\"{\i}ve Bayes system and 86.15\%
+versus 85.45\% for SVM) over classifiers that analyzed all text
+sentences at once, without any filtering.
+%% (Later on, a similar approach was also proposed by
+%% \newcite{Yessenalina:10}~[\citeyear{Yessenalina:10}], who used
+%% an expectation-maximization algorithm to select a small subset of
+%% the most indicative sentences and then classified the document [as
+%% either positive or negative] with the help of this subset,
+%% achieving 93.22\% accuracy on the aforementioned IMDB dataset.)
+
+Although an oversimplification, the core idea that locally adjacent
+sentences are likely to share the same subjective orientation
+(\emph{local coherence}) was dominating the following DASA research
+for almost a decade.  For example, \newcite{Riloff:03} also improved the
+accuracy of their Na\"{\i}ve Bayes predictor of subjective expressions
+by almost two percent after adding a set of local coherence features.
+Similarly, \newcite{Hu:04} could better disambiguate users' attitudes to
+particular product attributes by taking the semantic orientation of
+previous sentences into account.
+
+At the same time, another line of discourse-aware sentiment research
+concentrated on the joint classification of all opinions in the text,
+where in addition to predicting each sentiment in isolation, the
+authors also sought to maximize the ``total happiness'' (\emph{global
+  coherence}) of these assignments, ensuring that related subjective
+statements received agreeing polarity scores.  Notable works in this
+direction were done by \newcite{Snyder:07}, who proposed the Good Grief
+algorithm for predicting users' satisfaction with different restaurant
+aspects, and \newcite{Somasundaran:08a,Somasundaran:08}, who introduced
+the concept of \emph{opinion frames} (OF), a special data structure
+for capturing the relations between opinions in discourse.  Depending
+on the type of these opinions (arguing~[\emph{A}] or
+sentiment~[\emph{S}]), their polarity towards the target
+(positive~[\emph{P}] or negative~[\emph{N}]), and semantic
+relationship between these targets (alternative~[\emph{Alt}] or the
+same~[\emph{same}]), the authors distinguished 32 types of possible
+frames (\emph{SPSPsame}, \emph{SPSNsame}, \emph{APAPalt}, etc.),
+dividing them into reinforcing and non-reinforcing ones.  In later
+works, \newcite{Somasundaran:09a,Somasundaran:09b} also presented two
+joint inference frameworks (one based on the iterative classification
+and another one relying on integer linear programming) for determining
+the best configuration of all frames in text, achieving 77.72\%
+accuracy on frame prediction in the AMI meeting
+corpus~\cite{Carletta:05}.
+
+%% \done[inline]{\newcite{Somasundaran:09a,Somasundaran:09b}}
+
+%% In a later work, \newcite{Somasundaran:09b,Somasundaran:09a} also
+%% introduced a joint inference framework based on the Iterative
+%% Classification Algorithm (ICA) and Integer Linear Programming (ILP)
+%% for joinly predicting the best configuration of single opinions and
+%% their frames.  In this approach, the authors first applied a local SVM
+%% classifier to compute the probabilities of polarity classes (positive,
+%% negative, or neutral) of individual dialog acts and then harnessed the
+%% ICA and ILP systems to determine which of the predicted opinions were
+%% connected via opinion frames and whether these frames were reinforcing
+%% or not.  Given a perfect information about the opinion links, this
+%% joint method outperformed the local classifier by more than 9
+%% percentage points, reaching 77.72\% accuracy on the AMI meeting
+%% corpus~\cite{Carletta:05}.
+
+%% \done[inline]{\newcite{Mao:06}}
+
+%% \newcite{Mao:06} proposed the idea of isotonic CRFs in which they
+%% explicitly modeled the constraint that features which were stronger
+%% associated with either polarity classes had to have higher
+%% coefficients than less predictive attributes.  After proving that this
+%% formalism also allowed to directly model the ordinal scale of
+%% sentiment scores (with lower CRF outputs indicating the negativity of
+%% a sentence, and higher scores showing its positive class), the authors
+%% used this approach to model the sentiment flow in a document.  For
+%% this purpose, they first predicted the polarity value for each
+%% sentence of a document in isolation and then convolved these outputs
+%% with a Gaussian kernel, getting a smoothed polarity curve for the
+%% whole analyzed text at the end.
+%% \done[inline]{\newcite{Thomas:06}}
+
+%% \newcite{Thomas:06} enhanced an SVM-based sentiment classification
+%% system for predicting speaker's attitude in political speeches with
+%% information about the inter-speaker agreement, incorporating these
+%% links into the global cost function.  Thanks to this change, the
+%% authors achieved $\approx$4\% improvement in accuracy (from 66.05 to
+%% 70.81\%) over the baseline classifer which analyzed each utterance in
+%% isolation.
+
+An attempt to unite local and global coherence was made by
+\newcite{McDonald:07}, who tried to simultaneously predict the polarity
+of a document and classify semantic orientations of its sentences.
+For this purpose, the authors devised an undirected probabilistic
+graphical model based on the structured linear
+classifier~\cite{Collins:02}.  Similarly to \newcite{Pang:04}, they
+connected the label nodes of each sentence to the labels of its
+neighboring clauses and also linked these nodes to the overarching
+vertex representing the polarity of the text.  After optimizing this
+model with the MIRA learning algorithm~\cite{Crammer:03},
+\newcite{McDonald:07} achieved an accuracy of 82.2\% for
+document-level classification and 62.6\% for sentence-level prediction
+on a corpus of online product reviews, outperforming pure document and
+sentence classifiers by up to four percent.  A crucial limitation of
+this system though was that its optimization required the gold labels
+of sentences and documents to be known at the training time, which
+considerably limited its applicability to other domains with no such
+data.
+
+%% A similar approach was also suggested by~\newcite{Sadamitsu:08}, who
+%% attained 82.74\% accuracy on predicting the polarity of customer
+%% reviews with the help of hidden conditional random fields.
+
+Another significant drawback of all previous approaches is that they
+completely ignored traditional discourse theory and, as a result,
+severely oversimplified discourse structure.  Among the first who
+tried to overcome this omission were \newcite{Voll:07}, who proposed two
+discourse-aware enhancements of their lexicon-based sentiment
+calculator (SO-CAL).  In the first method, the authors let the SO-CAL
+analyze only the topmost nucleus EDU of each sentence, whereas in the
+second approach, they expanded its input to all clauses that another
+classifier had considered as relevant to the main topic of the
+document.  Unfortunately, the former solution did not work out as well
+as expected, yielding 69\% accuracy on the corpus of Epinion
+reviews~\cite{Taboada:06}, but the latter system could perform much
+better, achieving 73\% on this two-class prediction task.
+
+Other ways of adding discourse information to a sentiment system were
+explored by \newcite{Heerschop:11}, who experimented with three
+different approaches:
+\begin{inparaenum}[(i)]
+\item increasing the polarity scores of words that appeared near the
+  end of the document,
+\item assigning higher weights to nucleus tokens, and finally
+\item learning separate scores for nuclei and satellites using a
+  genetic algorithm.
+\end{inparaenum}
+An evaluation of these methods on the movie review corpus
+of~\newcite{Pang:04} showed better performance of the first option
+(60.8\% accuracy and 0.597 macro-\F), but the authors could
+significantly improve the results of the last classifier at the end by
+adding an offset to the decision boundary of this method, which
+increased both its accuracy and macro-averaged \F{} to 0.72.
+
+Further notable contributions to RST-based sentiment analysis were
+made by \newcite{Zhou:11}, who used a set of heuristic rules to infer
+polarity shifts of discourse units based on their nuclearity status
+and outgoing relation links; \newcite{Zirn:11}, who used a lexicon-based
+sentiment system to predict the polarity scores of elementary
+discourse units and then enforced consistency of these assignments
+over the RST tree with the help of Markov logic constraints; and,
+finally, \newcite{Wang:13}, who determined the semantic orientation of a
+document by taking a linear combination of the polarity scores of its
+EDUs and multiplying these scores with automatically learned
+coefficients.
+
+%% \footnote{Similarly to the approach of~\newcite{Zirn:11}, these
+%%   coefficients depended on the status of the segment in the RST
+%%   tree (whether nucleus or sattelite) and relation, which connected
+%%   the respective discourse node to the ancestor.}  A similar system
+%%   was also described by \newcite{Chenlo:13,Chenlo:14}, who used their
+%%   model to analyze user blog posts, achieving significantly better
+%%   results on the TREC corpus \cite{Macdonald:09} than any
+%%   discourse-unaware baselines.
+
+Among the most recent advances in RST-aware sentiment research, we
+should especially emphasize the work of \newcite{Bhatia:15}, who
+proposed two different DASA systems:
+\begin{itemize}
+\item discourse-depth reweighting (DDR)
+\item and rhetorical recursive neural network (R2N2).
+\end{itemize}
+In the former approach, the authors estimated the relevance
+$\lambda_i$ of each elementary discourse unit $i$ as:
+\begin{equation*}
+  \lambda_i = \max\left(0.5, 1 - d_i/6\right),
+\end{equation*}
+where $d_i$ stands for the depth of the $i$-th EDU in the document's
+discourse tree.  Afterwards, they computed the sentiment score
+$\sigma_i$ of that unit by taking the dot product of its binary
+feature vector $\mathbf{w}_i$ (token unigrams) with polarity scores
+$\boldsymbol{\theta}$ of these unigrams:
+\begin{equation*}
+  \sigma_i = \boldsymbol{\theta}^{\top}\mathbf{w}_i;
+\end{equation*}
+and then calculated the overall semantic orientation of the
+document~$\Psi$ as the sum of sentiment scores for all units,
+multiplying these scores by their respective discourse-depth factors:
+\begin{equation*}
+  \Psi = \sum_i\lambda_i\boldsymbol{\theta}^T\mathbf{w}_i = \boldsymbol{\theta}^T\sum_i\lambda_i\mathbf{w}_i,
+\end{equation*}
+In the R2N2 system, the authors largely adopted the RNN method
+of~\newcite{Socher:13} by recursively computing the polarity scores of
+discourse units as:
+\begin{equation*}
+  \psi_i = \tanh\left(K_n^{(r_i)} \psi_{n(i)} + K_s^{(r_i)}\psi_{s(i)} \right),
+\end{equation*}
+where $K_n^{(r_i)}$ and $K_s^{(r_i)}$ stand for the nucleus and
+satellite coefficients associated with the rhetorical relation $r_i$,
+and $\psi_{n(i)}$ and $\psi_{s(i)}$ represent sentiment scores of the
+nucleus and satellite of the $i$-th vertex.  This approach achieved
+84.1\% two-class accuracy on the movie review corpus
+of~\newcite{Pang:04} and reached 85.6\% on the dataset
+of~\newcite{Socher:13}.
+
+For the sake of completeness, we should also note that there exist
+discourse-aware sentiment approaches that build upon PDTB and SDRT\@.
+For example, \newcite{Trivedi:13} proposed a method based on latent
+structural SVM~\cite{Yu:09}, where they represented each sentence as a
+vector of features produced by a feature function $\mathbf{f}(y,
+\mathbf{x}_i, h_i)$, in which $y\in\{-1, +1\}$ denotes the potential
+polarity of the whole document, $h_i \in \{0, 1\}$ stands for the
+assumed subjectivity class of sentence $i$, and $\mathbf{x}_i$
+represents the surface form of that sentence; and then tried to infer
+the most likely semantic orientation of the document $\hat{y}$ over
+all possible assignments $\mathbf{h}$, \ie{}:
+\begin{equation*}
+  \hat{y} =
+  \argmax_y\left(\max_{\mathbf{h}}\mathbf{w}^{\top}\mathbf{f}(y,
+  \mathbf{x}, \mathbf{h})\right).
+\end{equation*}
+To ensure that these assignments were still coherent, the authors
+additionally extended their feature space with special
+\emph{transitional} attributes, which indicated whether two adjacent
+sentences were likely to share the same subjectivity given the
+discourse connective between them.  With the help of these features,
+\newcite{Trivedi:13} could improve the accuracy of the
+connector-unaware model on the movie review corpus of~\newcite{Maas:11}
+from 88.21 to 91.36\%.
+
+The first step towards an SDRT-based sentiment approach was made by
+\newcite{Asher:08}, who presented an annotation scheme and a pilot
+corpus of English and French texts that were analyzed according to the
+SDRT theory and enriched with additional sentiment information.
+Specifically, the authors asked the annotators to ascribe one of four
+opinion categories (reporting, judgment, advice, or sentiment) along
+with their subclasses (\eg{} inform, assert, blame, recommend) to each
+discourse unit that had at least one opinionated word from a sentiment
+lexicon.  Afterwards, they showed that with a simple set of rules, one
+could easily propagate opinions through SDRT graphs, increasing the
+strengths or reversing the polarity of the sentiments, depending on
+the type of the discourse relation that was linking two segments.
+
+In general, however, PDTB- and SDRT-based sentiment systems are much
+less common than RST-inspired solutions.  Because of this fact, we
+will primarily concentrate on the RST-based of methods.  In
+particular, for the sake of comparison, we replicated the linear
+combination approach of \newcite{Wang:13} and also reimplemented the
+DDR and R2N2 systems of~\newcite{Bhatia:15}.  Furthermore, to see how
+these techniques would perform in comparison with much simpler
+baselines, we additionally created two methods that predicted the
+polarity of a message by only considering its last or topmost nucleus
+EDU (henceforth \textsc{Last} and \textsc{Root}), and also estimated
+the results of our original LBA classifier without any
+discourse-related modifications (henceforth \textsc{No-Discourse}).
+
+Apart from the above baselines and existing methods, we propose
+several novel DASA solutions, which will be briefly described below.
+
+
+\section{Recursive Dirichlet Model}\label{method}
+
+
+\section{Evaluation}\label{sec:evaluation}
+
+\subsection{Data}\label{subsec:eval:data}
+\subsection{Baselines}\label{subsec:eval:data}
+
+\begin{table}[hbt]
+  \begin{center}
+    \begin{tabular}{p{0.3\columnwidth}%
+        *{2}{>{\centering\arraybackslash}p{0.3\columnwidth}}} % first columm
+      \toprule
+      \multirow{2}*{\bfseries Method} & %
+      \multicolumn{2}{c}{\bfseries Dataset}\\\cmidrule(lr){2-3}
+      & IMDB & SST\\\midrule
+      RD & &\\
+      R2N2~\cite{Bhatia:15} & 84.1 & 85.6\\
+      DDR~\cite{Bhatia:15} & 82.9 & 82.0\\
+      \bottomrule
+    \end{tabular}
+    \caption{Accuracy of sentiment classification on IMDB~\cite{Pang:04}
+      and Stanford Sentiment
+      Treebank~\cite{Socher:13}}\label{tbl:accuracy}
+  \end{center}
+\end{table}
+
+\subsection{Conclusion}\label{conclusion}
+
+% include your own bib file like this:
+\bibliographystyle{coling2020/acl}
+\bibliography{bibliography}
+\end{document}

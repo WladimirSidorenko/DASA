@@ -1,0 +1,357 @@
+#!/usr/bin/env python
+# -*- coding: utf-8; -*-
+
+"""Script for converting Stanford Sentiment Treebank to a JSON file.
+
+"""
+
+##################################################################
+# Imports
+from argparse import ArgumentParser, Namespace
+from collections import Counter
+from pandas import read_csv
+from os import path
+from typing import Any, Dict, List, Set, Optional
+import json
+import re
+import sys
+
+
+##################################################################
+# Constants
+Int2Str = Dict[int, str]
+Int2StrList = Dict[int, List[str]]
+Str2Int = Dict[str, int]
+Str2Str = Dict[str, str]
+Int2Int = Dict[int, int]
+Str2ListStr = Dict[str, List[str]]
+Str2ListInt = Dict[str, List[int]]
+Int2Dict = Dict[int, Dict[str, Any]]
+IRRELEVANT_CHAR_RE = re.compile(r"(?:[ `']|#xa0)")
+DOTS_RE = re.compile(r"\.\.\.\.+")
+SPLIT2LABEL = {1: "train", 2: "test", 3: "dev"}
+LABEL_ID2LABEL = {'0': "negative", '1': "neutral", '2': "positive"}
+LABEL2LABEL_ID = {v: k for k, v in LABEL_ID2LABEL.items()}
+
+
+##################################################################
+# Methods
+def normalize(istr):
+    istr = DOTS_RE.sub("...", istr).replace(chr(0x2013), "--")
+    istr = istr.replace(chr(0xbd), "1/2").replace(chr(0xa0), "")
+    istr = IRRELEVANT_CHAR_RE.sub("", istr).replace('"', "")
+    istr = istr.replace(r"(", r"-LRB-").replace(r")", r"-RRB-")
+    istr = istr.replace(r"\*", r"*").replace(r"\/", r"/")
+    return istr
+
+
+def read_labels(fname: str) -> Str2Str:
+    """Read sentiment labels for phrases.
+
+    Args:
+      fname (str): path to the labels file
+
+    Returns:
+      dict: mapping from phrase ids to sentiment labels
+
+    """
+    labels_df = read_csv(fname, sep='|',
+                         dtype={"phrase ids": int, "sentiment values": float})
+    phrase_id2label: Str2Str = {}
+    for i, row_i in labels_df.iterrows():
+        score = row_i["sentiment values"]
+        if score > 0.6:
+            label = "positive"
+        elif score < 0.4:
+            label = "negative"
+        else:
+            label = "neutral"
+        phrase_id2label[row_i["phrase ids"]] = label
+    return phrase_id2label
+
+
+def snippet2dict(_id, snippet):
+    """Convert IMDB snippet to dict."""
+    return {
+        "text": snippet.strip(),
+        "msg_id": _id,
+        "split": None,
+        "label": None,
+        "toks": [],
+        "edus": [],
+        "rst_trees": {},
+        "polarity_scores": []
+    }
+
+
+def join_snippets_sentences(doc_id2doc: Int2Dict,
+                            snt_id2snt: Int2Str) -> Str2ListStr:
+    """Split sentences into training, development, and test set.
+
+    Args:
+      doc_id2doc (Str2Str): mapping from snippet id to snippet
+      snt_id2snt (Str2Str): mapping from tokenized phrases
+        to their ids
+
+    Returns:
+      dict: mapping from snippets to sentences
+
+    """
+    doc_id2snt_ids = {doc_id: [] for doc_id in doc_id2doc}
+    doc_id_doc = sorted([(doc_id, normalize(doc["text"]))
+                         for doc_id, doc in doc_id2doc.items()],
+                        key=lambda x: x[0])
+    snt_id_snt = sorted([(snt_id, normalize(snt))
+                         for snt_id, snt in snt_id2snt.items()],
+                        key=lambda x: x[0])
+    i = 0
+    N = len(doc_id_doc) - 1
+    crnt_doc_id, crnt_doc = doc_id_doc[i]
+    for snt_id, snt in snt_id_snt:
+        assert crnt_doc.startswith(snt), \
+            "Snippet/sentence mismatch: '{:s}' vs. '{:s}'".format(
+                crnt_doc, snt
+            )
+        doc_id2snt_ids[crnt_doc_id].append(snt_id)
+        crnt_doc = crnt_doc[len(snt):]
+        if crnt_doc == "":
+            if i < N:
+                i += 1
+                crnt_doc_id, crnt_doc = doc_id_doc[i]
+    assert i == N and crnt_doc == "", "Not all snippets matched sentences."
+    return doc_id2snt_ids
+
+
+def split_snippets(doc_id2doc: Int2Dict, doc_id2snt_ids: Str2ListInt,
+                   snt_id2split: Int2Int) -> None:
+    """Add split label (train, dev, test) to snippets.
+
+    Args:
+      doc_id2doc (dict): mapping from snippet id to snippet
+      doc_id2snt_ids (dict): mapping from snippet id to a list of sentence ids
+      snt_id2split (dict): mapping from sentence ids to train/dev/test split
+
+    Returns:
+      void:
+
+    """
+    for doc_id, doc in doc_id2doc.items():
+        splits = set(
+            snt_id2split[snt_id] for snt_id in doc_id2snt_ids[doc_id]
+        )
+        n = len(splits)
+        if n > 1:
+            print(
+                "Ambiguous split for snippet {}: {}".format(
+                    doc["text"], splits
+                ), file=sys.stderr
+            )
+            splits.discard(1)
+        elif n < 1:
+            print(
+                "Unknown split for snippet {}.".format(doc["text"]),
+                file=sys.stderr
+            )
+            exit(1)
+        doc["split"] = SPLIT2LABEL[splits.pop()]
+
+
+def add_labels(doc_id2doc: Int2Dict, doc_id2label: Int2Str,
+               doc_id2sentences: Int2StrList, phrase2phrase_id: Str2Int,
+               phrase_id2label: Int2Str) -> None:
+    """Add sentiment labels to snippets.
+
+    Args:
+      doc_id2doc (dict): mapping from snippet id to snippet
+      doc_id2label (dict): mapping from doc id to its known label
+      doc_id2sentences (dict): mapping from snippet id to snippet's sentences
+      phrase2phrase_id (dict): mapping from tokenized phrases to their ids
+      phrase_id2label (dict): mapping from phrase ids to their
+        sentiment labels
+
+    Returns:
+      void: modifies `doc_id2doc` in-place
+
+    """
+    doc2doc_id = {normalize(doc_i["text"]): doc_id
+                  for doc_id, doc_i in doc_id2doc.items()}
+    doc_ids: Set[int] = set(doc_id2doc)
+    phr2phr_id = {normalize(phr_i): phr_id
+                  for phr_i, phr_id in phrase2phrase_id.items()}
+    # add labels for known snippets
+    for doc_id, label in doc_id2label.items():
+        doc_id = int(doc_id)
+        doc_ids.discard(doc_id)
+        doc_id2doc[doc_id]["label"] = label
+    # look for snippets that are completely matched by a phrase and add a label
+    # for them
+    for phr, phr_id in phr2phr_id.items():
+        doc_id = doc2doc_id.get(phr)
+        if doc_id is None:
+            continue
+        doc_ids.discard(doc_id)
+        assert doc_id2doc[doc_id]["label"] is None, \
+            "Multiple labels found for review {}".format(doc_id)
+        doc_id2doc[doc_id]["label"] = phrase_id2label[phr_id]
+    # if we haven't matched snippet as a whole, let's check whether we can find
+    # polarities of its single sentences
+    infer_labels_from_sentences(doc_ids, doc_id2doc, doc_id2label,
+                                doc_id2sentences, phr2phr_id, phrase_id2label)
+
+
+def infer_labels_from_sentences(doc_ids: Set[int], doc_id2doc: Int2Dict,
+                                doc_id2label: Int2Str,
+                                doc_id2sentences: Int2StrList,
+                                phr2phr_id: Str2Int,
+                                phrase_id2label: Int2Str) -> None:
+    """Look for each sentence of provided snippets and infer snippet's polarity.
+
+    """
+    for doc_id in doc_ids:
+        labels = Counter()
+        for snt_i in doc_id2sentences[doc_id]:
+            assert snt_i in phr2phr_id, \
+                "Sentence {!r} not found in phrases".format(snt_i)
+            phr_id = phr2phr_id[snt_i]
+            labels[phrase_id2label[phr_id]] += 1
+        # Once we have iterated over all sentences, it's time to figure out the
+        # main polarity of the snippet
+        N = len(labels)
+        assert N >= 1, "No polarity found for document {}".format(doc_id)
+        doc = doc_id2doc[doc_id]
+        if len(labels) == 1:
+            doc["label"] = list(labels.keys())[0]
+        elif len(labels) == 2 and "neutral" in labels:
+            labels.pop("neutral")
+            doc["label"] = list(labels.keys())[0]
+        else:
+            while True:
+                label_id = input(
+                    """Ambiguous sentiment labels for message `{:s}':
+{!r}
+Please type correct polarity for this message: {!r} """.format(
+                        doc["text"], labels,
+                        ", ".join("{} => {}".format(k, v)
+                                  for k, v in LABEL_ID2LABEL.items()
+                                  if v in labels))
+                )
+                label = LABEL_ID2LABEL.get(label_id)
+                if label is None:
+                    print("Unrecognized label: '{:s}'.  Type: {:s}".format(
+                        label_id, ", ".join(LABEL_ID2LABEL))
+                    )
+                    continue
+                elif label not in labels:
+                    agree = input(
+                        "Provided label does not appear among phrase labels."
+                        "  Really add this value? [y|N]"
+                    )
+                    if not agree.strip().lower().startswith('y'):
+                        continue
+                    break
+                else:
+                    break
+            doc["label"] = label
+            doc_id2label[doc_id] = label
+
+
+def str2tok(form: str, prnt: Optional[int] = None,
+            snt_id: Optional[int] = None):
+    """Generate information on a single token to list.
+
+    """
+    return {"form": form, "prnt": prnt, "lemma": None,
+            "tag": None, "rel": None, "children": [],
+            "feats": {}, "snt_id": snt_id}
+
+
+def add_tokens(doc_id2doc: Int2Dict, doc_id2sentences: Int2StrList,
+               sst_dir: str) -> None:
+    """Add token information to snippets.
+
+    Args:
+      doc_id2doc (dict): mapping from snippet id to snippet
+      doc_id2sentences (dict): mapping from snippet id to snippet's sentences
+      sst_dir (str): path to Stanford Sentiment Treebank
+
+    """
+    # read sentence tokens
+    snt_id2toks = {}
+    with open(path.join(sst_dir, "SOStr.txt")) as ifile:
+        for i, line_i in enumerate(ifile, 1):
+            snt_id2toks[i] = line_i.strip().split('|')
+    for doc_id, doc in doc_id2doc.items():
+        sentences = doc_id2sentences[doc_id]
+        sentences.sort()
+        doc_toks = doc["toks"]
+        for i, snt_id in enumerate(sentences):
+            snt_toks = [str2tok(form_i, snt_id=i)
+                        for form_i in snt_id2toks[snt_id]]
+            doc_toks += snt_toks
+
+
+def main():
+    argparser = ArgumentParser(
+        description="Script for converting Stanford Sentiment Treebank to JSON"
+        " format"
+    )
+    argparser.add_argument("--docid2label",
+                           help="JSON file containing mapping from snippet ids"
+                           " to polarities for ambiguous cases their",
+                           type=str, default="snipet_id2label.json")
+    argparser.add_argument("sst_dir",
+                           help="directory containing original treebank data")
+    args: Namespace = argparser.parse_args()
+    # read snippets
+    doc_id2doc = {}
+    with open(path.join(args.sst_dir, "original_rt_snippets.txt")) as ifile:
+        for i, line_i in enumerate(ifile):
+            doc_id2doc[i] = snippet2dict(i, line_i)
+    # read sentences
+    snt_df = read_csv(path.join(args.sst_dir, "datasetSentences.txt"),
+                      sep="\t", dtype={"sentence_index": int, "sentence": str})
+    snt_id2snt = {row_i["sentence_index"]: row_i["sentence"]
+                  for i, row_i in snt_df.iterrows()}
+    # read dataset split
+    split_df = read_csv(path.join(args.sst_dir, "datasetSplit.txt"),
+                        dtype=(int, int))
+    snt_id2split = {row_i["sentence_index"]: row_i["splitset_label"]
+                    for i, row_i in split_df.iterrows()}
+    # split snippets into training, dev, and test set
+    doc_id2snt_ids = join_snippets_sentences(doc_id2doc, snt_id2snt)
+    split_snippets(doc_id2doc, doc_id2snt_ids, snt_id2split)
+    # read phrases
+    phrase_df = read_csv(path.join(args.sst_dir, "dictionary.txt"),
+                         sep='|', names=["phrase", "id"],
+                         dtype={"phrase": str, "id": int})
+    phrase2phrase_id = {row_i["phrase"]: row_i["id"]
+                        for i, row_i in phrase_df.iterrows()}
+    # read labels
+    phrase_id2label = read_labels(path.join(args.sst_dir,
+                                            "sentiment_labels.txt"))
+    # join snippets, phrases, and labels
+    doc_id2sentences = {
+        doc_id: [normalize(snt_id2snt[snt_id])
+                 for snt_id in doc_id2snt_ids[doc_id]]
+        for doc_id in doc_id2doc
+    }
+    if path.exists(args.docid2label):
+        with open(args.docid2label, 'r') as ifile:
+            doc_id2labels = json.load(ifile)
+    else:
+        doc_id2labels = {}
+    try:
+        add_labels(doc_id2doc, doc_id2labels, doc_id2sentences,
+                   phrase2phrase_id, phrase_id2label)
+    finally:
+        with open(args.docid2label, 'w') as ofile:
+            json.dump(doc_id2labels, ofile)
+    # add token information
+    add_tokens(doc_id2doc, doc_id2snt_ids, args.sst_dir)
+    print(json.dumps({"docs": list(doc_id2doc.values())}))
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main()

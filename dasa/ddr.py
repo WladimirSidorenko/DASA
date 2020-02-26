@@ -1,0 +1,123 @@
+#!/usr/bin/env python
+# -*- mode: python; coding: utf-8 -*-
+
+##################################################################
+# Documentation
+"""Module providing a class for predicting polarity of a tweet based on
+discourse-depth reweighting.
+
+Attributes:
+  DDRAnalyzer (class): class for predicting polarity of a tweet based on the
+    polarity of the root EDU(s)
+
+"""
+
+##################################################################
+# Imports
+from __future__ import absolute_import, print_function, unicode_literals
+
+from torch import eye
+from torch.utils.data import DataLoader
+import numpy as np
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+
+from .constants import CLS2IDX, IDX2CLS
+from .dataset import Dataset
+from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
+from .rst import Tree as RSTTree
+
+
+##################################################################
+# Variables and Constants
+
+
+##################################################################
+# Class
+class DDR(nn.Linear):
+    """Neural network model for doing DDR prediction.
+
+    """
+    def __init__(self):
+        n = len(CLS2IDX)
+        super(DDR, self).__init__(n, n)
+        self.weight.data.copy_(eye(n))
+
+    def forward(self, x):
+        try:
+            ret = super(DDR, self).forward(x)
+        except:
+            ret = super(DDR, self).forward(x.float())
+        return F.softmax(ret, dim=-1)
+
+
+class DDRAnalyzer(DLBaseAnalyzer):
+    """Main class for coarse-grained sentiment analyzer.
+
+    Attributes:
+
+    """
+    def __init__(self, relation_scheme, *args, **kwargs):
+        """Class constructor.
+
+        Args:
+          args (list[str]): arguments to use for initializing models
+          kwargs (dict): keyword arguments to use for initializing models
+
+        """
+        super(DDRAnalyzer, self).__init__(*args, **kwargs)
+        self._name = "DDR"
+        self._model = DDR()
+        self._relation_scheme = relation_scheme
+
+    def predict(self, instance, relation_scheme=None):
+        self._wbench *= 0
+        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
+        with torch.no_grad():
+            out = self._model(
+                torch.from_numpy(self._wbench)
+            )
+            _, cls_idx = torch.max(out, 1)
+        return IDX2CLS[cls_idx.item()]
+
+    def debug(self, instance, relation_scheme=None):
+        self._logger.info("instance: %r", instance)
+        self._wbench *= 0
+        self._logger.info("wbench: %r", self._wbench)
+        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
+        self._logger.info("* wbench: %r", self._wbench)
+        with torch.no_grad():
+            out = self._model(
+                torch.from_numpy(self._wbench).double()
+            )
+        self._logger.info("out: %r", out)
+        _, cls_idx = torch.max(out, 1)
+        self._logger.info("cls_idx: %r (%s)",
+                          cls_idx, IDX2CLS[cls_idx.item()])
+        return IDX2CLS[cls_idx.item()]
+
+    def _digitize_data(self, data, train_mode=False):
+        n = len(data)
+        m = len(CLS2IDX)
+        digitized_input = np.zeros((n, m), dtype="float32")
+        digitized_labels = np.zeros(n, dtype="long")
+        for i, instance in enumerate(data):
+            self._compute_scores(digitized_input[i, :], instance)
+            digitized_labels[i] = CLS2IDX[instance["label"]]
+        dataset = Dataset(digitized_input, digitized_labels)
+        return DataLoader(dataset, **DATALOADER_KWARGS)
+
+    def _compute_scores(self, scores, instance, relation_scheme=None):
+        if relation_scheme is None:
+            relation_scheme = self._relation_scheme
+        rst_tree = RSTTree(instance,
+                           instance["rst_trees"][relation_scheme])
+        dep_tree = rst_tree.to_deps()
+        for i, nodes_i in enumerate(dep_tree.bfs(), -1):
+            if i < 0:
+                continue
+            lambda_i = max(0.5, 1. - float(i)/6.)
+            scores += lambda_i * np.sum([n.polarity_scores
+                                         for n in nodes_i], axis=0)
+        return scores

@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+##################################################################
+# Imports
+from __future__ import (absolute_import, print_function,
+                        unicode_literals)
+import argparse
+import json
+import codecs
+import os
+import sys
+
+from cgsa.utils.data import Tweet
+from dasa.constants import ENCODING
+
+
+##################################################################
+# Methods
+def main(argv):
+    """Main method for converting TSV data to JSON format.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    Return:
+      int: 0 on success, non-0 otherwise
+
+    """
+    argparser = argparse.ArgumentParser(
+        description="Script for comverting TSV files to JSON format."
+    )
+    argparser.add_argument("-d", "--directory",
+                           help="target directory in which to store"
+                           " JSON files", type=str)
+    argparser.add_argument("files", help="TSV files to process",
+                           nargs="+")
+    args = argparser.parse_args(argv)
+    trg_dir = args.directory
+    if trg_dir is None:
+        trg_dir = os.path.dirname(args.files[0])
+    for fname_i in args.files:
+        tweets = []
+        trg_fname = os.path.join(
+            trg_dir,
+            os.path.splitext(os.path.basename(fname_i))[0] + ".json"
+        )
+        with codecs.open(fname_i, 'r', ENCODING) as ifile:
+            for iline in ifile:
+                tweet = Tweet(iline.strip())
+                toks = [
+                    {
+                        "form": w_i.form,
+                        "lemma": w_i.lemma,
+                        "tag": w_i.tag,
+                        "prnt": w_i.prnt_idx,
+                        "rel": w_i.deprel,
+                        "feats": w_i.feats._feats,
+                        "children": w_i.children
+                    }
+                    for w_i in tweet
+                ]
+                tweets.append({
+                    "msg_id": tweet.msg_id,
+                    "label": tweet.label,
+                    "text": ' '.join([t.form for t in tweet]),
+                    "toks": toks,
+                })
+        with open(trg_fname, 'w') as ofile:
+            json.dump({"tweets": tweets}, ofile)
+    return 0
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main(sys.argv[1:])

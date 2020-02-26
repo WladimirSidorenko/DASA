@@ -1,0 +1,956 @@
+	id	319780665581264897
+	time	Thu Apr 04 11:57:06 +0000 2013
+	replace	offset	72	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	40
+	token_offsets	sentence	0	offsets	0::5	6::4	11::3	15::6	22::1	24::3	28::10	38::1
+	token_offsets	sentence	1	offsets	40::5	46::5	52::3	56::2	59::4	64::7	72::10
+(HS JETZT gebe ich Player 6 den Todesstoss . )
+
+(HS Lange genug hat er sich gewehrt %PosSmiley )
+
+	id	329242221637402626
+	time	Tue Apr 30 14:33:57 +0000 2013
+	replace	offset	99	length	10	num	0	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	57
+	token_offsets	sentence	0	offsets	0::2	3::3	7::7	15::2	18::7	26::4	31::3	35::2	38::2	41::5	47::8	55::1
+	token_offsets	sentence	1	offsets	57::5	63::5	69::5	75::3	79::4	84::4	89::9	99::10
+(HS In den letzten 48_ Stunden habe ich Ca 30_ Chips gegessen . )
+
+(HS Heute Abend dafür ein Menü beim Italiener %PosSmiley )
+
+	id	327014426416922624
+	time	Wed Apr 24 11:01:29 +0000 2013
+	replace	offset	74	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::7	18::5	24::3	28::4	33::3	37::7	45::4	50::5	56::5	62::7	70::3	74::10
+(HS Heute ist Welttag gegen den Lärm ich wünsche euch allen einen ruhigen Tag %PosSmiley )
+
+	id	326101031673028608
+	time	Sun Apr 21 22:31:59 +0000 2013
+	replace	offset	48	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::2	13::3	17::4	22::6	29::3	33::3	37::3	41::6	48::10
+(HS Heute bis zu 15°_ kann wieder mit dem rad fahren %PosSmiley )
+
+	id	322239999795929088
+	time	Thu Apr 11 06:49:37 +0000 2013
+	replace	offset	75	length	10	num	0	orig	:(	replacement	%NegSmiley	info_end
+	sentence_start	0	53	59	65	75
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::5	20::8	29::8	38::7	46::5	51::1
+	token_offsets	sentence	1	offsets	53::4	57::1
+	token_offsets	sentence	2	offsets	59::4	63::1
+	token_offsets	sentence	3	offsets	65::8	73::1
+	token_offsets	sentence	4	offsets	75::10
+(HS Wie gerne ich jetzt BioShock Infinite spielen würde . )
+
+(HSF Muss . )
+
+(HSF Mich . )
+
+(HSF Gedulden . )
+
+(FRE %NegSmiley )
+
+	id	319056818867412993
+	time	Tue Apr 02 12:00:48 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@NoFate_NoFear 	replacement		info_end
+	replace	offset	13	length	11	num	2	orig	;-) 	replacement	%PosSmiley 	info_end
+	replace	offset	55	length	11	num	4	orig	:D	replacement	%PosSmiley 	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::9	13::10	24::3	28::4	33::3	37::7	45::9	55::10
+(HS im Gegenteil %PosSmiley Ich darf den Railjet beglücken %PosSmiley )
+
+	id	319142916239015936
+	time	Tue Apr 02 17:42:55 +0000 2013
+	replace	offset	37	length	10	num	0	orig	:)))	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::7	14::4	19::4	24::5	30::6	37::10
+(HS Ahhhh endlich geht mein handy wieder %PosSmiley )
+
+	id	322052690572099584
+	time	Wed Apr 10 18:25:19 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@83_adnan 	replacement		info_end
+	replace	offset	32	length	0	num	2	orig	!	replacement		info_end
+	replace	offset	33	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	2::1	4::4	9::5	15::7	23::4	28::3	31::1	33::10
+(HS Ja , aber Greys Anatomy geht vor ! %PosSmiley )
+
+	id	324402230012821504
+	time	Wed Apr 17 06:01:33 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@FrauGluckstein 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::3	12::3	16::3	20::13	34::3	38::6	45::10	56::1	57::1	58::1
+(HS Einigen wir uns auf Schokopudding aus Deinem Bauchnabel , - -CP- )
+
+	id	326758608698232832
+	time	Tue Apr 23 18:04:57 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@buntgestreift_ 	replacement		info_end
+	replace	offset	43	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	replace	offset	54	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	54	length	5	num	6	orig	_Schlumpfinchen	replacement	%User	info_end
+	sentence_start	0	12
+	token_offsets	sentence	0	offsets	0::3	4::5	9::2
+	token_offsets	sentence	1	offsets	12::8	21::3	25::3	29::7	37::5	43::10	54::5
+(HS ich schon .. )
+
+(HS Kelloggs mag ich nämlich nicht %PosSmiley _Schlumpfinchen )
+
+	id	324404078887182336
+	time	Wed Apr 17 06:08:54 +0000 2013
+	replace	offset	137	length	10	num	0	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0	49	137
+	token_offsets	sentence	0	offsets	0::3	4::4	9::2	12::6	19::7	27::3	31::8	40::7	47::1
+	token_offsets	sentence	1	offsets	49::3	53::5	58::1	60::3	64::7	72::2	75::2	77::1	79::7	87::3	91::6	98::3	102::8	111::5	117::3	121::3	125::10	135::1
+	token_offsets	sentence	2	offsets	137::10
+(HS Ich muss am Montag Artikel und Konzepte abgeben . )
+
+(HS Ich glaub , ich arbeite am WE , während Ihr grillt (HSF und twittere heute aus dem Biergarten . ) )
+
+(FRE %PosSmiley )
+
+	id	326381569679953921
+	time	Mon Apr 22 17:06:44 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@next_85 	replacement		info_end
+	replace	offset	32	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	7::1	9::3	13::4	18::7	26::5	32::10
+(HS Awwwwww , ich habe mehrere Yodas %PosSmiley )
+
+	id	325214398916472832
+	time	Fri Apr 19 11:48:49 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @da_frei: @treimannch 	replacement		info_end
+	replace	offset	56	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	67	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::5	9::3	13::11	25::1	27::3	31::6	38::5	44::11	56::10	67::19
+(HS da hätte ich tonnenweise - nur gerade keine gelegenheit %PosSmiley nutzlosesuperkräfte )
+
+	id	328947846684483585
+	time	Mon Apr 29 19:04:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Aimar_HH 	replacement		info_end
+	replace	offset	41	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	2::1	4::3	8::10	19::3	23::6	30::2	33::7	41::10
+(HS ja , die medienwelt ist wieder in Ordnung %PosSmiley )
+
+	id	320835355953741824
+	time	Sun Apr 07 09:48:04 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@CampOnTours 	replacement		info_end
+	replace	offset	84	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0	60	84
+	token_offsets	sentence	0	offsets	0::5	6::1	8::4	12::1	14::8	23::7	31::6	38::3	42::2	45::8	54::4	58::1
+	token_offsets	sentence	1	offsets	60::3	64::6	71::3	75::6	81::3
+	token_offsets	sentence	2	offsets	84::10
+(HS piero @ lori : chönnder schnäll hinter dem vo hangover stah ? )
+
+(HS ich möchte ihn fötele ... )
+
+(FRE %PosSmiley )
+
+	id	328220056083365888
+	time	Sat Apr 27 18:52:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@xo_Yassi__ 	replacement		info_end
+	replace	offset	45	length	10	num	2	orig	xD	replacement	%PosSmiley	info_end
+	replace	offset	75	length	10	num	4	orig	xD	replacement	%PosSmiley	info_end
+	replace	offset	137	length	10	num	6	orig	xD	replacement	%PosSmiley	info_end
+	replace	offset	148	length	10	num	8	orig	:*	replacement	%PosSmiley	info_end
+	sentence_start	0	56
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::5	20::3	24::4	29::3	33::4	38::3	41::1	42::1	43::1	45::10
+	token_offsets	sentence	1	offsets	56::3	60::4	65::3	69::5	75::10	86::3	90::3	94::5	100::3	104::6	111::5	117::4	122::3	126::2	129::7	137::10	148::10	159::1
+(HS ach passt ihr jetzt auf mich auf oder was ? ? ? %PosSmiley )
+
+(HS das will ich nicht %PosSmiley und vor allem die zweite woche sind wir eh alleine %PosSmiley %PosSmiley ❤ )
+
+	id	328184575765393408
+	time	Sat Apr 27 16:31:14 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@iFlobole 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	0	length	5	num	4	orig	MaaaaxMax	replacement	%User	info_end
+	replace	offset	45	length	10	num	6	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::4	11::3	15::13	29::3	33::5	39::5	45::10
+(HS MaaaaxMax hast die entsprechende App nicht drauf %PosSmiley )
+
+	id	325975421726375936
+	time	Sun Apr 21 14:12:51 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ErwinKintop_ 	replacement		info_end
+	replace	offset	69	length	10	num	2	orig	:(((	replacement	%NegSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::6	15::8	24::3	28::3	32::4	37::1	39::7	47::3	51::7	59::5	65::3	69::10
+(HS ich bin selber traurich (HS und ich habe 5 stunden nur geheult wegen dir %NegSmiley ) )
+
+	id	328191002076663808
+	time	Sat Apr 27 16:56:47 +0000 2013
+	replace	offset	48	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::6	20::6	27::3	31::6	38::4	43::4	48::10
+(HS Ich habe die Partei gerade mal wieder sehr gern %PosSmiley )
+
+	id	323541138080411648
+	time	Sun Apr 14 20:59:53 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@paaarmis 	replacement		info_end
+	replace	offset	53	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::18	19::3	23::5	29::3	33::2	35::2	37::2	40::4	45::4	50::2	53::10
+(HS benachrichtigungen bei whats app fi ** en mich aber ab %PosSmiley )
+
+	id	321626017309544448
+	time	Tue Apr 09 14:09:52 +0000 2013
+	replace	offset	95	length	11	num	0	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	106	length	5	num	2	orig	http://t.co/MDJr5AMWCY	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::9	10::4	15::6	22::9	32::3	36::8	45::2	48::3	52::11	64::3	68::3	72::6	79::3	83::6	90::4	95::10	106::5
+(HS Hallöchen mein erstes kurzvideo und schreibt in den kommentaren was für videos ich machen soll %PosSmiley %Link )
+
+	id	324495631651594241
+	time	Wed Apr 17 12:12:42 +0000 2013
+	replace	offset	96	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	79
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::12	28::3	32::3	36::5	42::5	48::4	53::8	62::8	71::3	75::2	77::1
+	token_offsets	sentence	1	offsets	79::9	89::6	96::10
+(HS Und dann lande ausgerechnet ich bei einem Paper über optische Computer und so . )
+
+(HSF Irgendwie lustig %PosSmiley )
+
+	id	323452872828260354
+	time	Sun Apr 14 15:09:09 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@ziromr 	replacement		info_end
+	replace	offset	47	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::5	19::3	23::5	29::3	33::5	39::7	47::10
+(HS Auf dem Mond leben nur Nazis und keine Piraten %PosSmiley )
+
+	id	320918467555508225
+	time	Sun Apr 07 15:18:19 +0000 2013
+	replace	offset	62	length	11	num	0	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	91	length	10	num	2	orig	;)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::11	21::1	23::4	28::7	36::3	40::3	44::5	50::5	56::5	62::10	73::3	77::5	83::3	87::3	91::10
+(HS Bin total ausgepowert , habe endlich was für meine Figur getan %PosSmiley Und jetzt ein Eis %PosSmiley )
+
+	id	328114711679881216
+	time	Sat Apr 27 11:53:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@wildhorses66 	replacement		info_end
+	replace	offset	48	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::5	19::4	24::3	28::10	39::3	43::4	48::10
+(HS Ich habe die Daily News von vorgestern für dich %PosSmiley )
+
+	id	324469049314643968
+	time	Wed Apr 17 10:27:04 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @SiebenVerlag: 	replacement		info_end
+	sentence_start	0	116
+	token_offsets	sentence	0	offsets	0::4	5::13	19::1	20::5	25::1	26::1	27::9	37::2	40::7	48::6	54::1	55::2	57::2	60::6	66::1	67::1	69::3	73::5	79::2	82::3	86::6	93::4	98::4	103::6	110::2	112::3
+	token_offsets	sentence	1	offsets	116::2	119::3
+(HS Eine wunderhübsche -OP- Audio - -CP- Rezension zu Swantje Berndt / S. B. Sasori ' s DAS BIEST IN IHM findet sich ganz frisch in ... )
+
+(HSF ht ... )
+
+	id	324955751145672704
+	time	Thu Apr 18 18:41:03 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@AlienNeedLove_ 	replacement		info_end
+	replace	offset	26	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::4	18::7	26::10
+(HS ich habe das Buch gelesen %PosSmiley )
+
+	id	323802072011128832
+	time	Mon Apr 15 14:16:44 +0000 2013
+	replace	offset	33	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	44	length	0	num	2	orig	@Roghetti 	replacement		info_end
+	replace	offset	44	length	0	num	4	orig	@thomas_heg 	replacement		info_end
+	replace	offset	44	length	0	num	6	orig	@	replacement		info_end
+	replace	offset	44	length	5	num	8	orig	00v3rdr1v3	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::4	14::3	18::10	29::3	33::10	44::5
+(HSF Und auch hier das zugehörige Pad %PosSmiley 00v3rdr1v3 )
+
+	id	319973164375486464
+	time	Fri Apr 05 00:42:01 +0000 2013
+	replace	offset	36	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::4	12::5	18::6	25::6	32::2	34::1	36::10
+(HS Morgen sind meine Eltern wieder da ! %PosSmiley )
+
+	id	326367722738954241
+	time	Mon Apr 22 16:11:43 +0000 2013
+	replace	offset	42	length	11	num	0	orig	:-) 	replacement	%PosSmiley 	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::5	22::4	27::3	31::10	42::10	53::6	60::4	65::5	71::4	76::10	87::3	91::3	95::3	99::5	105::7	112::1
+(HS Der Apfel fällt nicht weit vom Birnenbaum %PosSmiley Köhler Sven &amp; Nico Küstermann Das hat man heute gesehen . )
+
+	id	318692576301563904
+	time	Mon Apr 01 11:53:25 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@supitsaileen 	replacement		info_end
+	sentence_start	0	79
+	token_offsets	sentence	0	offsets	0::5	6::3	10::4	15::3	19::5	25::5	31::3	35::7	43::4	48::1	49::1	51::4	56::3	60::3	64::13	77::1
+	token_offsets	sentence	1	offsets	79::1	80::1
+(HS jaaaa *-* aber ich weiss nicht bei welchem lied o : habe ich ein lieblingslied ? )
+
+(HS : b )
+
+	id	319737047696949249
+	time	Thu Apr 04 09:03:47 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@HerrTutorial 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@YolandoDespidar 	replacement		info_end
+	replace	offset	41	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	34
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::7	22::4	26::1	28::4	32::1
+	token_offsets	sentence	1	offsets	34::5	39::1	41::10
+(HS Wir haben das gleiche Bild , Sami . )
+
+(HSF Weeey ! %PosSmiley )
+
+	id	320269238625505281
+	time	Fri Apr 05 20:18:31 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Unerklaerlich 	replacement		info_end
+	replace	offset	58	length	11	num	2	orig	:) 	replacement	%PosSmiley 	info_end
+	sentence_start	0	24	58
+	token_offsets	sentence	0	offsets	0::6	7::3	11::11	22::1
+	token_offsets	sentence	1	offsets	24::4	29::2	32::2	35::3	39::4	44::1	46::3	50::3	54::2	56::1
+	token_offsets	sentence	2	offsets	58::10	69::5	74::1
+(HS wollte mal ausschlafen . )
+
+(HS Aber so ab 12/_ halb 1 bin ich da . )
+
+(HSF %PosSmiley warum ? )
+
+	id	327826286338789376
+	time	Fri Apr 26 16:47:32 +0000 2013
+	replace	offset	111	length	0	num	0	orig	 http://t.co/IbLPJHG7N3	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::5	10::1	12::4	17::4	22::3	26::8	35::4	40::4	45::3	49::5	55::3	59::4	64::11	75::1	77::4	82::3	86::8	95::4	100::10	110::1
+(HS (FRE Lena Glück : ) Lies mich und verkaufe dein Buch Sie haben ein Buch geschrieben , (HS doch die Verkäufe sind schleppend ? ) )
+
+	id	328506279175806976
+	time	Sun Apr 28 13:49:34 +0000 2013
+	replace	offset	77	length	11	num	0	orig	^-^ 	replacement	%PosSmiley 	info_end
+	replace	offset	88	length	5	num	2	orig	http://t.co/cgmILQ2Who	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	4::1	6::17	23::1	25::4	30::4	35::2	38::5	44::5	50::2	53::2	56::5	62::10	73::3	77::10	88::5
+(HS (FRE Foto : (FRE dortmunderjungs11 : ) ) Also wenn er lacht sieht er ja schon knuffelich aus %PosSmiley %Link )
+
+	id	324244065191342080
+	time	Tue Apr 16 19:33:03 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::10	16::4	21::5	27::4	32::3	36::3	40::12	52::1	54::5	60::3	64::4	69::6	76::6	83::2	86::3	90::5	95::1
+(HS (ADV Habe eigentlich noch genug Zeit für die Hausaufgaben , ) mache sie aber lieber morgen in der Pause . )
+
+	id	323008229334478848
+	time	Sat Apr 13 09:42:17 +0000 2013
+	sentence_start	0	31
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::2	18::3	22::7	29::1
+	token_offsets	sentence	1	offsets	31::7	38::1	39::3	43::1	45::5	51::4	56::5	62::3	66::3	70::4
+(HS ich kriege das OP von Haiyore ! )
+
+(HS Nyarlko - san W immer noch nicht aus dem kopf )
+
+	id	325201699667066880
+	time	Fri Apr 19 10:58:21 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@astridschuler 	replacement		info_end
+	sentence_start	0	44
+	token_offsets	sentence	0	offsets	0::6	7::4	11::1	13::5	19::5	24::1	26::5	32::4	37::5	42::1
+	token_offsets	sentence	1	offsets	44::4	48::1	49::1	51::3	54::1	55::5	60::1	62::7	69::1	71::2	74::7	82::2	85::8	93::1	95::4	100::2	103::6	110::3	114::5	120::4	124::1
+(HS Zühlke Blog , (HS danke dafür , ) liest sich super ! )
+
+(HS Gibt ' s Abo - Liste , Hashtag , (ADV um schnell zu erfahren , (ADV wenn es wieder was Neues gibt ? ) ) )
+
+	id	321956866903138304
+	time	Wed Apr 10 12:04:33 +0000 2013
+	replace	offset	35	length	0	num	0	orig	 http://t.co/6gKHj9mEmt	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::2	7::4	11::1	13::4	18::4	23::4	28::6	34::1
+(HSF (ADV Ist es grau , ) dann mach dich schlau ! )
+
+	id	318962694411653120
+	time	Tue Apr 02 05:46:47 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::9	24::1	26::4	30::1	32::4	37::11	48::1	50::7	58::3	62::9	71::1
+(HS der mensch ist unhöflich , müde , sehr interessant , seltsam und neugierig ! )
+
+	id	325162078191095808
+	time	Fri Apr 19 08:20:55 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @DieKlatsche: 	replacement		info_end
+	replace	offset	116	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	72
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::6	21::4	26::4	31::4	36::5	42::3	46::5	52::9	62::7	69::3
+	token_offsets	sentence	1	offsets	72::6	79::8	88::3	92::2	95::5	101::4	106::1	107::8	116::3
+(HS Mal sehen was morgen denn dann geht gegen den neuen deutschen Meister ... )
+
+(HS Punkte brauchen die eh nicht mehr + heimsieg h96 )
+
+	id	325122612378337281
+	time	Fri Apr 19 05:44:05 +0000 2013
+	replace	offset	57	length	5	num	0	orig	http://t.co/S5Q10MYxnG	replacement	%Link	info_end
+	replace	offset	62	length	0	num	2	orig	 http://t.co/nDotGlYkls	replacement		info_end
+	sentence_start	0	57
+	token_offsets	sentence	0	offsets	0::3	4::4	8::1	9::1	11::5	17::3	21::5	27::10	38::8	47::3	51::4	55::1
+	token_offsets	sentence	1	offsets	57::5
+(HS Wie wäre ' s jetzt mit einem exotischen Cocktail auf Bali ? )
+
+(FRE %Link )
+
+	id	326378849120157697
+	time	Mon Apr 22 16:55:56 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @SusiSorglos15: 	replacement		info_end
+	sentence_start	0	30
+	token_offsets	sentence	0	offsets	0::7	7::1	9::8	17::1	19::6	25::1	26::3
+	token_offsets	sentence	1	offsets	30::2	33::5	39::1	40::11	51::1	53::3	57::2	60::4	65::10	75::1
+(HSF Twitter , Facebook , Google + ... )
+
+(HSF so viele ' Spielwiesen ' und so viel Einsamkeit . )
+
+	id	324071884239036417
+	time	Tue Apr 16 08:08:52 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@tomenmeta 	replacement		info_end
+	replace	offset	68	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	68	length	5	num	4	orig	CSSTeam_at	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::1	1::3	5::5	11::3	15::2	18::4	23::2	26::6	33::2	36::11	47::1	49::1	50::8	59::7	66::1	68::5
+(HS " das Leben ist zu kurz um Müesli zu frühstücken " -OP- Reinhold Messner -CP- CSSTeam_at )
+
+	id	320226570247745536
+	time	Fri Apr 05 17:28:58 +0000 2013
+	replace	offset	113	length	0	num	0	orig	 http://t.co/22s693CIv6	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::6	12::5	18::3	22::4	26::1	28::4	33::12	46::4	51::5	56::1	58::4	63::3	67::13	81::9	91::3	95::6	102::4	107::3	110::3
+(HS Zwei Wochen Pause für Bale : Hier entschuldigt sich Degen : Nach dem unglücklichen Zweikampf mit Gareth Bale ent ... )
+
+	id	322641413235949569
+	time	Fri Apr 12 09:24:41 +0000 2013
+	replace	offset	27	length	7	num	0	orig	\o/	replacement	%Smiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::4	12::3	16::5	22::4	27::7
+(HSF Himmel blau und Sonne satt %Smiley )
+
+	id	318494157087854592
+	time	Sun Mar 31 22:44:59 +0000 2013
+	replace	offset	81	length	5	num	0	orig	http://t.co/L1Au860NA1	replacement	%Link	info_end
+	replace	offset	87	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	95	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	108	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	87
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::6	22::6	29::3	33::3	37::5	43::6	50::5	56::7	64::9	73::1	75::5	81::5
+	token_offsets	sentence	1	offsets	87::7	95::12	108::11
+(HS Die Feinde des Reichs werden vor der Macht meines neuen Zaubers erzittern , Tief. %Link )
+
+(HSF Android AndroidGames gameinsight )
+
+	id	323918794915475456
+	time	Mon Apr 15 22:00:33 +0000 2013
+	replace	offset	91	length	0	num	0	orig	 http://t.co/wfQq1FJhMG	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::8	9::3	13::7	21::3	25::5	30::1	32::1	33::6	40::6	46::1	48::3	52::8	61::12	74::3	78::12	90::1
+(HS Beginnen Sie einfach mit einem , " kalten Entzug " der falschen Lebensmittel und Gewohnheiten . )
+
+	id	328628433292771329
+	time	Sun Apr 28 21:54:58 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@broeselbub 	replacement		info_end
+	replace	offset	8	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	54	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	49
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::7	21::3	25::6	32::8	41::6	47::1
+	token_offsets	sentence	1	offsets	49::4	54::4	58::1	60::5	66::13	79::1	81::5	87::11	99::2	102::3	106::11	118::7	125::1
+(HS Für den Euro mussten die Banken gerettet werden . )
+
+(HSF Kein Euro , keine Bankenrettung , keine Einmischung in die griechische Politik . )
+
+	id	324258207981785089
+	time	Tue Apr 16 20:29:15 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Sp3aedy 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@xs_11official 	replacement		info_end
+	replace	offset	32	length	10	num	4	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::3	14::6	21::3	25::6	32::10
+(HS genau auf den wollte ich hinaus %PosSmiley )
+
+	id	326269461000769536
+	time	Mon Apr 22 09:41:15 +0000 2013
+	replace	offset	26	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	109	length	5	num	2	orig	http://t.co/j5kpr5WAUb	replacement	%Link	info_end
+	replace	offset	115	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	109
+	token_offsets	sentence	0	offsets	0::4	5::3	9::3	13::7	21::4	26::8	35::6	42::4	47::7	55::3	59::6	66::12	79::7	87::4	92::5	98::5	104::3	107::1
+	token_offsets	sentence	1	offsets	109::5	115::3
+(HS Sehe ich das richtig dass Schäuble gerade dazu aufruft die Konten leerzuräumen solange noch etwas drauf ist ? )
+
+(HS %Link ESM )
+
+	id	326695161553903616
+	time	Tue Apr 23 13:52:50 +0000 2013
+	replace	offset	41	length	10	num	0	orig	&lt;3	replacement	%PosSmiley	info_end
+	replace	offset	51	length	0	num	2	orig	 http://t.co/PQi0CuuYJy	replacement		info_end
+	sentence_start	0	34
+	token_offsets	sentence	0	offsets	0::5	6::2	9::6	16::4	21::4	26::6	32::1
+	token_offsets	sentence	1	offsets	34::1	36::4	41::10
+(HS Magst du lieber Obst oder Gemüse ? )
+
+(HSF - Obst %PosSmiley )
+
+	id	320950022810267648
+	time	Sun Apr 07 17:23:43 +0000 2013
+	sentence_start	0	12	32	43	97
+	token_offsets	sentence	0	offsets	0::3	4::6	10::1
+	token_offsets	sentence	1	offsets	12::4	17::13	30::1
+	token_offsets	sentence	2	offsets	32::3	36::5	41::1
+	token_offsets	sentence	3	offsets	43::4	48::2	51::8	59::1	61::3	65::2	68::5	74::11	86::7	93::3
+	token_offsets	sentence	4	offsets	97::7	105::2	108::2	111::4	116::7	123::1
+(HSF Ein Moment . )
+
+(HSF Eine Unehrlichkeit . )
+
+(HSF Ein Abend . )
+
+(HS Wenn du wüsstest , was du damit (OBJ angerichtet hättest ... ) )
+
+(HS hättest du es dann gemacht ? )
+
+	id	323716749658828801
+	time	Mon Apr 15 08:37:42 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::11	16::5	22::3	26::3	30::4	35::8	44::4	49::3	53::10
+(HS Die süddeutsche Hitze ist für mich wirklich mehr als ungeeignet )
+
+	id	323399733727068160
+	time	Sun Apr 14 11:37:59 +0000 2013
+	sentence_start	0	93	99
+	token_offsets	sentence	0	offsets	0::4	5::7	13::1	15::5	21::3	25::11	37::2	40::6	47::3	51::7	59::6	66::3	70::3	74::7	82::2	85::6	91::1
+	token_offsets	sentence	1	offsets	93::2	96::2	98::1
+	token_offsets	sentence	2	offsets	99::6	106::1
+(HS (FRE Ganz ehrlich : ) Einen Boy Directioner zu finden ist genauso schwer wie ein Einhorn zu finden . )
+
+(HS Mr es . )
+
+(HS Storan ♥ )
+
+	id	325905309132521473
+	time	Sun Apr 21 09:34:15 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@berlinwerbung 	replacement		info_end
+	replace	offset	45	length	0	num	2	orig	 @bootboss	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::4	10::2	13::4	17::1	19::4	24::2	27::3	31::5	37::5	42::3
+(HSF dann wird es Zeit , (HSF dass du mal gross wirst ... ) )
+
+	id	325236369872015360
+	time	Fri Apr 19 13:16:07 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@norbertmeier9 	replacement		info_end
+	replace	offset	5	length	10	num	2	orig	👍	replacement	%PosSmiley	info_end
+	replace	offset	67	length	0	num	4	orig	.	replacement		info_end
+	sentence_start	0	67
+	token_offsets	sentence	0	offsets	0::4	5::10	15::3	19::3	23::3	27::7	35::4	40::4	45::3	49::8	58::6	64::3
+	token_offsets	sentence	1	offsets	67::4	72::5	78::4
+(HS hehe %PosSmiley 🎶🎶🎤 ich kam gestern erst spät aus Hannover zurück ... )
+
+(HS viel Spass 🎉🍻🍻🍼 )
+
+	id	319085862732300288
+	time	Tue Apr 02 13:56:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @twitgeridoo: 	replacement		info_end
+	replace	offset	105	length	11	num	2	orig	:D	replacement	%PosSmiley 	info_end
+	replace	offset	117	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	117
+	token_offsets	sentence	0	offsets	0::3	4::10	15::9	24::1	26::3	30::9	40::5	46::1	47::4	52::7	60::4	64::1	66::3	70::5	76::9	86::9	96::6	102::2	105::10
+	token_offsets	sentence	1	offsets	117::8	126::1	128::3
+(HS (FRE Ein absehbarer Shitstorm : ) Die Atomlobby sucht " Miss Nuclear 2013 " mit einem unfassbar dämlichen Poster .. %PosSmiley )
+
+(HSF facepalm h ... )
+
+	id	328145243109208064
+	time	Sat Apr 27 13:54:57 +0000 2013
+	replace	offset	83	length	5	num	0	orig	http://t.co/qBjxhXsPJK	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::3	12::5	17::1	19::9	29::4	34::3	38::5	44::3	48::6	55::4	60::3	64::4	68::1	69::6	76::6	83::5	89::8	98::4	103::6
+(HS Angebot des Tages : femininer Rock für Jacke von Claude Zana mit gelb / grünem Muster %Link Designer Mode Outlet )
+
+	id	323484418192855040
+	time	Sun Apr 14 17:14:30 +0000 2013
+	sentence_start	0	63
+	token_offsets	sentence	0	offsets	0::3	4::8	13::3	17::5	23::8	31::1	33::3	37::5	43::5	49::8	58::3	61::1
+	token_offsets	sentence	1	offsets	63::3	67::7	75::4	80::3	84::5	89::1	91::4	96::2	99::5	105::4	110::2	113::3	116::1
+(HS Man vergisst nie einen Menschen , (ARR der einem alles bedeutet hat . ) )
+
+(HS Man gewöhnt sich nur daran , dass er nicht mehr da ist . )
+
+	id	319561793158660096
+	time	Wed Apr 03 21:27:23 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@tessalynnxo 	replacement		info_end
+	replace	offset	0	length	0	num	2	orig	@planetjedward 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::6	21::4	26::6	33::5	39::6	45::1
+(HS Ich hoffe die kommen echt morgen schon zurück . )
+
+	id	327290543820398592
+	time	Thu Apr 25 05:18:41 +0000 2013
+	replace	offset	112	length	0	num	0	orig	 http://t.co/vnFmbEyZfx	replacement		info_end
+	sentence_start	0	36	58	88
+	token_offsets	sentence	0	offsets	0::8	9::6	16::1	18::3	22::1	24::10	34::1
+	token_offsets	sentence	1	offsets	36::3	40::5	45::1	46::4	51::6	57::1
+	token_offsets	sentence	2	offsets	58::1	60::6	67::1	69::5	75::5	81::5	86::1
+	token_offsets	sentence	3	offsets	88::3	92::4	97::4	102::6	109::3
+(HSF Tropical Island 2 für 1 Gutscheine ! )
+
+(HSF Bis 30.12 . 2013_ gültig ! )
+
+(HS : Berlin | Hallo liebe Leute . )
+
+(HS Ich habe noch einige ... )
+
+	id	324247193257144320
+	time	Tue Apr 16 19:45:29 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Antiidiotikum 	replacement		info_end
+	replace	offset	98	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	21	33	57	98
+	token_offsets	sentence	0	offsets	0::7	8::6	15::4	19::1
+	token_offsets	sentence	1	offsets	21::6	28::3	31::1
+	token_offsets	sentence	2	offsets	33::4	38::3	42::2	45::4	50::5	55::1
+	token_offsets	sentence	3	offsets	57::4	62::3	66::5	72::3	76::2	79::5	85::4	90::6	96::1
+	token_offsets	sentence	4	offsets	98::10
+(HSF Ehrlich gesagt doch . )
+
+(HS Glaube ich . )
+
+(HS Sehe ich um mich herum . )
+
+(HS Aber zum Glück ist ja jedes Kind anders . )
+
+(FRE %PosSmiley )
+
+	id	324646028668190720
+	time	Wed Apr 17 22:10:19 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::6	17::8	25::1	27::8
+(HS ein neuer klasse Bandname : Filament )
+
+	id	328867774128586754
+	time	Mon Apr 29 13:46:02 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@_skudder_ 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::5	13::1	15::6	22::3	26::2	29::5	35::20	56::3	60::3	64::5	70::5	76::2
+(HS einfach sagen : grüsse von so einem inetkumpelpissazeugs den ich nicht kenne 8) )
+
+	id	325287863589675009
+	time	Fri Apr 19 16:40:44 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @4_myDream: @iamnorda @JuliaSrk 	replacement		info_end
+	sentence_start	0	2	42
+	token_offsets	sentence	0	offsets	0::2
+	token_offsets	sentence	1	offsets	2::3	6::3	10::5	16::3	20::2	23::5	29::10	39::3
+	token_offsets	sentence	2	offsets	42::5	48::1
+(HSF .. )
+
+(HS sie hat recht und Du grins gefälligst ... )
+
+(HS jetzt ♥ )
+
+	id	322992523951874048
+	time	Sat Apr 13 08:39:53 +0000 2013
+	sentence_start	0	30
+	token_offsets	sentence	0	offsets	0::2	3::3	7::3	11::3	15::4	20::8	28::1
+	token_offsets	sentence	1	offsets	30::8	39::5	45::4	50::3	54::5	60::2	63::5	68::1
+(FRB So auf dem Weg nach Lüneburg . )
+
+(HS Bestimmt lenkt mich das etwas ab heute . )
+
+	id	328630070409306114
+	time	Sun Apr 28 22:01:29 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@_yurdakul_ 	replacement		info_end
+	replace	offset	97	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	115	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	62
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::9	23::3	27::4	32::7	40::2	43::3	47::5	53::7	60::1
+	token_offsets	sentence	1	offsets	62::8	71::11	83::13	97::17	115::11
+(HS ich habe den newsflash von Welt gestern an der UBahn gesehen . )
+
+(HS Ziemlich inhaltslose Angelegenheit zeitverschwendung nachrichten )
+
+	id	321190601997553664
+	time	Mon Apr 08 09:19:41 +0000 2013
+	replace	offset	57	length	0	num	0	orig	 http://t.co/uOR5RG1Uav	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	3::1	5::12	18::3	22::14	37::3	41::16
+(HS BGH : Verschärfung der Rechtsprechung zum Steuerstrafrecht )
+
+	id	326007514334363648
+	time	Sun Apr 21 16:20:23 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@sarinagrosche 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::2	9::3	13::2	16::5	22::6	29::2	32::2	35::3	39::5	45::3	49::3	53::4	58::3	62::7	70::3	74::5	80::6	87::1	88::2
+(HS meine bf ist 10_ keine ahnung ob du sie kenst sie ist auch auf twitter und heist Gloria . az )
+
+	id	321639475258212356
+	time	Tue Apr 09 15:03:21 +0000 2013
+	replace	offset	23	length	0	num	0	orig	.	replacement		info_end
+	replace	offset	51	length	10	num	2	orig	xD	replacement	%PosSmiley	info_end
+	sentence_start	0	24
+	token_offsets	sentence	0	offsets	0::5	6::1	7::1	8::1	9::4	14::6	20::3
+	token_offsets	sentence	1	offsets	24::3	28::3	32::4	37::4	42::5	47::3	51::10
+(HSF Penis - - - &gt; Titten ... )
+
+(HSF Ich hab echt kein Leben ... %PosSmiley )
+
+	id	327768087648669701
+	time	Fri Apr 26 12:56:16 +0000 2013
+	sentence_start	0	45	92
+	token_offsets	sentence	0	offsets	0::1	1::9	11::9	21::5	27::5	33::5	39::4	43::1
+	token_offsets	sentence	1	offsets	45::1	47::3	51::7	59::1	60::2	63::17	80::1	81::1	83::2	86::4	90::1
+	token_offsets	sentence	2	offsets	92::3	96::3	100::4	105::6	112::6	119::6	126::3	130::4	135::3
+(HS " Einmalige Zusendung fällt nicht unter SPAM " )
+
+(HS - Ich schrieb " im Wiederholungsfall " , Du Depp . )
+
+(HS Und ich muss keinen Anwalt fragen was SPAM ist )
+
+	id	322642609321418752
+	time	Fri Apr 12 09:29:27 +0000 2013
+	replace	offset	44	length	0	num	0	orig	 http://t.co/7sNL7S8YoG	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::9	22::3	26::17	43::1
+(HS Was ist das Gegenteil von Frühlingserwachen ? )
+
+	id	322848800081317889
+	time	Fri Apr 12 23:08:46 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@bewitchedmind 	replacement		info_end
+	replace	offset	109	length	10	num	2	orig	;)	replacement	%PosSmiley	info_end
+	sentence_start	0	73
+	token_offsets	sentence	0	offsets	0::7	8::4	13::3	17::2	20::5	26::12	39::4	44::7	52::2	55::5	61::10	71::1
+	token_offsets	sentence	1	offsets	73::4	78::3	82::4	87::6	93::1	95::2	98::7	106::2	109::10
+(HS Neulich habe ich so einen abgefahrenen Text gelesen zu einem Radiodings . )
+
+(HS Muss mal eben suchen , da kippste um %PosSmiley )
+
+	id	322006820824698880
+	time	Wed Apr 10 15:23:03 +0000 2013
+	replace	offset	41	length	5	num	0	orig	http://t.co/aFYg9dLra9	replacement	%Link	info_end
+	replace	offset	47	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	56	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	70	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	41
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::17	31::8	39::1
+	token_offsets	sentence	1	offsets	41::5	47::7	54::1	56::12	68::1	70::11
+(HS Ich habe 250_ Nahrungseinheiten geerntet ! )
+
+(HS %Link android , androidgames , gameinsight )
+
+	id	320607543795798016
+	time	Sat Apr 06 18:42:49 +0000 2013
+	replace	offset	118	length	0	num	0	orig	 http://t.co/CtSSWtNwew	replacement		info_end
+	sentence_start	0	22	28	96
+	token_offsets	sentence	0	offsets	0::5	6::5	12::8	20::2
+	token_offsets	sentence	1	offsets	22::4	26::2
+	token_offsets	sentence	2	offsets	28::3	32::3	36::9	46::16	63::4	68::3	72::5	78::7	86::7	93::3
+	token_offsets	sentence	3	offsets	96::3	100::7	108::3	112::3	115::3
+(HS jetzt isset passiert .. )
+
+(HSF öach .. )
+
+(HS ich der oberfaule schnabiffmeister habe mir heutn fahrrad kekauft ... )
+
+(HSF das aldirad das die ... )
+
+	id	323121895811735552
+	time	Sat Apr 13 17:13:57 +0000 2013
+	replace	offset	54	length	5	num	0	orig	http://t.co/Ces11cBGSZ	replacement	%Link	info_end
+	replace	offset	82	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::13	14::6	21::4	26::4	31::4	36::2	39::14	54::5	60::3	64::6	71::10	82::11	94::4	99::4
+(HS Internetspiel gratis Kiez King Game im Rotlichtmilieu %Link zum sofort mitspielen Mafiaspiele Kiez King )
+
+	id	324909339951366144
+	time	Thu Apr 18 15:36:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Physiochris 	replacement		info_end
+	sentence_start	0	41
+	token_offsets	sentence	0	offsets	0::2	3::6	10::3	14::3	18::3	22::3	26::5	32::7	39::1
+	token_offsets	sentence	1	offsets	41::5	47::3	51::4	56::5	62::4	67::11	79::2	82::3	86::5	92::5	98::3	102::3	106::1	107::2
+(HS Du kannst für Sie die SIM Karte sperren . )
+
+(HS Sende uns dazu bitte Ihre Handynummer so wie Ihren Namen via DM. ^ SD )
+
+	id	323545950603837441
+	time	Sun Apr 14 21:19:00 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::16	16::1	18::3	22::5	28::6	35::7	43::11	54::1
+(HSF Beziehungsstatus : (FRB mit einem fetten Grinsen einschlafen . ) )
+
+	id	319809846557954050
+	time	Thu Apr 04 13:53:03 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::4	15::3	19::4	24::6
+(HS Ich fühle mich wie eine Banane )
+
+	id	323428812014641152
+	time	Sun Apr 14 13:33:32 +0000 2013
+	replace	offset	89	length	0	num	0	orig	!	replacement		info_end
+	replace	offset	113	length	0	num	2	orig	 http://t.co/1ugKtpSrCv	replacement		info_end
+	sentence_start	0	90
+	token_offsets	sentence	0	offsets	0::6	7::2	10::3	14::3	18::4	22::1	24::5	29::1	31::4	36::1	38::8	47::6	54::2	57::3	61::10	72::2	75::5	81::7	88::1
+	token_offsets	sentence	1	offsets	90::5	96::7	103::1	104::4	109::1	110::3
+(HS Yamaha AX 700_ 600_ Watt : Essen , Ruhr | Verkaufe Yamaha AX 700_ Verstärker im beste zustand ! )
+
+(HSF Keine kratzer , (ATT Voll f ... ) )
+
+	id	320832419932540928
+	time	Sun Apr 07 09:36:24 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @BMOnline: 	replacement		info_end
+	replace	offset	52	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	65	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	76	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	80	length	0	num	8	orig	 https://t.co/j46BqfpveG	replacement		info_end
+	sentence_start	0	52
+	token_offsets	sentence	0	offsets	0::4	5::3	9::4	13::1	15::4	20::3	24::8	33::3	37::13	50::1
+	token_offsets	sentence	1	offsets	52::12	65::10	76::4
+(HSF NACH dem Lauf , Teil 01:_ Johannes aus Reinickendorf . )
+
+(HS Halbmarathon berlinhalf Vine )
+
+	id	321642305247391744
+	time	Tue Apr 09 15:14:36 +0000 2013
+	replace	offset	133	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	33	133
+	token_offsets	sentence	0	offsets	0::14	15::5	21::10	31::1
+	token_offsets	sentence	1	offsets	33::3	37::12	50::4	55::3	59::12	72::7	80::5	86::10	97::2	100::9	110::7	118::6	125::6	131::1
+	token_offsets	sentence	2	offsets	133::1	134::4
+(HS Bürgergemeinde macht Rückzieher ! )
+
+(HS Ein Theaterstück über den Massenmörder Breivik hätte eigentlich im Stadthaus gezeigt werden sollen . )
+
+(HS 7 vor7 )
+
+	id	320537205930065921
+	time	Sat Apr 06 14:03:19 +0000 2013
+	replace	offset	83	length	0	num	0	orig	 - http://t.co/6x9RQKGgkm	replacement		info_end
+	sentence_start	0	20
+	token_offsets	sentence	0	offsets	0::5	6::3	10::1	11::8
+	token_offsets	sentence	1	offsets	20::1	22::3	26::2	29::3	33::3	37::13	50::1	52::2	55::8	64::1	65::9	75::7	82::1
+(HSF Check out " Straight )
+
+(HS - Rap so wie Ein Waffenschrank " by STRAIGHT -OP- Warghosts Germany -CP- )
+
+	id	323741871023206400
+	time	Mon Apr 15 10:17:31 +0000 2013
+	replace	offset	30	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	112	length	0	num	2	orig	 http://t.co/L22z4FRenn	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::3	11::8	20::3	24::5	30::4	35::5	41::3	45::9	54::1	56::6	63::4	68::3	71::1	73::3	77::8	86::3	89::1	91::4	96::6	103::3	107::2	109::3
+(HSF Wolkig mit Aussicht auf Musik 106:_ Heute mit Tripwires , Bombay Show Pig , The Twilight Sad , Twin Tigers und Ho ... )
+
+	id	325773282404089856
+	time	Sun Apr 21 00:49:37 +0000 2013
+	sentence_start	0	48
+	token_offsets	sentence	0	offsets	0::4	5::4	9::1	10::1	12::5	18::4	23::7	31::3	35::5	41::4	45::2
+	token_offsets	sentence	1	offsets	48::1
+(HSF Heck nawl , " cudnt even picture dem doing dhat .. )
+
+(FRE ! )
+
+	id	320134717980696576
+	time	Fri Apr 05 11:23:59 +0000 2013
+	replace	offset	22	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	40	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	111	length	0	num	4	orig	 http://t.co/8yIoXPGeHf	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::15	16::2	19::2	22::7	30::5	36::3	40::9	50::8	59::3	63::8	72::4	77::5	83::2	86::5	92::1	93::5	99::3	103::7	110::1
+(HS Landeshauptmann a. D. Dörfler wurde zum Bundesrat angelobt und befindet sich jetzt in einer " Phase des Lernens " )
+
+	id	325150870884990976
+	time	Fri Apr 19 07:36:23 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	48	length	5	num	2	orig	http://t.co/5vqRUUdw9f	replacement	%Link	info_end
+	replace	offset	54	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	61	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::2	8::1	10::3	14::7	22::5	28::3	32::1	34::7	42::5	48::5	54::6	61::3
+(HS Motor Re : (HS 848_ spritzt nicht ein / ) startet nicht %Link Ducati SBK )
+
+	id	321082596215889920
+	time	Mon Apr 08 02:10:31 +0000 2013
+	replace	offset	55	length	0	num	0	orig	_	replacement		info_end
+	sentence_start	0	54
+	token_offsets	sentence	0	offsets	0::5	6::3	10::4	15::1	16::7	23::1	25::10	36::7	44::4	49::3	52::1
+	token_offsets	sentence	1	offsets	54::1	55::1
+(HS Nicht mal mein " Kalinke " Klingelton heitert mich auf . )
+
+(HSF ; ; )
+
+	id	326787415803052032
+	time	Tue Apr 23 19:59:26 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::6	14::3	18::7	26::3	30::1	31::1
+(HS Master bringt mir Deutsch bei : 3 )
+
+	id	320665307540754432
+	time	Sat Apr 06 22:32:21 +0000 2013
+	replace	offset	14	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	71	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	71	length	5	num	4	orig	NaptoFCB	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	4::1	5::4	10::3	14::3	18::3	22::15	38::7	46::7	54::3	58::4	63::3	67::3	71::5	77::9	86::1
+(HS Also , wenn der fcb die Championsleague gewinnt sollten wir alle mit dem NaptoFCB losziehen . )
+
+	id	327755796253384704
+	time	Fri Apr 26 12:07:26 +0000 2013
+	replace	offset	46	length	5	num	0	orig	http://t.co/2naCtAcC9X	replacement	%Link	info_end
+	replace	offset	51	length	0	num	2	orig	 http://t.co/fmzv6VIrte	replacement		info_end
+	sentence_start	0	46
+	token_offsets	sentence	0	offsets	0::2	3::8	12::5	18::3	22::4	27::4	32::3	36::2	39::5	44::1
+	token_offsets	sentence	1	offsets	46::5
+(HS In Egliswil fühlt man sich wohl und zu Hause ! )
+
+(FRE %Link )
+
+	id	321982190281949185
+	time	Wed Apr 10 13:45:10 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::6	11::3	15::7	23::4	28::4	33::5	39::8	47::1
+(HS Mal wieder mit Gorrest Fump nach Hause gekommen . )
+
+	id	319943712312532992
+	time	Thu Apr 04 22:44:59 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@MARINASLiMANI 	replacement		info_end
+	replace	offset	39	length	10	num	2	orig	.o	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::5	19::3	23::7	31::6	38::1	39::10
+(HS Nur das alle jetzt was anderes denken o %PosSmiley )
+
+	id	321903251274477568
+	time	Wed Apr 10 08:31:30 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@JuliavonLehmenden 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::1	2::5	8::4	13::3	17::3	21::15	36::1
+(HSF - schon Lust auf den Vormittagskaffe ? )
+
+	id	323854836149936128
+	time	Mon Apr 15 17:46:24 +0000 2013
+	replace	offset	38	length	10	num	0	orig	XD	replacement	%PosSmiley	info_end
+	replace	offset	58	length	0	num	2	orig	 http://t.co/YSD7xF6ntB)	replacement		info_end
+	sentence_start	0	6	38
+	token_offsets	sentence	0	offsets	0::4	4::1
+	token_offsets	sentence	1	offsets	6::3	10::3	14::3	18::4	23::6	30::6	36::1
+	token_offsets	sentence	2	offsets	38::10	49::1	50::8
+(HSF Echt ? )
+
+(HS Das hat mir noch keiner gesagt . )
+
+(HSF %PosSmiley -OP- @YouTube )
+
+	id	322294258944049152
+	time	Thu Apr 11 10:25:13 +0000 2013
+	replace	offset	113	length	0	num	0	orig	 http://t.co/DBrDTaRnFU	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::8	16::1	18::5	24::7	32::5	38::3	42::2	45::19	65::4	70::8	79::3	83::3	87::3	90::1	91::9	101::11	112::1
+(HS Elmars Programm - Elmar Pichler Rolle hat am Donnerstagvormittag sein Programm für die SVP - Basiswahl vorgestellt . )
+
+	id	326665686636187649
+	time	Tue Apr 23 11:55:43 +0000 2013
+	replace	offset	79	length	0	num	0	orig	 http://t.co/W3l9dJRCPi	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::9	10::3	14::3	18::13	32::9	42::1	44::4	49::4	54::1	56::3	60::8	69::3	73::6
+(HSF Interview mit dem Holländischen Fernsehen , dann Teil 2 mit gesantem aus Israel )
+
+	id	323328407289085952
+	time	Sun Apr 14 06:54:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @SebRoloff: 	replacement		info_end
+	replace	offset	59	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::4	12::3	16::3	20::14	35::3	39::5	45::3	49::2	52::2	55::3	59::6
+(HS Volles Haus bei der Vorbesprechung von Jusos und DL 21_ zum spdbpt )
+

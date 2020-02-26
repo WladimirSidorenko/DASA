@@ -1,0 +1,1028 @@
+	id	311972225265836033
+	time	Wed Mar 13 22:49:09 +0000 2013
+	replace	offset	0	length	11	num	0	orig	:-))) 	replacement	%PosSmiley 	info_end
+	replace	offset	50	length	5	num	2	orig	http://t.co/51IzDHwkaV	replacement	%Link	info_end
+	replace	offset	60	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	60	length	5	num	6	orig	SPIEGELONLINE	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::10	11::3	15::4	20::5	25::1	27::2	30::3	34::3	38::11	50::5	56::3	60::5
+(HS %PosSmiley Der neue Papst : Es ist ein Argentinier %Link via SPIEGELONLINE )
+
+	id	311920588497231875
+	time	Wed Mar 13 19:23:58 +0000 2013
+	replace	offset	37	length	10	num	0	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	3::1	5::2	8::4	13::5	19::2	22::4	26::1	28::3	32::4	37::10
+(HS ooh , de neue Papst is süss , der gute %PosSmiley )
+
+	id	311918752864288768
+	time	Wed Mar 13 19:16:40 +0000 2013
+	replace	offset	29	length	11	num	0	orig	:-) 	replacement	%PosSmiley 	info_end
+	replace	offset	40	length	0	num	2	orig	RT @Koerber:	replacement		info_end
+	replace	offset	71	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0	57	71
+	token_offsets	sentence	0	offsets	0::3	4::4	9::4	14::6	21::7	29::10	41::8	50::5	55::1
+	token_offsets	sentence	1	offsets	57::4	61::1	63::6	69::1
+	token_offsets	sentence	2	offsets	71::5	76::1
+(HS War auch mein erster Gedanke %PosSmiley Kardinal Jorge ? )
+
+(HS Hola , Chicas ! )
+
+(HSF Papst " )
+
+	id	311908929766572032
+	time	Wed Mar 13 18:37:38 +0000 2013
+	replace	offset	31	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::5	19::5	25::5	31::10
+(HS Die Welt hat einen neuen Papst %PosSmiley )
+
+	id	311942701710987264
+	time	Wed Mar 13 20:51:50 +0000 2013
+	replace	offset	1	length	0	num	0	orig	@bernry: 	replacement		info_end
+	replace	offset	82	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	110	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	82
+	token_offsets	sentence	0	offsets	0::1	1::6	8::3	12::4	17::3	21::2	24::5	30::3	34::8	42::1	44::2	47::3	51::3	55::5	61::5	67::7	75::5	80::1
+	token_offsets	sentence	1	offsets	82::6	89::3	93::3	97::6	104::5	110::10
+(HS " Bayern hat noch nie an einem Tag verloren , (ARR an dem ein neuer Papst gewählt wurde . ) )
+
+(HS FCBAFC und der heisst franz %PosSmiley )
+
+	id	311792272935096320
+	time	Wed Mar 13 10:54:05 +0000 2013
+	replace	offset	28	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	49	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	91	length	11	num	4	orig	:-) 	replacement	%PosSmiley 	info_end
+	replace	offset	102	length	5	num	6	orig	http://t.co/5rVz30u9yF	replacement	%Link	info_end
+	sentence_start	0	91
+	token_offsets	sentence	0	offsets	0::6	7::9	17::5	23::4	28::9	37::5	43::5	49::5	55::6	62::3	66::4	71::2	74::4	79::9	88::3
+	token_offsets	sentence	1	offsets	91::10	102::5
+(HS wieder schwarzer rauch beim konklave. einen neuen papst findet man doch so viel schneller ... )
+
+(HS %PosSmiley %Link )
+
+	id	311950754535600128
+	time	Wed Mar 13 21:23:50 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @STUMML_de: 	replacement		info_end
+	replace	offset	33	length	10	num	2	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	48
+	token_offsets	sentence	0	offsets	0::2	2::1	4::3	8::4	13::5	19::5	25::7	33::10	44::3
+	token_offsets	sentence	1	offsets	48::11	60::6	67::4	72::3	76::3	80::2	83::12	96::3	100::3	104::1	105::6	111::1	112::6	118::1	120::3	124::2	126::1
+(HS So , der neue Papst wurde gewählt %PosSmiley ... )
+
+(HS hoffentlich ändert sich nun was im Zusammenhang mit dem " Kondom - Verbot " und co . )
+
+	id	311913897688956928
+	time	Wed Mar 13 18:57:22 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Engstfelder: 	replacement		info_end
+	replace	offset	19	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	19	length	5	num	4	orig	ZDF	replacement	%User	info_end
+	replace	offset	25	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	55	length	0	num	8	orig	@	replacement		info_end
+	replace	offset	55	length	5	num	10	orig	tagesschau	replacement	%User	info_end
+	replace	offset	102	length	10	num	12	orig	;-)	replacement	%PosSmiley	info_end
+	replace	offset	113	length	0	num	14	orig	#	replacement		info_end
+	sentence_start	0	62
+	token_offsets	sentence	0	offsets	0::5	6::2	9::5	15::3	19::5	25::5	31::1	33::5	39::8	48::2	51::3	55::5	60::1
+	token_offsets	sentence	1	offsets	62::3	66::10	76::1	77::10	88::3	92::3	96::5	102::10	113::12
+(HS Weist er Rauch bei ZDF heute - Papst Auftritt in der tagesschau ? )
+
+(HS Das öffentlich - rechtliche ist ein Fuchs %PosSmiley HabemusPapam )
+
+	id	312172552187437056
+	time	Thu Mar 14 12:05:10 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Schmmmiddelinho 	replacement		info_end
+	replace	offset	69	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	88	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	88
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::2	16::8	25::3	29::15	45::3	49::3	53::6	60::4	65::3	69::5	75::6	82::4	86::1
+	token_offsets	sentence	1	offsets	88::10
+(HS Das ist auch so ziemlich das Interessanteste (ARR was ich bisher über den Papst gehört habe . ) )
+
+(FRE %PosSmiley )
+
+	id	311905252070813696
+	time	Wed Mar 13 18:23:02 +0000 2013
+	replace	offset	115	length	11	num	0	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	126	length	5	num	2	orig	http://t.co/1QInlysw9i	replacement	%Link	info_end
+	sentence_start	0	8	26	65
+	token_offsets	sentence	0	offsets	0::4	5::2
+	token_offsets	sentence	1	offsets	8::5	14::2	17::5	23::2
+	token_offsets	sentence	2	offsets	26::2	29::2	32::3	36::5	42::4	47::3	51::4	56::5	62::2
+	token_offsets	sentence	3	offsets	65::3	69::5	75::10	86::3	90::5	96::5	102::5	108::3	112::2	115::10	126::5
+(HSF Okay .. )
+
+(HS Weist er Rauch .. )
+
+(HS Um 21_ Uhr zeigt sich der neue Papst .. )
+
+(HS Ich hoffe nachwievor auf Papst Bunga Bunga der I. %PosSmiley %Link )
+
+	id	311965806705643520
+	time	Wed Mar 13 22:23:39 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @aiida976: @kleopatra2009 @dertweety 	replacement		info_end
+	replace	offset	3	length	0	num	2	orig	.	replacement		info_end
+	replace	offset	42	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	3
+	token_offsets	sentence	0	offsets	0::3
+	token_offsets	sentence	1	offsets	3::4	8::3	12::5	18::3	22::4	27::4	32::9	42::10
+(FRE ... )
+
+(HS aber der Papst ist doch kein Landsmann %PosSmiley )
+
+	id	311924923641774081
+	time	Wed Mar 13 19:41:11 +0000 2013
+	replace	offset	38	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::5	21::3	25::11	36::1	38::10
+(HS Der neue papst kommt aus argentinien ! %PosSmiley )
+
+	id	311902105927573504
+	time	Wed Mar 13 18:10:31 +0000 2013
+	replace	offset	6	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	12	length	11	num	2	orig	:-) 	replacement	%PosSmiley 	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::5	12::10	23::4	28::4	33::5	39::6
+(HSF Neuer papst %PosSmiley Also kein neuer Rekord )
+
+	id	311927461690617856
+	time	Wed Mar 13 19:51:16 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	6	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	69	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::4	11::3	15::5	21::3	25::2	28::3	32::6	39::3	43::5	49::5	55::3	59::4	64::4	69::10
+(HS Papst pope Mal sehen was es als erstes vom neuen Papst bei Ebay gibt %PosSmiley )
+
+	id	311912074852855809
+	time	Wed Mar 13 18:50:08 +0000 2013
+	replace	offset	28	length	0	num	0	orig	@	replacement		info_end
+	replace	offset	28	length	5	num	2	orig	sixtus	replacement	%User	info_end
+	replace	offset	106	length	10	num	4	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::5	16::6	23::2	26::1	28::5	34::8	43::3	47::5	53::3	57::4	62::5	68::3	72::3	76::7	84::6	91::7	98::1	99::6	106::10
+(HS tippt auf Papst Sixtus VI - sixtus überlege Dir schon mal eine Summe für den Verkauf Deines Twitter - Namens %PosSmiley )
+
+	id	311921946709336065
+	time	Wed Mar 13 19:29:21 +0000 2013
+	replace	offset	60	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::3	11::5	17::3	21::3	25::4	30::4	35::6	42::2	45::3	49::5	55::4	60::10
+(HS Obwohl dem Papst hör ich fast noch lieber zu als einer KMH. %PosSmiley )
+
+	id	311923680093560832
+	time	Wed Mar 13 19:36:15 +0000 2013
+	replace	offset	62	length	10	num	0	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0	58
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::3	19::5	25::3	29::11	41::3	45::5	51::5	56::2
+	token_offsets	sentence	1	offsets	58::4	62::10
+(HS Der neue Papst hat schon irg Ähnlichkeit mit Leoni Messi .. )
+
+(HSF haha %PosSmiley )
+
+	id	311959960210780160
+	time	Wed Mar 13 22:00:25 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@	replacement		info_end
+	replace	offset	0	length	5	num	2	orig	heidy79	replacement	%User	info_end
+	replace	offset	92	length	10	num	4	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::5	16::5	22::3	26::3	30::2	33::3	37::3	41::2	44::9	54::2	57::6	63::1	65::2	68::3	72::5	78::10	89::3	92::10
+(HS heidy79 mit ihrem Vater war ich an der Uni in Frankfurt zu Besuch , wo der Papst promoviert hat %PosSmiley )
+
+	id	311919568509607939
+	time	Wed Mar 13 19:19:54 +0000 2013
+	replace	offset	31	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	55	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	97	length	10	num	4	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	108	length	0	num	6	orig	!	replacement		info_end
+	sentence_start	0	69
+	token_offsets	sentence	0	offsets	0::5	6::5	12::3	16::10	27::3	31::10	42::3	46::3	50::4	55::5	61::6	67::1
+	token_offsets	sentence	1	offsets	69::3	73::5	79::4	84::4	89::7	97::10	107::1
+(HS Jetzt kommt die Eilmeldung via Tagesschau wie der neue Pabst heisst ! )
+
+(HS Die haben wohl kein Twitter %PosSmiley ! )
+
+	id	311908393549971456
+	time	Wed Mar 13 18:35:30 +0000 2013
+	replace	offset	0	length	0	num	0	orig	...	replacement		info_end
+	replace	offset	21	length	10	num	2	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	32	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	1
+	token_offsets	sentence	0	offsets	1::4	6::4	11::3	15::5	21::10	32::5	38::4	42::1	44::1	45::3	49::5	55::7	62::1
+(HS oder doch ein Neger %PosSmiley papst BILD : " Wir sehen schwarz " )
+
+	id	311918892811419648
+	time	Wed Mar 13 19:17:13 +0000 2013
+	replace	offset	82	length	10	num	0	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0	36	61
+	token_offsets	sentence	0	offsets	0::3	4::11	16::3	20::3	24::4	29::5	34::1
+	token_offsets	sentence	1	offsets	36::3	40::4	45::2	48::4	53::6	59::1
+	token_offsets	sentence	2	offsets	61::9	71::3	75::5	80::1	82::10
+(HS Ein Argentinier ist der neue Papst . )
+
+(HS Wie wird er sich nennen ? )
+
+(HSF Maradonna der Erste ? %PosSmiley )
+
+	id	311935023701958657
+	time	Wed Mar 13 20:21:19 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @ESA_de: 	replacement		info_end
+	replace	offset	76	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	106	length	10	num	4	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	117	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	117
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::8	21::6	28::3	32::5	38::5	44::7	52::3	56::3	60::6	67::2	70::5	76::11	88::2	91::4	95::1	96::8	104::1	106::10
+	token_offsets	sentence	1	offsets	117::9	127::1	129::3
+(HS Bei all den hitzigen Tweets zum neuen Papst kümmern wir uns lieber um kühle Nordlichter in Nord - Finnland ! %PosSmiley )
+
+(HSF esaaurora # ... )
+
+	id	312045853814685696
+	time	Thu Mar 14 03:41:43 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @hipsterschwein: 	replacement		info_end
+	replace	offset	30	length	10	num	2	orig	:-(	replacement	%NegSmiley	info_end
+	sentence_start	0	30
+	token_offsets	sentence	0	offsets	0::6	7::4	12::6	19::3	23::5	28::1
+	token_offsets	sentence	1	offsets	30::10
+(HSF Wieder kein Moslem als Papst . )
+
+(FRE %NegSmiley )
+
+	id	311945538956308480
+	time	Wed Mar 13 21:03:06 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @MrMenstrends: 	replacement		info_end
+	replace	offset	39	length	11	num	2	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	55	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	61	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	65	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	72	length	0	num	10	orig	 http://t.co/hdbNE4YPir	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::4	11::3	15::3	19::9	29::9	39::10	50::4	55::5	61::3	65::7
+(HS Papst Wahl aus der Badewanne anschauen %PosSmiley Haha papst rom italien )
+
+	id	311931226468544512
+	time	Wed Mar 13 20:06:14 +0000 2013
+	replace	offset	9	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	72	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	89	length	0	num	4	orig	@ja_natuerlich 	replacement		info_end
+	replace	offset	89	length	10	num	6	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::5	21::11	33::3	37::5	43::6	50::3	54::4	59::2	62::3	66::5	72::8	81::2	84::3	87::1	89::10
+(HS der neue papst nutzt SocialMedia (HSF und kocht gerne. wie wäre es mit einem twitcook in rom ? %PosSmiley ) )
+
+	id	311951192995532800
+	time	Wed Mar 13 21:25:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@Agadius 	replacement		info_end
+	replace	offset	43	length	10	num	2	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::2	8::4	13::4	18::6	25::5	31::5	37::5	43::10
+(HS Aber es gibt doch gerade einen neuen papst %PosSmiley )
+
+	id	311924790170628097
+	time	Wed Mar 13 19:40:39 +0000 2013
+	sentence_start	0	76
+	token_offsets	sentence	0	offsets	0::4	5::7	12::1	14::3	18::5	24::9	34::3	38::10	49::3	53::6	60::3	64::8	72::3
+	token_offsets	sentence	1	offsets	76::4	81::3	85::4	90::4	95::6	102::8	110::2
+(HS Habe gehofft , (OBJ der Papst schmeisst zur Begrüssung mit Pillen und Kondomen ... ) )
+
+(HS Aber hat sich doch nichts geändert :( )
+
+	id	312145392336781313
+	time	Thu Mar 14 10:17:15 +0000 2013
+	replace	offset	36	length	11	num	0	orig	;-) 	replacement	%PosSmiley 	info_end
+	replace	offset	116	length	0	num	2	orig	 http://t.co/qonncIn5dp	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::8	9::6	16::5	22::1	24::5	30::5	36::10	47::7	55::3	58::1	60::4	65::3	69::4	74::5	80::10	91::1	92::6	99::8	108::5	113::3
+(HS Chemiker können alles - sogar Papst %PosSmiley Wusstet Ihr , dass der neue Papst Franziskus -OP- vorher Kardinal Jorge ... )
+
+	id	311911110678831104
+	time	Wed Mar 13 18:46:18 +0000 2013
+	replace	offset	11	length	0	num	0	orig	...	replacement		info_end
+	replace	offset	76	length	11	num	2	orig	:) 	replacement	%PosSmiley 	info_end
+	replace	offset	87	length	5	num	4	orig	http://t.co/cV83epVWg8	replacement	%Link	info_end
+	sentence_start	0	11	76
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3
+	token_offsets	sentence	1	offsets	11::1	13::3	17::3	21::8	30::7	38::12	51::3	55::4	60::5	66::8	74::1
+	token_offsets	sentence	2	offsets	76::10	87::5
+(HS Ich bin ... )
+
+(HS : Ich bin gespannt welcher Nationalität der neue Papst angehört . )
+
+(HS %PosSmiley %Link )
+
+	id	311903187705663490
+	time	Wed Mar 13 18:14:49 +0000 2013
+	replace	offset	100	length	10	num	0	orig	:-)	replacement	%PosSmiley	info_end
+	sentence_start	0	25	70
+	token_offsets	sentence	0	offsets	0::1	1::21	22::1	23::1
+	token_offsets	sentence	1	offsets	25::1	27::1	28::4	33::5	39::4	44::3	48::5	54::5	60::7	67::1	68::1
+	token_offsets	sentence	2	offsets	70::6	76::1	78::3	82::3	86::3	90::9	100::10
+(HSF " Programmunterbrechung ? " )
+
+(HS - " Dann wurde wohl ein neuer Papst gewählt . " )
+
+(HS Haaach , bin ich ein Hellseher %PosSmiley )
+
+	id	311905925072056320
+	time	Wed Mar 13 18:25:42 +0000 2013
+	replace	offset	33	length	10	num	0	orig	:-)	replacement	%PosSmiley	info_end
+	replace	offset	45	length	0	num	2	orig	@Halliway: 	replacement		info_end
+	replace	offset	81	length	10	num	4	orig	;)	replacement	%PosSmiley	info_end
+	replace	offset	92	length	0	num	6	orig	#	replacement		info_end
+	sentence_start	0	44	63	92
+	token_offsets	sentence	0	offsets	0::3	3::1	5::6	12::7	20::3	24::2	27::4	31::1	33::10
+	token_offsets	sentence	1	offsets	44::1	45::4	50::5	56::5	61::1
+	token_offsets	sentence	2	offsets	63::3	67::5	73::6	79::1	81::10
+	token_offsets	sentence	3	offsets	92::5	97::1
+(HS Nee , Helmut Schmidt war zu Gast ! %PosSmiley )
+
+(HSF " Kein neuer Papst . )
+
+(HS Die Hütte brennt ! %PosSmiley )
+
+(HSF Papst " )
+
+	id	311922181896540160
+	time	Wed Mar 13 19:30:18 +0000 2013
+	replace	offset	1	length	0	num	0	orig	@marcopolo71: 	replacement		info_end
+	replace	offset	14	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	54	length	0	num	4	orig	@	replacement		info_end
+	replace	offset	54	length	5	num	6	orig	Pontifex	replacement	%User	info_end
+	replace	offset	76	length	10	num	8	orig	;-)	replacement	%PosSmiley	info_end
+	sentence_start	0	52
+	token_offsets	sentence	0	offsets	0::1	1::3	5::3	9::4	14::5	20::4	25::5	31::3	35::14	49::1	50::1
+	token_offsets	sentence	1	offsets	52::1	54::5	60::4	65::2	68::7	76::10
+(HS " Hat der neue Papst auch schon ein Twitteraccount ? " )
+
+(HS - Pontifex oder so ähnlich %PosSmiley )
+
+	id	311913994862616576
+	time	Wed Mar 13 18:57:46 +0000 2013
+	replace	offset	28	length	10	num	0	orig	:)	replacement	%PosSmiley	info_end
+	replace	offset	39	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	48	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	52	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	62	length	10	num	8	orig	:)	replacement	%PosSmiley	info_end
+	sentence_start	0	39
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::3	16::4	21::5	26::1	28::10
+	token_offsets	sentence	1	offsets	39::8	48::3	52::9	62::10	72::2
+(HS Wer ist nun der neue papst ? %PosSmiley )
+
+(HS spannung mit vorfreude %PosSmiley ♥★ )
+
+	id	311939331642232832
+	time	Wed Mar 13 20:38:26 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @BistumMainz: 	replacement		info_end
+	replace	offset	57	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	80	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	91	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	97	length	0	num	8	orig	#	replacement		info_end
+	sentence_start	0	56
+	token_offsets	sentence	0	offsets	0::1	1::3	5::6	12::7	19::1	21::3	25::6	32::5	37::1	39::3	43::5	49::4	53::1	54::1
+	token_offsets	sentence	1	offsets	56::1	57::10	68::3	72::6	78::1	80::10	91::5	97::11
+(HS " Das Gesetz fordert , die Strafe nimmt , (HS die Gnade gibt . " ) )
+
+(HS -OP- Franziskus von Assisi -CP- ausgründen Papst FranziskusI )
+
+	id	311921002269523968
+	time	Wed Mar 13 19:25:36 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @onlinegott: 	replacement		info_end
+	sentence_start	0	69
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::5	21::1	23::4	28::3	32::3	36::5	42::5	48::2	51::7	59::8	67::1
+	token_offsets	sentence	1	offsets	69::3	73::3	77::5	83::3	87::3	91::4	96::4	101::8	109::1
+(HS Ich hatte schon Angst , (ATT dass wir den Papst nicht zu Gesicht bekommen . ) )
+
+(HS Hat Tom Hanks den Tag doch noch gerettet ! )
+
+	id	311915783804563457
+	time	Wed Mar 13 19:04:52 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @ProSieben: 	replacement		info_end
+	replace	offset	97	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	27	52	97
+	token_offsets	sentence	0	offsets	0::5	6::3	10::3	14::11	25::1
+	token_offsets	sentence	1	offsets	27::3	31::5	37::8	46::4	50::1
+	token_offsets	sentence	2	offsets	52::5	58::6	65::5	71::7	79::3	83::3	87::8	95::1
+	token_offsets	sentence	3	offsets	97::5
+(HSF Jubel auf dem Petersplatz . )
+
+(HS Die Garde formiert sich . )
+
+(HS Kommt gleich Marco Schreyl mit dem Umschlag ? )
+
+(HSF Papst )
+
+	id	312121921250676736
+	time	Thu Mar 14 08:43:59 +0000 2013
+	replace	offset	9	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::3	19::11	31::1	33::5	39::12	52::3	56::10	67::7	75::4	80::7	88::10	98::1
+(HS Der neue Papst ist Argentinier - Messi überraschend mit sofortiger Wirkung nach Italien gewechselt . )
+
+	id	311941011788144641
+	time	Wed Mar 13 20:45:07 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @SasaKiar: 	replacement		info_end
+	replace	offset	24	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	95
+	token_offsets	sentence	0	offsets	0::4	5::2	8::5	14::3	18::5	24::5	30::5	36::6	43::5	49::8	58::3	62::4	67::11	79::14	93::1
+	token_offsets	sentence	1	offsets	95::2	98::10	109::3	113::4	117::1	118::3	122::2	125::3
+(HS Erst du Infos zum neuen Papst geben leider keine Hoffnung für eine zeitgemässe Modernisierung ! )
+
+(HS Er verteufelt die Homo - Ehe un ... )
+
+	id	312140357938839552
+	time	Thu Mar 14 09:57:15 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @cdu_news: 	replacement		info_end
+	replace	offset	8	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	8	length	5	num	4	orig	groehe	replacement	%User	info_end
+	replace	offset	88	length	5	num	6	orig	http://t.co/jlKVzdJ7hp	replacement	%Link	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::5	13::1	15::3	19::3	23::12	36::10	47::5	53::10	64::8	73::2	76::6	83::4	88::5	94::1	95::3
+(HS Hermann groehe : (HS Die CDU Deutschlands gratuliert Papst Franziskus herzlich zu seiner Wahl %Link / umg ) )
+
+	id	311922605680635904
+	time	Wed Mar 13 19:31:59 +0000 2013
+	sentence_start	0	38	85
+	token_offsets	sentence	0	offsets	0::3	4::3	8::3	12::3	16::10	27::3	31::5	36::1
+	token_offsets	sentence	1	offsets	38::4	43::7	51::7	59::2	62::5	68::7	76::2	79::4	83::1
+	token_offsets	sentence	2	offsets	85::3	89::3	93::3	97::7	104::1	106::3	110::10	121::3	124::1
+(HS Ich war auf der Beerdigung vom Papst . )
+
+(HS Sehr beliebt scheint er (PRD nicht gewesen zu sein . ) )
+
+(HS Ich war der einzige , (ARR der geklatscht hat . ) )
+
+	id	311916620245237761
+	time	Wed Mar 13 19:08:12 +0000 2013
+	replace	offset	49	length	10	num	0	orig	.D	replacement	%PosSmiley	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::1	1::3	5::3	9::2	12::3	16::7	24::5	30::3	34::3	38::6	45::4	49::12	62::5	68::5	74::3	78::4	83::6	89::1	91::3	95::15	111::3	115::4	119::1
+(HS " das ist ja der doofste Papst auf der ganzen Welt %PosSmileyer kommt nicht und alle warten " Gut zusammengefasst von Mini . )
+
+	id	311977653848662017
+	time	Wed Mar 13 23:10:43 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @welt: 	replacement		info_end
+	replace	offset	9	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::6	22::9	32::7	40::3	44::10	54::1	56::5	62::10	73::2	76::1	78::4	83::4	88::2	91::5	97::7	105::4	109::1	111::4	116::2	119::4	124::2	127::3
+(HS Der neue Papst heisst offiziell einfach nur Franziskus , (OBJ nicht Franziskus I. - Erst wenn es einen Zweiten gibt , ) (HS gibt es auch de ... ) )
+
+	id	311918728755417088
+	time	Wed Mar 13 19:16:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @possum_sed_nolo: 	replacement		info_end
+	sentence_start	0	33
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::3	20::5	26::5	31::1
+	token_offsets	sentence	1	offsets	33::3	37::5	43::4	48::5	54::3	58::16	75::3	79::6	86::10	96::1
+(HS Wie jetzt Jorge ist neuer Papst ? )
+
+(HS Wer macht denn jetzt das Laufstegtraining bei Heidis Määäädchen ? )
+
+	id	311926568828145664
+	time	Wed Mar 13 19:47:43 +0000 2013
+	replace	offset	82	length	10	num	0	orig	;)	replacement	%PosSmiley	info_end
+	sentence_start	0	59
+	token_offsets	sentence	0	offsets	0::5	6::3	10::3	14::3	18::4	23::5	29::3	33::13	47::10	57::1
+	token_offsets	sentence	1	offsets	59::3	63::5	69::2	72::3	76::2	78::3	82::10
+(HS Jetzt hat mir der neue Papst das Abendprogramm vermasselt . )
+
+(HS Der fängt ja gut an ... %PosSmiley )
+
+	id	311919821438726146
+	time	Wed Mar 13 19:20:55 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::6	16::10	27::3	31::4	36::12	49::3	53::11	65::3	69::4	74::3	78::5	83::1
+(HS Nach dem besten Fussballer der Welt präsentieren die Argentinier nun auch den Papst . )
+
+	id	311923091540426753
+	time	Wed Mar 13 19:33:54 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @onlinegott: 	replacement		info_end
+	sentence_start	0	69
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::5	21::1	23::4	28::3	32::3	36::5	42::5	48::2	51::7	59::8	67::1
+	token_offsets	sentence	1	offsets	69::3	73::3	77::5	83::3	87::3	91::4	96::4	101::8	109::1
+(HS Ich hatte schon Angst , (ATT dass wir den Papst nicht zu Gesicht bekommen . ) )
+
+(HS Hat Tom Hanks den Tag doch noch gerettet ! )
+
+	id	311921269966786560
+	time	Wed Mar 13 19:26:40 +0000 2013
+	replace	offset	62	length	11	num	0	orig	:D	replacement	%PosSmiley 	info_end
+	replace	offset	74	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	14
+	token_offsets	sentence	0	offsets	0::5	6::6	12::1
+	token_offsets	sentence	1	offsets	14::2	17::4	22::7	30::3	34::5	40::5	46::3	50::11	62::10	74::5
+(HSF Super Nummer . )
+
+(HS Er kann erstmal das Gebet nicht auf italienisch %PosSmiley Papst )
+
+	id	311795029989548032
+	time	Wed Mar 13 11:05:02 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::4	13::4	18::5	24::9	34::3	38::7	46::3	50::5	56::8	65::5	71::3	75::3	79::6	86::5	91::1	93::3	97::2	100::4	105::4	110::5	116::8	125::8	133::1	135::4	139::1
+(HS (ADV Solange kein rosa Rauch aufsteigt (ADV und endlich ein offen schwuler Papst auf den Balkon tritt , ) ) ist es doch auch nicht wirklich spannend , (HS oder ? ) )
+
+	id	311906212683862017
+	time	Wed Mar 13 18:26:50 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @_ungenau_: 	replacement		info_end
+	sentence_start	0	9	17	47
+	token_offsets	sentence	0	offsets	0::1	1::6	7::1
+	token_offsets	sentence	1	offsets	9::6	15::1
+	token_offsets	sentence	2	offsets	17::3	21::5	27::5	33::5	39::5	44::1	45::1
+	token_offsets	sentence	3	offsets	47::1	49::1	50::4	55::4	60::3	64::4	69::4	74::5	80::7	88::9	98::6	104::1	105::1
+(FRE " Schatz ! )
+
+(FRE Schatz ! )
+
+(HS Wir haben einen neuen Papst ! " )
+
+(HS - " Dich darf man auch echt nicht alleine einkaufen lassen . " )
+
+	id	312096145964933122
+	time	Thu Mar 14 07:01:34 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @GoeringEckardt: 	replacement		info_end
+	sentence_start	0	57	104
+	token_offsets	sentence	0	offsets	0::6	7::2	10::15	26::3	30::4	35::4	40::3	44::5	50::5	55::1
+	token_offsets	sentence	1	offsets	57::10	68::3	72::6	79::3	83::5	89::3	93::3	97::5	102::1
+	token_offsets	sentence	2	offsets	104::8
+(FRB Gleich im Deutschlandfunk und dann MoMa zum neuen Papst . )
+
+(HS Franziskus war Anwalt der Armen und der Natur . )
+
+(HSF Hoffnung )
+
+	id	311806339443720192
+	time	Wed Mar 13 11:49:59 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::4	17::1	19::3	23::7	31::5	37::4	42::3	46::4	50::1
+(HS Ich leg mich fest : Der nächste Papst wird ein Mann ! )
+
+	id	311919445054472194
+	time	Wed Mar 13 19:19:25 +0000 2013
+	sentence_start	0	24
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::3	20::2	22::1
+	token_offsets	sentence	1	offsets	24::3	28::4	33::5	39::3	43::3	47::2	50::4	55::5	61::3	64::1
+(HSF Von wegen Rente mit 67 ! )
+
+(HS Der neue Papst ist mit 76_ auch schon alt ! )
+
+	id	311921981211697152
+	time	Wed Mar 13 19:29:30 +0000 2013
+	replace	offset	74	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	44
+	token_offsets	sentence	0	offsets	0::1	2::9	12::8	21::3	25::9	35::7	42::1
+	token_offsets	sentence	1	offsets	44::3	48::4	53::3	57::7	65::8	74::5
+(HS 1 Millionen Menschen zum schweigen bringen . )
+
+(HS Das muss man erstmal schaffen papst )
+
+	id	311917052103372800
+	time	Wed Mar 13 19:09:55 +0000 2013
+	sentence_start	0	41
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::11	25::3	29::3	33::6	39::1
+	token_offsets	sentence	1	offsets	41::4	46::3	50::5	56::6	63::4	67::1	69::4	74::4	79::3	83::6	90::10	101::3	105::11	116::1
+(HS Was wäre ein Fortschritt für die Kirche ? )
+
+(HS (ADV Wenn der Papst Schwul wäre , ) dann wäre die Kirche vielleicht mal weltoffener . )
+
+	id	311926562117275648
+	time	Wed Mar 13 19:47:42 +0000 2013
+	replace	offset	9	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	30	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::5	15::2	18::11	30::10	41::3	45::3	49::6	56::3	60::4	65::6	72::3	76::9	86::10	96::1	98::6	105::3	109::2	112::5	118::4	122::1
+(HS Wenn der Papst in Deutschland promoviert hat und Merkel ihm dann morgen ihr Vertrauen ausspricht , bleibt der ja nicht lang . )
+
+	id	311915787906580480
+	time	Wed Mar 13 19:04:53 +0000 2013
+	replace	offset	65	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	20	38	59	65
+	token_offsets	sentence	0	offsets	0::5	6::12	18::1
+	token_offsets	sentence	1	offsets	20::4	25::4	30::3	34::3
+	token_offsets	sentence	2	offsets	38::3	42::3	46::3	50::5	55::3
+	token_offsets	sentence	3	offsets	59::2	61::3
+	token_offsets	sentence	4	offsets	65::5	70::1
+(FRE Liebe Christenheit ! )
+
+(HS Mein Name ist ... )
+
+(HS und ich bin Pirat ... )
+
+(HSF äh ... )
+
+(HSF Papst . )
+
+	id	312192280419241984
+	time	Thu Mar 14 13:23:34 +0000 2013
+	replace	offset	9	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	26
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::3	19::5	24::1
+	token_offsets	sentence	1	offsets	26::3	30::4	34::1	35::3	39::3	43::4	48::7	56::6	63::3	67::5	73::14	88::3	92::16	109::2	112::10	123::3	127::4	132::5	137::1
+(HS Der neue Papst hat Humor ? )
+
+(HS Die Homo - Ehe als eine Intrige Satans und deren Adoptionsrecht als Kindesmissbrauch zu bezeichnen ist also Humor ? )
+
+	id	311912684457181184
+	time	Wed Mar 13 18:52:33 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @bangpowwww: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::6	7::5	13::6	20::3	24::3	28::6	35::3	39::4	44::3	48::5	54::5	60::2	63::3	67::4	72::3	76::4	81::5	87::3	91::9	101::7	109::6	116::3	120::3
+(HS Gleich tritt Rafiki auf den Balkon (HSF und hält den neuen Papst in die Luft und alle Tiere des geweihten Vatikan fallen auf ... ) )
+
+	id	311942870326198272
+	time	Wed Mar 13 20:52:30 +0000 2013
+	replace	offset	35	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	35
+	token_offsets	sentence	0	offsets	0::6	7::6	14::3	18::3	22::4	27::3	31::3
+	token_offsets	sentence	1	offsets	35::5
+(HS Chabos wissen wer der Babo ist ... )
+
+papst
+
+	id	311919177835347970
+	time	Wed Mar 13 19:18:21 +0000 2013
+	replace	offset	135	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	135
+	token_offsets	sentence	0	offsets	0::7	8::3	12::3	16::9	26::7	34::3	38::10	49::3	53::2	56::13	69::1	71::8	80::3	84::4	88::1	90::2	93::9	103::5	109::10	120::9	130::3	133::1
+	token_offsets	sentence	1	offsets	135::5
+(HS (ADV Während N24 den Wikipedia Eintrag von Franziskus dem I. runterrattert , ) überlege ich noch , (OBJ ob Bergoglio nicht irgendeine Krankheit ist . ) )
+
+(HSF Papst )
+
+	id	311937352576675841
+	time	Wed Mar 13 20:30:35 +0000 2013
+	replace	offset	45	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	19
+	token_offsets	sentence	0	offsets	0::5	6::2	9::5	15::3
+	token_offsets	sentence	1	offsets	19::3	22::1	24::20	45::5	51::1	53::3	57::6	64::3	68::6	75::1	76::4	80::1	82::4	87::2	90::6	97::10	108::6
+(HS weist er rauch ... )
+
+(HS (FRE gut : ) lateinamerikanischer papst - was werden die beiden -OP- foto -CP- wohl in diesem augenblick denken )
+
+	id	311902914325143552
+	time	Wed Mar 13 18:13:44 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @hubertsrevier: 	replacement		info_end
+	sentence_start	0	9
+	token_offsets	sentence	0	offsets	0::7	7::1
+	token_offsets	sentence	1	offsets	9::4	14::5	20::3	24::4	29::5	35::2	38::6	45::3	49::4	53::1
+(FRE Endlich ! )
+
+(HS Ohne Papst war mein Leben so unnütz und leer . )
+
+	id	311966953382223872
+	time	Wed Mar 13 22:28:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @SPIEGELONLINE: 	replacement		info_end
+	replace	offset	58	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	94	length	0	num	4	orig	 http://t.co/HVTqB55AC	replacement		info_end
+	sentence_start	0	79
+	token_offsets	sentence	0	offsets	0::3	4::3	8::5	14::5	20::9	29::1	31::3	35::12	48::3	52::5	58::5	64::7	72::5	77::1
+	token_offsets	sentence	1	offsets	79::4	84::10	95::3
+(HS Wer ist Jorge Mario Bergoglio , (ANR der überraschend zum neuen Papst gewählt wurde ? ) )
+
+(HSF Eine Annäherung ... )
+
+	id	311909873933766656
+	time	Wed Mar 13 18:41:23 +0000 2013
+	replace	offset	72	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	79
+	token_offsets	sentence	0	offsets	0::2	3::5	9::2	12::3	16::4	21::9	31::6	37::1	39::5	45::6	52::2	55::2	58::3	62::5	68::3	72::5	77::1
+	token_offsets	sentence	1	offsets	79::4	84::7	91::1
+(HS Da musst du als Kind Blockföte lernen , (HS schon stehst du in der Garde vom Papst . ) )
+
+(HSF Shit happens . )
+
+	id	311917300179664898
+	time	Wed Mar 13 19:10:54 +0000 2013
+	replace	offset	67	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::8	13::2	16::3	20::5	26::3	30::4	35::12	48::3	52::4	57::4	62::4	67::5
+(HS Wie spannend so ein Blick auf eine geschlossene Tür doch sein kann pabst )
+
+	id	311931936841007104
+	time	Wed Mar 13 20:09:03 +0000 2013
+	replace	offset	27	length	0	num	0	orig	@	replacement		info_end
+	replace	offset	27	length	5	num	2	orig	spoe_salzburg	replacement	%User	info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::11	16::1	18::4	23::3	27::5	33::3	37::5	42::1	43::4	48::3	52::4	57::4	62::1	64::3	68::6	74::1	75::4	80::5
+(HS Aber interessant , dass die spoe_salzburg die Papst - Wahl für fade hält - und Pleite - Gaby nicht )
+
+	id	311914526629036033
+	time	Wed Mar 13 18:59:52 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @koerber: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	4::1	5::11	17::2	20::15	35::1	37::1	38::3	42::5	48::2	51::7	59::3	63::4	68::1	70::11	82::3	86::5	92::7	100::1	101::1	102::1
+(HS Live - Übertragung im Privatfernsehen : " Der Papst am Fenster zur Welt - präsentiert vom neuen Windows 8 . " )
+
+	id	311917178859425792
+	time	Wed Mar 13 19:10:25 +0000 2013
+	replace	offset	50	length	5	num	0	orig	http://t.co/xQ0laKevuy	replacement	%Link	info_end
+	replace	offset	60	length	0	num	2	orig	@	replacement		info_end
+	replace	offset	60	length	5	num	4	orig	SPIEGELONLINE	replacement	%User	info_end
+	sentence_start	0	26
+	token_offsets	sentence	0	offsets	0::8	8::1	10::5	16::2	19::5	24::1
+	token_offsets	sentence	1	offsets	26::5	32::5	38::3	42::7	50::5	56::3	60::5
+(HS Konklave : Weist er Rauch ! )
+
+(HS Neuer Papst ist gewählt %Link via SPIEGELONLINE )
+
+	id	311919786202365953
+	time	Wed Mar 13 19:20:46 +0000 2013
+	replace	offset	22	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	29	length	0	num	2	orig	!	replacement		info_end
+	replace	offset	44	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	50	length	0	num	6	orig	!	replacement		info_end
+	sentence_start	0	30
+	token_offsets	sentence	0	offsets	0::3	4::5	10::5	16::5	22::5	28::1
+	token_offsets	sentence	1	offsets	30::5	36::2	39::4	44::4	49::1
+(HS Wir haben einen neuen papst ! )
+
+(HSF Temos um novo papa ! )
+
+	id	311925161614008320
+	time	Wed Mar 13 19:42:08 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @astefanowitsch: 	replacement		info_end
+	replace	offset	40	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::6	11::4	16::4	21::8	29::1	31::3	35::4	40::5	46::8	54::1
+(HS Ihr werdet euch noch wünschen , (OBJ ich wäre Papst geworden . ) )
+
+	id	311950503888175105
+	time	Wed Mar 13 21:22:50 +0000 2013
+	replace	offset	24	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	38	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	47	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::7	12::5	18::5	24::5	30::4	35::2	38::5	44::2	47::6	54::3
+(HS Wer braucht schon einen Papst wenn er Jesus im Herzen hat )
+
+	id	311923915108782080
+	time	Wed Mar 13 19:37:11 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Spielvrlagerung: 	replacement		info_end
+	sentence_start	0	63
+	token_offsets	sentence	0	offsets	0::13	14::14	29::3	33::9	43::2	46::3	50::5	56::5	61::1
+	token_offsets	sentence	1	offsets	63::9	73::4	78::4	83::3	87::6	94::14	109::2	112::3	116::3
+(HSF Hervorragende Raumaufteilung der Kardinäle um den Papst herum . )
+
+(HS Bergoglio wird auch als Messis Stellvertreter im Vat ... )
+
+	id	311920314965692416
+	time	Wed Mar 13 19:22:52 +0000 2013
+	replace	offset	65	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	65
+	token_offsets	sentence	0	offsets	0::3	4::3	8::10	19::4	24::3	28::8	37::5	43::4	48::3	52::3	56::3	60::3	63::1
+	token_offsets	sentence	1	offsets	65::5
+(HS Was ist (ADV eigentlich wenn der Gewählte keine Lust auf das Amt hat ? ) )
+
+papst
+
+	id	311920140847566848
+	time	Wed Mar 13 19:22:11 +0000 2013
+	replace	offset	45	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0	45
+	token_offsets	sentence	0	offsets	0::4	5::10	15::1	17::4	22::3	26::9	36::3	40::3	43::1
+	token_offsets	sentence	1	offsets	45::5
+(HSF Erst Polenpaule , dann der Imperator und nun ? )
+
+papst
+
+	id	311967768314535936
+	time	Wed Mar 13 22:31:26 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::4	8::4	12::1	14::3	18::5	24::5	29::1	31::3	35::3	39::3	43::5	49::5	55::4	60::3	64::3	68::3	72::8	81::3	85::5	91::6	98::6
+(HS Oh mein GOTT , die erste Sache , die ich vom neuen Papst höre und ich bin entsetzt und hulke gleich wieder )
+
+	id	311924458124353536
+	time	Wed Mar 13 19:39:20 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @ZDF: 	replacement		info_end
+	replace	offset	56	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::6	20::1	22::2	25::4	30::4	35::5	41::14	56::5
+(HS Wir haben ihm gesagt , (OBJ er soll sich jetzt verabschieden. papst ) )
+
+	id	312166120947859456
+	time	Thu Mar 14 11:39:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	11	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	112	length	0	num	4	orig	 http://t.co/xkSSnb5BIm	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::10	11::4	16::4	21::3	25::7	32::1	34::10	44::1	46::5	52::10	63::2	65::1	67::10	78::2	81::6	88::3	92::4	97::5	102::1	104::5	109::3
+(HS (FRE EilMeldung ) NEWS Name des Papstes : Franziskus , nicht Franziskus I. : Franziskus I. heisse der neue Papst , (HSF melde ... ) )
+
+	id	311911330246426624
+	time	Wed Mar 13 18:47:10 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @GarFunkel4: 	replacement		info_end
+	replace	offset	40	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	43	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	56	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	61	length	0	num	8	orig	 http://t.co/dCOTiaOc5V	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::6	10::3	14::4	19::3	23::5	29::6	36::3	40::2	43::12	56::5
+(HS So wählen die also den neuen Papst. via fb habemuspapam papst )
+
+	id	312165788050132993
+	time	Thu Mar 14 11:38:18 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @klz_georg_lux: 	replacement		info_end
+	replace	offset	54	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	72	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	77	length	0	num	6	orig	#	replacement		info_end
+	replace	offset	105	length	0	num	8	orig	#	replacement		info_end
+	replace	offset	109	length	0	num	10	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	8::3	12::7	20::3	24::5	30::5	36::10	46::1	48::2	51::2	54::7	62::4	67::4	72::4	77::7	85::5	91::3	95::9	105::3	109::3	113::3
+(HS gestern ein bisserl vom neuen papst überlagert : h. c. strache will laut zib2 scheuch nicht als bundesrat fpk fpö ... )
+
+	id	311905151634001922
+	time	Wed Mar 13 18:22:37 +0000 2013
+	replace	offset	4	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	109	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	116	length	0	num	4	orig	 http://t.co/f4CnN9gPQB	replacement		info_end
+	sentence_start	0	23
+	token_offsets	sentence	0	offsets	0::3	4::5	10::3	14::7	21::1
+	token_offsets	sentence	1	offsets	23::3	27::3	31::3	35::5	41::10	52::7	59::1	61::5	67::7	74::1	75::7	83::5	89::9	99::3	103::5	109::7
+(HS Der Papst ist gewählt . )
+
+(HS (SUB Was auf den neuen Oberhirten zukommt , ) weiss Vatikan - Insider Bernd Hagenkord von Radio Vatikan )
+
+	id	312132901338750976
+	time	Thu Mar 14 09:27:37 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Dandeloo: 	replacement		info_end
+	sentence_start	0	47
+	token_offsets	sentence	0	offsets	0::5	6::4	11::3	15::5	21::5	27::3	31::5	37::3	41::4	45::1
+	token_offsets	sentence	1	offsets	47::5	53::5	59::3	63::3	67::5	72::1
+(HS Warum muss der Papst immer ein alter Opa sein ? )
+
+(HSF Warum nicht mal ein Neger ? )
+
+	id	311929865941172224
+	time	Wed Mar 13 20:00:50 +0000 2013
+	sentence_start	0	19	34
+	token_offsets	sentence	0	offsets	0::5	5::1	6::9	15::3
+	token_offsets	sentence	1	offsets	19::3	23::6	30::2	32::1
+	token_offsets	sentence	2	offsets	34::9	44::3	48::12	61::5	66::1	68::7	76::3	80::3	84::5	90::3	94::10	105::5	111::4	116::5	122::9	132::5	138::5	143::1
+(HSF Papst - Firlefanz ... )
+
+(HS Wen juckte es ? )
+
+(HSF Oberhaupt der weltgrössten Sekte , welcher für die Armen und Hungernden betet (HSF aber ihnen überhaupt nicht hilft . ) )
+
+	id	312158230811910144
+	time	Thu Mar 14 11:08:16 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @paciscor: @MartaSalazar @Ark251 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::3	10::4	15::5	21::4	26::3	30::1	31::10	42::4	46::1	48::8	57::5	63::3	67::2	70::3	73::1
+(HS Wobei der neue Papst eben die " bewaffnete Hand " Woytilas gegen die BT war . )
+
+	id	311964777175973888
+	time	Wed Mar 13 22:19:33 +0000 2013
+	replace	offset	77	length	0	num	0	orig	 http://t.co/P9GzQwAc1B	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::2	9::5	15::2	18::3	21::1	23::8	32::5	38::14	53::8	62::3	66::5	72::5
+(HS Weist er Rauch in Rom : Konklave wählt argentinischen Kardinal zum neuen Papst )
+
+	id	311919867605417985
+	time	Wed Mar 13 19:21:06 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::3	13::4	18::10	29::11	41::3	45::3	49::7	57::3	61::4	66::5	71::1
+(HS ich habe mir auch franziskus ausgesucht. bin ich deshalb der neue papst ? )
+
+	id	311914598414565376
+	time	Wed Mar 13 19:00:10 +0000 2013
+	replace	offset	78	length	0	num	0	orig	_	replacement		info_end
+	replace	offset	82	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	50	73
+	token_offsets	sentence	0	offsets	0::3	4::4	9::2	12::10	23::3	27::5	33::4	38::3	42::5	48::1
+	token_offsets	sentence	1	offsets	50::4	55::2	58::11	70::2
+	token_offsets	sentence	2	offsets	73::5	78::1	79::2	82::11
+(HS Wie wäre es eigentlich mit einer Frau als Papst ? )
+
+(HSF Oder so Transgender ?? )
+
+(HS Papst / in Unterstrich )
+
+	id	312175236248371200
+	time	Thu Mar 14 12:15:50 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @queer_de: 	replacement		info_end
+	replace	offset	115	length	0	num	2	orig	 http:/	replacement		info_end
+	sentence_start	0	116
+	token_offsets	sentence	0	offsets	0::5	6::5	12::11	24::3	28::4	32::1	33::3	37::3	41::7	49::3	53::7	61::3	65::3	69::14	84::3	88::3	92::5	98::16	114::1
+	token_offsets	sentence	1	offsets	116::3
+(HS Neuer Papst bezeichnete die Homo - Ehe als Intrige des Teufels und ein Adoptionsrecht für die Paare Kindesmissbrauch . )
+
+(FRE ... )
+
+	id	312097665582239745
+	time	Thu Mar 14 07:07:36 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @thomas_mohr: 	replacement		info_end
+	replace	offset	50	length	0	num	2	orig	RT @szda 	replacement		info_end
+	replace	offset	94	length	0	num	4	orig	 http://t.co/rK5x	replacement		info_end
+	sentence_start	0	12	50	95
+	token_offsets	sentence	0	offsets	0::10	10::1
+	token_offsets	sentence	1	offsets	12::10	23::3	27::6	34::5	40::8	48::1
+	token_offsets	sentence	2	offsets	50::5	56::3	60::15	76::3	80::6	87::6	93::1
+	token_offsets	sentence	3	offsets	95::3
+(FRE Grossartig ! )
+
+(HSF Franziskus der Zweite schon gefunden . )
+
+(HS Papst ist Zwillingsbruder von Alfred Biolek ! )
+
+(FRE ... )
+
+	id	311904849644109825
+	time	Wed Mar 13 18:21:25 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @DerTivoli: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	5::3	9::3	13::5	19::3	23::4	28::10	39::8	47::1	49::6	56::3	60::6	66::1
+(HS (ADV Wenn man bei Papst ein paar Buchstaben umstellt , ) erhält man Schady . )
+
+	id	311914688726323201
+	time	Wed Mar 13 19:00:31 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @koerber: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::4	4::1	5::11	17::2	20::15	35::1	37::1	38::3	42::5	48::2	51::7	59::3	63::4	68::1	70::11	82::3	86::5	92::7	100::1	101::1	102::1
+(HS Live - Übertragung im Privatfernsehen : " Der Papst am Fenster zur Welt - präsentiert vom neuen Windows 8 . " )
+
+	id	311906041463992320
+	time	Wed Mar 13 18:26:09 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @HerrHundertmark: 	replacement		info_end
+	replace	offset	85	length	0	num	2	orig	#	replacement		info_end
+	sentence_start	0	85
+	token_offsets	sentence	0	offsets	0::3	4::4	9::8	18::12	31::4	36::3	39::1	41::4	46::6	53::4	58::4	63::3	67::3	71::6	78::5	83::1
+	token_offsets	sentence	1	offsets	85::5
+(HS Mal eine richtige Überraschung wäre mal , (ADV wenn gleich eine Frau auf den Balkon tritt . ) )
+
+(HSF Papst )
+
+	id	311921655976955904
+	time	Wed Mar 13 19:28:12 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Spielvrlagerung: 	replacement		info_end
+	sentence_start	0	63
+	token_offsets	sentence	0	offsets	0::13	14::14	29::3	33::9	43::2	46::3	50::5	56::5	61::1
+	token_offsets	sentence	1	offsets	63::9	73::4	78::4	83::3	87::6	94::14	109::2	112::3	116::3
+(HSF Hervorragende Raumaufteilung der Kardinäle um den Papst herum . )
+
+(HS Bergoglio wird auch als Messis Stellvertreter im Vat ... )
+
+	id	311981827529265152
+	time	Wed Mar 13 23:27:18 +0000 2013
+	replace	offset	21	length	0	num	0	orig	@hronline: 	replacement		info_end
+	replace	offset	36	length	0	num	2	orig	#	replacement		info_end
+	replace	offset	89	length	0	num	4	orig	#	replacement		info_end
+	replace	offset	98	length	0	num	6	orig	 http://t.co/2flhV5cxco"	replacement		info_end
+	sentence_start	0	21
+	token_offsets	sentence	0	offsets	0::3	4::4	9::4	14::5	19::1	20::1
+	token_offsets	sentence	1	offsets	21::7	28::1	30::5	36::5	42::7	50::12	63::2	66::8	74::1	75::10	86::2	89::9
+(HS Wir sind doch papst ! " )
+
+(HS Lehmann : Neuer Papst schrieb Doktorarbeit an Jesuiten - Hochschule in Frankfurt )
+
+	id	311922425757564928
+	time	Wed Mar 13 19:31:16 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @janboehm: 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::5	6::5	12::3	16::4	21::10	31::1
+(HS Jeder Papst ist eine Prinzessin . )
+
+	id	311912346127855616
+	time	Wed Mar 13 18:51:13 +0000 2013
+	replace	offset	12	length	0	num	0	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::2	3::3	7::4	12::5	18::4	23::6	30::2	33::4	38::7	46::5	52::6	58::1
+(HS Ob der neue Papst auch wieder so eine lustige Mütze aufhat ? )
+
+	id	311883128832655360
+	time	Wed Mar 13 16:55:07 +0000 2013
+	replace	offset	0	length	0	num	0	orig	@NZZfeed 	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::3	8::4	13::8	22::5	27::1	29::3	33::3	37::5	43::4	47::1
+(HS Und der Rest scheisst drauf , (OBJ wer nun Papst wird ! ) )
+
+	id	312173898689019904
+	time	Thu Mar 14 12:10:32 +0000 2013
+	replace	offset	0	length	0	num	0	orig	#	replacement		info_end
+	replace	offset	54	length	5	num	2	orig	http://t.co/ghXMrtsP2u	replacement	%Link	info_end
+	replace	offset	60	length	0	num	4	orig	#	replacement		info_end
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::7	7::1	9::5	15::3	19::11	30::1	32::10	43::10	54::5	60::4
+(HS spiegel : Papst aus Argentinien : Franziskus amerikanus %Link okru )
+
+	id	311928234751168514
+	time	Wed Mar 13 19:54:21 +0000 2013
+	sentence_start	0
+	token_offsets	sentence	0	offsets	0::3	4::4	9::2	12::5	18::16	35::9	44::1	46::4	51::4	56::3	60::3	64::4	69::5	75::7	82::1	84::6	91::3	95::6	102::3	106::4	111::10	122::8	130::1
+(HS Ich will ja keine Religionsdebatte lostreten , aber kaum ist der neue Papst gewählt , fangen die Bayern ein fast fliegendes Gegentor . )
+
+	id	311938559319887872
+	time	Wed Mar 13 20:35:22 +0000 2013
+	replace	offset	0	length	0	num	0	orig	RT @Schuby4ever: 	replacement		info_end
+	sentence_start	0	46	50	51
+	token_offsets	sentence	0	offsets	0::3	4::4	9::5	15::3	19::3	23::5	29::12	42::3
+	token_offsets	sentence	1	offsets	46::3
+	token_offsets	sentence	2	offsets	50::1
+	token_offsets	sentence	3	offsets	51::12	63::1
+(HS Der neue Papst hat was gegen Homosexuelle ... )
+
+(FRE ... )
+
+(FRE ! )
+
+(FRE ÜBERRASCHUNG ! )
+

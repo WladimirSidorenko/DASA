@@ -1,0 +1,45 @@
+dist: bionic
+
+language: python
+
+python:
+  - 3.6
+
+git:
+  depth: 1
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
+
+before_install:
+  - sudo apt-get install build-essential python-dev libatlas-base-dev libatlas3-base
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
+  - conda config --set channel_priority strict
+  - conda update -q conda
+  - conda create -n condaenv python=$TRAVIS_PYTHON_VERSION
+
+# Install packages
+install:
+  - source activate condaenv
+  - conda install pip pandas numpy scipy cython>=0.27.3
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - pip install -r requirements.txt
+  - pip install -r test-requirements.txt
+
+# Build the package and run tests
+script:
+  - ./setup.py build install
+  - ./setup.py test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
