@@ -106,3 +106,4 @@ dasa/data/models/*.model
 data/*/predicted/*/*.model
 .emacs.desktop
 .emacs.desktop.lock
+data/IMDB/*/*.txt
