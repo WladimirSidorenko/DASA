@@ -26,7 +26,10 @@ Data Preparation
 ----------------
 
 We use the `IMDB`_ corpus and `Stanford Sentiment Treebank`_ as
-primary data sources for evaluation.
+primary data sources for evaluation.  We have converted the original
+data of these corpora to the JSON format using the scripts
+`scripts/imdbjson` and `scripts/sst2json`, which are also included in
+this repository.
 
 Discourse Segmentation
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -34,22 +37,6 @@ Discourse Segmentation
 
 Discourse Parsing
 ^^^^^^^^^^^^^^^^^
-
-To derive RST trees for the obtained tweets, we used the script
-`add_rst_trees` from the `RSTParser package`_:
-
-.. code-block:: shell
-
-  pwd
-  /home/sidorenko/Projects/RSTParser
-
-  git rev-parse HEAD
-  8b595c3913daa68745758c1eb3420bfa90cbb264
-
-  for f in ../DASA/data/\*/\*/\*.json; do \
-    ./scripts/add_rst_trees bhatia data/pcc-dis-bhatia/test/rstparser.bhatia.model $f > 1 && \
-    mv 1 $f;
-  done
 
 
 Examples
