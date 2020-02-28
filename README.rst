@@ -25,18 +25,33 @@ single EDU, which is most representative of the whole analyzed text
 Data Preparation
 ----------------
 
-We use the `IMDB`_ corpus and `Stanford Sentiment Treebank`_ as
-primary data sources for evaluation.  We have converted the original
-data of these corpora to the JSON format using the scripts
-`scripts/imdbjson` and `scripts/sst2json`, which are also included in
-this repository.
+We use the `IMDB`_ corpus and `Stanford Sentiment Treebank`_ as our
+primary data for evaluation.
 
-Discourse Segmentation
-^^^^^^^^^^^^^^^^^^^^^^
+The exact preparation steps for these datasets looked as follows:
+
+* First, we have converted the original files of these corpora to the
+**JSON format** using the scripts `scripts/imdbjson` and
+`scripts/sst2json`, which are also included in this repository
+```shell
+
+./scripts/sst2json data/SST/ > data/SST/sst.json
+
+./scripts/imdb2json data/IMDB/*/*.txt
+```
+
+* Afterwards, we have enriched these converted data with information
+  about lemma, PoS tag, dependency relation, and morphological
+  features using the provided script `./scripts/enrich_json`
+```shell
+
+./scripts/enrich_json data/SST/sst.json data/IMDB/{pos,neg}/*.json
+```
+
+* **Discourse segmentation**
 
 
-Discourse Parsing
-^^^^^^^^^^^^^^^^^
+* **Discourse parsing**
 
 
 Examples
