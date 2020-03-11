@@ -44,43 +44,46 @@
 \maketitle
 \begin{abstract}
   This paper presents a novel Bayesian approach to sentiment analysis
-  of texts, in which we estimate the overall polarity of a discourse
-  from sentiment scores of its elementary discourse units (EDUs) using
-  a dedicated probabilistic magma.  In particular, we regard the
-  polarity of each text unit as a multinomial random variable, whose
-  conjugate prior is a Dirichlet distribution parameterized by a
-  single vector $\mathbf{\alpha}$; this vector, in turn, is computed
-  from the polarity scores of discourse desendants, taking into
-  account .  We evaluate our proposed method on the IMDB corpus and
-  Stanford Sentiment Treebank, getting\todo{add evaluation numbers}.
+  of documents, in which we estimate the overall polarity of a text
+  from sentiment scores of its elementary discourse units (typically
+  clauses) using a dedicated probabilistic algebra.  In particular, we
+  consider the semantic orientation of each unit as a multinomial
+  random variable drawn from a Dirichlet distribution.  The parameters
+  of this distribution, in turn, depend on the polarity scores
+  predicted by a simplistic base classifier for the respective clause,
+  as well as polarities of dependent discourse segments and their
+  semantic and pragmatic relations (as defined by Rhetorical Structure
+  Theory).  We evaluate our method on the IMDB corpus and Stanford
+  Sentiment Treebank, getting\todo{add evaluation numbers}.
 \end{abstract}
 
 \section{Introduction}\label{intro}
 
 Sentiment analysis has admittedly been one of the most popular,
 competitive, and prolific areas of natural language processing since
-its very inception around 2004~\cite[pp.~\todo{add pages}]{Liu:12}.
-However, most of the research done in this field has been primarily
-concentrated either on the analysis of \emph{words}' meaning or
-classification of \emph{sentence} polarity and subjectivity, with
-little attention paid to semantic links between the sentences---\ie{}
-the structure of \emph{discourse}.  Nevertheless, as noted by
-\newcite{Polanyi:06}, discourse relations are one of the most
-influential factors that might significantly change (and completely
-overturn) the semantic orientation of an opinion.
+its very inception~\cite[pp.~\todo{add pages}]{Liu:12}.  However, most
+of the research done in this field has been primarily concentrated on
+the analysis of words, sentences, or \emph{texts as a whole}, with
+little attention paid to semantic links between texts' sentences,
+\ie{} \emph{ignoring the structure of discourse}.  Nevertheless, as
+already noted by~\newcite{Polanyi:06}, discourse relations and
+structure are one of the most influential linguistic factors that
+might significantly change the polarity of an opinion.
 
-Indeed, if we look at Figure~\ref{fig:rst-tree}, we will see that the
-first passage of the cited IMDB review expresses a strong negative
-attitude of the author towards any kind of TV shows, and especially
-the medical ones.  The second paragraph, however, admits that he/she
-liked the series ``House M.D.''  And it is the pragmatic link of
-\discrel{Antithesis} that tells us how these two parts relate to each
-other, and the higher importance of the second claim that determines
-the overall mood of the whole text.
+Indeed, if we look at Figure~\ref{fig:rst-tree}, which shows a
+fragment of an IMDB review of the ``House M.D'' series, and simply
+compare the number of positive and negative terms in that snippet, we
+will tend to think that the polarity of the review is negative, as
+most of its polar terms indicate a critical attitude (seven negative
+terms versus two positive).  However, the actual opinion of the author
+about the series is unequivocally positive, and she only expresses her
+general negative general stance in order to stress the strengths of
+this show.
 
 \begin{figure*}[htb!]\label{fig:rst-tree}
   \input{rst.tex}
 \end{figure*}
+
 
 %% \blfootnote{
 %%     % % final paper: en-us version
@@ -389,9 +392,6 @@ EDU (henceforth \textsc{Last} and \textsc{Root}), and also estimated
 the results of our original LBA classifier without any
 discourse-related modifications (henceforth \textsc{No-Discourse}).
 
-Apart from the above baselines and existing methods, we propose
-several novel DASA solutions, which will be briefly described below.
-
 
 \section{Recursive Dirichlet Model}\label{method}
 
@@ -399,6 +399,11 @@ several novel DASA solutions, which will be briefly described below.
 \section{Evaluation}\label{sec:evaluation}
 
 \subsection{Data}\label{subsec:eval:data}
+
+\todo[inline]{Lemmatization:}
+\todo[inline]{Discourse segmentation: \newcite{Wang:18}}
+\todo[inline]{Gold label}
+
 \subsection{Baselines}\label{subsec:eval:data}
 
 \begin{table}[hbt]
