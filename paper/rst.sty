@@ -47,15 +47,23 @@
 
 %empty the following two if you wish NOT to use the color package
 \newcommand{\relnamebgcolor}{}%       background color.
-\newcommand{\relnamecolor}{blue}%     relation name color
+\definecolor{SlateBlue1}{RGB}{131,111,255}
+\definecolor{SlateBlue}{RGB}{106,90,205}
+\definecolor{DarkSlateBlue}{RGB}{72,61,139}
+\definecolor{DodgerBlue3}{RGB}{24,116,205}
+\definecolor{DodgerBlue4}{RGB}{16,78,139}
+\definecolor{MediumBlue}{RGB}{0,0,205}
+\newcommand{\relnamecolor}{MediumBlue}%     relation name color
 
 
 %uncomment the following two if you wish NOT to use the color package
 \newcommand{\mycolorbox}{}  % uncommented so that \raisebox may be used
 
 %\newcommand{\mycolor}{}
-\newcommand{\posterm}[1]{\textcolor{green}{#1}$^+$}%     relation name color
-\newcommand{\negterm}[1]{\textcolor{red}{#1}$^-$}%     relation name color
+\definecolor{ForestGreen}{rgb}{0., 0.5, 0.}
+\newcommand{\posterm}[1]{\textcolor{ForestGreen}{\textbf{#1\textsuperscript{$+$}}}}
+\definecolor{BostonUniversityRed}{rgb}{0.8, 0.0, 0.0}
+\newcommand{\negterm}[1]{\textcolor{BostonUniversityRed}{\textbf{#1\textsuperscript{$-$}}}}
 
 
 
