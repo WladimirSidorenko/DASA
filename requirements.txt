@@ -5,4 +5,5 @@ pyro-ppl
 pystruct~=0.3.1
 scikit-learn~=0.19.1
 scipy
+stanfordnlp~=0.2
 torch
