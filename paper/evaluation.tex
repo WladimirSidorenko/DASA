@@ -1,0 +1,28 @@
+% section "Evaluation"
+
+\subsection{Data}\label{subsec:eval:data}
+
+\todo[inline]{Lemmatization:}
+\todo[inline]{Discourse segmentation: \newcite{Wang:18}}
+\todo[inline]{Gold label}
+
+\subsection{Baselines}\label{subsec:eval:data}
+
+\begin{table}[hbt]
+  \begin{center}
+    \begin{tabular}{p{0.3\columnwidth}%
+        *{2}{>{\centering\arraybackslash}p{0.3\columnwidth}}} % first columm
+      \toprule
+      \multirow{2}*{\bfseries Method} & %
+      \multicolumn{2}{c}{\bfseries Dataset}\\\cmidrule(lr){2-3}
+      & IMDB & SST\\\midrule
+      RD & &\\
+      R2N2~\cite{Bhatia:15} & 84.1 & 85.6\\
+      DDR~\cite{Bhatia:15} & 82.9 & 82.0\\
+      \bottomrule
+    \end{tabular}
+    \caption{Accuracy of sentiment classification on IMDB~\cite{Pang:04}
+      and Stanford Sentiment
+      Treebank~\cite{Socher:13}}\label{tbl:accuracy}
+  \end{center}
+\end{table}
