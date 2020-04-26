@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+# -*- coding: utf-8; -*-
+
+"""Script for converting Stanford Sentiment Treebank to a JSON file.
+
+"""
+
+##################################################################
+# Imports
+from argparse import ArgumentParser, Namespace
+from stanfordnlp import Pipeline
+import stanfordnlp
+import json
+
+
+##################################################################
+# Constants
+
+
+##################################################################
+# Methods
+def parse_feats(ifeats: str) -> dict:
+    """Parse string representation of morphological features to a dict.
+
+    """
+    feats = {}
+    for feat_i in ifeats.split('|'):
+        if feat_i == '_':
+            continue
+        k, v = feat_i.split('=')
+        feats[k] = v
+    return feats
+
+
+def enrich(pipeline: Pipeline, data: dict) -> None:
+    """Enrich input data with linguistic information.
+
+    """
+    for doc in data["docs"]:
+        sentences = []
+        orig_sentences = []
+        prev_snt_id = None
+        for t in doc["toks"]:
+            if t["snt_id"] != prev_snt_id:
+                prev_snt_id = t["snt_id"]
+                last_sentence = []
+                sentences.append(last_sentence)
+                orig_sentences.append([])
+            last_sentence.append(t["form"])
+            t["children"] = []
+            orig_sentences[-1].append(t)
+        analyzed_sentences = pipeline(sentences).sentences
+        offset = 0
+        for s_orig, s_analyzed in zip(orig_sentences, analyzed_sentences):
+            assert len(s_orig) == len(s_analyzed.tokens), \
+                "Different number of original and analyzed tokens."
+            for (i, t_orig), t_analyzed in zip(enumerate(s_orig),
+                                               s_analyzed.tokens):
+                assert len(t_analyzed.words) == 1, \
+                    "Detected multi-word token: {}".format(t_analyzed.words)
+                t_analyzed = t_analyzed.words[0]
+                t_orig["lemma"] = t_analyzed.lemma
+                t_orig["tag"] = t_analyzed.xpos
+                t_orig["rel"] = t_analyzed.dependency_relation
+                t_orig["feats"] = parse_feats(t_analyzed.feats)
+                # parent index within the current sentence
+                prnt_idx = t_analyzed.governor - 1
+                if prnt_idx >= 0:
+                    s_orig[prnt_idx]["children"].append(i + offset)
+                # parent index within the whole text
+                t_orig["prnt"] = prnt_idx + offset
+            offset += len(s_analyzed.tokens)
+
+
+def main():
+    argparser = ArgumentParser(
+        description="Script for enriching JSON files with"
+        " linguistic information."
+    )
+    argparser.add_argument("json_files",
+                           help="JSON files to be enriched",
+                           nargs='+')
+    args: Namespace = argparser.parse_args()
+    stanfordnlp.download('en')
+    pipeline = Pipeline("tokenize,lemma,pos,depparse",
+                        tokenize_pretokenized=True)
+
+    # process files
+    for fname in args.json_files:
+        with open(fname) as ifile:
+            data = json.load(ifile)
+        enrich(pipeline, data)
+        with open(fname, 'w') as ofile:
+            json.dump(data, ofile)
+
+
+##################################################################
+# Main
+if __name__ == "__main__":
+    main()
