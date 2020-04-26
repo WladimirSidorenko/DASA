@@ -107,3 +107,4 @@ data/*/predicted/*/*.model
 .emacs.desktop
 .emacs.desktop.lock
 data/IMDB/*/*.txt
+data/SST/*.txt
