@@ -82,6 +82,13 @@ The exact preparation steps for these datasets looked as follows:
 
 * **Sentiment Scores**
 
+  * SO-Cal sentiment scores where added using the following commands
+  ```
+  ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/SST/sst.json
+  ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/IMDB/*/*.json
+  ```
+  at commit `419bc23` of (this project)[https://github.com/WladimirSidorenko/SO-CAL]
+
 Examples
 --------
 
