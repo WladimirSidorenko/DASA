@@ -1,1 +1,4734 @@
-{"docs": [{"text": "bruce lee was a bigger-than-life martial artist ( and ) actor . \n bruce's unique character ( i . e . , self-produced sound effects , etc . ) and seemingly perfected martial art and physique were all well portrayed by the actor , james lee . \n the story is told from his wife linda's point of view where she put a lot of family and practical side of bruce lee's life . \n however , you can't help but like , whenever the fight scenes are on , what he can does with his body and that familiar bruce attitude and character . \n i also like the little bits of insight scenes about bruce lee's life before he became famous : scenes like bruce practicing pronunciation of english . \n it seemed as if he was no better than anybody else . \n scenes like bruce delivering chinese food as a delivery boy ridding a bike through the american college looking at the ( all-white ) students , cheerleaders , and athletes . \n it seemed he too wished for the american dreams and hopes . \n in conclusion , the movie was well made , it produced a realization of who bruce lee was , and actor james lee was so much like bruce you have to remind yourself that he is just an actor . \n and the fighting scenes were all excellent . \n so go see it and enjoy the movie . \n p . s . if you have seen the movie unforgiven by clint eastwood , then the feeling left after dragon was very much like the feeling you got after the unforgiven .", "msg_id": "cv847_1941", "label": "positive", "toks": [{"form": "bruce", "prnt": 6, "lemma": "bruce", "tag": "NNP", "rel": "nsubj", "children": [1], "feats": {"Number": "Sing"}, "snt_id": 0}, {"form": "lee", "prnt": 0, "lemma": "lee", "tag": "NNP", "rel": "flat", "children": [], "feats": {"Number": "Sing"}, "snt_id": 0}, {"form": "was", "prnt": 6, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 0}, {"form": "a", "prnt": 6, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 0}, {"form": "bigger-than-life", "prnt": 6, "lemma": "bigger-than-life", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 0}, {"form": "martial", "prnt": 6, "lemma": "martial", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 0}, {"form": "artist", "prnt": -1, "lemma": "artist", "tag": "NN", "rel": "root", "children": [0, 2, 3, 4, 5, 10, 11], "feats": {"Number": "Sing"}, "snt_id": 0}, {"form": "(", "prnt": 10, "lemma": "(", "tag": "-LRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 0}, {"form": "and", "prnt": 10, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 0}, {"form": ")", "prnt": 10, "lemma": ")", "tag": "-RRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 0}, {"form": "actor", "prnt": 6, "lemma": "actor", "tag": "NN", "rel": "conj", "children": [7, 8, 9], "feats": {"Number": "Sing"}, "snt_id": 0}, {"form": ".", "prnt": 6, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 0}, {"form": "bruce's", "prnt": 11, "lemma": "bruce'", "tag": "VBZ", "rel": "root", "children": [14, 38], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 1}, {"form": "unique", "prnt": 14, "lemma": "unique", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 1}, {"form": "character", "prnt": 12, "lemma": "character", "tag": "NN", "rel": "obj", "children": [13, 18, 23], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": "(", "prnt": 16, "lemma": "(", "tag": "-LRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "i", "prnt": 18, "lemma": "i", "tag": "PRP", "rel": "compound", "children": [15, 17], "feats": {"Case": "Nom", "Number": "Sing", "Person": "1", "PronType": "Prs"}, "snt_id": 1}, {"form": ".", "prnt": 16, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "e", "prnt": 14, "lemma": "e", "tag": "NN", "rel": "appos", "children": [16, 19], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": ".", "prnt": 18, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": ",", "prnt": 23, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "self-produced", "prnt": 23, "lemma": "self-produced", "tag": "VBN", "rel": "amod", "children": [], "feats": {"Tense": "Past", "VerbForm": "Part"}, "snt_id": 1}, {"form": "sound", "prnt": 23, "lemma": "sound", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": "effects", "prnt": 14, "lemma": "effect", "tag": "NNS", "rel": "conj", "children": [20, 21, 22, 25], "feats": {"Number": "Plur"}, "snt_id": 1}, {"form": ",", "prnt": 25, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "etc", "prnt": 23, "lemma": "etc", "tag": "FW", "rel": "advmod", "children": [24, 26], "feats": {}, "snt_id": 1}, {"form": ".", "prnt": 25, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": ")", "prnt": 30, "lemma": ")", "tag": "-RRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "and", "prnt": 30, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 1}, {"form": "seemingly", "prnt": 30, "lemma": "seemingly", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 1}, {"form": "perfected", "prnt": 38, "lemma": "perfect", "tag": "VBN", "rel": "advcl", "children": [27, 28, 29, 32], "feats": {"Tense": "Past", "VerbForm": "Part"}, "snt_id": 1}, {"form": "martial", "prnt": 32, "lemma": "martial", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 1}, {"form": "art", "prnt": 30, "lemma": "art", "tag": "NN", "rel": "obj", "children": [31, 34], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": "and", "prnt": 34, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 1}, {"form": "physique", "prnt": 32, "lemma": "physique", "tag": "NN", "rel": "conj", "children": [33], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": "were", "prnt": 38, "lemma": "be", "tag": "VBD", "rel": "aux:pass", "children": [], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 1}, {"form": "all", "prnt": 38, "lemma": "all", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 1}, {"form": "well", "prnt": 38, "lemma": "well", "tag": "RB", "rel": "advmod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 1}, {"form": "portrayed", "prnt": 12, "lemma": "portray", "tag": "VBN", "rel": "conj", "children": [30, 35, 36, 37, 41, 45], "feats": {"Tense": "Past", "VerbForm": "Part", "Voice": "Pass"}, "snt_id": 1}, {"form": "by", "prnt": 41, "lemma": "by", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 1}, {"form": "the", "prnt": 41, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 1}, {"form": "actor", "prnt": 38, "lemma": "actor", "tag": "NN", "rel": "obl", "children": [39, 40, 42, 43], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": ",", "prnt": 41, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "james", "prnt": 41, "lemma": "jame", "tag": "NNP", "rel": "appos", "children": [44], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": "lee", "prnt": 43, "lemma": "lee", "tag": "NNP", "rel": "flat", "children": [], "feats": {"Number": "Sing"}, "snt_id": 1}, {"form": ".", "prnt": 38, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 1}, {"form": "the", "prnt": 47, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 2}, {"form": "story", "prnt": 49, "lemma": "story", "tag": "NN", "rel": "nsubj:pass", "children": [46], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "is", "prnt": 49, "lemma": "be", "tag": "VBZ", "rel": "aux:pass", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 2}, {"form": "told", "prnt": 45, "lemma": "tell", "tag": "VBN", "rel": "root", "children": [47, 48, 52, 53, 71], "feats": {"Tense": "Past", "VerbForm": "Part", "Voice": "Pass"}, "snt_id": 2}, {"form": "from", "prnt": 52, "lemma": "from", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 2}, {"form": "his", "prnt": 52, "lemma": "he", "tag": "PRP$", "rel": "nmod:poss", "children": [], "feats": {"Gender": "Masc", "Number": "Sing", "Person": "3", "Poss": "Yes", "PronType": "Prs"}, "snt_id": 2}, {"form": "wife", "prnt": 49, "lemma": "wife", "tag": "NN", "rel": "obl", "children": [50, 51], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "linda's", "prnt": 49, "lemma": "linda'", "tag": "VBZ", "rel": "ccomp", "children": [54], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 2}, {"form": "point", "prnt": 53, "lemma": "point", "tag": "NN", "rel": "obj", "children": [56], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "of", "prnt": 56, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 2}, {"form": "view", "prnt": 54, "lemma": "view", "tag": "NN", "rel": "nmod", "children": [55, 59], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "where", "prnt": 59, "lemma": "where", "tag": "WRB", "rel": "advmod", "children": [], "feats": {"PronType": "Rel"}, "snt_id": 2}, {"form": "she", "prnt": 59, "lemma": "she", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Fem", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 2}, {"form": "put", "prnt": 56, "lemma": "put", "tag": "VBD", "rel": "acl:relcl", "children": [57, 58, 61], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 2}, {"form": "a", "prnt": 61, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 2}, {"form": "lot", "prnt": 59, "lemma": "lot", "tag": "NN", "rel": "obj", "children": [60, 63], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "of", "prnt": 63, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 2}, {"form": "family", "prnt": 61, "lemma": "family", "tag": "NN", "rel": "nmod", "children": [62, 66], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "and", "prnt": 66, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 2}, {"form": "practical", "prnt": 66, "lemma": "practical", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 2}, {"form": "side", "prnt": 63, "lemma": "side", "tag": "NN", "rel": "conj", "children": [64, 65, 70], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "of", "prnt": 70, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 2}, {"form": "bruce", "prnt": 70, "lemma": "bruce", "tag": "NNP", "rel": "compound", "children": [69], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": "lee's", "prnt": 68, "lemma": "lee'", "tag": "NNS", "rel": "flat", "children": [], "feats": {"Number": "Plur"}, "snt_id": 2}, {"form": "life", "prnt": 66, "lemma": "life", "tag": "NN", "rel": "nmod", "children": [67, 68], "feats": {"Number": "Sing"}, "snt_id": 2}, {"form": ".", "prnt": 49, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 2}, {"form": "however", "prnt": 76, "lemma": "however", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 3}, {"form": ",", "prnt": 76, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 3}, {"form": "you", "prnt": 76, "lemma": "you", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Person": "2", "PronType": "Prs"}, "snt_id": 3}, {"form": "can't", "prnt": 76, "lemma": "can't", "tag": "MD", "rel": "aux", "children": [], "feats": {"VerbForm": "Fin"}, "snt_id": 3}, {"form": "help", "prnt": 71, "lemma": "help", "tag": "VB", "rel": "root", "children": [72, 73, 74, 75, 78, 101], "feats": {"VerbForm": "Inf"}, "snt_id": 3}, {"form": "but", "prnt": 78, "lemma": "but", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 3}, {"form": "like", "prnt": 76, "lemma": "like", "tag": "VB", "rel": "conj", "children": [77, 79, 85], "feats": {"VerbForm": "Inf"}, "snt_id": 3}, {"form": ",", "prnt": 78, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 3}, {"form": "whenever", "prnt": 85, "lemma": "whenever", "tag": "WRB", "rel": "mark", "children": [], "feats": {"PronType": "Int"}, "snt_id": 3}, {"form": "the", "prnt": 83, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 3}, {"form": "fight", "prnt": 83, "lemma": "fight", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 3}, {"form": "scenes", "prnt": 85, "lemma": "scene", "tag": "NNS", "rel": "nsubj", "children": [81, 82], "feats": {"Number": "Plur"}, "snt_id": 3}, {"form": "are", "prnt": 85, "lemma": "be", "tag": "VBP", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 3}, {"form": "on", "prnt": 78, "lemma": "on", "tag": "RB", "rel": "advcl", "children": [80, 83, 84, 87], "feats": {}, "snt_id": 3}, {"form": ",", "prnt": 90, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 3}, {"form": "what", "prnt": 85, "lemma": "what", "tag": "WP", "rel": "obj", "children": [90], "feats": {"PronType": "Int"}, "snt_id": 3}, {"form": "he", "prnt": 90, "lemma": "he", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Masc", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 3}, {"form": "can", "prnt": 90, "lemma": "can", "tag": "MD", "rel": "aux", "children": [], "feats": {"VerbForm": "Fin"}, "snt_id": 3}, {"form": "does", "prnt": 87, "lemma": "do", "tag": "VBZ", "rel": "acl:relcl", "children": [86, 88, 89, 93], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 3}, {"form": "with", "prnt": 93, "lemma": "with", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 3}, {"form": "his", "prnt": 93, "lemma": "he", "tag": "PRP$", "rel": "nmod:poss", "children": [], "feats": {"Gender": "Masc", "Number": "Sing", "Person": "3", "Poss": "Yes", "PronType": "Prs"}, "snt_id": 3}, {"form": "body", "prnt": 90, "lemma": "body", "tag": "NN", "rel": "obl", "children": [91, 92, 98], "feats": {"Number": "Sing"}, "snt_id": 3}, {"form": "and", "prnt": 98, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 3}, {"form": "that", "prnt": 98, "lemma": "that", "tag": "DT", "rel": "det", "children": [], "feats": {"Number": "Sing", "PronType": "Dem"}, "snt_id": 3}, {"form": "familiar", "prnt": 98, "lemma": "familiar", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 3}, {"form": "bruce", "prnt": 98, "lemma": "bruce", "tag": "NNP", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 3}, {"form": "attitude", "prnt": 93, "lemma": "attitude", "tag": "NN", "rel": "conj", "children": [94, 95, 96, 97, 100], "feats": {"Number": "Sing"}, "snt_id": 3}, {"form": "and", "prnt": 100, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 3}, {"form": "character", "prnt": 98, "lemma": "character", "tag": "NN", "rel": "conj", "children": [99], "feats": {"Number": "Sing"}, "snt_id": 3}, {"form": ".", "prnt": 76, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 3}, {"form": "i", "prnt": 104, "lemma": "i", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Number": "Sing", "Person": "1", "PronType": "Prs"}, "snt_id": 4}, {"form": "also", "prnt": 104, "lemma": "also", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 4}, {"form": "like", "prnt": 101, "lemma": "like", "tag": "VBP", "rel": "root", "children": [102, 103, 107, 114, 117, 127], "feats": {"Mood": "Ind", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 4}, {"form": "the", "prnt": 107, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 4}, {"form": "little", "prnt": 107, "lemma": "little", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 4}, {"form": "bits", "prnt": 104, "lemma": "bit", "tag": "NNS", "rel": "obj", "children": [105, 106, 110], "feats": {"Number": "Plur"}, "snt_id": 4}, {"form": "of", "prnt": 110, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 4}, {"form": "insight", "prnt": 110, "lemma": "insight", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": "scenes", "prnt": 107, "lemma": "scene", "tag": "NNS", "rel": "nmod", "children": [108, 109, 112], "feats": {"Number": "Plur"}, "snt_id": 4}, {"form": "about", "prnt": 114, "lemma": "about", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 4}, {"form": "bruce", "prnt": 110, "lemma": "bruce", "tag": "NNP", "rel": "nmod", "children": [113], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": "lee's", "prnt": 112, "lemma": "lee'", "tag": "NNS", "rel": "flat", "children": [], "feats": {"Number": "Plur"}, "snt_id": 4}, {"form": "life", "prnt": 104, "lemma": "life", "tag": "NN", "rel": "obl", "children": [111], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": "before", "prnt": 117, "lemma": "before", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 4}, {"form": "he", "prnt": 117, "lemma": "he", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Masc", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 4}, {"form": "became", "prnt": 104, "lemma": "become", "tag": "VBD", "rel": "advcl", "children": [115, 116, 118], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 4}, {"form": "famous", "prnt": 117, "lemma": "famous", "tag": "JJ", "rel": "xcomp", "children": [119, 120], "feats": {"Degree": "Pos"}, "snt_id": 4}, {"form": ":", "prnt": 118, "lemma": ":", "tag": ":", "rel": "punct", "children": [], "feats": {}, "snt_id": 4}, {"form": "scenes", "prnt": 118, "lemma": "scene", "tag": "NNS", "rel": "appos", "children": [122, 123], "feats": {"Number": "Plur"}, "snt_id": 4}, {"form": "like", "prnt": 122, "lemma": "like", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 4}, {"form": "bruce", "prnt": 120, "lemma": "bruce", "tag": "NNP", "rel": "nmod", "children": [121], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": "practicing", "prnt": 120, "lemma": "practice", "tag": "VBG", "rel": "acl", "children": [124], "feats": {"VerbForm": "Ger"}, "snt_id": 4}, {"form": "pronunciation", "prnt": 123, "lemma": "pronunciation", "tag": "NN", "rel": "obj", "children": [126], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": "of", "prnt": 126, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 4}, {"form": "english", "prnt": 124, "lemma": "english", "tag": "NNP", "rel": "nmod", "children": [125], "feats": {"Number": "Sing"}, "snt_id": 4}, {"form": ".", "prnt": 104, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 4}, {"form": "it", "prnt": 129, "lemma": "it", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Neut", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 5}, {"form": "seemed", "prnt": 127, "lemma": "seem", "tag": "VBD", "rel": "root", "children": [128, 135, 139], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 5}, {"form": "as", "prnt": 135, "lemma": "as", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 5}, {"form": "if", "prnt": 135, "lemma": "if", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 5}, {"form": "he", "prnt": 135, "lemma": "he", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Masc", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 5}, {"form": "was", "prnt": 135, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 5}, {"form": "no", "prnt": 135, "lemma": "no", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 5}, {"form": "better", "prnt": 129, "lemma": "better", "tag": "JJR", "rel": "advcl", "children": [130, 131, 132, 133, 134, 137], "feats": {"Degree": "Cmp"}, "snt_id": 5}, {"form": "than", "prnt": 137, "lemma": "than", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 5}, {"form": "anybody", "prnt": 135, "lemma": "anybody", "tag": "NN", "rel": "obl", "children": [136, 138], "feats": {"Number": "Sing"}, "snt_id": 5}, {"form": "else", "prnt": 137, "lemma": "else", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 5}, {"form": ".", "prnt": 129, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 5}, {"form": "scenes", "prnt": 139, "lemma": "scene", "tag": "NNS", "rel": "root", "children": [142, 143, 169], "feats": {"Number": "Plur"}, "snt_id": 6}, {"form": "like", "prnt": 142, "lemma": "like", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 6}, {"form": "bruce", "prnt": 140, "lemma": "bruce", "tag": "NNP", "rel": "nmod", "children": [141], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "delivering", "prnt": 140, "lemma": "deliver", "tag": "VBG", "rel": "acl", "children": [145, 149], "feats": {"VerbForm": "Ger"}, "snt_id": 6}, {"form": "chinese", "prnt": 145, "lemma": "chinese", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 6}, {"form": "food", "prnt": 143, "lemma": "food", "tag": "NN", "rel": "obj", "children": [144], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "as", "prnt": 149, "lemma": "as", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 6}, {"form": "a", "prnt": 149, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 6}, {"form": "delivery", "prnt": 149, "lemma": "delivery", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "boy", "prnt": 143, "lemma": "boy", "tag": "NN", "rel": "obl", "children": [146, 147, 148, 150], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "ridding", "prnt": 149, "lemma": "ridding", "tag": "VBG", "rel": "acl", "children": [152, 156], "feats": {"VerbForm": "Ger"}, "snt_id": 6}, {"form": "a", "prnt": 152, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 6}, {"form": "bike", "prnt": 150, "lemma": "bike", "tag": "NN", "rel": "obj", "children": [151], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "through", "prnt": 156, "lemma": "through", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 6}, {"form": "the", "prnt": 156, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 6}, {"form": "american", "prnt": 156, "lemma": "american", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 6}, {"form": "college", "prnt": 150, "lemma": "college", "tag": "NN", "rel": "obl", "children": [153, 154, 155, 157], "feats": {"Number": "Sing"}, "snt_id": 6}, {"form": "looking", "prnt": 156, "lemma": "look", "tag": "VBG", "rel": "acl", "children": [163], "feats": {"VerbForm": "Ger"}, "snt_id": 6}, {"form": "at", "prnt": 163, "lemma": "at", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 6}, {"form": "the", "prnt": 163, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 6}, {"form": "(", "prnt": 161, "lemma": "(", "tag": "-LRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 6}, {"form": "all-white", "prnt": 163, "lemma": "all-white", "tag": "JJ", "rel": "amod", "children": [160], "feats": {"Degree": "Pos"}, "snt_id": 6}, {"form": ")", "prnt": 163, "lemma": ")", "tag": "-RRB-", "rel": "punct", "children": [], "feats": {}, "snt_id": 6}, {"form": "students", "prnt": 157, "lemma": "student", "tag": "NNS", "rel": "obl", "children": [158, 159, 161, 162, 165, 168], "feats": {"Number": "Plur"}, "snt_id": 6}, {"form": ",", "prnt": 165, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 6}, {"form": "cheerleaders", "prnt": 163, "lemma": "cheerleader", "tag": "NNS", "rel": "conj", "children": [164], "feats": {"Number": "Plur"}, "snt_id": 6}, {"form": ",", "prnt": 168, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 6}, {"form": "and", "prnt": 168, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 6}, {"form": "athletes", "prnt": 163, "lemma": "athlete", "tag": "NNS", "rel": "conj", "children": [166, 167], "feats": {"Number": "Plur"}, "snt_id": 6}, {"form": ".", "prnt": 140, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 6}, {"form": "it", "prnt": 171, "lemma": "it", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Neut", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 7}, {"form": "seemed", "prnt": 169, "lemma": "seem", "tag": "VBD", "rel": "root", "children": [170, 174, 181], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 7}, {"form": "he", "prnt": 174, "lemma": "he", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Masc", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 7}, {"form": "too", "prnt": 174, "lemma": "too", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 7}, {"form": "wished", "prnt": 171, "lemma": "wish", "tag": "VBD", "rel": "ccomp", "children": [172, 173, 178], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 7}, {"form": "for", "prnt": 178, "lemma": "for", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 7}, {"form": "the", "prnt": 178, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 7}, {"form": "american", "prnt": 178, "lemma": "american", "tag": "JJ", "rel": "amod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 7}, {"form": "dreams", "prnt": 174, "lemma": "dream", "tag": "NNS", "rel": "obl", "children": [175, 176, 177, 180], "feats": {"Number": "Plur"}, "snt_id": 7}, {"form": "and", "prnt": 180, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 7}, {"form": "hopes", "prnt": 178, "lemma": "hope", "tag": "NNS", "rel": "conj", "children": [179], "feats": {"Number": "Plur"}, "snt_id": 7}, {"form": ".", "prnt": 171, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 7}, {"form": "in", "prnt": 183, "lemma": "in", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 8}, {"form": "conclusion", "prnt": 189, "lemma": "conclusion", "tag": "NN", "rel": "obl", "children": [182], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": ",", "prnt": 189, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 8}, {"form": "the", "prnt": 186, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 8}, {"form": "movie", "prnt": 189, "lemma": "movie", "tag": "NN", "rel": "nsubj:pass", "children": [185], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "was", "prnt": 189, "lemma": "be", "tag": "VBD", "rel": "aux:pass", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 8}, {"form": "well", "prnt": 189, "lemma": "well", "tag": "RB", "rel": "advmod", "children": [], "feats": {"Degree": "Pos"}, "snt_id": 8}, {"form": "made", "prnt": 181, "lemma": "make", "tag": "VBN", "rel": "root", "children": [183, 184, 186, 187, 188, 190, 192, 211, 221], "feats": {"Tense": "Past", "VerbForm": "Part", "Voice": "Pass"}, "snt_id": 8}, {"form": ",", "prnt": 189, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 8}, {"form": "it", "prnt": 192, "lemma": "it", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Neut", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 8}, {"form": "produced", "prnt": 189, "lemma": "produce", "tag": "VBD", "rel": "parataxis", "children": [191, 194], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 8}, {"form": "a", "prnt": 194, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 8}, {"form": "realization", "prnt": 192, "lemma": "realization", "tag": "NN", "rel": "obj", "children": [193, 196], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "of", "prnt": 196, "lemma": "of", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 8}, {"form": "who", "prnt": 194, "lemma": "who", "tag": "WP", "rel": "nmod", "children": [195, 197, 199], "feats": {"PronType": "Rel"}, "snt_id": 8}, {"form": "bruce", "prnt": 196, "lemma": "bruce", "tag": "NNP", "rel": "nsubj", "children": [198], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "lee", "prnt": 197, "lemma": "lee", "tag": "NNP", "rel": "flat", "children": [], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "was", "prnt": 196, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 8}, {"form": ",", "prnt": 205, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 8}, {"form": "and", "prnt": 205, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 8}, {"form": "actor", "prnt": 203, "lemma": "actor", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "james", "prnt": 205, "lemma": "jame", "tag": "NNS", "rel": "nsubj", "children": [202, 204], "feats": {"Number": "Plur"}, "snt_id": 8}, {"form": "lee", "prnt": 203, "lemma": "lee", "tag": "NNP", "rel": "flat", "children": [], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "was", "prnt": 207, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [200, 201, 203], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 8}, {"form": "so", "prnt": 207, "lemma": "so", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 8}, {"form": "much", "prnt": 211, "lemma": "much", "tag": "RB", "rel": "advmod", "children": [205, 206, 209], "feats": {}, "snt_id": 8}, {"form": "like", "prnt": 209, "lemma": "like", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 8}, {"form": "bruce", "prnt": 207, "lemma": "bruce", "tag": "NNP", "rel": "obl", "children": [208], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": "you", "prnt": 211, "lemma": "you", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Person": "2", "PronType": "Prs"}, "snt_id": 8}, {"form": "have", "prnt": 189, "lemma": "have", "tag": "VBP", "rel": "conj", "children": [207, 210, 213], "feats": {"Mood": "Ind", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 8}, {"form": "to", "prnt": 213, "lemma": "to", "tag": "TO", "rel": "mark", "children": [], "feats": {}, "snt_id": 8}, {"form": "remind", "prnt": 211, "lemma": "remind", "tag": "VB", "rel": "xcomp", "children": [212, 214, 220], "feats": {"VerbForm": "Inf"}, "snt_id": 8}, {"form": "yourself", "prnt": 213, "lemma": "yourself", "tag": "PRP", "rel": "obj", "children": [], "feats": {"Case": "Acc", "Number": "Sing", "Person": "2", "PronType": "Prs", "Reflex": "Yes"}, "snt_id": 8}, {"form": "that", "prnt": 220, "lemma": "that", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 8}, {"form": "he", "prnt": 220, "lemma": "he", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Gender": "Masc", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 8}, {"form": "is", "prnt": 220, "lemma": "be", "tag": "VBZ", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 8}, {"form": "just", "prnt": 220, "lemma": "just", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 8}, {"form": "an", "prnt": 220, "lemma": "a", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Ind", "PronType": "Art"}, "snt_id": 8}, {"form": "actor", "prnt": 213, "lemma": "actor", "tag": "NN", "rel": "ccomp", "children": [215, 216, 217, 218, 219], "feats": {"Number": "Sing"}, "snt_id": 8}, {"form": ".", "prnt": 189, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 8}, {"form": "and", "prnt": 228, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 9}, {"form": "the", "prnt": 225, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 9}, {"form": "fighting", "prnt": 225, "lemma": "fight", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 9}, {"form": "scenes", "prnt": 228, "lemma": "scene", "tag": "NNS", "rel": "nsubj", "children": [223, 224], "feats": {"Number": "Plur"}, "snt_id": 9}, {"form": "were", "prnt": 228, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 9}, {"form": "all", "prnt": 228, "lemma": "all", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 9}, {"form": "excellent", "prnt": 221, "lemma": "excellent", "tag": "JJ", "rel": "root", "children": [222, 225, 226, 227, 229], "feats": {"Degree": "Pos"}, "snt_id": 9}, {"form": ".", "prnt": 228, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 9}, {"form": "so", "prnt": 231, "lemma": "so", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 10}, {"form": "go", "prnt": 229, "lemma": "go", "tag": "VB", "rel": "root", "children": [230, 232, 235, 238], "feats": {"Mood": "Imp", "VerbForm": "Fin"}, "snt_id": 10}, {"form": "see", "prnt": 231, "lemma": "see", "tag": "VB", "rel": "xcomp", "children": [233], "feats": {"Mood": "Imp", "VerbForm": "Fin"}, "snt_id": 10}, {"form": "it", "prnt": 232, "lemma": "it", "tag": "PRP", "rel": "obj", "children": [], "feats": {"Case": "Acc", "Gender": "Neut", "Number": "Sing", "Person": "3", "PronType": "Prs"}, "snt_id": 10}, {"form": "and", "prnt": 235, "lemma": "and", "tag": "CC", "rel": "cc", "children": [], "feats": {}, "snt_id": 10}, {"form": "enjoy", "prnt": 231, "lemma": "enjoy", "tag": "VB", "rel": "conj", "children": [234, 237], "feats": {"Mood": "Imp", "VerbForm": "Fin"}, "snt_id": 10}, {"form": "the", "prnt": 237, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 10}, {"form": "movie", "prnt": 235, "lemma": "movie", "tag": "NN", "rel": "obj", "children": [236], "feats": {"Number": "Sing"}, "snt_id": 10}, {"form": ".", "prnt": 231, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 10}, {"form": "p", "prnt": 257, "lemma": "p", "tag": "NN", "rel": "nummod", "children": [240, 241, 242], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": ".", "prnt": 239, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 11}, {"form": "s", "prnt": 239, "lemma": "'s", "tag": "AFX", "rel": "case", "children": [], "feats": {}, "snt_id": 11}, {"form": ".", "prnt": 239, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 11}, {"form": "if", "prnt": 246, "lemma": "if", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 11}, {"form": "you", "prnt": 246, "lemma": "you", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Person": "2", "PronType": "Prs"}, "snt_id": 11}, {"form": "have", "prnt": 246, "lemma": "have", "tag": "VBP", "rel": "aux", "children": [], "feats": {"Mood": "Ind", "Tense": "Pres", "VerbForm": "Fin"}, "snt_id": 11}, {"form": "seen", "prnt": 257, "lemma": "see", "tag": "VBN", "rel": "advcl", "children": [243, 244, 245, 249, 251], "feats": {"Tense": "Past", "VerbForm": "Part"}, "snt_id": 11}, {"form": "the", "prnt": 249, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 11}, {"form": "movie", "prnt": 249, "lemma": "movie", "tag": "NN", "rel": "compound", "children": [], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "unforgiven", "prnt": 246, "lemma": "unforgiven", "tag": "NN", "rel": "obj", "children": [247, 248], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "by", "prnt": 251, "lemma": "by", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 11}, {"form": "clint", "prnt": 246, "lemma": "clint", "tag": "NNP", "rel": "obl", "children": [250, 252], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "eastwood", "prnt": 251, "lemma": "eastwood", "tag": "NNP", "rel": "flat", "children": [], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": ",", "prnt": 257, "lemma": ",", "tag": ",", "rel": "punct", "children": [], "feats": {}, "snt_id": 11}, {"form": "then", "prnt": 257, "lemma": "then", "tag": "RB", "rel": "advmod", "children": [], "feats": {"PronType": "Dem"}, "snt_id": 11}, {"form": "the", "prnt": 256, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 11}, {"form": "feeling", "prnt": 257, "lemma": "feeling", "tag": "NN", "rel": "nsubj", "children": [255], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "left", "prnt": 238, "lemma": "leave", "tag": "VBD", "rel": "root", "children": [239, 246, 253, 254, 256, 265, 271], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 11}, {"form": "after", "prnt": 265, "lemma": "after", "tag": "IN", "rel": "mark", "children": [], "feats": {}, "snt_id": 11}, {"form": "dragon", "prnt": 265, "lemma": "dragon", "tag": "NN", "rel": "nsubj", "children": [], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "was", "prnt": 265, "lemma": "be", "tag": "VBD", "rel": "cop", "children": [], "feats": {"Mood": "Ind", "Number": "Sing", "Person": "3", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 11}, {"form": "very", "prnt": 262, "lemma": "very", "tag": "RB", "rel": "advmod", "children": [], "feats": {}, "snt_id": 11}, {"form": "much", "prnt": 265, "lemma": "much", "tag": "RB", "rel": "advmod", "children": [261], "feats": {}, "snt_id": 11}, {"form": "like", "prnt": 265, "lemma": "like", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 11}, {"form": "the", "prnt": 265, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 11}, {"form": "feeling", "prnt": 257, "lemma": "feeling", "tag": "NN", "rel": "advcl", "children": [258, 259, 260, 262, 263, 264, 267], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": "you", "prnt": 267, "lemma": "you", "tag": "PRP", "rel": "nsubj", "children": [], "feats": {"Case": "Nom", "Person": "2", "PronType": "Prs"}, "snt_id": 11}, {"form": "got", "prnt": 265, "lemma": "get", "tag": "VBD", "rel": "acl:relcl", "children": [266, 270], "feats": {"Mood": "Ind", "Tense": "Past", "VerbForm": "Fin"}, "snt_id": 11}, {"form": "after", "prnt": 270, "lemma": "after", "tag": "IN", "rel": "case", "children": [], "feats": {}, "snt_id": 11}, {"form": "the", "prnt": 270, "lemma": "the", "tag": "DT", "rel": "det", "children": [], "feats": {"Definite": "Def", "PronType": "Art"}, "snt_id": 11}, {"form": "unforgiven", "prnt": 267, "lemma": "unforgiven", "tag": "NN", "rel": "obl", "children": [268, 269], "feats": {"Number": "Sing"}, "snt_id": 11}, {"form": ".", "prnt": 257, "lemma": ".", "tag": ".", "rel": "punct", "children": [], "feats": {}, "snt_id": 11}], "edus": [{"polarity_scores": {"socal": [0.0, 0.4615384615384615, 0.5384615384615384]}, "toks": [0, 1, 2, 3, 4, 5, 6]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [7, 8, 9]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [10, 11]}, {"polarity_scores": {"socal": [0.0, 0.4, 0.6000000000000001]}, "toks": [12, 13, 14]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]}, {"polarity_scores": {"socal": [0.0, 0.4857142857142857, 0.5142857142857143]}, "toks": [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56]}, {"polarity_scores": {"socal": [0.0, 0.4827586206896552, 0.5172413793103449]}, "toks": [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]}, {"polarity_scores": {"socal": [0.0, 0.42857142857142855, 0.5714285714285714]}, "toks": [72, 73, 74, 75, 76, 77, 78, 79]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [80, 81, 82, 83, 84, 85, 86]}, {"polarity_scores": {"socal": [0.0, 0.4827586206896552, 0.5172413793103449]}, "toks": [87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]}, {"polarity_scores": {"socal": [0.16956521739130434, 0.4347826086956522, 0.39565217391304347]}, "toks": [102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]}, {"polarity_scores": {"socal": [0.0, 0.4444444444444445, 0.5555555555555556]}, "toks": [115, 116, 117, 118, 119]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [120, 121, 122, 123, 124, 125, 126, 127]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [140, 141, 142, 143, 144, 145, 146, 147, 148, 149]}, {"polarity_scores": {"socal": [0.5384615384615384, 0.4615384615384615, 0.0]}, "toks": [150, 151, 152, 153, 154, 155, 156]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [157, 158, 159]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [160, 161, 162]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [163, 164, 165, 166, 167, 168, 169]}, {"polarity_scores": {"socal": [0.3956043956043956, 0.42857142857142855, 0.17582417582417584]}, "toks": [170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [182, 183, 184]}, {"polarity_scores": {"socal": [0.0, 0.45454545454545453, 0.5454545454545454]}, "toks": [185, 186, 187, 188, 189, 190]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [191, 192, 193, 194]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [195, 196, 197, 198, 199, 200]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [201, 202, 203, 204, 205, 206, 207, 208, 209]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [210, 211, 212, 213, 214]}, {"polarity_scores": {"socal": [0.0, 0.4615384615384615, 0.5384615384615384]}, "toks": [215, 216, 217, 218, 219, 220, 221]}, {"polarity_scores": {"socal": [0.0, 0.4666666666666667, 0.5333333333333333]}, "toks": [222, 223, 224, 225, 226, 227, 228, 229]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [230, 231, 232, 233]}, {"polarity_scores": {"socal": [0.0, 0.4444444444444445, 0.5555555555555556]}, "toks": [234, 235, 236, 237, 238]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [239, 240, 241, 242]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265]}, {"polarity_scores": {"socal": [0.0, 1.0, 0.0]}, "toks": [266, 267, 268, 269, 270, 271]}], "rst_trees": {"wang": {"id": -1, "rel2par": null, "n/s": null, "children": [{"id": -2, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": -3, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": [{"id": 0, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 1, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}, {"id": 2, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": []}]}, {"id": -4, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": -5, "rel2par": "Contrast", "n/s": "Nucleus", "children": [{"id": -6, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": -7, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": [{"id": 3, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 4, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}, {"id": 5, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": []}]}, {"id": -8, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": 6, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 7, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}]}, {"id": -9, "rel2par": "Contrast", "n/s": "Nucleus", "children": [{"id": -10, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": -11, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": [{"id": 8, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 9, "rel2par": "Condition", "n/s": "Satellite", "children": []}]}, {"id": 10, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": []}]}, {"id": -12, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": -13, "rel2par": "Textual-Organization", "n/s": "Nucleus", "children": [{"id": 11, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 12, "rel2par": "Temporal", "n/s": "Satellite", "children": []}]}, {"id": -14, "rel2par": "Textual-Organization", "n/s": "Nucleus", "children": [{"id": -15, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": 13, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 14, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}, {"id": -16, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": -17, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": -18, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": [{"id": 15, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": -19, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": -20, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": 16, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 17, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}, {"id": 18, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}]}, {"id": 19, "rel2par": "Same-Unit", "n/s": "Nucleus", "children": []}]}, {"id": -21, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": -22, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": -23, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": 20, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": -24, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": -25, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": 21, "rel2par": "Attribution", "n/s": "Nucleus", "children": []}, {"id": -26, "rel2par": "Attribution", "n/s": "Nucleus", "children": [{"id": 22, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": -27, "rel2par": "Attribution", "n/s": "Satellite", "children": [{"id": 23, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 24, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}]}]}, {"id": -28, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": 25, "rel2par": "Attribution", "n/s": "Nucleus", "children": []}, {"id": -29, "rel2par": "Attribution", "n/s": "Nucleus", "children": [{"id": 26, "rel2par": "Attribution", "n/s": "Satellite", "children": []}, {"id": 27, "rel2par": "span", "n/s": "Nucleus", "children": []}]}]}]}]}, {"id": -30, "rel2par": "Joint", "n/s": "Nucleus", "children": [{"id": 28, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": -31, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": 29, "rel2par": "Joint", "n/s": "Nucleus", "children": []}, {"id": 30, "rel2par": "Joint", "n/s": "Nucleus", "children": []}]}]}]}, {"id": -32, "rel2par": "Elaboration", "n/s": "Satellite", "children": [{"id": 31, "rel2par": "Condition", "n/s": "Nucleus", "children": []}, {"id": -33, "rel2par": "Condition", "n/s": "Nucleus", "children": [{"id": 32, "rel2par": "Condition", "n/s": "Satellite", "children": []}, {"id": -34, "rel2par": "span", "n/s": "Nucleus", "children": [{"id": 33, "rel2par": "span", "n/s": "Nucleus", "children": []}, {"id": 34, "rel2par": "Elaboration", "n/s": "Satellite", "children": []}]}]}]}]}]}]}]}]}]}]}}, "polarity_scores": {"socal": [0.11262939958592132, 0.4819047619047619, 0.4054658385093168]}}]}
+{
+  "docs": [
+    {
+      "text": "bruce lee was a bigger-than-life martial artist ( and ) actor . \n bruce's unique character ( i . e . , self-produced sound effects , etc . ) and seemingly perfected martial art and physique were all well portrayed by the actor , james lee . \n the story is told from his wife linda's point of view where she put a lot of family and practical side of bruce lee's life . \n however , you can't help but like , whenever the fight scenes are on , what he can does with his body and that familiar bruce attitude and character . \n i also like the little bits of insight scenes about bruce lee's life before he became famous : scenes like bruce practicing pronunciation of english . \n it seemed as if he was no better than anybody else . \n scenes like bruce delivering chinese food as a delivery boy ridding a bike through the american college looking at the ( all-white ) students , cheerleaders , and athletes . \n it seemed he too wished for the american dreams and hopes . \n in conclusion , the movie was well made , it produced a realization of who bruce lee was , and actor james lee was so much like bruce you have to remind yourself that he is just an actor . \n and the fighting scenes were all excellent . \n so go see it and enjoy the movie . \n p . s . if you have seen the movie unforgiven by clint eastwood , then the feeling left after dragon was very much like the feeling you got after the unforgiven .",
+      "label": "positive",
+      "toks": [
+        {
+          "form": "bruce",
+          "prnt": 6,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "nsubj",
+          "children": [
+            1
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "lee",
+          "prnt": 0,
+          "lemma": "lee",
+          "tag": "NNP",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "was",
+          "prnt": 6,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "a",
+          "prnt": 6,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "bigger-than-life",
+          "prnt": 6,
+          "lemma": "bigger-than-life",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "martial",
+          "prnt": 6,
+          "lemma": "martial",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "artist",
+          "prnt": -1,
+          "lemma": "artist",
+          "tag": "NN",
+          "rel": "root",
+          "children": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            10,
+            11
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": "(",
+          "prnt": 10,
+          "lemma": "(",
+          "tag": "-LRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 0
+        },
+        {
+          "form": "and",
+          "prnt": 10,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 0
+        },
+        {
+          "form": ")",
+          "prnt": 10,
+          "lemma": ")",
+          "tag": "-RRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 0
+        },
+        {
+          "form": "actor",
+          "prnt": 6,
+          "lemma": "actor",
+          "tag": "NN",
+          "rel": "conj",
+          "children": [
+            7,
+            8,
+            9
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 0
+        },
+        {
+          "form": ".",
+          "prnt": 6,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 0
+        },
+        {
+          "form": "bruce's",
+          "prnt": 11,
+          "lemma": "bruce'",
+          "tag": "VBZ",
+          "rel": "root",
+          "children": [
+            14,
+            38
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "unique",
+          "prnt": 14,
+          "lemma": "unique",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "character",
+          "prnt": 12,
+          "lemma": "character",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            13,
+            18,
+            23
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "(",
+          "prnt": 16,
+          "lemma": "(",
+          "tag": "-LRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "i",
+          "prnt": 18,
+          "lemma": "i",
+          "tag": "PRP",
+          "rel": "compound",
+          "children": [
+            15,
+            17
+          ],
+          "feats": {
+            "Case": "Nom",
+            "Number": "Sing",
+            "Person": "1",
+            "PronType": "Prs"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": ".",
+          "prnt": 16,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "e",
+          "prnt": 14,
+          "lemma": "e",
+          "tag": "NN",
+          "rel": "appos",
+          "children": [
+            16,
+            19
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": ".",
+          "prnt": 18,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": ",",
+          "prnt": 23,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "self-produced",
+          "prnt": 23,
+          "lemma": "self-produced",
+          "tag": "VBN",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "sound",
+          "prnt": 23,
+          "lemma": "sound",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "effects",
+          "prnt": 14,
+          "lemma": "effect",
+          "tag": "NNS",
+          "rel": "conj",
+          "children": [
+            20,
+            21,
+            22,
+            25
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": ",",
+          "prnt": 25,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "etc",
+          "prnt": 23,
+          "lemma": "etc",
+          "tag": "FW",
+          "rel": "advmod",
+          "children": [
+            24,
+            26
+          ],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": ".",
+          "prnt": 25,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": ")",
+          "prnt": 30,
+          "lemma": ")",
+          "tag": "-RRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "and",
+          "prnt": 30,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "seemingly",
+          "prnt": 30,
+          "lemma": "seemingly",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "perfected",
+          "prnt": 38,
+          "lemma": "perfect",
+          "tag": "VBN",
+          "rel": "advcl",
+          "children": [
+            27,
+            28,
+            29,
+            32
+          ],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "martial",
+          "prnt": 32,
+          "lemma": "martial",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "art",
+          "prnt": 30,
+          "lemma": "art",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            31,
+            34
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "and",
+          "prnt": 34,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "physique",
+          "prnt": 32,
+          "lemma": "physique",
+          "tag": "NN",
+          "rel": "conj",
+          "children": [
+            33
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "were",
+          "prnt": 38,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "aux:pass",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "all",
+          "prnt": 38,
+          "lemma": "all",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "well",
+          "prnt": 38,
+          "lemma": "well",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "portrayed",
+          "prnt": 12,
+          "lemma": "portray",
+          "tag": "VBN",
+          "rel": "conj",
+          "children": [
+            30,
+            35,
+            36,
+            37,
+            41,
+            45
+          ],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part",
+            "Voice": "Pass"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "by",
+          "prnt": 41,
+          "lemma": "by",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "the",
+          "prnt": 41,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "actor",
+          "prnt": 38,
+          "lemma": "actor",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            39,
+            40,
+            42,
+            43
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": ",",
+          "prnt": 41,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "james",
+          "prnt": 41,
+          "lemma": "jame",
+          "tag": "NNP",
+          "rel": "appos",
+          "children": [
+            44
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": "lee",
+          "prnt": 43,
+          "lemma": "lee",
+          "tag": "NNP",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 1
+        },
+        {
+          "form": ".",
+          "prnt": 38,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 1
+        },
+        {
+          "form": "the",
+          "prnt": 47,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "story",
+          "prnt": 49,
+          "lemma": "story",
+          "tag": "NN",
+          "rel": "nsubj:pass",
+          "children": [
+            46
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "is",
+          "prnt": 49,
+          "lemma": "be",
+          "tag": "VBZ",
+          "rel": "aux:pass",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "told",
+          "prnt": 45,
+          "lemma": "tell",
+          "tag": "VBN",
+          "rel": "root",
+          "children": [
+            47,
+            48,
+            52,
+            53,
+            71
+          ],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part",
+            "Voice": "Pass"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "from",
+          "prnt": 52,
+          "lemma": "from",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "his",
+          "prnt": 52,
+          "lemma": "he",
+          "tag": "PRP$",
+          "rel": "nmod:poss",
+          "children": [],
+          "feats": {
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "Poss": "Yes",
+            "PronType": "Prs"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "wife",
+          "prnt": 49,
+          "lemma": "wife",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            50,
+            51
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "linda's",
+          "prnt": 49,
+          "lemma": "linda'",
+          "tag": "VBZ",
+          "rel": "ccomp",
+          "children": [
+            54
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "point",
+          "prnt": 53,
+          "lemma": "point",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            56
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "of",
+          "prnt": 56,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "view",
+          "prnt": 54,
+          "lemma": "view",
+          "tag": "NN",
+          "rel": "nmod",
+          "children": [
+            55,
+            59
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "where",
+          "prnt": 59,
+          "lemma": "where",
+          "tag": "WRB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {
+            "PronType": "Rel"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "she",
+          "prnt": 59,
+          "lemma": "she",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Fem",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "put",
+          "prnt": 56,
+          "lemma": "put",
+          "tag": "VBD",
+          "rel": "acl:relcl",
+          "children": [
+            57,
+            58,
+            61
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "a",
+          "prnt": 61,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "lot",
+          "prnt": 59,
+          "lemma": "lot",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            60,
+            63
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "of",
+          "prnt": 63,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "family",
+          "prnt": 61,
+          "lemma": "family",
+          "tag": "NN",
+          "rel": "nmod",
+          "children": [
+            62,
+            66
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "and",
+          "prnt": 66,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "practical",
+          "prnt": 66,
+          "lemma": "practical",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "side",
+          "prnt": 63,
+          "lemma": "side",
+          "tag": "NN",
+          "rel": "conj",
+          "children": [
+            64,
+            65,
+            70
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "of",
+          "prnt": 70,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "bruce",
+          "prnt": 70,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "compound",
+          "children": [
+            69
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "lee's",
+          "prnt": 68,
+          "lemma": "lee'",
+          "tag": "NNS",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": "life",
+          "prnt": 66,
+          "lemma": "life",
+          "tag": "NN",
+          "rel": "nmod",
+          "children": [
+            67,
+            68
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 2
+        },
+        {
+          "form": ".",
+          "prnt": 49,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 2
+        },
+        {
+          "form": "however",
+          "prnt": 76,
+          "lemma": "however",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": ",",
+          "prnt": 76,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "you",
+          "prnt": 76,
+          "lemma": "you",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Person": "2",
+            "PronType": "Prs"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "can't",
+          "prnt": 76,
+          "lemma": "can't",
+          "tag": "MD",
+          "rel": "aux",
+          "children": [],
+          "feats": {
+            "VerbForm": "Fin"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "help",
+          "prnt": 71,
+          "lemma": "help",
+          "tag": "VB",
+          "rel": "root",
+          "children": [
+            72,
+            73,
+            74,
+            75,
+            78,
+            101
+          ],
+          "feats": {
+            "VerbForm": "Inf"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "but",
+          "prnt": 78,
+          "lemma": "but",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "like",
+          "prnt": 76,
+          "lemma": "like",
+          "tag": "VB",
+          "rel": "conj",
+          "children": [
+            77,
+            79,
+            85
+          ],
+          "feats": {
+            "VerbForm": "Inf"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": ",",
+          "prnt": 78,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "whenever",
+          "prnt": 85,
+          "lemma": "whenever",
+          "tag": "WRB",
+          "rel": "mark",
+          "children": [],
+          "feats": {
+            "PronType": "Int"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "the",
+          "prnt": 83,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "fight",
+          "prnt": 83,
+          "lemma": "fight",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "scenes",
+          "prnt": 85,
+          "lemma": "scene",
+          "tag": "NNS",
+          "rel": "nsubj",
+          "children": [
+            81,
+            82
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "are",
+          "prnt": 85,
+          "lemma": "be",
+          "tag": "VBP",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "on",
+          "prnt": 78,
+          "lemma": "on",
+          "tag": "RB",
+          "rel": "advcl",
+          "children": [
+            80,
+            83,
+            84,
+            87
+          ],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": ",",
+          "prnt": 90,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "what",
+          "prnt": 85,
+          "lemma": "what",
+          "tag": "WP",
+          "rel": "obj",
+          "children": [
+            90
+          ],
+          "feats": {
+            "PronType": "Int"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "he",
+          "prnt": 90,
+          "lemma": "he",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "can",
+          "prnt": 90,
+          "lemma": "can",
+          "tag": "MD",
+          "rel": "aux",
+          "children": [],
+          "feats": {
+            "VerbForm": "Fin"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "does",
+          "prnt": 87,
+          "lemma": "do",
+          "tag": "VBZ",
+          "rel": "acl:relcl",
+          "children": [
+            86,
+            88,
+            89,
+            93
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "with",
+          "prnt": 93,
+          "lemma": "with",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "his",
+          "prnt": 93,
+          "lemma": "he",
+          "tag": "PRP$",
+          "rel": "nmod:poss",
+          "children": [],
+          "feats": {
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "Poss": "Yes",
+            "PronType": "Prs"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "body",
+          "prnt": 90,
+          "lemma": "body",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            91,
+            92,
+            98
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "and",
+          "prnt": 98,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "that",
+          "prnt": 98,
+          "lemma": "that",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Number": "Sing",
+            "PronType": "Dem"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "familiar",
+          "prnt": 98,
+          "lemma": "familiar",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "bruce",
+          "prnt": 98,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "attitude",
+          "prnt": 93,
+          "lemma": "attitude",
+          "tag": "NN",
+          "rel": "conj",
+          "children": [
+            94,
+            95,
+            96,
+            97,
+            100
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": "and",
+          "prnt": 100,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "character",
+          "prnt": 98,
+          "lemma": "character",
+          "tag": "NN",
+          "rel": "conj",
+          "children": [
+            99
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 3
+        },
+        {
+          "form": ".",
+          "prnt": 76,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 3
+        },
+        {
+          "form": "i",
+          "prnt": 104,
+          "lemma": "i",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Number": "Sing",
+            "Person": "1",
+            "PronType": "Prs"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "also",
+          "prnt": 104,
+          "lemma": "also",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "like",
+          "prnt": 101,
+          "lemma": "like",
+          "tag": "VBP",
+          "rel": "root",
+          "children": [
+            102,
+            103,
+            107,
+            114,
+            117,
+            127
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "the",
+          "prnt": 107,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "little",
+          "prnt": 107,
+          "lemma": "little",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "bits",
+          "prnt": 104,
+          "lemma": "bit",
+          "tag": "NNS",
+          "rel": "obj",
+          "children": [
+            105,
+            106,
+            110
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "of",
+          "prnt": 110,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "insight",
+          "prnt": 110,
+          "lemma": "insight",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "scenes",
+          "prnt": 107,
+          "lemma": "scene",
+          "tag": "NNS",
+          "rel": "nmod",
+          "children": [
+            108,
+            109,
+            112
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "about",
+          "prnt": 114,
+          "lemma": "about",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "bruce",
+          "prnt": 110,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "nmod",
+          "children": [
+            113
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "lee's",
+          "prnt": 112,
+          "lemma": "lee'",
+          "tag": "NNS",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "life",
+          "prnt": 104,
+          "lemma": "life",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            111
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "before",
+          "prnt": 117,
+          "lemma": "before",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "he",
+          "prnt": 117,
+          "lemma": "he",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "became",
+          "prnt": 104,
+          "lemma": "become",
+          "tag": "VBD",
+          "rel": "advcl",
+          "children": [
+            115,
+            116,
+            118
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "famous",
+          "prnt": 117,
+          "lemma": "famous",
+          "tag": "JJ",
+          "rel": "xcomp",
+          "children": [
+            119,
+            120
+          ],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": ":",
+          "prnt": 118,
+          "lemma": ":",
+          "tag": ":",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "scenes",
+          "prnt": 118,
+          "lemma": "scene",
+          "tag": "NNS",
+          "rel": "appos",
+          "children": [
+            122,
+            123
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "like",
+          "prnt": 122,
+          "lemma": "like",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "bruce",
+          "prnt": 120,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "nmod",
+          "children": [
+            121
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "practicing",
+          "prnt": 120,
+          "lemma": "practice",
+          "tag": "VBG",
+          "rel": "acl",
+          "children": [
+            124
+          ],
+          "feats": {
+            "VerbForm": "Ger"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "pronunciation",
+          "prnt": 123,
+          "lemma": "pronunciation",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            126
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": "of",
+          "prnt": 126,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "english",
+          "prnt": 124,
+          "lemma": "english",
+          "tag": "NNP",
+          "rel": "nmod",
+          "children": [
+            125
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 4
+        },
+        {
+          "form": ".",
+          "prnt": 104,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 4
+        },
+        {
+          "form": "it",
+          "prnt": 129,
+          "lemma": "it",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Neut",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "seemed",
+          "prnt": 127,
+          "lemma": "seem",
+          "tag": "VBD",
+          "rel": "root",
+          "children": [
+            128,
+            135,
+            139
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "as",
+          "prnt": 135,
+          "lemma": "as",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 5
+        },
+        {
+          "form": "if",
+          "prnt": 135,
+          "lemma": "if",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 5
+        },
+        {
+          "form": "he",
+          "prnt": 135,
+          "lemma": "he",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "was",
+          "prnt": 135,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "no",
+          "prnt": 135,
+          "lemma": "no",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 5
+        },
+        {
+          "form": "better",
+          "prnt": 129,
+          "lemma": "better",
+          "tag": "JJR",
+          "rel": "advcl",
+          "children": [
+            130,
+            131,
+            132,
+            133,
+            134,
+            137
+          ],
+          "feats": {
+            "Degree": "Cmp"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "than",
+          "prnt": 137,
+          "lemma": "than",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 5
+        },
+        {
+          "form": "anybody",
+          "prnt": 135,
+          "lemma": "anybody",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            136,
+            138
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": "else",
+          "prnt": 137,
+          "lemma": "else",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 5
+        },
+        {
+          "form": ".",
+          "prnt": 129,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 5
+        },
+        {
+          "form": "scenes",
+          "prnt": 139,
+          "lemma": "scene",
+          "tag": "NNS",
+          "rel": "root",
+          "children": [
+            142,
+            143,
+            169
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "like",
+          "prnt": 142,
+          "lemma": "like",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "bruce",
+          "prnt": 140,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "nmod",
+          "children": [
+            141
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "delivering",
+          "prnt": 140,
+          "lemma": "deliver",
+          "tag": "VBG",
+          "rel": "acl",
+          "children": [
+            145,
+            149
+          ],
+          "feats": {
+            "VerbForm": "Ger"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "chinese",
+          "prnt": 145,
+          "lemma": "chinese",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "food",
+          "prnt": 143,
+          "lemma": "food",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            144
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "as",
+          "prnt": 149,
+          "lemma": "as",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "a",
+          "prnt": 149,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "delivery",
+          "prnt": 149,
+          "lemma": "delivery",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "boy",
+          "prnt": 143,
+          "lemma": "boy",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            146,
+            147,
+            148,
+            150
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "ridding",
+          "prnt": 149,
+          "lemma": "ridding",
+          "tag": "VBG",
+          "rel": "acl",
+          "children": [
+            152,
+            156
+          ],
+          "feats": {
+            "VerbForm": "Ger"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "a",
+          "prnt": 152,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "bike",
+          "prnt": 150,
+          "lemma": "bike",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            151
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "through",
+          "prnt": 156,
+          "lemma": "through",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "the",
+          "prnt": 156,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "american",
+          "prnt": 156,
+          "lemma": "american",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "college",
+          "prnt": 150,
+          "lemma": "college",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            153,
+            154,
+            155,
+            157
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "looking",
+          "prnt": 156,
+          "lemma": "look",
+          "tag": "VBG",
+          "rel": "acl",
+          "children": [
+            163
+          ],
+          "feats": {
+            "VerbForm": "Ger"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "at",
+          "prnt": 163,
+          "lemma": "at",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "the",
+          "prnt": 163,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": "(",
+          "prnt": 161,
+          "lemma": "(",
+          "tag": "-LRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "all-white",
+          "prnt": 163,
+          "lemma": "all-white",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [
+            160
+          ],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": ")",
+          "prnt": 163,
+          "lemma": ")",
+          "tag": "-RRB-",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "students",
+          "prnt": 157,
+          "lemma": "student",
+          "tag": "NNS",
+          "rel": "obl",
+          "children": [
+            158,
+            159,
+            161,
+            162,
+            165,
+            168
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": ",",
+          "prnt": 165,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "cheerleaders",
+          "prnt": 163,
+          "lemma": "cheerleader",
+          "tag": "NNS",
+          "rel": "conj",
+          "children": [
+            164
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": ",",
+          "prnt": 168,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "and",
+          "prnt": 168,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "athletes",
+          "prnt": 163,
+          "lemma": "athlete",
+          "tag": "NNS",
+          "rel": "conj",
+          "children": [
+            166,
+            167
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 6
+        },
+        {
+          "form": ".",
+          "prnt": 140,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 6
+        },
+        {
+          "form": "it",
+          "prnt": 171,
+          "lemma": "it",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Neut",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "seemed",
+          "prnt": 169,
+          "lemma": "seem",
+          "tag": "VBD",
+          "rel": "root",
+          "children": [
+            170,
+            174,
+            181
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "he",
+          "prnt": 174,
+          "lemma": "he",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "too",
+          "prnt": 174,
+          "lemma": "too",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 7
+        },
+        {
+          "form": "wished",
+          "prnt": 171,
+          "lemma": "wish",
+          "tag": "VBD",
+          "rel": "ccomp",
+          "children": [
+            172,
+            173,
+            178
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "for",
+          "prnt": 178,
+          "lemma": "for",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 7
+        },
+        {
+          "form": "the",
+          "prnt": 178,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "american",
+          "prnt": 178,
+          "lemma": "american",
+          "tag": "JJ",
+          "rel": "amod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "dreams",
+          "prnt": 174,
+          "lemma": "dream",
+          "tag": "NNS",
+          "rel": "obl",
+          "children": [
+            175,
+            176,
+            177,
+            180
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": "and",
+          "prnt": 180,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 7
+        },
+        {
+          "form": "hopes",
+          "prnt": 178,
+          "lemma": "hope",
+          "tag": "NNS",
+          "rel": "conj",
+          "children": [
+            179
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 7
+        },
+        {
+          "form": ".",
+          "prnt": 171,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 7
+        },
+        {
+          "form": "in",
+          "prnt": 183,
+          "lemma": "in",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "conclusion",
+          "prnt": 189,
+          "lemma": "conclusion",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            182
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": ",",
+          "prnt": 189,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "the",
+          "prnt": 186,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "movie",
+          "prnt": 189,
+          "lemma": "movie",
+          "tag": "NN",
+          "rel": "nsubj:pass",
+          "children": [
+            185
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "was",
+          "prnt": 189,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "aux:pass",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "well",
+          "prnt": 189,
+          "lemma": "well",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "made",
+          "prnt": 181,
+          "lemma": "make",
+          "tag": "VBN",
+          "rel": "root",
+          "children": [
+            183,
+            184,
+            186,
+            187,
+            188,
+            190,
+            192,
+            211,
+            221
+          ],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part",
+            "Voice": "Pass"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": ",",
+          "prnt": 189,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "it",
+          "prnt": 192,
+          "lemma": "it",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Neut",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "produced",
+          "prnt": 189,
+          "lemma": "produce",
+          "tag": "VBD",
+          "rel": "parataxis",
+          "children": [
+            191,
+            194
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "a",
+          "prnt": 194,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "realization",
+          "prnt": 192,
+          "lemma": "realization",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            193,
+            196
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "of",
+          "prnt": 196,
+          "lemma": "of",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "who",
+          "prnt": 194,
+          "lemma": "who",
+          "tag": "WP",
+          "rel": "nmod",
+          "children": [
+            195,
+            197,
+            199
+          ],
+          "feats": {
+            "PronType": "Rel"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "bruce",
+          "prnt": 196,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "nsubj",
+          "children": [
+            198
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "lee",
+          "prnt": 197,
+          "lemma": "lee",
+          "tag": "NNP",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "was",
+          "prnt": 196,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": ",",
+          "prnt": 205,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "and",
+          "prnt": 205,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "actor",
+          "prnt": 203,
+          "lemma": "actor",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "james",
+          "prnt": 205,
+          "lemma": "jame",
+          "tag": "NNS",
+          "rel": "nsubj",
+          "children": [
+            202,
+            204
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "lee",
+          "prnt": 203,
+          "lemma": "lee",
+          "tag": "NNP",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "was",
+          "prnt": 207,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [
+            200,
+            201,
+            203
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "so",
+          "prnt": 207,
+          "lemma": "so",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "much",
+          "prnt": 211,
+          "lemma": "much",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [
+            205,
+            206,
+            209
+          ],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "like",
+          "prnt": 209,
+          "lemma": "like",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "bruce",
+          "prnt": 207,
+          "lemma": "bruce",
+          "tag": "NNP",
+          "rel": "obl",
+          "children": [
+            208
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "you",
+          "prnt": 211,
+          "lemma": "you",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Person": "2",
+            "PronType": "Prs"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "have",
+          "prnt": 189,
+          "lemma": "have",
+          "tag": "VBP",
+          "rel": "conj",
+          "children": [
+            207,
+            210,
+            213
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "to",
+          "prnt": 213,
+          "lemma": "to",
+          "tag": "TO",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "remind",
+          "prnt": 211,
+          "lemma": "remind",
+          "tag": "VB",
+          "rel": "xcomp",
+          "children": [
+            212,
+            214,
+            220
+          ],
+          "feats": {
+            "VerbForm": "Inf"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "yourself",
+          "prnt": 213,
+          "lemma": "yourself",
+          "tag": "PRP",
+          "rel": "obj",
+          "children": [],
+          "feats": {
+            "Case": "Acc",
+            "Number": "Sing",
+            "Person": "2",
+            "PronType": "Prs",
+            "Reflex": "Yes"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "that",
+          "prnt": 220,
+          "lemma": "that",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "he",
+          "prnt": 220,
+          "lemma": "he",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Gender": "Masc",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "is",
+          "prnt": 220,
+          "lemma": "be",
+          "tag": "VBZ",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "just",
+          "prnt": 220,
+          "lemma": "just",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "an",
+          "prnt": 220,
+          "lemma": "a",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Ind",
+            "PronType": "Art"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": "actor",
+          "prnt": 213,
+          "lemma": "actor",
+          "tag": "NN",
+          "rel": "ccomp",
+          "children": [
+            215,
+            216,
+            217,
+            218,
+            219
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 8
+        },
+        {
+          "form": ".",
+          "prnt": 189,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 8
+        },
+        {
+          "form": "and",
+          "prnt": 228,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 9
+        },
+        {
+          "form": "the",
+          "prnt": 225,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 9
+        },
+        {
+          "form": "fighting",
+          "prnt": 225,
+          "lemma": "fight",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 9
+        },
+        {
+          "form": "scenes",
+          "prnt": 228,
+          "lemma": "scene",
+          "tag": "NNS",
+          "rel": "nsubj",
+          "children": [
+            223,
+            224
+          ],
+          "feats": {
+            "Number": "Plur"
+          },
+          "snt_id": 9
+        },
+        {
+          "form": "were",
+          "prnt": 228,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 9
+        },
+        {
+          "form": "all",
+          "prnt": 228,
+          "lemma": "all",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 9
+        },
+        {
+          "form": "excellent",
+          "prnt": 221,
+          "lemma": "excellent",
+          "tag": "JJ",
+          "rel": "root",
+          "children": [
+            222,
+            225,
+            226,
+            227,
+            229
+          ],
+          "feats": {
+            "Degree": "Pos"
+          },
+          "snt_id": 9
+        },
+        {
+          "form": ".",
+          "prnt": 228,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 9
+        },
+        {
+          "form": "so",
+          "prnt": 231,
+          "lemma": "so",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 10
+        },
+        {
+          "form": "go",
+          "prnt": 229,
+          "lemma": "go",
+          "tag": "VB",
+          "rel": "root",
+          "children": [
+            230,
+            232,
+            235,
+            238
+          ],
+          "feats": {
+            "Mood": "Imp",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": "see",
+          "prnt": 231,
+          "lemma": "see",
+          "tag": "VB",
+          "rel": "xcomp",
+          "children": [
+            233
+          ],
+          "feats": {
+            "Mood": "Imp",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": "it",
+          "prnt": 232,
+          "lemma": "it",
+          "tag": "PRP",
+          "rel": "obj",
+          "children": [],
+          "feats": {
+            "Case": "Acc",
+            "Gender": "Neut",
+            "Number": "Sing",
+            "Person": "3",
+            "PronType": "Prs"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": "and",
+          "prnt": 235,
+          "lemma": "and",
+          "tag": "CC",
+          "rel": "cc",
+          "children": [],
+          "feats": {},
+          "snt_id": 10
+        },
+        {
+          "form": "enjoy",
+          "prnt": 231,
+          "lemma": "enjoy",
+          "tag": "VB",
+          "rel": "conj",
+          "children": [
+            234,
+            237
+          ],
+          "feats": {
+            "Mood": "Imp",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": "the",
+          "prnt": 237,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": "movie",
+          "prnt": 235,
+          "lemma": "movie",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            236
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 10
+        },
+        {
+          "form": ".",
+          "prnt": 231,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 10
+        },
+        {
+          "form": "p",
+          "prnt": 257,
+          "lemma": "p",
+          "tag": "NN",
+          "rel": "nummod",
+          "children": [
+            240,
+            241,
+            242
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": ".",
+          "prnt": 239,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "s",
+          "prnt": 239,
+          "lemma": "'s",
+          "tag": "AFX",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": ".",
+          "prnt": 239,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "if",
+          "prnt": 246,
+          "lemma": "if",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "you",
+          "prnt": 246,
+          "lemma": "you",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Person": "2",
+            "PronType": "Prs"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "have",
+          "prnt": 246,
+          "lemma": "have",
+          "tag": "VBP",
+          "rel": "aux",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Pres",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "seen",
+          "prnt": 257,
+          "lemma": "see",
+          "tag": "VBN",
+          "rel": "advcl",
+          "children": [
+            243,
+            244,
+            245,
+            249,
+            251
+          ],
+          "feats": {
+            "Tense": "Past",
+            "VerbForm": "Part"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "the",
+          "prnt": 249,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "movie",
+          "prnt": 249,
+          "lemma": "movie",
+          "tag": "NN",
+          "rel": "compound",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "unforgiven",
+          "prnt": 246,
+          "lemma": "unforgiven",
+          "tag": "NN",
+          "rel": "obj",
+          "children": [
+            247,
+            248
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "by",
+          "prnt": 251,
+          "lemma": "by",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "clint",
+          "prnt": 246,
+          "lemma": "clint",
+          "tag": "NNP",
+          "rel": "obl",
+          "children": [
+            250,
+            252
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "eastwood",
+          "prnt": 251,
+          "lemma": "eastwood",
+          "tag": "NNP",
+          "rel": "flat",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": ",",
+          "prnt": 257,
+          "lemma": ",",
+          "tag": ",",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "then",
+          "prnt": 257,
+          "lemma": "then",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {
+            "PronType": "Dem"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "the",
+          "prnt": 256,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "feeling",
+          "prnt": 257,
+          "lemma": "feeling",
+          "tag": "NN",
+          "rel": "nsubj",
+          "children": [
+            255
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "left",
+          "prnt": 238,
+          "lemma": "leave",
+          "tag": "VBD",
+          "rel": "root",
+          "children": [
+            239,
+            246,
+            253,
+            254,
+            256,
+            265,
+            271
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "after",
+          "prnt": 265,
+          "lemma": "after",
+          "tag": "IN",
+          "rel": "mark",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "dragon",
+          "prnt": 265,
+          "lemma": "dragon",
+          "tag": "NN",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "was",
+          "prnt": 265,
+          "lemma": "be",
+          "tag": "VBD",
+          "rel": "cop",
+          "children": [],
+          "feats": {
+            "Mood": "Ind",
+            "Number": "Sing",
+            "Person": "3",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "very",
+          "prnt": 262,
+          "lemma": "very",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "much",
+          "prnt": 265,
+          "lemma": "much",
+          "tag": "RB",
+          "rel": "advmod",
+          "children": [
+            261
+          ],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "like",
+          "prnt": 265,
+          "lemma": "like",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "the",
+          "prnt": 265,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "feeling",
+          "prnt": 257,
+          "lemma": "feeling",
+          "tag": "NN",
+          "rel": "advcl",
+          "children": [
+            258,
+            259,
+            260,
+            262,
+            263,
+            264,
+            267
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "you",
+          "prnt": 267,
+          "lemma": "you",
+          "tag": "PRP",
+          "rel": "nsubj",
+          "children": [],
+          "feats": {
+            "Case": "Nom",
+            "Person": "2",
+            "PronType": "Prs"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "got",
+          "prnt": 265,
+          "lemma": "get",
+          "tag": "VBD",
+          "rel": "acl:relcl",
+          "children": [
+            266,
+            270
+          ],
+          "feats": {
+            "Mood": "Ind",
+            "Tense": "Past",
+            "VerbForm": "Fin"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "after",
+          "prnt": 270,
+          "lemma": "after",
+          "tag": "IN",
+          "rel": "case",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        },
+        {
+          "form": "the",
+          "prnt": 270,
+          "lemma": "the",
+          "tag": "DT",
+          "rel": "det",
+          "children": [],
+          "feats": {
+            "Definite": "Def",
+            "PronType": "Art"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": "unforgiven",
+          "prnt": 267,
+          "lemma": "unforgiven",
+          "tag": "NN",
+          "rel": "obl",
+          "children": [
+            268,
+            269
+          ],
+          "feats": {
+            "Number": "Sing"
+          },
+          "snt_id": 11
+        },
+        {
+          "form": ".",
+          "prnt": 257,
+          "lemma": ".",
+          "tag": ".",
+          "rel": "punct",
+          "children": [],
+          "feats": {},
+          "snt_id": 11
+        }
+      ],
+      "edus": [
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4615384615384615,
+              0.5384615384615384
+            ]
+          },
+          "toks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            10,
+            11
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4,
+              0.6000000000000001
+            ]
+          },
+          "toks": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4857142857142857,
+              0.5142857142857143
+            ]
+          },
+          "toks": [
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4827586206896552,
+              0.5172413793103449
+            ]
+          },
+          "toks": [
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.42857142857142855,
+              0.5714285714285714
+            ]
+          },
+          "toks": [
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4827586206896552,
+              0.5172413793103449
+            ]
+          },
+          "toks": [
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0.16956521739130434,
+              0.4347826086956522,
+              0.39565217391304347
+            ]
+          },
+          "toks": [
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4444444444444445,
+              0.5555555555555556
+            ]
+          },
+          "toks": [
+            115,
+            116,
+            117,
+            118,
+            119
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0.5384615384615384,
+              0.4615384615384615,
+              0
+            ]
+          },
+          "toks": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            157,
+            158,
+            159
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            160,
+            161,
+            162
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            163,
+            164,
+            165,
+            166,
+            167,
+            168,
+            169
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0.3956043956043956,
+              0.42857142857142855,
+              0.17582417582417584
+            ]
+          },
+          "toks": [
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            182,
+            183,
+            184
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.45454545454545453,
+              0.5454545454545454
+            ]
+          },
+          "toks": [
+            185,
+            186,
+            187,
+            188,
+            189,
+            190
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            191,
+            192,
+            193,
+            194
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            195,
+            196,
+            197,
+            198,
+            199,
+            200
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            210,
+            211,
+            212,
+            213,
+            214
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4615384615384615,
+              0.5384615384615384
+            ]
+          },
+          "toks": [
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4666666666666667,
+              0.5333333333333333
+            ]
+          },
+          "toks": [
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            230,
+            231,
+            232,
+            233
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              0.4444444444444445,
+              0.5555555555555556
+            ]
+          },
+          "toks": [
+            234,
+            235,
+            236,
+            237,
+            238
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            239,
+            240,
+            241,
+            242
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265
+          ]
+        },
+        {
+          "polarity_scores": {
+            "socal": [
+              0,
+              1,
+              0
+            ]
+          },
+          "toks": [
+            266,
+            267,
+            268,
+            269,
+            270,
+            271
+          ]
+        }
+      ],
+      "rst_trees": {
+        "wang": {
+          "id": -1,
+          "rel2par": null,
+          "n/s": null,
+          "children": [
+            {
+              "id": -2,
+              "rel2par": "Joint",
+              "n/s": "Nucleus",
+              "children": [
+                {
+                  "id": -3,
+                  "rel2par": "Same-Unit",
+                  "n/s": "Nucleus",
+                  "children": [
+                    {
+                      "id": 0,
+                      "rel2par": "span",
+                      "n/s": "Nucleus",
+                      "children": []
+                    },
+                    {
+                      "id": 1,
+                      "rel2par": "Elaboration",
+                      "n/s": "Satellite",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 2,
+                  "rel2par": "Same-Unit",
+                  "n/s": "Nucleus",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": -4,
+              "rel2par": "Joint",
+              "n/s": "Nucleus",
+              "children": [
+                {
+                  "id": -5,
+                  "rel2par": "Contrast",
+                  "n/s": "Nucleus",
+                  "children": [
+                    {
+                      "id": -6,
+                      "rel2par": "span",
+                      "n/s": "Nucleus",
+                      "children": [
+                        {
+                          "id": -7,
+                          "rel2par": "Same-Unit",
+                          "n/s": "Nucleus",
+                          "children": [
+                            {
+                              "id": 3,
+                              "rel2par": "span",
+                              "n/s": "Nucleus",
+                              "children": []
+                            },
+                            {
+                              "id": 4,
+                              "rel2par": "Elaboration",
+                              "n/s": "Satellite",
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "id": 5,
+                          "rel2par": "Same-Unit",
+                          "n/s": "Nucleus",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "id": -8,
+                      "rel2par": "Elaboration",
+                      "n/s": "Satellite",
+                      "children": [
+                        {
+                          "id": 6,
+                          "rel2par": "span",
+                          "n/s": "Nucleus",
+                          "children": []
+                        },
+                        {
+                          "id": 7,
+                          "rel2par": "Elaboration",
+                          "n/s": "Satellite",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": -9,
+                  "rel2par": "Contrast",
+                  "n/s": "Nucleus",
+                  "children": [
+                    {
+                      "id": -10,
+                      "rel2par": "Joint",
+                      "n/s": "Nucleus",
+                      "children": [
+                        {
+                          "id": -11,
+                          "rel2par": "Same-Unit",
+                          "n/s": "Nucleus",
+                          "children": [
+                            {
+                              "id": 8,
+                              "rel2par": "span",
+                              "n/s": "Nucleus",
+                              "children": []
+                            },
+                            {
+                              "id": 9,
+                              "rel2par": "Condition",
+                              "n/s": "Satellite",
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "id": 10,
+                          "rel2par": "Same-Unit",
+                          "n/s": "Nucleus",
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "id": -12,
+                      "rel2par": "Joint",
+                      "n/s": "Nucleus",
+                      "children": [
+                        {
+                          "id": -13,
+                          "rel2par": "Textual-Organization",
+                          "n/s": "Nucleus",
+                          "children": [
+                            {
+                              "id": 11,
+                              "rel2par": "span",
+                              "n/s": "Nucleus",
+                              "children": []
+                            },
+                            {
+                              "id": 12,
+                              "rel2par": "Temporal",
+                              "n/s": "Satellite",
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "id": -14,
+                          "rel2par": "Textual-Organization",
+                          "n/s": "Nucleus",
+                          "children": [
+                            {
+                              "id": -15,
+                              "rel2par": "span",
+                              "n/s": "Nucleus",
+                              "children": [
+                                {
+                                  "id": 13,
+                                  "rel2par": "span",
+                                  "n/s": "Nucleus",
+                                  "children": []
+                                },
+                                {
+                                  "id": 14,
+                                  "rel2par": "Elaboration",
+                                  "n/s": "Satellite",
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "id": -16,
+                              "rel2par": "Elaboration",
+                              "n/s": "Satellite",
+                              "children": [
+                                {
+                                  "id": -17,
+                                  "rel2par": "span",
+                                  "n/s": "Nucleus",
+                                  "children": [
+                                    {
+                                      "id": -18,
+                                      "rel2par": "Same-Unit",
+                                      "n/s": "Nucleus",
+                                      "children": [
+                                        {
+                                          "id": 15,
+                                          "rel2par": "span",
+                                          "n/s": "Nucleus",
+                                          "children": []
+                                        },
+                                        {
+                                          "id": -19,
+                                          "rel2par": "Elaboration",
+                                          "n/s": "Satellite",
+                                          "children": [
+                                            {
+                                              "id": -20,
+                                              "rel2par": "span",
+                                              "n/s": "Nucleus",
+                                              "children": [
+                                                {
+                                                  "id": 16,
+                                                  "rel2par": "span",
+                                                  "n/s": "Nucleus",
+                                                  "children": []
+                                                },
+                                                {
+                                                  "id": 17,
+                                                  "rel2par": "Elaboration",
+                                                  "n/s": "Satellite",
+                                                  "children": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "id": 18,
+                                              "rel2par": "Elaboration",
+                                              "n/s": "Satellite",
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": 19,
+                                      "rel2par": "Same-Unit",
+                                      "n/s": "Nucleus",
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": -21,
+                                  "rel2par": "Elaboration",
+                                  "n/s": "Satellite",
+                                  "children": [
+                                    {
+                                      "id": -22,
+                                      "rel2par": "span",
+                                      "n/s": "Nucleus",
+                                      "children": [
+                                        {
+                                          "id": -23,
+                                          "rel2par": "Joint",
+                                          "n/s": "Nucleus",
+                                          "children": [
+                                            {
+                                              "id": 20,
+                                              "rel2par": "span",
+                                              "n/s": "Nucleus",
+                                              "children": []
+                                            },
+                                            {
+                                              "id": -24,
+                                              "rel2par": "Elaboration",
+                                              "n/s": "Satellite",
+                                              "children": [
+                                                {
+                                                  "id": -25,
+                                                  "rel2par": "Joint",
+                                                  "n/s": "Nucleus",
+                                                  "children": [
+                                                    {
+                                                      "id": 21,
+                                                      "rel2par": "Attribution",
+                                                      "n/s": "Nucleus",
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "id": -26,
+                                                      "rel2par": "Attribution",
+                                                      "n/s": "Nucleus",
+                                                      "children": [
+                                                        {
+                                                          "id": 22,
+                                                          "rel2par": "span",
+                                                          "n/s": "Nucleus",
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "id": -27,
+                                                          "rel2par": "Attribution",
+                                                          "n/s": "Satellite",
+                                                          "children": [
+                                                            {
+                                                              "id": 23,
+                                                              "rel2par": "span",
+                                                              "n/s": "Nucleus",
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "id": 24,
+                                                              "rel2par": "Elaboration",
+                                                              "n/s": "Satellite",
+                                                              "children": []
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "id": -28,
+                                                  "rel2par": "Joint",
+                                                  "n/s": "Nucleus",
+                                                  "children": [
+                                                    {
+                                                      "id": 25,
+                                                      "rel2par": "Attribution",
+                                                      "n/s": "Nucleus",
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "id": -29,
+                                                      "rel2par": "Attribution",
+                                                      "n/s": "Nucleus",
+                                                      "children": [
+                                                        {
+                                                          "id": 26,
+                                                          "rel2par": "Attribution",
+                                                          "n/s": "Satellite",
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "id": 27,
+                                                          "rel2par": "span",
+                                                          "n/s": "Nucleus",
+                                                          "children": []
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "id": -30,
+                                          "rel2par": "Joint",
+                                          "n/s": "Nucleus",
+                                          "children": [
+                                            {
+                                              "id": 28,
+                                              "rel2par": "span",
+                                              "n/s": "Nucleus",
+                                              "children": []
+                                            },
+                                            {
+                                              "id": -31,
+                                              "rel2par": "Elaboration",
+                                              "n/s": "Satellite",
+                                              "children": [
+                                                {
+                                                  "id": 29,
+                                                  "rel2par": "Joint",
+                                                  "n/s": "Nucleus",
+                                                  "children": []
+                                                },
+                                                {
+                                                  "id": 30,
+                                                  "rel2par": "Joint",
+                                                  "n/s": "Nucleus",
+                                                  "children": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": -32,
+                                      "rel2par": "Elaboration",
+                                      "n/s": "Satellite",
+                                      "children": [
+                                        {
+                                          "id": 31,
+                                          "rel2par": "Condition",
+                                          "n/s": "Nucleus",
+                                          "children": []
+                                        },
+                                        {
+                                          "id": -33,
+                                          "rel2par": "Condition",
+                                          "n/s": "Nucleus",
+                                          "children": [
+                                            {
+                                              "id": 32,
+                                              "rel2par": "Condition",
+                                              "n/s": "Satellite",
+                                              "children": []
+                                            },
+                                            {
+                                              "id": -34,
+                                              "rel2par": "span",
+                                              "n/s": "Nucleus",
+                                              "children": [
+                                                {
+                                                  "id": 33,
+                                                  "rel2par": "span",
+                                                  "n/s": "Nucleus",
+                                                  "children": []
+                                                },
+                                                {
+                                                  "id": 34,
+                                                  "rel2par": "Elaboration",
+                                                  "n/s": "Satellite",
+                                                  "children": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "polarity_scores": {
+        "socal": [
+          0.11262939958592132,
+          0.4819047619047619,
+          0.4054658385093168
+        ]
+      },
+      "doc_id": "cv847_1941"
+    }
+  ]
+}
