@@ -1,123 +1,166 @@
 #!/usr/bin/env python
 
+"""Train and predict sentiment scores using XLNET model.
+
+"""
+
 ##################################################################
 # Imports
-from __future__ import absolute_import, print_function, unicode_literals
-from collections import namedtuple
-import argparse
+from argparse import ArgumentParser
+from dasa.dl import DATALOADER_KWARGS
+from dasa.utils.common import LOGGER
+from sklearn.model_selection import KFold
+from typing import List, Tuple
+from torch import tensor
+from torch.optim import AdamW
+from torch.utils.data import DataLoader, TensorDataset
+from tqdm import trange
+from transformers import XLNetTokenizer, XLNetForSequenceClassification
 import json
-import logging
 import numpy as np
 import os
-import re
 import sys
+import torch
 
-from cgsa.cgsa import SentimentAnalyzer
-from cgsa.constants import DFLT_MODEL_PATH, DFLT_W2V_PATH
 
+##################################################################
+# Types
+Indices = List[int]
+Scores = List[float]
 
 ##################################################################
 # Variables and Constants
-SPACE_RE = re.compile('\s+')
-LOG_LVL = logging.INFO
-LOGGER = logging.getLogger("CGSA")
-LOGGER.setLevel(LOG_LVL)
-formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+DFLT_MODEL_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "data", "models"
 )
-sh = logging.StreamHandler()
-sh.setLevel(LOG_LVL)
-sh.setFormatter(formatter)
-LOGGER.addHandler(sh)
-Y = np.zeros(3)
-
-
-##################################################################
-# Class
-Word = namedtuple("Word", ["form", "lemma", "prnt_idx"])
-
-
-class Tweet(object):
-    def __init__(self, words):
-        self.words = [Word(*w) for w in words]
-        self.iwords = iter(self.words)
-
-    def __iter__(self):
-        """Private method required for iteration.
-
-        """
-        self.iwords = iter(self.words)
-        return self.iwords
-
-    def __next__(self):
-        """Private method required for iteration.
-
-        """
-        return next(self.iwords)
-
-    def __len__(self):
-        """Return number of tokens in the tweet.
-
-        """
-        return len(self.words)
-
-    def __str__(self):
-        """Return unicode representation of the given word.
-
-        Returns:
-          unicode:
-
-        """
-        # output the same string as the one that has been parsed
-        ret = "forms: {tokens:s}\nlemmas: {lemmas:s}\ndeps:{deps:s}".format(
-                  tokens=", ".join(w.form for w in self.words),
-                  lemmas=", ".join(w.lemma for w in self.words),
-                  deps=", ".join(str(w.prnt_idx) for w in self.words)
-              )
-        return ret
+TRAIN = "train"
+TEST = "test"
+LABEL2PROB = {
+    "negative": 1,
+    "neutral": 2,
+    "positive": 3
+}
+EPOCHS = 4
 
 
 ##################################################################
 # Methods
-def debug_tweet(tweet):
-    for w_i in tweet:
-        print("w_i.lemma: ", repr(w_i.lemma))
-        print("w_i.prnt_idx: ", repr(w_i.prnt_idx))
-        if w_i.prnt_idx >= 0:
-            print("prnt: ", repr(tweet.words[w_i.prnt_idx].lemma))
-        print("")
-
-
-def msg2tweet(msg, toks, prnt_idcs=None):
-    msg_toks = msg["toks"]
-    if prnt_idcs is None:
-        prnt_idcs = [msg_toks[t]["prnt"] for t in toks]
-    return Tweet([(msg_toks[t]["form"],
-                   msg_toks[t]["lemma"],
-                   prnt_idx)
-                  for t, prnt_idx in zip(toks, prnt_idcs)])
-
-
-def map_prnt_idcs(edu_toks, prnt_idcs):
-    """Renumber indices of parent nodes in EDU segments.
-
-    Args:
-      edu_toks (list[int]): original tokens of the whole tweet
-      prnt_idcs (list[int]): original tokens of the whole tweet
+def tokenize_doc(tokenizer: XLNetTokenizer,
+                 doc: dict) -> Tuple[Indices, List[Indices]]:
+    """Convert document's and edus' text into a tensor of word ids.
 
     """
-    edu_tok2i = {t: i for i, t in enumerate(edu_toks)}
-    mapped_prnt_idcs = []
-    for p_idx in prnt_idcs:
-        if p_idx < 0 or p_idx not in edu_tok2i:
-            mapped_prnt_idcs.append(-1)
-        else:
-            mapped_prnt_idcs.append(edu_tok2i[p_idx])
-    return mapped_prnt_idcs
+    text = tokenizer.encode(doc["text"], add_special_tokens=True)
+    edus = [
+        tokenizer.encode(
+            [doc["toks"][t]["form"] for t in edu_i["toks"]],
+            add_special_tokens=True
+        )
+        for edu_i in doc["edus"]
+    ]
+    return text, edus
 
 
-def add_scores(analyzer, messages):
-    """Main method for adding sentiment scores to tweets.
+def pad(X: List[Indices], pad_token_id: int) -> tensor:
+    """Pad lists of token ids to the maximum observed length.
+
+    """
+    max_length = max(len(x_i) for x_i in X)
+    for x_i in X:
+        x_i += [pad_token_id] * (max_length - len(x_i))
+    return tensor(X)
+
+
+def read_data(fnames: List[str],
+              tokenizer: XLNetTokenizer) -> Tuple[tensor, tensor, tensor,
+                                                  dict, dict]:
+    """Generate data set from JSON files.
+
+    """
+    X_txt = []
+    X_edu = []
+    Y = []
+    txt_id2doc_id = {}
+    doc_id2edu_ids = {}
+    # convert documents and EDUs into token ids
+    for fname_i in fnames:
+        with open(fname_i) as ifile:
+            data = json.load(ifile)
+            for doc_i in data["docs"]:
+                doc_id = doc_i["doc_id"]
+                x_txt, x_edus = tokenize_doc(tokenizer, doc_i)
+                txt_id2doc_id[len(X_txt)] = doc_id
+                # training will be performed only on full text
+                X_txt.append(x_txt)
+                y_i = LABEL2PROB[doc_i["label"]]
+                Y.append(y_i)
+                # whereas predictions will also be performed on EDUs
+                edu_start_idx = len(X_edu)
+                edu_end_idx = edu_start_idx + len(x_edus)
+                doc_id2edu_ids[doc_id] = list(
+                    range(edu_start_idx, edu_end_idx)
+                )
+                X_edu += x_edus
+    X_txt = pad(X_txt, tokenizer.pad_token_id)
+    X_edu = pad(X_edu, tokenizer.pad_token_id)
+    Y = tensor(Y)
+    return X_txt, X_edu, Y, txt_id2doc_id, doc_id2edu_ids
+
+
+def accuracy(preds, labels):
+    pred_flat = np.argmax(preds, axis=1).flatten()
+    labels_flat = labels.flatten()
+    return np.sum(pred_flat == labels_flat) / len(labels_flat)
+
+
+def init_optimizer(model):
+    param_optimizer = list(model.named_parameters())
+    no_decay = ['bias', 'gamma', 'beta']
+    optimizer_grouped_parameters = [
+        {'params': [p for n, p in param_optimizer
+                    if not any(nd in n for nd in no_decay)],
+         'weight_decay_rate': 0.01},
+        {'params': [p for n, p in param_optimizer
+                    if any(nd in n for nd in no_decay)],
+         'weight_decay_rate': 0.0}
+    ]
+    return AdamW(optimizer_grouped_parameters, lr=2e-5)
+
+
+def train(model: XLNetForSequenceClassification, X: tensor, Y: tensor):
+    """Optimize model on given data.
+
+    """
+    dataset = TensorDataset(X, Y)
+    data = DataLoader(dataset, **DATALOADER_KWARGS)
+    optimizer = init_optimizer(model)
+    model.train()
+    for e_i in trange(EPOCHS, desc="Epoch"):
+        epoch_loss = 0.
+        for (x, y) in data:
+            optimizer.zero_grad()
+            outputs = model(x, labels=y)
+            loss = outputs[0]
+            epoch_loss += loss.item()
+            # Backward pass
+            loss.backward()
+            # Update parameters and take a step using the computed gradient
+            optimizer.step()
+        LOGGER.info("Epoch %d: training loss: %f", e_i, epoch_loss)
+
+
+def predict(model: XLNetForSequenceClassification, X: tensor) -> None:
+    model.eval()
+    with torch.no_grad():
+        result = model(X)
+    return result[0]
+
+
+def cross_val_predict(X_txt, X_edu, Y,
+                      txt_id2doc_id,
+                      doc_id2edu_ids) -> Tuple[np.array, np.array]:
+    """Perform 5-fold cross-validation, fine-tuning the model on `X_txt`.
 
     Args:
       analyzer (SentimentAnalyzer): sentiment analyzer
@@ -130,20 +173,41 @@ def add_scores(analyzer, messages):
       modifies `tweets` in place
 
     """
-    for msg_i in messages:
-        tweet = msg2tweet(msg_i, range(len(msg_i["toks"])))
-        # debug_tweet(tweet)
-        analyzer.predict_proba(tweet, Y)
-        msg_i["polarity_scores"] = Y.tolist()  # will create a copy
-        # assign polarity scores to each of the segments
-        for edu_i in msg_i["edus"]:
-            edu_toks = edu_i["toks"]
-            prnt_idcs = [msg_i["toks"][t]["prnt"] for t in edu_toks]
-            prnt_idcs = map_prnt_idcs(edu_toks, prnt_idcs)
-            tweet = msg2tweet(msg_i, edu_toks, prnt_idcs)
-            # debug_tweet(tweet)
-            analyzer.predict_proba(tweet, Y)
-            edu_i["polarity_scores"] = Y.tolist()  # will create a copy
+    num_labels = len(set(Y))
+    Y_txt = np.zeros((len(X_txt)))
+    Y_edu = np.zeros((len(X_edu), Y.shape[-1]))
+
+    kfold = KFold(shuffle=True)
+    for i, (train_ids, test_ids) in enumerate(kfold.split(X_txt, Y)):
+        model = XLNetForSequenceClassification.from_pretrained(
+            "xlnet-base-cased", num_labels=num_labels
+        )
+        train(model, X_txt[train_ids], Y[train_ids])
+        Y_txt[test_ids] = predict(model, X_txt[test_ids])
+        doc_ids = [txt_id2doc_id[txt_id] for txt_id in test_ids]
+        edu_ids = [edu_id
+                   for doc_id in doc_ids
+                   for edu_id in doc_id2edu_ids[doc_id]]
+        Y_edu[edu_ids] = predict(model, X_txt[edu_ids])
+    return (Y_txt, Y_edu)
+
+
+def add_scores(fnames: List[str], Y_txt: np.array, Y_edus: np.array,
+               doc_id2txt_id: dict, doc_id2edu_ids: dict):
+    """Add polarity predictions to messages and EDUs.
+
+    """
+    for fname_i in fnames:
+        with open(fname_i) as ifile:
+            data = json.load(ifile)
+        # add polarity scores
+        for doc_i in data["docs"]:
+            doc_id = doc_i["doc_id"]
+            txt_id = doc_id2txt_id[doc_id]
+            doc_i["polarity_scores"]["xlnet"] = Y_txt[txt_id]
+            edu_ids = doc_id2edu_ids[doc_id]
+            for i, edu_id in enumerate(edu_ids):
+                doc_i["edus"][i]["polarity_scores"]["xlnet"] = Y_edus[edu_id]
 
 
 def main(argv):
@@ -156,41 +220,22 @@ def main(argv):
       int: 0 on success, non-0 otherwise
 
     """
-    argparser = argparse.ArgumentParser(
+    argparser = ArgumentParser(
         description="Script for adding polarity scores to tweets and EDUs."
     )
-    argparser.add_argument("--w2v-path",
-                           help="path to pre-trained word2vec embeddings"
-                           " to use (should better be the same as the ones "
-                           "used for training)", type=str,
-                           default=DFLT_W2V_PATH)
-    argparser.add_argument("-m", "--model",
-                           help="path to the main model (if different from"
-                           " default)", type=str, default=DFLT_MODEL_PATH)
     argparser.add_argument("json_files",
                            nargs='+',
                            help="JSON file containing tweets")
     args = argparser.parse_args(argv)
-
-    # initialize sentiment analyzer
-    analyzer = SentimentAnalyzer.load(args.model, args.w2v_path)
-    assert len(analyzer._models) == 1, (
-        "We currently support only analyzers with one model"
+    tokenizer = XLNetTokenizer.from_pretrained("xlnet-large-cased")
+    X_txt, X_edus, Y, txt_id2doc_id, doc_id2edu_ids = read_data(
+        args.json_files, tokenizer
     )
-    analyzer = analyzer._models[0]
-    for fname in args.json_files:
-        LOGGER.info("Processing file %s", fname)
-        if not (os.path.isfile(fname)
-                and os.access(fname, os.W_OK)):
-            LOGGER.error("Cannot write to file %s", fname)
-            sys.exit(1)
-        # read data
-        with open(fname) as ifile:
-            data = json.load(ifile)
-        add_scores(analyzer, data["tweets"])
-        # write data
-        with open(fname, 'w') as ofile:
-            json.dump(data, ofile)
+    doc_id2txt_id = {doc_id: txt_id
+                     for txt_id, doc_id in txt_id2doc_id.items()}
+    Y_txt, Y_edu = cross_val_predict(X_txt, X_edus, Y,
+                                     doc_id2txt_id, doc_id2edu_ids)
+    add_scores(args.json_files, Y_txt, Y_edu)
     return 0
 
 
