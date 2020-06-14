@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """Train and predict sentiment scores using XLNET model.
 
@@ -9,6 +9,7 @@
 from argparse import ArgumentParser
 from dasa.dl import DATALOADER_KWARGS
 from dasa.utils.common import LOGGER
+from scipy.special import softmax
 from sklearn.model_selection import KFold
 from typing import List, Tuple
 from torch import tensor
@@ -18,7 +19,6 @@ from tqdm import trange
 from transformers import XLNetTokenizer, XLNetForSequenceClassification
 import json
 import numpy as np
-import os
 import sys
 import torch
 
@@ -30,18 +30,20 @@ Scores = List[float]
 
 ##################################################################
 # Variables and Constants
-DFLT_MODEL_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "data", "models"
-)
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available()
+                      else "cpu")
+DFLT_MODEL_NAME = "xlnet-base-cased"
 TRAIN = "train"
 TEST = "test"
+# we might not have the neutral class, but still need all available classes to
+# be contiguous
 LABEL2PROB = {
-    "negative": 1,
-    "neutral": 2,
-    "positive": 3
+    "negative": 0,
+    "positive": 1,
+    "neutral": 2
 }
 EPOCHS = 4
+MAX_SEQ_LENGTH = 512
 
 
 ##################################################################
@@ -66,9 +68,13 @@ def pad(X: List[Indices], pad_token_id: int) -> tensor:
     """Pad lists of token ids to the maximum observed length.
 
     """
-    max_length = max(len(x_i) for x_i in X)
-    for x_i in X:
-        x_i += [pad_token_id] * (max_length - len(x_i))
+    max_length = min(MAX_SEQ_LENGTH,
+                     max(len(x_i) for x_i in X))
+    for i, x_i in enumerate(X):
+        if len(x_i) > max_length:
+            X[i] = x_i[:max_length]
+        else:
+            x_i += [pad_token_id] * (max_length - len(x_i))
     return tensor(X)
 
 
@@ -101,7 +107,7 @@ def read_data(fnames: List[str],
                 doc_id2edu_ids[doc_id] = list(
                     range(edu_start_idx, edu_end_idx)
                 )
-                X_edu += x_edus
+                X_edu.extend(x_edus)
     X_txt = pad(X_txt, tokenizer.pad_token_id)
     X_edu = pad(X_edu, tokenizer.pad_token_id)
     Y = tensor(Y)
@@ -140,7 +146,7 @@ def train(model: XLNetForSequenceClassification, X: tensor, Y: tensor):
         epoch_loss = 0.
         for (x, y) in data:
             optimizer.zero_grad()
-            outputs = model(x, labels=y)
+            outputs = model(x.to(DEVICE), labels=y.to(DEVICE))
             loss = outputs[0]
             epoch_loss += loss.item()
             # Backward pass
@@ -150,11 +156,31 @@ def train(model: XLNetForSequenceClassification, X: tensor, Y: tensor):
         LOGGER.info("Epoch %d: training loss: %f", e_i, epoch_loss)
 
 
-def predict(model: XLNetForSequenceClassification, X: tensor) -> None:
+def predict(model: XLNetForSequenceClassification, X: tensor) -> np.array:
+    result = []
+    # as `X` might be too big, we divide it into batches
+    dataset = TensorDataset(X)
+    data = DataLoader(dataset)
     model.eval()
     with torch.no_grad():
-        result = model(X)
-    return result[0]
+        for (x,) in data:
+            y = model(x.to(DEVICE))
+            result.extend(y[0].numpy())
+    return np.vstack(result)
+
+
+def finalize_prediction(Y):
+    """Add missing columns, perform softmax, and convert prediction to list.
+
+    """
+    Y = softmax(Y, axis=1)
+    # fill missing column for the neutral class
+    if Y.shape[-1] == 2:
+        Y = np.insert(Y, 1, 0, axis=1)
+    # otherwise, swap first and second columns
+    else:
+        Y[:, [1, 2]] = Y[:, [2, 1]]
+    return Y.tolist()
 
 
 def cross_val_predict(X_txt, X_edu, Y,
@@ -165,6 +191,10 @@ def cross_val_predict(X_txt, X_edu, Y,
     Args:
       analyzer (SentimentAnalyzer): sentiment analyzer
       messages (list[dict]): messages to analyze
+      txt_id2doc_id (dict): mapping from running number of examples to their
+        document id's
+      doc_id2edu_ids (dict): mapping from document id's to the running numbers
+        of EDUs
 
     Returns:
       void:
@@ -173,23 +203,25 @@ def cross_val_predict(X_txt, X_edu, Y,
       modifies `tweets` in place
 
     """
-    num_labels = len(set(Y))
-    Y_txt = np.zeros((len(X_txt)))
-    Y_edu = np.zeros((len(X_edu), Y.shape[-1]))
+    num_labels = Y.max().item() + 1
+    Y_txt = np.zeros((len(X_txt), num_labels))
+    Y_edu = np.zeros((len(X_edu), num_labels))
 
     kfold = KFold(shuffle=True)
     for i, (train_ids, test_ids) in enumerate(kfold.split(X_txt, Y)):
         model = XLNetForSequenceClassification.from_pretrained(
-            "xlnet-base-cased", num_labels=num_labels
+            DFLT_MODEL_NAME, num_labels=num_labels
         )
+        model.to(DEVICE)
         train(model, X_txt[train_ids], Y[train_ids])
         Y_txt[test_ids] = predict(model, X_txt[test_ids])
         doc_ids = [txt_id2doc_id[txt_id] for txt_id in test_ids]
         edu_ids = [edu_id
                    for doc_id in doc_ids
                    for edu_id in doc_id2edu_ids[doc_id]]
-        Y_edu[edu_ids] = predict(model, X_txt[edu_ids])
-    return (Y_txt, Y_edu)
+        Y_edu[edu_ids] = predict(model, X_edu[edu_ids])
+    return (finalize_prediction(Y_txt),
+            finalize_prediction(Y_edu))
 
 
 def add_scores(fnames: List[str], Y_txt: np.array, Y_edus: np.array,
@@ -206,8 +238,12 @@ def add_scores(fnames: List[str], Y_txt: np.array, Y_edus: np.array,
             txt_id = doc_id2txt_id[doc_id]
             doc_i["polarity_scores"]["xlnet"] = Y_txt[txt_id]
             edu_ids = doc_id2edu_ids[doc_id]
-            for i, edu_id in enumerate(edu_ids):
-                doc_i["edus"][i]["polarity_scores"]["xlnet"] = Y_edus[edu_id]
+            edus = doc_i["edus"]
+            for j, edu_id in enumerate(edu_ids):
+                edus[j]["polarity_scores"]["xlnet"] = Y_edus[edu_id]
+        # write polarity scores
+        with open(fname_i, 'w') as ofile:
+            json.dump(data, ofile)
 
 
 def main(argv):
@@ -227,15 +263,16 @@ def main(argv):
                            nargs='+',
                            help="JSON file containing tweets")
     args = argparser.parse_args(argv)
-    tokenizer = XLNetTokenizer.from_pretrained("xlnet-large-cased")
+    tokenizer = XLNetTokenizer.from_pretrained(DFLT_MODEL_NAME)
     X_txt, X_edus, Y, txt_id2doc_id, doc_id2edu_ids = read_data(
         args.json_files, tokenizer
     )
+    Y_txt, Y_edu = cross_val_predict(X_txt, X_edus, Y,
+                                     txt_id2doc_id, doc_id2edu_ids)
     doc_id2txt_id = {doc_id: txt_id
                      for txt_id, doc_id in txt_id2doc_id.items()}
-    Y_txt, Y_edu = cross_val_predict(X_txt, X_edus, Y,
-                                     doc_id2txt_id, doc_id2edu_ids)
-    add_scores(args.json_files, Y_txt, Y_edu)
+    add_scores(args.json_files, Y_txt, Y_edu,
+               doc_id2txt_id, doc_id2edu_ids)
     return 0
 
 

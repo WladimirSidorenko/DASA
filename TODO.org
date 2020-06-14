@@ -1,9 +1,17 @@
 * DONE Sentence-split, lemmatize, and dep-parse Stanford Sentiment Treebank (SST) and IMDB
 * DONE Perform EDU segmentation of SST and IMDB (https://www.aclweb.org/anthology/D18-1116/; Joty's self-praised segmenter is actually not available)
 * DONE Perform discourse parsing of SST and IMDB (https://www.aclweb.org/anthology/P17-2029/)
-* IN-PROGRESS Add base seniment scores
+* DONE Add base seniment scores
 ** DONE SO-Cal
-** IN-PROGRESS XLNet
+** DONE XLNet
+* IN-PROGRESS Evaluate Methods
+** TODO Evaluate `No-Sentiment`
+** TODO Evaluate `Last`
+** TODO Evaluate `Root`
+** TODO Evaluate `R2N2`
+** TODO Evaluate `DDR`
+** TODO Evaluate `Wang`
+** TODO Evaluate `RDM`
 * TODO Write introduction draft
 * TODO Rewrite related work
 * TODO Describe data
