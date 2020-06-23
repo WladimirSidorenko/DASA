@@ -22,7 +22,7 @@ with codecs.open(path.join(PWD, "requirements.txt"),
                  encoding=ENCODING) as ifile:
     for iline in ifile:
         iline = iline.strip()
-        if iline:
+        if iline and not iline.startswith("-e"):
             INSTALL_REQUIRES.append(iline)
 
 TEST_REQUIRES = []
@@ -53,7 +53,7 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=TEST_REQUIRES,
     provides=["dasa (0.1.0a0)"],
-    scripts=glob(path.join("scripts", "dasa*")),
+    scripts=glob(path.join("scripts", "dasa_*")),
     classifiers=["Development Status :: 3 - Alpha",
                  "Environment :: Console",
                  "Intended Audience :: Science/Research",
@@ -61,9 +61,6 @@ setup(
                  "Natural Language :: German",
                  "Operating System :: Unix",
                  "Operating System :: MacOS",
-                 "Programming Language :: Python :: 2",
-                 "Programming Language :: Python :: 2.6",
-                 "Programming Language :: Python :: 2.7",
                  "Programming Language :: Python :: 3",
                  "Topic :: Text Processing :: Linguistic"],
     keywords="sentiment-analysis discourse NLP linguistics")
