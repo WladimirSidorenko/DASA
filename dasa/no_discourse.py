@@ -14,6 +14,7 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
+from typing import Optional
 
 import numpy as np
 
@@ -28,7 +29,7 @@ from .constants import IDX2CLS
 ##################################################################
 # Classes
 class DUSAnalyzer(DASBaseAnalyzer):
-    """Main class for coarse-grained sentiment analyzer.
+    """Main class for discourse-unaware sentiment analyzer.
 
     Attributes:
 
@@ -58,11 +59,14 @@ class DUSAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance, relation_scheme=None):
+    def predict(self, instance: dict,
+                relation_scheme: Optional[str] = None,
+                sentiment_scores: Optional[str] = None):
         """Predict label of a single input instance.
 
         Args:
           instance (dict): input instance to classify
+          relation_scheme (str): input instance to classify
 
         Returns:
           str: predicted label

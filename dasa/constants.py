@@ -46,6 +46,10 @@ HEERSCHOP = "heerschop"
 PCC = "pcc"
 ZHOU = "zhou"
 
+# Sentiment Scores
+SOCAL = "socal"
+XLNET = "xlnet"
+
 # mapping from polarity classes to indices and vice versa
 POSITIVE = "positive"
 NEGATIVE = "negative"

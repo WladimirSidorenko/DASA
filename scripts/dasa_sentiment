@@ -5,7 +5,7 @@
 # Imports
 from __future__ import absolute_import, unicode_literals, print_function
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 import json
 import logging
 import sys
@@ -16,20 +16,26 @@ from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
                             DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO, GOLD,
-                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL)
+                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL,
+                            SOCAL, XLNET)
 
 
 ##################################################################
 # Variables and Constants
 DEBUG = "debug"
+CV = "cv"
 TRAIN = "train"
 TEST = "test"
 NO_REL_TYPE = (LAST, NO_DISCOURSE)
+MODEL_TYPES = (DDR, LAST, ROOT, R2N2, RDP, WANG,
+               NO_DISCOURSE, LCRF, LMCRF)
+ORIG_RELATION_SCHEMES = (BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU)
+RELATION_SCHEMES = (WANG,)
 
 
 ##################################################################
 # Methods
-def _add_cmn_options(parser):
+def _add_cmn_options(parser: ArgumentParser):
     """Add common options to option subparser
 
     Args:
@@ -45,49 +51,16 @@ def _add_cmn_options(parser):
                         " default)", type=str, default=DFLT_MODEL_PATH)
     parser.add_argument("-r", "--relation-scheme",
                         help="RST relation scheme to be analyzed",
-                        choices=(BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU))
+                        choices=(WANG,), default=WANG)
+    parser.add_argument("-s", "--sentiment-scores",
+                        help="key for base sentiment scores",
+                        choices=(SOCAL, XLNET), default=XLNET)
     parser.add_argument("files", help="input file(s)",
                         type=str, nargs="+")
 
 
-def _read_data(files):
-    """Read files and return an iterator over tweets.
-
-    Args:
-      files (list[str]): list of input files
-
-    """
-    if files is None:
-        raise StopIteration
-    for fname in files:
-        with open(fname, 'r') as ifile:
-            data = json.load(ifile)
-            if "tweets" not in data:
-                LOGGER.warn("No tweets found in %s", fname)
-                continue
-            for tweet_i in data["tweets"]:
-                if len(tweet_i["edus"]) < 2:
-                    LOGGER.warn(
-                        "Skipping tweet %s which contains only one EDU.",
-                        tweet_i["msg_id"]
-                    )
-                    continue
-                elif tweet_i["label"] not in (POSITIVE, NEGATIVE, NEUTRAL):
-                    LOGGER.warn("Skipping tweet %s due to non-standard"
-                                " polarity (%s).",
-                                tweet_i["msg_id"], tweet_i["label"])
-                    continue
-                yield tweet_i
-
-
-def main(argv):
-    """Main method for training and applying discourse-aware sentiment classifiers.
-
-    Args:
-      argv (list[str]): CLI arguments
-
-    Returns:
-      int: 0 on success, non-0 otherwise
+def parse_args() -> Namespace:
+    """Parse command-line arguments.
 
     """
     argparser = ArgumentParser(
@@ -108,10 +81,17 @@ def main(argv):
                               " search", action="store_true")
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
-                              choices=(DDR, LAST, ROOT, R2N2, RDP, WANG,
-                                       NO_DISCOURSE, LCRF, LMCRF),
+                              choices=MODEL_TYPES,
                               required=True, type=str)
     _add_cmn_options(parser_train)
+
+    parser_cv = subparsers.add_parser(
+        CV, help="cross-validate model on provided data")
+    parser_cv.add_argument("-t", "--type",
+                           help="type(s) of the model(s) to train",
+                           choices=MODEL_TYPES,
+                           required=True, type=str)
+    _add_cmn_options(parser_cv)
 
     parser_test = subparsers.add_parser(
         TEST, help="determine polarity of the given messages")
@@ -121,7 +101,50 @@ def main(argv):
         DEBUG, help="explain model's prediction"
     )
     _add_cmn_options(parser_debug)
-    args = argparser.parse_args()
+    return argparser.parse_args()
+
+
+def _read_data(files):
+    """Read files and return an iterator over docs.
+
+    Args:
+      files (list[str]): list of input files
+
+    """
+    if files is None:
+        return
+    for fname in files:
+        with open(fname, 'r') as ifile:
+            data = json.load(ifile)
+            if "docs" not in data:
+                LOGGER.warn("No docs found in %s", fname)
+                continue
+            for doc_i in data["docs"]:
+                if len(doc_i["edus"]) < 2:
+                    LOGGER.warn(
+                        "Skipping doc %s which contains only one EDU.",
+                        doc_i["doc_id"]
+                    )
+                    continue
+                elif doc_i["label"] not in (POSITIVE, NEGATIVE, NEUTRAL):
+                    LOGGER.warn("Skipping doc %s due to non-standard"
+                                " polarity (%s).",
+                                doc_i["doc_id"], doc_i["label"])
+                    continue
+                yield doc_i
+
+
+def main(argv):
+    """Main method for training and applying discourse-aware sentiment classifiers.
+
+    Args:
+      argv (list[str]): CLI arguments
+
+    Returns:
+      int: 0 on success, non-0 otherwise
+
+    """
+    args = parse_args()
 
     if args.verbose or args.mode == DEBUG:
         log_lvl = logging.DEBUG
@@ -129,44 +152,59 @@ def main(argv):
         for handler_i in LOGGER.handlers:
             handler_i.setLevel(log_lvl)
 
-    if args.mode == TRAIN:
+    if args.mode == TRAIN or args.mode == CV:
         if args.type not in NO_REL_TYPE and args.relation_scheme is None:
             LOGGER.error("No relation scheme specified for model %s",
                          args.type)
             sys.exit(2)
 
-        train_set = [tweet_i for tweet_i in _read_data(args.files)]
+        train_set = [doc_i for doc_i in _read_data(args.files)]
         LOGGER.debug("Reading development set...")
-        dev_set = [tweet_i for tweet_i in _read_data(args.dev)]
+        dev_set = [doc_i for doc_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
         if args.type == DDR:
-            analyzer = DDRAnalyzer(args.relation_scheme)
+            analyzer = DDRAnalyzer(sentiment_scores=args.sentiment_scores,
+                                   relation_scheme=args.relation_scheme)
         elif args.type == LAST:
-            analyzer = LastAnalyzer()
+            analyzer = LastAnalyzer(sentiment_scores=args.sentiment_scores)
         elif args.type == NO_DISCOURSE:
-            analyzer = DUSAnalyzer()
+            analyzer = DUSAnalyzer(sentiment_scores=args.sentiment_scores)
         elif args.type == ROOT:
-            analyzer = RootAnalyzer(args.relation_scheme)
+            analyzer = RootAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    relation_scheme=args.relation_scheme)
         elif args.type == R2N2:
-            analyzer = R2N2Analyzer(args.relation_scheme)
+            analyzer = R2N2Analyzer(sentiment_scores=args.sentiment_scores,
+                                    relation_scheme=args.relation_scheme)
         elif args.type == RDP:
-            analyzer = RDPAnalyzer(args.relation_scheme)
+            analyzer = RDPAnalyzer(sentiment_scores=args.sentiment_scores,
+                                   relation_scheme=args.relation_scheme)
         elif args.type == WANG:
-            analyzer = WangAnalyzer(args.relation_scheme)
+            analyzer = WangAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    relation_scheme=args.relation_scheme)
         elif args.type == LCRF:
-            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=False)
+            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    relation_scheme=args.relation_scheme,
+                                    marginalized=False)
         elif args.type == LMCRF:
-            analyzer = LCRFAnalyzer(args.relation_scheme, marginalized=True)
+            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    relation_scheme=args.relation_scheme,
+                                    marginalized=True)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
                     args.type
                 )
             )
-        LOGGER.debug("Training analyzer...")
-        analyzer.train(train_set, dev_set, grid_search=args.grid_search)
-        LOGGER.debug("Analyzer trained.")
-        analyzer.save(args.model)
+        if args.mode == TRAIN:
+            LOGGER.debug("Training analyzer...")
+            analyzer.train(train_set, dev_set, grid_search=args.grid_search)
+            LOGGER.debug("Analyzer trained.")
+            analyzer.save(args.model)
+        else:
+            LOGGER.debug("Cross-validating analyzer...")
+            analyzer.cv(train_set)
+            LOGGER.debug("Analyzer validated.")
+            analyzer.save(args.model)
     else:
         analyzer = DASBaseAnalyzer.load(args.model)
         if args.mode == DEBUG:
@@ -175,10 +213,10 @@ def main(argv):
             predict = analyzer.predict
 
         ret = []
-        for tweet_i in _read_data(args.files):
-            tweet_i["predicted"] = predict(tweet_i, args.relation_scheme)
-            ret.append(tweet_i)
-        json.dump({"tweets": ret},
+        for doc_i in _read_data(args.files):
+            doc_i["predicted"] = predict(doc_i, args.relation_scheme)
+            ret.append(doc_i)
+        json.dump({"docs": ret},
                   sys.stdout, indent=1, separators=[',', ": "])
 
 

@@ -117,6 +117,7 @@ class DASBaseAnalyzer(object):
         Args:
           instance (dict): input instance to classify
           relation_scheme (str): relation scheme to use
+          sentiment_scores (str): base sentiment scores to use
 
         Returns:
           str: predicted label
@@ -134,6 +135,7 @@ class DASBaseAnalyzer(object):
         Args:
           instance (dict): input instance to classify
           relation_scheme (str): relation scheme to use
+          sentiment_scores (str): base sentiment scores to use
 
         Returns:
           str: predicted label
