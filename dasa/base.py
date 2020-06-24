@@ -14,6 +14,8 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
+from sklearn.model_selection import cross_validate
+from typing import List
 try:
     from cPickle import dump, load
 except ImportError:
@@ -69,6 +71,22 @@ class DASBaseAnalyzer(object):
         self._n_cls = 0
         self._wbench = None
         self._logger = LOGGER
+
+    def cv(self, X: List[dict]):
+        """Cross-validate specified model(s) on the provided data.
+
+        Args:
+          X (list): data to cross-validate the classifier on
+
+        Returns:
+          void:
+
+        """
+        scorers = ("accuracy", "precision_macro", "recall_macro",
+                   "f1_macro", "f1_micro")
+        Y = [x_i.pop("label") for x_i in X]
+        results = cross_validate(self, X, Y, scorers)
+        print(repr(results))
 
     @abc.abstractmethod
     def train(self, train_set, dev_set=None,
