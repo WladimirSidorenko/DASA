@@ -34,7 +34,7 @@ from .constants import CLS2IDX
 OPTIM_PARAM = {}
 N_EPOCHS = 100
 DATALOADER_KWARGS = {
-    "batch_size": 16,
+    "batch_size": 4,
     "shuffle": True
 }
 warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
