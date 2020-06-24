@@ -53,10 +53,10 @@ def read_file(fname, label_field="label"):
         "Cannot read file {!r}.".format(fname)
     with open(fname, 'r') as ifile:
         data = []
-        for t in json.load(ifile)["tweets"]:
+        for t in json.load(ifile)["docs"]:
             if len(t["edus"]) < 2:
                 print(
-                    "Skipping tweet {:s} containing a single EDU.".format(
+                    "Skipping document {:s} containing a single EDU.".format(
                         t["msg_id"]
                     ), file=sys.stderr)
                 continue
