@@ -21,7 +21,7 @@ import logging
 ##################################################################
 # Variables and Constants
 LOG_LVL = logging.INFO
-LOGGER = logging.getLogger("CGSA")
+LOGGER = logging.getLogger("DASA")
 LOGGER.setLevel(LOG_LVL)
 formatter = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
