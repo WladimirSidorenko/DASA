@@ -15,13 +15,14 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 from sklearn.model_selection import cross_validate
-from typing import List
+from typing import List, Optional
 try:
     from cPickle import dump, load
 except ImportError:
     from _pickle import dump, load
 
 import abc
+import numpy as np
 import os
 
 from .utils import LOGGER
@@ -59,15 +60,17 @@ class DASBaseAnalyzer(object):
         analyzer._restore(a_path)
         return analyzer
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, sentiment_scores: str, *args, **kwargs):
         """Class constructor.
 
         Args:
-          a_args (list[str]): arguments to use for initializing models
-          a_kwargs (dict): keyword arguments to use for initializing models
+          sentiment_scores (str): key of sentiment scores
+          args (list[str]): arguments to use for initializing models
+          kwargs (dict): keyword arguments to use for initializing models
 
         """
         self._name = "BaseAnalyzer"
+        self._sentiment_scores = sentiment_scores
         self._n_cls = 0
         self._wbench = None
         self._logger = LOGGER
@@ -184,6 +187,15 @@ class DASBaseAnalyzer(object):
                 raise RuntimeError("Cannot write to file '{:s}'.".format(
                     a_path))
         return dirname
+
+    def _get_scores(self, item: dict,
+                    scores_key: Optional[str]) -> np.array:
+        """Remove members which cannot be serialized.
+
+        """
+        if scores_key is None:
+            scores_key = self._sentiment_scores
+        return np.array(item["polarity_scores"][scores_key])
 
     def _reset(self):
         """Remove members which cannot be serialized.

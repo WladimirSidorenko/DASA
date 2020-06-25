@@ -79,6 +79,9 @@ def parse_args() -> Namespace:
     parser_train.add_argument("-g", "--grid-search",
                               help="determine optimal parameters using grid"
                               " search", action="store_true")
+    parser_train.add_argument("-n", "--n-classes",
+                              help="number of sentiment classes to predict",
+                              choices=(2, 3), default=3)
     parser_train.add_argument("-t", "--type",
                               help="type(s) of the model(s) to train",
                               choices=MODEL_TYPES,
@@ -87,6 +90,9 @@ def parse_args() -> Namespace:
 
     parser_cv = subparsers.add_parser(
         CV, help="cross-validate model on provided data")
+    parser_train.add_argument("-n", "--n-classes",
+                              help="number of sentiment classes to predict",
+                              choices=(2, 3), default=3)
     parser_cv.add_argument("-t", "--type",
                            help="type(s) of the model(s) to train",
                            choices=MODEL_TYPES,
@@ -164,29 +170,38 @@ def main(argv):
         LOGGER.debug("Initializing analyzer...")
         if args.type == DDR:
             analyzer = DDRAnalyzer(sentiment_scores=args.sentiment_scores,
+                                   n_classes=args.n_classes,
                                    relation_scheme=args.relation_scheme)
         elif args.type == LAST:
-            analyzer = LastAnalyzer(sentiment_scores=args.sentiment_scores)
+            analyzer = LastAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes)
         elif args.type == NO_DISCOURSE:
-            analyzer = DUSAnalyzer(sentiment_scores=args.sentiment_scores)
+            analyzer = DUSAnalyzer(sentiment_scores=args.sentiment_scores,
+                                   n_classes=args.n_classes)
         elif args.type == ROOT:
             analyzer = RootAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme)
         elif args.type == R2N2:
             analyzer = R2N2Analyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme)
         elif args.type == RDP:
             analyzer = RDPAnalyzer(sentiment_scores=args.sentiment_scores,
+                                   n_classes=args.n_classes,
                                    relation_scheme=args.relation_scheme)
         elif args.type == WANG:
             analyzer = WangAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme)
         elif args.type == LCRF:
             analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme,
                                     marginalized=False)
         elif args.type == LMCRF:
             analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
+                                    n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme,
                                     marginalized=True)
         else:
@@ -214,7 +229,8 @@ def main(argv):
 
         ret = []
         for doc_i in _read_data(args.files):
-            doc_i["predicted"] = predict(doc_i, args.relation_scheme)
+            doc_i["predicted"] = predict(doc_i, args.relation_scheme,
+                                         args.sentiment_scores)
             ret.append(doc_i)
         json.dump({"docs": ret},
                   sys.stdout, indent=1, separators=[',', ": "])
