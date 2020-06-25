@@ -12,12 +12,12 @@ import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   LastAnalyzer, RootAnalyzer, R2N2Analyzer,
-                  RDPAnalyzer, WangAnalyzer, LCRFAnalyzer)
+                  RDPAnalyzer, WangAnalyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
-                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO, GOLD,
-                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL,
-                            SOCAL, XLNET)
+                            DDR, WANG, RDP, BHATIA, CHENLO, GOLD, HEERSCHOP,
+                            PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL, SOCAL,
+                            XLNET)
 
 
 ##################################################################
@@ -27,8 +27,7 @@ CV = "cv"
 TRAIN = "train"
 TEST = "test"
 NO_REL_TYPE = (LAST, NO_DISCOURSE)
-MODEL_TYPES = (DDR, LAST, ROOT, R2N2, RDP, WANG,
-               NO_DISCOURSE, LCRF, LMCRF)
+MODEL_TYPES = (DDR, LAST, ROOT, R2N2, RDP, WANG, NO_DISCOURSE)
 ORIG_RELATION_SCHEMES = (BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU)
 RELATION_SCHEMES = (WANG,)
 
