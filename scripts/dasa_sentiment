@@ -172,8 +172,6 @@ def main(argv):
             sys.exit(2)
 
         train_set = [doc_i for doc_i in _read_data(args.files)]
-        LOGGER.debug("Reading development set...")
-        dev_set = [doc_i for doc_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
         if args.type == DDR:
             analyzer = DDRAnalyzer(sentiment_scores=args.sentiment_scores,
@@ -208,6 +206,8 @@ def main(argv):
                 )
             )
         if args.mode == TRAIN:
+            LOGGER.debug("Reading development set...")
+            dev_set = [doc_i for doc_i in _read_data(args.dev)]
             LOGGER.debug("Training analyzer...")
             analyzer.train(train_set, dev_set, grid_search=args.grid_search)
             LOGGER.debug("Analyzer trained.")
