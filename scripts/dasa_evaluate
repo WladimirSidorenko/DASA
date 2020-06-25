@@ -57,12 +57,12 @@ def read_file(fname, label_field="label"):
             if len(t["edus"]) < 2:
                 print(
                     "Skipping document {:s} containing a single EDU.".format(
-                        t["msg_id"]
+                        str(t["doc_id"])
                     ), file=sys.stderr)
                 continue
             data.append(t)
     data = {
-        ID: [t["msg_id"] for t in data],
+        ID: [t["doc_id"] for t in data],
         POLARITY: [t[label_field] for t in data],
         TOKS: [t["text"] for t in data],
     }

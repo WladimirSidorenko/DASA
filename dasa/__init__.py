@@ -19,15 +19,13 @@ from .root import RootAnalyzer
 from .r2n2 import R2N2Analyzer
 from .rdp.analyzer import RDPAnalyzer
 from .wang import WangAnalyzer
-from .lcrf import LCRFAnalyzer
 
 
 ##################################################################
 # Variables and Constants
 __name__ = "dasa"
 __all__ = ["DASBaseAnalyzer", "DDRAnalyzer", "DUSAnalyzer", "LastAnalyzer",
-           "RootAnalyzer", "R2N2Analyzer", "RDPAnalyzer", "WangAnalyzer",
-           "LCRFAnalyzer"]
+           "RootAnalyzer", "R2N2Analyzer", "RDPAnalyzer", "WangAnalyzer"]
 __author__ = "Uladzimir Sidarenka"
 __email__ = "sidarenk at uni dash potsdam dot de"
 __version__ = "0.1.0a0"

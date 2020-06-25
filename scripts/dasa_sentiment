@@ -12,12 +12,12 @@ import sys
 
 from dasa import (DASBaseAnalyzer, DDRAnalyzer, DUSAnalyzer,
                   LastAnalyzer, RootAnalyzer, R2N2Analyzer,
-                  RDPAnalyzer, WangAnalyzer, LCRFAnalyzer)
+                  RDPAnalyzer, WangAnalyzer)
 from dasa.utils.common import LOGGER
 from dasa.constants import (DFLT_MODEL_PATH, LAST, ROOT, NO_DISCOURSE, R2N2,
-                            DDR, WANG, RDP, LCRF, LMCRF, BHATIA, CHENLO, GOLD,
-                            HEERSCHOP, PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL,
-                            SOCAL, XLNET)
+                            DDR, WANG, RDP, BHATIA, CHENLO, GOLD, HEERSCHOP,
+                            PCC, ZHOU, POSITIVE, NEGATIVE, NEUTRAL, SOCAL,
+                            XLNET)
 
 
 ##################################################################
@@ -27,8 +27,7 @@ CV = "cv"
 TRAIN = "train"
 TEST = "test"
 NO_REL_TYPE = (LAST, NO_DISCOURSE)
-MODEL_TYPES = (DDR, LAST, ROOT, R2N2, RDP, WANG,
-               NO_DISCOURSE, LCRF, LMCRF)
+MODEL_TYPES = (DDR, LAST, ROOT, R2N2, RDP, WANG, NO_DISCOURSE)
 ORIG_RELATION_SCHEMES = (BHATIA, CHENLO, GOLD, HEERSCHOP, PCC, ZHOU)
 RELATION_SCHEMES = (WANG,)
 
@@ -59,6 +58,26 @@ def _add_cmn_options(parser: ArgumentParser):
                         type=str, nargs="+")
 
 
+def _add_cmn_train_options(parser: ArgumentParser):
+    """Add options that are common to all train argparsers.
+
+    Args:
+      parser (argparse.ArgumentParser):
+        option subparser to which new options should be added
+
+    Returns:
+      void:
+
+    """
+    parser.add_argument("-n", "--n-classes",
+                        help="number of sentiment classes to predict",
+                        choices=(2, 3), default=3, type=int)
+    parser.add_argument("-t", "--type",
+                        help="type(s) of the model(s) to train",
+                        choices=MODEL_TYPES,
+                        required=True, type=str)
+
+
 def parse_args() -> Namespace:
     """Parse command-line arguments.
 
@@ -79,24 +98,12 @@ def parse_args() -> Namespace:
     parser_train.add_argument("-g", "--grid-search",
                               help="determine optimal parameters using grid"
                               " search", action="store_true")
-    parser_train.add_argument("-n", "--n-classes",
-                              help="number of sentiment classes to predict",
-                              choices=(2, 3), default=3)
-    parser_train.add_argument("-t", "--type",
-                              help="type(s) of the model(s) to train",
-                              choices=MODEL_TYPES,
-                              required=True, type=str)
+    _add_cmn_train_options(parser_train)
     _add_cmn_options(parser_train)
 
     parser_cv = subparsers.add_parser(
         CV, help="cross-validate model on provided data")
-    parser_train.add_argument("-n", "--n-classes",
-                              help="number of sentiment classes to predict",
-                              choices=(2, 3), default=3)
-    parser_cv.add_argument("-t", "--type",
-                           help="type(s) of the model(s) to train",
-                           choices=MODEL_TYPES,
-                           required=True, type=str)
+    _add_cmn_train_options(parser_cv)
     _add_cmn_options(parser_cv)
 
     parser_test = subparsers.add_parser(
@@ -165,8 +172,6 @@ def main(argv):
             sys.exit(2)
 
         train_set = [doc_i for doc_i in _read_data(args.files)]
-        LOGGER.debug("Reading development set...")
-        dev_set = [doc_i for doc_i in _read_data(args.dev)]
         LOGGER.debug("Initializing analyzer...")
         if args.type == DDR:
             analyzer = DDRAnalyzer(sentiment_scores=args.sentiment_scores,
@@ -194,16 +199,6 @@ def main(argv):
             analyzer = WangAnalyzer(sentiment_scores=args.sentiment_scores,
                                     n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme)
-        elif args.type == LCRF:
-            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
-                                    n_classes=args.n_classes,
-                                    relation_scheme=args.relation_scheme,
-                                    marginalized=False)
-        elif args.type == LMCRF:
-            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
-                                    n_classes=args.n_classes,
-                                    relation_scheme=args.relation_scheme,
-                                    marginalized=True)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(
@@ -211,13 +206,15 @@ def main(argv):
                 )
             )
         if args.mode == TRAIN:
+            LOGGER.debug("Reading development set...")
+            dev_set = [doc_i for doc_i in _read_data(args.dev)]
             LOGGER.debug("Training analyzer...")
             analyzer.train(train_set, dev_set, grid_search=args.grid_search)
             LOGGER.debug("Analyzer trained.")
             analyzer.save(args.model)
         else:
             LOGGER.debug("Cross-validating analyzer...")
-            analyzer.cv(train_set)
+            analyzer.crossvalidate(train_set)
             LOGGER.debug("Analyzer validated.")
             analyzer.save(args.model)
     else:

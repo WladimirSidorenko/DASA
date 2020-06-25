@@ -76,6 +76,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
 
         """
         scores = self._get_scores(instance)
+        self._prune_prediction(scores)
         cls_idx = np.argmax(scores)
         return IDX2CLS[cls_idx]
 
@@ -94,6 +95,8 @@ class DUSAnalyzer(DASBaseAnalyzer):
         """
         scores = self._get_scores(instance)
         self._logger.info("Polarity scores: %r", scores)
+        self._prune_prediction(scores)
+        self._logger.info("Pruned polarity scores: %r", scores)
         cls_idx = np.argmax(scores)
         self._logger.info("cls_idx: %r", cls_idx)
         self._logger.info("label: %s", IDX2CLS[cls_idx])
