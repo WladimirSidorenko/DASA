@@ -77,7 +77,7 @@ class DASBaseAnalyzer(object):
         self._wbench = None
         self._logger = LOGGER
 
-    def cv(self, X: List[dict]):
+    def crossvalidate(self, X: List[dict]):
         """Cross-validate specified model(s) on the provided data.
 
         Args:
