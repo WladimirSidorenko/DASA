@@ -58,6 +58,26 @@ def _add_cmn_options(parser: ArgumentParser):
                         type=str, nargs="+")
 
 
+def _add_cmn_train_options(parser: ArgumentParser):
+    """Add options that are common to all train argparsers.
+
+    Args:
+      parser (argparse.ArgumentParser):
+        option subparser to which new options should be added
+
+    Returns:
+      void:
+
+    """
+    parser.add_argument("-n", "--n-classes",
+                        help="number of sentiment classes to predict",
+                        choices=(2, 3), default=3, type=int)
+    parser.add_argument("-t", "--type",
+                        help="type(s) of the model(s) to train",
+                        choices=MODEL_TYPES,
+                        required=True, type=str)
+
+
 def parse_args() -> Namespace:
     """Parse command-line arguments.
 
@@ -78,24 +98,12 @@ def parse_args() -> Namespace:
     parser_train.add_argument("-g", "--grid-search",
                               help="determine optimal parameters using grid"
                               " search", action="store_true")
-    parser_train.add_argument("-n", "--n-classes",
-                              help="number of sentiment classes to predict",
-                              choices=(2, 3), default=3)
-    parser_train.add_argument("-t", "--type",
-                              help="type(s) of the model(s) to train",
-                              choices=MODEL_TYPES,
-                              required=True, type=str)
+    _add_cmn_train_options(parser_train)
     _add_cmn_options(parser_train)
 
     parser_cv = subparsers.add_parser(
         CV, help="cross-validate model on provided data")
-    parser_train.add_argument("-n", "--n-classes",
-                              help="number of sentiment classes to predict",
-                              choices=(2, 3), default=3)
-    parser_cv.add_argument("-t", "--type",
-                           help="type(s) of the model(s) to train",
-                           choices=MODEL_TYPES,
-                           required=True, type=str)
+    _add_cmn_train_options(parser_cv)
     _add_cmn_options(parser_cv)
 
     parser_test = subparsers.add_parser(
@@ -193,16 +201,6 @@ def main(argv):
             analyzer = WangAnalyzer(sentiment_scores=args.sentiment_scores,
                                     n_classes=args.n_classes,
                                     relation_scheme=args.relation_scheme)
-        elif args.type == LCRF:
-            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
-                                    n_classes=args.n_classes,
-                                    relation_scheme=args.relation_scheme,
-                                    marginalized=False)
-        elif args.type == LMCRF:
-            analyzer = LCRFAnalyzer(sentiment_scores=args.sentiment_scores,
-                                    n_classes=args.n_classes,
-                                    relation_scheme=args.relation_scheme,
-                                    marginalized=True)
         else:
             raise NotImplementedError(
                 "Analyzer {:s} has not been implemented yet.".format(

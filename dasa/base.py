@@ -60,17 +60,19 @@ class DASBaseAnalyzer(object):
         analyzer._restore(a_path)
         return analyzer
 
-    def __init__(self, sentiment_scores: str, *args, **kwargs):
+    def __init__(self, sentiment_scores: str, n_classes: int, *args, **kwargs):
         """Class constructor.
 
         Args:
           sentiment_scores (str): key of sentiment scores
+          n_classes (int): number of sentiment classes to predict
           args (list[str]): arguments to use for initializing models
           kwargs (dict): keyword arguments to use for initializing models
 
         """
         self._name = "BaseAnalyzer"
         self._sentiment_scores = sentiment_scores
+        self._n_classes = n_classes
         self._n_cls = 0
         self._wbench = None
         self._logger = LOGGER
@@ -189,13 +191,39 @@ class DASBaseAnalyzer(object):
         return dirname
 
     def _get_scores(self, item: dict,
-                    scores_key: Optional[str]) -> np.array:
-        """Remove members which cannot be serialized.
+                    scores_key: Optional[str] = None) -> np.array:
+        """Obtain base sentiment scores for EDU or whole document.
+
+        Args:
+          item (dict): EDU or whole document
+          scores_key (dict): symbolic key of base sentiment scores
+
+        Returns:
+          np.array: sentiment scores of analyzed item
 
         """
         if scores_key is None:
             scores_key = self._sentiment_scores
         return np.array(item["polarity_scores"][scores_key])
+
+    def _prune_prediction(self, scores: np.array) -> np.array:
+        """Remove.
+
+        Args:
+          item (dict): EDU or whole document
+          scores_key (dict): symbolic key of base sentiment scores
+
+        Returns:
+          np.array: sentiment scores of analyzed item
+
+        """
+        n_predicted = scores.shape[-1]
+        if n_predicted == 3 and self._n_classes == 2:
+            neut_scores = scores[1] / 2.
+            scores[1] = 0
+            scores[0] += neut_scores
+            scores[2] += neut_scores
+        return scores
 
     def _reset(self):
         """Remove members which cannot be serialized.
