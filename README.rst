@@ -221,17 +221,16 @@ Results
 
 
 .. comment: SST (So-Cal)
-
    General Statistics:
-                precision    recall  f1-score   support
+               precision    recall  f1-score   support
 
-   positive       0.64      0.74      0.68       589
    negative       0.60      0.63      0.61       606
    neutral        0.22      0.11      0.14       254
+   positive       0.64      0.74      0.68       589
 
-   accuracy                            0.58      1449
-   macro avg       0.48      0.49      0.48      1449
-   weighted avg    0.55      0.58      0.56      1449
+   accuracy                           0.58      1449
+   macro avg      0.48      0.49      0.48      1449
+   weighted avg   0.55      0.58      0.56      1449
 
    Macro-Averaged F1-Score (Positive and Negative Classes): 64.83%
    Micro-Averaged F1-Score (All Classes): 58.2471%
