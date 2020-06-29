@@ -214,7 +214,7 @@ def main(argv):
             analyzer.save(args.model)
         else:
             LOGGER.debug("Cross-validating analyzer...")
-            analyzer.crossvalidate(train_set)
+            analyzer.cross_validate(train_set)
             LOGGER.debug("Analyzer validated.")
             analyzer.save(args.model)
     else:
@@ -222,7 +222,9 @@ def main(argv):
         if args.mode == DEBUG:
             predict = analyzer.debug
         else:
-            predict = analyzer.predict
+            def predict(doc, rel_scheme, sentiment_scores):
+                labels = analyzer.predict([doc], rel_scheme, sentiment_scores)
+                return labels[0]
 
         ret = []
         for doc_i in _read_data(args.files):

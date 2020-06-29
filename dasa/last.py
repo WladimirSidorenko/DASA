@@ -16,6 +16,7 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
+from typing import List, Optional
 import numpy as np
 
 from .base import DASBaseAnalyzer
@@ -34,16 +35,7 @@ class LastAnalyzer(DASBaseAnalyzer):
     Attributes:
 
     """
-    def __init__(self, *args, **kwargs):
-        """Class constructor.
-
-        Args:
-          args (list[str]): arguments to use for initializing models
-          kwargs (dict): keyword arguments to use for initializing models
-
-        """
-        super(LastAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "LastEDU"
+    _name = "LastEDU"
 
     def train(self, *args, **kwargs):
         """Train specified model(s) on the provided data.
@@ -59,11 +51,19 @@ class LastAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance, relation_scheme=None):
+    def fit(self, *args, **kwargs):
+        """Analogue of `train` method applied directly to features.
+
+        """
+        pass
+
+    def predict(self, instances: List[dict],
+                relation_scheme: Optional[str] = None,
+                sentiment_scores: Optional[str] = None):
         """Predict label of a single input instance.
 
         Args:
-          instance (dict): input instance to classify
+          instance (list): input instance to classify
           relation_scheme (str): relation scheme to use
 
         Returns:
@@ -73,7 +73,13 @@ class LastAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        return IDX2CLS[np.argmax(instance["edus"][-1]["polarity_scores"])]
+        ret = []
+        for instance_i in instances:
+            scores = self._get_scores(instance_i["edus"][-1])
+            self._prune_prediction(scores)
+            cls_idx = np.argmax(scores)
+            ret.append(IDX2CLS[cls_idx])
+        return ret
 
     def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.

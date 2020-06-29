@@ -14,6 +14,7 @@
 #########################################################################
 from __future__ import absolute_import, unicode_literals, print_function
 
+from dasa.utils.common import LOGGER
 from glob import iglob
 import sklearn.metrics as sklm
 import pandas as pd
@@ -55,10 +56,10 @@ def read_file(fname, label_field="label"):
         data = []
         for t in json.load(ifile)["docs"]:
             if len(t["edus"]) < 2:
-                print(
-                    "Skipping document {:s} containing a single EDU.".format(
-                        str(t["doc_id"])
-                    ), file=sys.stderr)
+                LOGGER.warn(
+                    "Skipping document %s containing a single EDU.",
+                    t["doc_id"]
+                )
                 continue
             data.append(t)
     data = {
@@ -129,12 +130,23 @@ def compute_stat(gold, pred, verbose):
     print("General Statistics:")
     print(sklm.classification_report(y_gold, y_pred), end="\n\n")
 
+    # Macro-Averaged Precision
+    print(
+        "Macro-Averaged Precision:"
+        " {:.2%}".format(
+            sklm.precision_score(y_gold, y_pred, average="macro")
+        ))
+    # Macro-Averaged Recall
+    print(
+        "Macro-Averaged Recall:"
+        " {:.2%}".format(
+            sklm.recall_score(y_gold, y_pred, average="macro")
+        ))
     # Macro-Averaged F1 Score
     print(
-        "Macro-Averaged F1-Score (Positive and Negative Classes):"
+        "Macro-Averaged F1-Score:"
         " {:.2%}".format(
-            sklm.f1_score(y_gold, y_pred,
-                          labels=(POSITIVE, NEGATIVE), average="macro")
+            sklm.f1_score(y_gold, y_pred, average="macro")
         ))
 
     # Micro-Averaged F1 Score

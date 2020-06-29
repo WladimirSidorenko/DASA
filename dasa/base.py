@@ -14,6 +14,7 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
+from sklearn.base import BaseEstimator
 from sklearn.model_selection import cross_validate
 from typing import List, Optional
 try:
@@ -35,13 +36,14 @@ DEBUG_NFEATS = 10
 
 ##################################################################
 # Classes
-class DASBaseAnalyzer(object):
+class DASBaseAnalyzer(BaseEstimator):
     """Main class for coarse-grained sentiment analyzer.
 
     Attributes:
 
     """
     __metaclass__ = abc.ABCMeta
+    _name = "BaseAnalyzer"
 
     @staticmethod
     def load(a_path):
@@ -60,7 +62,7 @@ class DASBaseAnalyzer(object):
         analyzer._restore(a_path)
         return analyzer
 
-    def __init__(self, sentiment_scores: str, n_classes: int, *args, **kwargs):
+    def __init__(self, sentiment_scores: str, n_classes: int):
         """Class constructor.
 
         Args:
@@ -70,28 +72,38 @@ class DASBaseAnalyzer(object):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        self._name = "BaseAnalyzer"
-        self._sentiment_scores = sentiment_scores
-        self._n_classes = n_classes
-        self._n_cls = 0
+        self.sentiment_scores = sentiment_scores
+        self.n_classes = n_classes
         self._wbench = None
         self._logger = LOGGER
 
-    def crossvalidate(self, X: List[dict]):
+    def cross_validate(self, X: List[dict]):
         """Cross-validate specified model(s) on the provided data.
 
         Args:
-          X (list): data to cross-validate the classifier on
+          X (List[dict]): data to cross-validate the classifier on
 
         Returns:
           void:
 
         """
-        scorers = ("accuracy", "precision_macro", "recall_macro",
-                   "f1_macro", "f1_micro")
-        Y = [x_i.pop("label") for x_i in X]
-        results = cross_validate(self, X, Y, scorers)
-        print(repr(results))
+        scorers = ("precision_macro", "recall_macro",
+                   "f1_macro", "accuracy")
+        Y = self._digitize_labels(X)
+        results = cross_validate(self, X, Y, scoring=scorers)
+        print(results)
+        for scorer_i in scorers:
+            stat = results["test_" + scorer_i]
+            print("{:>10}: {:.4f} (+/- {:.2f})".format(
+                scorer_i, np.mean(stat), np.std(stat)))
+
+    @abc.abstractmethod
+    def _digitize_input(self, data: List[dict],
+                        train_mode: bool = False) -> np.array:
+        raise NotImplementedError
+
+    def _digitize_labels(self, data: List[dict]) -> np.array:
+        return np.array([instance["label"] for instance in data])
 
     @abc.abstractmethod
     def train(self, train_set, dev_set=None,
@@ -116,11 +128,11 @@ class DASBaseAnalyzer(object):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def predict(self, instance, relation_scheme=None):
+    def predict(self, instance: List[dict], relation_scheme=None):
         """Predict label of a single input instance.
 
         Args:
-          instance (dict): input instance to classify
+          instance (list): input instances to classify
           relation_scheme (str): relation scheme to use
           sentiment_scores (str): base sentiment scores to use
 
@@ -203,7 +215,7 @@ class DASBaseAnalyzer(object):
 
         """
         if scores_key is None:
-            scores_key = self._sentiment_scores
+            scores_key = self.sentiment_scores
         return np.array(item["polarity_scores"][scores_key])
 
     def _prune_prediction(self, scores: np.array) -> np.array:
@@ -218,7 +230,7 @@ class DASBaseAnalyzer(object):
 
         """
         n_predicted = scores.shape[-1]
-        if n_predicted == 3 and self._n_classes == 2:
+        if n_predicted == 3 and self.n_classes == 2:
             neut_scores = scores[1] / 2.
             scores[1] = 0
             scores[0] += neut_scores

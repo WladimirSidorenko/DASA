@@ -14,7 +14,7 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -34,16 +34,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
     Attributes:
 
     """
-    def __init__(self, *args, **kwargs):
-        """Class constructor.
-
-        Args:
-          args (list[str]): arguments to use for initializing models
-          kwargs (dict): keyword arguments to use for initializing models
-
-        """
-        super(DUSAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "NoDiscourse"
+    _name = "NoDiscourse"
 
     def train(self, *args, **kwargs):
         """Train specified model(s) on the provided data.
@@ -59,13 +50,19 @@ class DUSAnalyzer(DASBaseAnalyzer):
         # this analyzer does not require training
         pass
 
-    def predict(self, instance: dict,
+    def fit(self, *args, **kwargs):
+        """Analogue of `train` method applied directly to features.
+
+        """
+        pass
+
+    def predict(self, instances: List[dict],
                 relation_scheme: Optional[str] = None,
                 sentiment_scores: Optional[str] = None):
         """Predict label of a single input instance.
 
         Args:
-          instance (dict): input instance to classify
+          instances (list): input instances to classify
           relation_scheme (str): input instance to classify
 
         Returns:
@@ -75,10 +72,13 @@ class DUSAnalyzer(DASBaseAnalyzer):
           modifies input tweet in place
 
         """
-        scores = self._get_scores(instance)
-        self._prune_prediction(scores)
-        cls_idx = np.argmax(scores)
-        return IDX2CLS[cls_idx]
+        ret = []
+        for instance_i in instances:
+            scores = self._get_scores(instance_i)
+            self._prune_prediction(scores)
+            cls_idx = np.argmax(scores)
+            ret.append(IDX2CLS[cls_idx])
+        return ret
 
     def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
@@ -102,3 +102,7 @@ class DUSAnalyzer(DASBaseAnalyzer):
         self._logger.info("label: %s", IDX2CLS[cls_idx])
         self._logger.info("score: %f", scores[cls_idx])
         return IDX2CLS[cls_idx]
+
+    def _digitize_input(self, data: List[dict],
+                        train_mode: bool = False) -> np.array:
+        return np.array([self._get_scores(instance) for instance in data])
