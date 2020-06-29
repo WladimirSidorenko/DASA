@@ -28,7 +28,7 @@ class Dataset(TDS):
           x (list[np.array]): digitized input data
 
         """
-        y = torch.from_numpy(x[-1])
         x = [torch.from_numpy(x_) for x_ in x[:-1]]
+        y = torch.from_numpy(x[-1])
         x.append(y)
         super(Dataset, self).__init__(*x)
