@@ -359,10 +359,42 @@ Results
 .. comment: IMDB (So-Cal)
 
 .. comment: SST (So-Cal)
+   General Statistics:
+              precision    recall  f1-score   support
+
+    negative       0.55      0.38      0.45       606
+    neutral        0.18      0.39      0.25       254
+    positive       0.61      0.51      0.55       589
+
+   accuracy                            0.43      1449
+   macro avg       0.45      0.43      0.42      1449
+   weighted avg    0.51      0.43      0.46      1449
+
+
+   Macro-Averaged Precision: 44.84%
+   Macro-Averaged Recall: 42.53%
+   Macro-Averaged F1-Score: 41.68%
+   Micro-Averaged F1-Score (All Classes): 43.2022%
 
 .. comment: IMDB (XLNET)
 
 .. comment: SST (XLNET)
+   General Statistics:
+              precision    recall  f1-score   support
+
+    negative       0.46      0.48      0.47       606
+    neutral        0.17      0.47      0.25       254
+    positive       0.56      0.13      0.21       589
+
+    accuracy                           0.34      1449
+    macro avg      0.40      0.36      0.31      1449
+    weighted avg   0.45      0.34      0.33      1449
+
+    Macro-Averaged Precision: 40.07%
+    Macro-Averaged Recall: 36.00%
+    Macro-Averaged F1-Score: 31.14%
+    Micro-Averaged F1-Score (All Classes): 33.5404%
+
 
 +-----------+--------------------+---------------------+--------------------+------------------+
 | **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |

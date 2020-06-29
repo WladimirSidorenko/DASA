@@ -127,9 +127,31 @@ class DASBaseAnalyzer(BaseEstimator):
         """
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def predict(self, instance: List[dict], relation_scheme=None):
+    def predict(self, instances: List[dict],
+                relation_scheme: Optional[str] = None,
+                sentiment_scores: Optional[str] = None) -> List[str]:
         """Predict label of a single input instance.
+
+        Args:
+          instance (list): input instances to classify
+          relation_scheme (str): relation scheme to use
+          sentiment_scores (str): key of sentiment scores to use
+
+        Returns:
+          list[str]: predicted labels
+
+        """
+        ret = []
+        for instance_i in instances:
+            ret.append(self._predict(instance_i, relation_scheme,
+                                     sentiment_scores))
+        return ret
+
+    @abc.abstractmethod
+    def _predict(self, instance: dict,
+                 relation_scheme: Optional[str] = None,
+                 sentiment_scores: Optional[str] = None) -> str:
+        """Predict label for a single input instance.
 
         Args:
           instance (list): input instances to classify

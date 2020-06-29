@@ -56,29 +56,13 @@ class DUSAnalyzer(DASBaseAnalyzer):
         """
         pass
 
-    def predict(self, instances: List[dict],
-                relation_scheme: Optional[str] = None,
-                sentiment_scores: Optional[str] = None):
-        """Predict label of a single input instance.
-
-        Args:
-          instances (list): input instances to classify
-          relation_scheme (str): input instance to classify
-
-        Returns:
-          str: predicted label
-
-        Note:
-          modifies input tweet in place
-
-        """
-        ret = []
-        for instance_i in instances:
-            scores = self._get_scores(instance_i)
-            self._prune_prediction(scores)
-            cls_idx = np.argmax(scores)
-            ret.append(IDX2CLS[cls_idx])
-        return ret
+    def _predict(self, instance: dict,
+                 relation_scheme: Optional[str] = None,
+                 sentiment_scores: Optional[str] = None) -> str:
+        scores = self._get_scores(instance)
+        self._prune_prediction(scores)
+        cls_idx = np.argmax(scores)
+        return IDX2CLS[cls_idx]
 
     def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
