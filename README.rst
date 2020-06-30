@@ -14,13 +14,12 @@ Discourse-Aware Sentiment Analysis
 Description
 -----------
 
-This package provides several implementations of common
-discourse-aware sentiment analysis (DASA) methods.  Most of these
-approaches infer the overall polarity of the input (*e.g,* of a tweet)
-from the polarity scores of its elementary discourse units (EDUs) by
-either accumulating these scores over the RST tree or choosing a
-single EDU, which is most representative of the whole analyzed text
-(*e.g.*, the last discourse segment).
+This package provides implementations of various discourse-aware
+sentiment analysis (DASA) methods.  Most of these approaches infer the
+overall polarity of the input (*e.g,* of a review) from the polarity
+scores of its elementary discourse units (EDUs) by either accumulating
+these scores over the RST tree or just considering a single EDU, which
+is considered to be most representative of the whole analyzed text.
 
 Data Preparation
 ----------------
@@ -30,17 +29,17 @@ primary data for evaluation.
 
 The exact preparation steps for these datasets looked as follows:
 
-* First, I have converted the original files of these corpora to the
-  **JSON format** using the scripts `scripts/imdbjson` and
-  `scripts/sst2json`, which are also included in this repository::
+* First, the original files of these corpora were converted to the
+  **JSON format** using the scripts `imdb2json`_ and `sst2json`_,
+  which are also included in this repository::
 
     ./scripts/sst2json data/SST/ > data/SST/sst.json
     ./scripts/imdb2json data/IMDB/*/*.txt
 
 
-* Afterwards, I have enriched these converted data with information
+* Afterwards, these converted data were enriched with information
   about lemma, PoS tag, dependency relation, and morphological
-  features using the provided script `./scripts/enrich_json`::
+  features using the provided script `enrich_json`_::
 
     ./scripts/enrich_json data/SST/sst.json data/IMDB/{pos,neg}/*.json
 
@@ -570,7 +569,9 @@ Results
 
 .. _IMDB: http://www.cs.cornell.edu/people/pabo/movie-review-data/review_polarity.tar.gz
 .. _Stanford Sentiment Treebank: http://nlp.stanford.edu/~socherr/stanfordSentimentTreebank.zip
-
+.. _imdb2json: scripts/imdb2json
+.. _sst2json: scripts/sst2json
+.. _enrich_json: scripts/enrich_json
 
 References
 ----------
