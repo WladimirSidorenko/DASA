@@ -58,7 +58,8 @@ The exact preparation steps for these datasets looked as follows:
 * In a similar way, **discourse parsing** was performed with a
   slightly adjusted `version
   <https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
-  discourse parser by [Wang et al.]_::
+  discourse parser by `Wang et
+  al. <https://www.aclweb.org/anthology/P17-2029/>`_::
 
     git clone git@github.com:WladimirSidorenko/StageDP.git
     cd StageDP
@@ -593,4 +594,3 @@ References
 	  analysis. In 2013 International Conference on Asian Language
 	  Processing, IALP 2013, Urumqi, China, August 17-19, 2013 ,
 	  pages 121--124. IEEE.
-.. [WANG et al.] https://www.aclweb.org/anthology/P17-2029/
