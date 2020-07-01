@@ -45,8 +45,10 @@ The exact preparation steps for these datasets looked as follows:
 
 
 * **discourse segmentation** was done with a slightly adjusted
-  `version <https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
-  of `Wang et al.`_ 's neural discourse segmenter::
+  `version
+  <https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
+  of `Wang et al. <https://arxiv.org/abs/1808.09147>`_ 's neural
+  discourse segmenter::
 
     git clone git@github.com:WladimirSidorenko/NeuralEDUSeg.git
     cd NeuralEDUSeg
@@ -75,7 +77,8 @@ The exact preparation steps for these datasets looked as follows:
       ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/SST/sst.json
       ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/IMDB/*/*.json
 
-    using the code from repository https://github.com/WladimirSidorenko/SO-CAL
+    using the code from the `SO-CAL repository
+    <https://github.com/WladimirSidorenko/SO-CAL>`_
 
   * **XLNet** scores were computed with the script
     `add_polarity_scores <scripts/add_polarity_scores>`_ using included
@@ -579,7 +582,6 @@ Results
 .. _imdb2json: scripts/imdb2json
 .. _sst2json: scripts/sst2json
 .. _enrich_json: scripts/enrich_json
-.. _`Wang et al.`: https://arxiv.org/abs/1808.09147
 
 References
 ----------
