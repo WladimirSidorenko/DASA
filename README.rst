@@ -29,40 +29,37 @@ primary data for evaluation.
 
 The exact preparation steps for these datasets looked as follows:
 
-* First, the original files of these corpora were converted to the
-  **JSON format** using the scripts `imdb2json`_ and `sst2json`_,
-  which are also included in this repository::
+* First, the original files of these corpora were **converted to the
+  JSON format** using the scripts `imdb2json`_ and `sst2json`_, which
+  are also included in this repository::
 
     ./scripts/sst2json data/SST/ > data/SST/sst.json
     ./scripts/imdb2json data/IMDB/*/*.txt
 
 
-* Afterwards, these converted data were enriched with information
-  about lemma, PoS tag, dependency relation, and morphological
-  features using the provided script `enrich_json`_::
+* Afterwards, converted data were **enriched** with information about
+  lemma, PoS tag, dependency relation, and morphological features
+  using the provided script `enrich_json`_::
 
     ./scripts/enrich_json data/SST/sst.json data/IMDB/{pos,neg}/*.json
 
 
-* **Discourse Segmentation**
+* **Discourse Segmentation** was done with a `slightly adjusted
+  version<https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
+  of `Wang et al.`_ 's neural discourse segmenter::
 
-  Discourse segmentation was done with a [slightly adjusted
-  version](https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts)
-  of Wang et al.'s [neural discourse
-  segmenter](https://arxiv.org/abs/1808.09147)::
     git clone git@github.com:WladimirSidorenko/NeuralEDUSeg.git
     cd NeuralEDUSeg
     python -m venv venv
     . venv/bin/activate
-    pip install -e .
-    dsegment ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
+    pip install -e .  dsegment
+    ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
 
-* **Discourse Parsing**
+* In a similar way, **discourse parsing** was performed with a
+ `slightly adjusted
+ version<https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
+ discourse parser by [Wang et al.]_::
 
-  Similarly, discourse parsing was performed with a [slightly adjusted
-  version](https://github.com/WladimirSidorenko/StageDP) of two-stage
-  discourse parser by [Yizhong Wang et
-  al.](https://www.aclweb.org/anthology/P17-2029/)::
     git clone git@github.com:WladimirSidorenko/StageDP.git
     cd StageDP
     python -m venv venv
@@ -72,13 +69,22 @@ The exact preparation steps for these datasets looked as follows:
 
 * **Sentiment Scores**
 
-  * SO-Cal sentiment scores where added using the following commands::
+  * **SO-Cal** scores were added using the following commands::
+
       ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/SST/sst.json
       ./Source_Code/sentiment_calculator/SO_JsonCalc.py ~/Projects/DASA/data/IMDB/*/*.json
-    at commit `419bc23` of (this project)[https://github.com/WladimirSidorenko/SO-CAL]
 
-Examples
---------
+    using the code from repository https://github.com/WladimirSidorenko/SO-CAL
+
+  * **XLNet** scores were computed with the script
+    `add_polarity_scores<scripts/add_polarity_scores>`_ using included
+    in this repo::
+
+      ./scripts/add_polarity_scores data/IMDB/{pos,neg}/*.json
+      ./scripts/add_polarity_scores data/SST/raw/sst.json
+
+Models
+------
 
 DDR
 ^^^
@@ -572,6 +578,7 @@ Results
 .. _imdb2json: scripts/imdb2json
 .. _sst2json: scripts/sst2json
 .. _enrich_json: scripts/enrich_json
+.. _`Wang et al.`: https://arxiv.org/abs/1808.09147
 
 References
 ----------
@@ -586,3 +593,4 @@ References
 	  analysis. In 2013 International Conference on Asian Language
 	  Processing, IALP 2013, Urumqi, China, August 17-19, 2013 ,
 	  pages 121--124. IEEE.
+.. [WANG et al.] https://www.aclweb.org/anthology/P17-2029/
