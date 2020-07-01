@@ -44,8 +44,8 @@ The exact preparation steps for these datasets looked as follows:
     ./scripts/enrich_json data/SST/sst.json data/IMDB/{pos,neg}/*.json
 
 
-* **Discourse Segmentation** was done with a `slightly adjusted
-  version <https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
+* **discourse segmentation** was done with a slightly adjusted
+  `version <https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
   of `Wang et al.`_ 's neural discourse segmenter::
 
     git clone git@github.com:WladimirSidorenko/NeuralEDUSeg.git
@@ -56,9 +56,9 @@ The exact preparation steps for these datasets looked as follows:
     dsegment ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
 
 * In a similar way, **discourse parsing** was performed with a
- `slightly adjusted
- version <https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
- discourse parser by [Wang et al.]_::
+  slightly adjusted `version
+  <https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
+  discourse parser by [Wang et al.]_::
 
     git clone git@github.com:WladimirSidorenko/StageDP.git
     cd StageDP
@@ -67,7 +67,7 @@ The exact preparation steps for these datasets looked as follows:
     pip install -e .
     dparse ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
 
-* **Sentiment Scores**
+* **sentiment scores**
 
   * **SO-Cal** scores were added using the following commands::
 
