@@ -45,19 +45,19 @@ The exact preparation steps for these datasets looked as follows:
 
 
 * **Discourse Segmentation** was done with a `slightly adjusted
-  version<https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
+  version <https://github.com/WladimirSidorenko/NeuralEDUSeg/tree/master/scripts>`_
   of `Wang et al.`_ 's neural discourse segmenter::
 
     git clone git@github.com:WladimirSidorenko/NeuralEDUSeg.git
     cd NeuralEDUSeg
     python -m venv venv
     . venv/bin/activate
-    pip install -e .  dsegment
-    ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
+    pip install -e .
+    dsegment ../DASA/data/IMDB/*/*.json ../DASA/data/SST/sst.json
 
 * In a similar way, **discourse parsing** was performed with a
  `slightly adjusted
- version<https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
+ version <https://github.com/WladimirSidorenko/StageDP>`_ of two-stage
  discourse parser by [Wang et al.]_::
 
     git clone git@github.com:WladimirSidorenko/StageDP.git
@@ -77,7 +77,7 @@ The exact preparation steps for these datasets looked as follows:
     using the code from repository https://github.com/WladimirSidorenko/SO-CAL
 
   * **XLNet** scores were computed with the script
-    `add_polarity_scores<scripts/add_polarity_scores>`_ using included
+    `add_polarity_scores <scripts/add_polarity_scores>`_ using included
     in this repo::
 
       ./scripts/add_polarity_scores data/IMDB/{pos,neg}/*.json
