@@ -362,50 +362,50 @@ Results
 
 .. comment: IMDB (So-Cal)
    Command:
-     dasa_sentiment cv -t root -n 2 -s socal data/IMDB/*/*.json
+   dasa_sentiment cv -t root -n 2 -s socal data/IMDB/*/*.json
 
    Results:
-     precision_macro: 0.5173 (+/- 0.03)
-     recall_macro: 0.3450 (+/- 0.13)
-     f1_macro: 0.4036 (+/- 0.10)
-     accuracy: 57.3500 (+/- 10.46)
+   precision_macro: 0.5173 (+/- 0.03)
+   recall_macro: 0.3450 (+/- 0.13)
+   f1_macro: 0.4036 (+/- 0.10)
+   accuracy: 57.3500 (+/- 10.46)
 
 .. comment: SST (So-Cal)
    Commands:
-     dasa_sentiment train -t root -m data/SST/models/root.socal.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
-     dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
-     dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
+   dasa_sentiment train -t root -m data/SST/models/root.socal.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+   dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
+   dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
 
    General Statistics:
                 precision    recall  f1-score   support
-     negative       0.62      0.41      0.49       606
-     neutral        0.18      0.44      0.26       254
-     positive       0.66      0.49      0.56       589
+   negative       0.62      0.41      0.49       606
+   neutral        0.18      0.44      0.26       254
+   positive       0.66      0.49      0.56       589
 
-     accuracy                           0.45      1449
-     macro avg       0.49      0.45      0.44      1449
-     weighted avg       0.56      0.45      0.48      1449
+   accuracy                           0.45      1449
+   macro avg       0.49      0.45      0.44      1449
+   weighted avg       0.56      0.45      0.48      1449
 
-     Macro-Averaged Precision: 48.60%
-     Macro-Averaged Recall: 44.70%
-     Macro-Averaged F1-Score: 43.79%
-     Micro-Averaged F1-Score (All Classes): 44.7895%
+   Macro-Averaged Precision: 48.60%
+   Macro-Averaged Recall: 44.70%
+   Macro-Averaged F1-Score: 43.79%
+   Micro-Averaged F1-Score (All Classes): 44.7895%
 
 .. comment: IMDB (XLNET)
    Command:
-     dasa_sentiment cv -t root -n 2 -s xlnet data/IMDB/*/*.json
+   dasa_sentiment cv -t root -n 2 -s xlnet data/IMDB/*/*.json
 
    Results:
-     precision_macro: 0.4501 (+/- 0.40)
-     recall_macro: 0.4002 (+/- 0.37)
-     f1_macro: 0.3676 (+/- 0.37)
-     accuracy: 50.0000 (+/- 44.67)
+   precision_macro: 0.4501 (+/- 0.40)
+   recall_macro: 0.4002 (+/- 0.37)
+   f1_macro: 0.3676 (+/- 0.37)
+   accuracy: 50.0000 (+/- 44.67)
 
 .. comment: SST (XLNET)
    Commands:
-     dasa_sentiment train -t root -m data/SST/models/root.xlnet.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
-     dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
-     dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
+   dasa_sentiment train -t root -m data/SST/models/root.xlnet.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+   dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
+   dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
 
    General Statistics:
                 precision  recall  f1-score   support
@@ -423,7 +423,6 @@ Results
    Macro-Averaged F1-Score: 30.48%
    Micro-Averaged F1-Score (All Classes): 31.9531%
 
-
 +-----------+--------------------+---------------------+--------------------+------------------+
 | **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro-math:`F_1`  |     Accuracy     |
 +-----------+--------------------+---------------------+--------------------+------------------+
@@ -433,7 +432,7 @@ Results
 | SST       | 0.486              |  0.447              |  0.4379            |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
-+-----------+--------------------+--------------------+--------------------+------------------+
++-----------+--------------------+--------------------+--------------------+-------------------+
 | IMDB      | 0.4501 (+/- 0.40)  |  0.4002 (+/- 0.37)  |  0.3676 (+/- 0.37) | 50.0 (+/- 44.67) |
 | SST       | 0.4252             |  0.361              |  0.3048            | 31.9531          |
 +-----------+--------------------+---------------------+--------------------+------------------+
