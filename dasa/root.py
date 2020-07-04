@@ -16,7 +16,7 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 from functools import partial
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -47,7 +47,7 @@ class RootAnalyzer(DASBaseAnalyzer):
 
         """
         super().__init__(sentiment_scores, n_classes)
-        self._relation_scheme = relation_scheme
+        self.relation_scheme = relation_scheme
 
     def train(self, *args, **kwargs):
         """Train specified model(s) on the provided data.
@@ -69,31 +69,19 @@ class RootAnalyzer(DASBaseAnalyzer):
         """
         pass
 
-    def _predict(self, instances: dict,
-                 relation_scheme: Optional[str] = None,
-                 sentiment_scores: Optional[str] = None):
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None):
         if relation_scheme is None:
-            relation_scheme = self._relation_scheme
+            relation_scheme = self.relation_scheme
         get_scores = partial(self._get_scores,
                              scores_key=sentiment_scores)
-        tree = RSTTree(instance_i,
-                       instance_i["rst_trees"][relation_scheme],
+        tree = RSTTree(instance,
+                       instance["rst_trees"][relation_scheme],
                        get_scores)
-        roots = tree.root_edus
-        scores = self._get_scores(instance_i["edus"][-1])
-            self._prune_prediction(scores)
-            cls_idx = np.argmax(scores)
-            ret.append(IDX2CLS[cls_idx])
-        return ret
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
-        tree = RSTTree(instance_i,
-                       instance_i["rst_trees"][relation_scheme],
-                       get_scores)
-        roots = tree.root_edus
-        scores = np.sum(r.polarity_scores for r in roots)
-        cls_idx = np.argmax(scores)
-        return IDX2CLS[cls_idx]
+        scores = np.sum(r.polarity_scores for r in tree.root_edus)
+        self._prune_prediction(scores)
+        return IDX2CLS[np.argmax(scores)]
 
     def debug(self, instance, relation_scheme=None):
         """Explain predictions of each classifier.
@@ -110,8 +98,8 @@ class RootAnalyzer(DASBaseAnalyzer):
 
         """
         if relation_scheme is None:
-            relation_scheme = self._relation_scheme
-        tree = RSTTree(instance, instance["rst_trees"][self._relation_scheme])
+            relation_scheme = self.relation_scheme
+        tree = RSTTree(instance, instance["rst_trees"][self.relation_scheme])
         roots = tree.root_edus
         self._logger.info("Root EDUs: %r.", roots)
         scores = [r.polarity_scores for r in roots]

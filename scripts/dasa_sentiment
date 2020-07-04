@@ -53,7 +53,7 @@ def _add_cmn_options(parser: ArgumentParser):
                         choices=(WANG,), default=WANG)
     parser.add_argument("-s", "--sentiment-scores",
                         help="key for base sentiment scores",
-                        choices=(SOCAL, XLNET), default=XLNET)
+                        choices=(SOCAL, XLNET), default=None)
     parser.add_argument("files", help="input file(s)",
                         type=str, nargs="+")
 
@@ -134,7 +134,7 @@ def _read_data(files):
                 continue
             for doc_i in data["docs"]:
                 if len(doc_i["edus"]) < 2:
-                    LOGGER.warn(
+                    LOGGER.warning(
                         "Skipping doc %s which contains only one EDU.",
                         doc_i["doc_id"]
                     )
@@ -222,14 +222,11 @@ def main(argv):
         if args.mode == DEBUG:
             predict = analyzer.debug
         else:
-            def predict(doc, rel_scheme, sentiment_scores):
-                labels = analyzer.predict([doc], rel_scheme, sentiment_scores)
-                return labels[0]
-
+            predict = analyzer.predict_instance
         ret = []
         for doc_i in _read_data(args.files):
             doc_i["predicted"] = predict(doc_i, args.relation_scheme,
-                                         args.sentiment_scores)
+                                         sentiment_scores=None)
             ret.append(doc_i)
         json.dump({"docs": ret},
                   sys.stdout, indent=1, separators=[',', ": "])

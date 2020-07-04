@@ -57,9 +57,9 @@ class LastAnalyzer(DASBaseAnalyzer):
         """
         pass
 
-    def _predict(self, instance: dict,
-                 relation_scheme: Optional[str] = None,
-                 sentiment_scores: Optional[str] = None):
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None):
         scores = self._get_scores(instance["edus"][-1])
         self._prune_prediction(scores)
         cls_idx = np.argmax(scores)

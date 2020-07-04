@@ -91,9 +91,10 @@ class DASBaseAnalyzer(BaseEstimator):
                    "f1_macro", "accuracy")
         Y = self._digitize_labels(X)
         results = cross_validate(self, X, Y, scoring=scorers)
-        print(results)
         for scorer_i in scorers:
             stat = results["test_" + scorer_i]
+            if scorer_i == "accuracy":
+                stat *= 100
             print("{:>10}: {:.4f} (+/- {:.2f})".format(
                 scorer_i, np.mean(stat), np.std(stat)))
 
@@ -143,14 +144,14 @@ class DASBaseAnalyzer(BaseEstimator):
         """
         ret = []
         for instance_i in instances:
-            ret.append(self._predict(instance_i, relation_scheme,
-                                     sentiment_scores))
+            ret.append(self.predict_instance(instance_i, relation_scheme,
+                                             sentiment_scores))
         return ret
 
     @abc.abstractmethod
-    def _predict(self, instance: dict,
-                 relation_scheme: Optional[str] = None,
-                 sentiment_scores: Optional[str] = None) -> str:
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None) -> str:
         """Predict label for a single input instance.
 
         Args:

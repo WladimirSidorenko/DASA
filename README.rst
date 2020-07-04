@@ -41,7 +41,7 @@ The exact preparation steps for these datasets looked as follows:
   lemma, PoS tag, dependency relation, and morphological features
   using the provided script `enrich_json`_::
 
-    ./scripts/enrich_json data/SST/sst.json data/IMDB/{pos,neg}/*.json
+    ./scripts/enrich_json data/SST/sst.json data/IMDB/*/*.json
 
 
 * **discourse segmentation** was done with a slightly adjusted
@@ -106,15 +106,15 @@ test sets and evaluate the quality of the resulting model:
 
 .. code-block:: shell
 
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/root/root.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/root/root.json
+  dasa_sentiment -v test data/PotTS/test/*.json > data/PotTS/predicted/ddr/ddr.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/ddr/ddr.json
 
 Equivalently, you can run the following commands to check the
 performance of this approach on the SB10k_ corpus:
 
 .. code-block:: shell
 
-  dasa_sentiment -v train -t ddr -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
+  dasa_sentiment -v train -t ddr -r bhatia data/SB10k/train/*.json  data/SB10k/dev/*.json
   dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/ddr/ddr.json
   dasa_evaluate data/SB10k/test/ data/SB10k/predicted/ddr/ddr.json
 
@@ -147,28 +147,23 @@ Results
 Last EDU
 ^^^^^^^^
 
-To predict the polarity of a tweet based on the polarity of its last
-EDU, we used the following command to create the model:
+To predict the polarity of a document based on the polarity of its
+last EDU, you can use the following command to create the model::
 
-.. code-block:: shell
+  dasa_sentiment train -t last -m data/SST/models/last.socal.model \
+  -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
 
-  dasa_sentiment -v train -t last data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+and then execute the following scripts to predict the label and
+evaluate the quality::
 
-and then executed the following scripts to predict the label and
-evaluate the quality:
-
-.. code-block:: shell
-
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/last/last.json
+  dasa_sentiment -v test data/SST/test/test.json > data/SST/predicted/last/last.socal.json
   dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.json
 
-equivalently:
+If you want to cross-validate the classifier on IMDB, you can use the
+following commands::
 
-.. code-block:: shell
-
-  dasa_sentiment -v train -t last data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/last/last.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/last/last.json
+  dasa_sentiment cv -t last -n 2 -s socal  data/IMDB/*/*.json
+  dasa_sentiment cv -t last -n 2 -s xlnet  data/IMDB/*/*.json
 
 
 Results
@@ -179,7 +174,7 @@ Results
    precision_macro: 0.3518 (+/- 0.04)
    recall_macro: 0.1267 (+/- 0.04)
    f1_macro: 0.1840 (+/- 0.05)
-   accuracy: 0.3185 (+/- 0.06)
+   accuracy: 31.85 (+/- 5.88)
 
 .. comment: SST (So-Cal)
    General Statistics:
@@ -200,11 +195,11 @@ Results
 
 .. comment: IMDB (XLNET)
 
-   Command: dasa_sentiment cv -t last -n 3 -s xlnet  data/IMDB/*/*.json
+   Command: dasa_sentiment cv -t last -n 2 -s xlnet  data/IMDB/*/*.json
    precision_macro: 0.4500 (+/- 0.10)
    recall_macro: 0.3003 (+/- 0.24)
    f1_macro: 0.2679 (+/- 0.22)
-   accuracy: 0.5005 (+/- 0.44)
+   accuracy: 50.05 (+/- 44.44)
 
 .. comment: SST (XLNET)
    Train Command: dasa_sentiment train -t last -m data/SST/models/last.xlnet.model -n 3 -s xlnet -d data/SST/dev/dev.json data/SST/train/train.json
@@ -225,19 +220,19 @@ Results
     Macro-Averaged F1-Score: 31.14%
     Micro-Averaged F1-Score (All Classes): 33.5404%
 
-+-----------+--------------------+---------------------+--------------------+----------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy   |
-+-----------+--------------------+---------------------+--------------------+----------------+
-|                                               So-Cal                                       |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |  0.3518 (+/- 0.04) |  0.1267 (+/- 0.04)  |  0.1840 (+/- 0.05) | 31.85 (+/- 6)  |
-| SST       |  0.4484            |  0.4253             |  0.4168            | 43.2%          |
+| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
 +-----------+--------------------+---------------------+--------------------+------------------+
-|                                               XLNET                                        |
+|                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |  0.45 (+/- 0.1)    |  0.3003 (+/- 0.24)  |  0.2679 (+/- 0.22) | 50.05 (+/- 44) |
-| SST       |  0.4007            |  0.36               |  0.3141            | 33.54%         |
-+-----------+--------------------+---------------------+--------------------+----------------+
+| IMDB      |  0.3518 (+/- 0.04) |  0.1267 (+/- 0.04)  |  0.1840 (+/- 0.05) | 31.85 (+/-5.88)  |
+| SST       |  0.4484            |  0.4253             |  0.4168            | 43.2%            |
++-----------+--------------------+---------------------+--------------------+------------------+
+|                                               XLNET                                          |
++-----------+--------------------+---------------------+--------------------+------------------+
+| IMDB      |  0.45 (+/- 0.1)    |  0.3003 (+/- 0.24)  |  0.2679 (+/- 0.22) | 50.05 (+/-44.44) |
+| SST       |  0.4007            |  0.36               |  0.3141            | 33.54%           |
++-----------+--------------------+---------------------+--------------------+------------------+
 
 
 No-Discourse
@@ -273,7 +268,7 @@ Results
 ~~~~~~~
 
 .. comment: IMDB (So-Cal)
-   dasa_sentiment cv -t no-discourse -n 3 -s socal  data/IMDB/*/*.json 
+   dasa_sentiment cv -t no-discourse -n 2 -s socal  data/IMDB/*/*.json
    precision_macro: 0.5496 (+/- 0.10)
    recall_macro: 0.4475 (+/- 0.16)
    f1_macro: 0.4852 (+/- 0.13)
@@ -297,7 +292,7 @@ Results
    Micro-Averaged F1-Score (All Classes): 58.2471%
 
 .. comment: IMDB (XLNET)
-   Command: dasa_sentiment cv -t no-discourse -n 3 -s xlnet  data/IMDB/*/*.json
+   Command: dasa_sentiment cv -t no-discourse -n 2 -s xlnet  data/IMDB/*/*.json
    precision_macro: 0.5620 (+/- 0.12)
    recall_macro: 0.4832 (+/- 0.16)
    f1_macro: 0.5168 (+/- 0.14)
@@ -337,8 +332,8 @@ Results
 Root EDU
 ^^^^^^^^
 
-To predict the polarity of a tweet based on the root EDU (*i.e.*, the
-nucleus of the nucleus), we used the following commands to create and
+To predict the polarity of a document based on the root EDU (*i.e.*,
+the top-most nucleus), I used the following commands to create and
 test the models:
 
 .. code-block:: shell
@@ -366,57 +361,80 @@ Results
 ~~~~~~~
 
 .. comment: IMDB (So-Cal)
+   Command:
+     dasa_sentiment cv -t root -n 2 -s socal data/IMDB/*/*.json
+
+   Results:
+     precision_macro: 0.5173 (+/- 0.03)
+     recall_macro: 0.3450 (+/- 0.13)
+     f1_macro: 0.4036 (+/- 0.10)
+     accuracy: 57.3500 (+/- 10.46)
 
 .. comment: SST (So-Cal)
+   Commands:
+     dasa_sentiment train -t root -m data/SST/models/root.socal.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+     dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
+     dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
+
    General Statistics:
-              precision    recall  f1-score   support
+                precision    recall  f1-score   support
+     negative       0.62      0.41      0.49       606
+     neutral        0.18      0.44      0.26       254
+     positive       0.66      0.49      0.56       589
 
-    negative       0.55      0.38      0.45       606
-    neutral        0.18      0.39      0.25       254
-    positive       0.61      0.51      0.55       589
+     accuracy                           0.45      1449
+     macro avg       0.49      0.45      0.44      1449
+     weighted avg       0.56      0.45      0.48      1449
 
-   accuracy                            0.43      1449
-   macro avg       0.45      0.43      0.42      1449
-   weighted avg    0.51      0.43      0.46      1449
-
-
-   Macro-Averaged Precision: 44.84%
-   Macro-Averaged Recall: 42.53%
-   Macro-Averaged F1-Score: 41.68%
-   Micro-Averaged F1-Score (All Classes): 43.2022%
+     Macro-Averaged Precision: 48.60%
+     Macro-Averaged Recall: 44.70%
+     Macro-Averaged F1-Score: 43.79%
+     Micro-Averaged F1-Score (All Classes): 44.7895%
 
 .. comment: IMDB (XLNET)
+   Command:
+     dasa_sentiment cv -t root -n 2 -s xlnet data/IMDB/*/*.json
+
+   Results:
+     precision_macro: 0.4501 (+/- 0.40)
+     recall_macro: 0.4002 (+/- 0.37)
+     f1_macro: 0.3676 (+/- 0.37)
+     accuracy: 50.0000 (+/- 44.67)
 
 .. comment: SST (XLNET)
+   Commands:
+     dasa_sentiment train -t root -m data/SST/models/root.xlnet.model -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+     dasa_sentiment -v test -m data/SST/models/root.socal.model  data/SST/test/test.json > data/SST/predicted/root/root.socal.json
+     dasa_evaluate  data/SST/test/test.json data/SST/predicted/root/root.socal.json
+
    General Statistics:
-              precision    recall  f1-score   support
+                precision  recall  f1-score   support
 
-    negative       0.46      0.48      0.47       606
-    neutral        0.17      0.47      0.25       254
-    positive       0.56      0.13      0.21       589
+   negative       0.48      0.41      0.45       606
+   neutral        0.17      0.54      0.26       254
+   positive       0.62      0.13      0.21       589
 
-    accuracy                           0.34      1449
-    macro avg      0.40      0.36      0.31      1449
-    weighted avg   0.45      0.34      0.33      1449
+   accuracy                           0.32      1449
+   macro avg      0.43      0.36      0.30      1449
+   weighted avg   0.48      0.32      0.32      1449
 
-    Macro-Averaged Precision: 40.07%
-    Macro-Averaged Recall: 36.00%
-    Macro-Averaged F1-Score: 31.14%
-    Micro-Averaged F1-Score (All Classes): 33.5404%
-
+   Macro-Averaged Precision: 42.52%
+   Macro-Averaged Recall: 36.10%
+   Macro-Averaged F1-Score: 30.48%
+   Micro-Averaged F1-Score (All Classes): 31.9531%
 
 +-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
+| **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro-math:`F_1`  |     Accuracy     |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |                    |                     |                    |                  |
-| SST       |                    |                     |                    |                  |
+| IMDB      | 0.5173 (+/- 0.03)  |  0.3450 (+/- 0.13)  |  0.4036 (+/- 0.10) | 57.35 (+/- 10.46)|
+| SST       | 0.486              |  0.447              |  0.4379            |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |                    |                     |                    |                  |
-| SST       |                    |                     |                    |                  |
++-----------+--------------------+--------------------+--------------------+------------------+
+| IMDB      | 0.4501 (+/- 0.40)  |  0.4002 (+/- 0.37)  |  0.3676 (+/- 0.37) | 50.0 (+/- 44.67) |
+| SST       | 0.4252             |  0.361              |  0.3048            | 31.9531          |
 +-----------+--------------------+---------------------+--------------------+------------------+
 
 R2N2
