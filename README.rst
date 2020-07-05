@@ -22,7 +22,7 @@ is considered to be most representative of the whole analyzed text.
 Table of Contents
 -----------------
 
-.. contents::
+.. toctree::
 
 Data
 ----
