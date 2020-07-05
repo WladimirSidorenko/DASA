@@ -19,8 +19,8 @@ scores of its elementary discourse units (EDUs) by either accumulating
 these scores over the RST tree or just considering a single EDU, which
 is considered to be most representative of the whole analyzed text.
 
-
-.. contents:: ""
+.. contents::
+  :local:
 
 Data
 ----
