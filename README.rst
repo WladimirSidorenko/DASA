@@ -150,20 +150,20 @@ Last EDU
 To predict the polarity of a document based on the polarity of its
 last EDU, you can use the following command to create the model::
 
-  dasa_sentiment train -t last -m data/SST/models/last.socal.model \
-  -n 3 -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+  dasa_sentiment train -t last -m data/SST/models/last.{xlnet,socal}.model \
+  -n 3 -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
 
 and then execute the following scripts to predict the label and
 evaluate the quality::
 
-  dasa_sentiment -v test data/SST/test/test.json > data/SST/predicted/last/last.socal.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.json
+  dasa_sentiment -v test -m data/SST/models/last.{xlnet,socal}.model \
+  data/SST/test/test.json > data/SST/predicted/last/last.{xlnet,socal}.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.{xlnet,socal}.json
 
 If you want to cross-validate the classifier on IMDB, you can use the
 following commands::
 
-  dasa_sentiment cv -t last -n 2 -s socal  data/IMDB/*/*.json
-  dasa_sentiment cv -t last -n 2 -s xlnet  data/IMDB/*/*.json
+  dasa_sentiment cv -t last -n 2 -s {xlnet,socal}  data/IMDB/*/*.json
 
 
 Results
@@ -334,27 +334,21 @@ Root EDU
 
 To predict the polarity of a document based on the root EDU (*i.e.*,
 the top-most nucleus), I used the following commands to create and
-test the models:
+test the models::
 
-.. code-block:: shell
+  dasa_sentiment train -t root -m data/SST/models/root.{xlnet,socal}.model -n 3 \
+  -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
 
-  dasa_sentiment -v train -t root -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+and then the following scripts to predict labels and evaluate the
+results::
 
-and then the following scripts to predict the label and evaluate the
-quality:
+  dasa_sentiment -v test -m data/SST/models/root.{xlnet,socal}.model \
+  data/SST/test/test.json > data/SST/predicted/root/root.{xlnet,socal}.json
+  dasa_evaluate  data/SST/test/test.json  data/SST/predicted/root/root.{xlnet,socal}.json
 
-.. code-block:: shell
+Equivalently, for crossvalidation::
 
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/root/root.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/root/root.json
-
-equivalently:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t root -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/root/root.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/root/root.json
+   dasa_sentiment cv -t root -n 2 -s {xlnet,socal} data/IMDB/*/*.json
 
 
 Results
