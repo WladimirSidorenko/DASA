@@ -20,10 +20,7 @@ these scores over the RST tree or just considering a single EDU, which
 is considered to be most representative of the whole analyzed text.
 
 
-.. topic:: Table of Contents
-
-.. contents:: Table of Contents
-  :local:
+.. contents:: ""
 
 Data
 ----
