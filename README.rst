@@ -11,8 +11,6 @@ Discourse-Aware Sentiment Analysis
    :align: right
    :target: http://opensource.org/licenses/MIT
 
-Description
------------
 
 This package provides implementations of various discourse-aware
 sentiment analysis (DASA) methods.  Most of these approaches infer the
@@ -21,10 +19,13 @@ scores of its elementary discourse units (EDUs) by either accumulating
 these scores over the RST tree or just considering a single EDU, which
 is considered to be most representative of the whole analyzed text.
 
+Table of Contents
+-----------------
+
 .. contents::
 
-Data Preparation
-----------------
+Data
+----
 
 We use the `IMDB`_ corpus and `Stanford Sentiment Treebank`_ as our
 primary data for evaluation.
