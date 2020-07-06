@@ -12,15 +12,18 @@ Discourse-Aware Sentiment Analysis
    :target: http://opensource.org/licenses/MIT
 
 
+.. contents::
+  :local:
+
+Description
+-----------
+
 This package provides implementations of various discourse-aware
 sentiment analysis (DASA) methods.  Most of these approaches infer the
 overall polarity of the input (*e.g,* of a review) from the polarity
 scores of its elementary discourse units (EDUs) by either accumulating
 these scores over the RST tree or just considering a single EDU, which
 is considered to be most representative of the whole analyzed text.
-
-.. contents::
-  :local:
 
 Data
 ----
@@ -93,22 +96,22 @@ Models
 
 This package comes with the following discourse-aware sentiment models:
 
-* `no-discourse`, which simply re-uses the classification of the base
-  predictor
+* **no-discourse**, which simply re-uses the classification of the
+  base predictor
 
-* `last`, which decides on the polarity of the whole document by the
+* **last**, which decides on the polarity of the whole document by the
   polarity of the last elementary discourse unit
 
-* `root`, which induce the polarity of the whole document from the
+* **root**, which induce the polarity of the whole document from the
   polarity of the top-most (root) EDU
 
-* `ddr` &ndash; a re-implementation of the discourse depth
-reweighting (DDR) approach by [BHATIA]_
+* **ddr** |--| a re-implementation of the discourse depth reweighting
+  (DDR) approach by [BHATIA]_
 
-* `r2n2` &ndash; a re-implementation of the rhetorical recursive
+* **r2n2** |--| a re-implementation of the rhetorical recursive
   neural-network approach by [BHATIA]_
 
-* `rdm` &ndash our own **Recursive Dirichlet Model**.
+* **rdm** |--| our own *Recursive Dirichlet Model*.
 
 Training
 --------
@@ -236,12 +239,12 @@ Last EDU
 |                                                So-Cal                                          |
 +-----------+--------------------+---------------------+---------------------+-------------------+
 | IMDB      |  0.3518 (+/- 0.04) |  0.1267 (+/- 0.04)  |  0.1840 (+/- 0.05)  | 31.85 (+/- 5.88)  |
-| SST       |  0.4484            |  0.4253             |  0.4168             | 43.2%             |
+| SST       |  0.4484            |  0.4253             |  0.4168             | 43.2022           |
 +-----------+--------------------+---------------------+---------------------+-------------------+
 |                                               XLNET                                            |
 +-----------+--------------------+---------------------+---------------------+-------------------+
 | IMDB      |  0.45 (+/- 0.1)    |  0.3003 (+/- 0.24)  |  0.2679 (+/- 0.22)  | 50.05 (+/- 44.44) |
-| SST       |  0.4007            |  0.36               |  0.3141             | 33.54%            |
+| SST       |  0.4007            |  0.36               |  0.3141             | 33.5404           |
 +-----------+--------------------+---------------------+---------------------+-------------------+
 
 
@@ -296,19 +299,19 @@ No-Discourse
    Macro-Averaged F1-Score: 68.42%
    Micro-Averaged F1-Score (All Classes): 75.5694%
 
-+-----------+--------------------+---------------------+----------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |       Macro-F1       |     Accuracy     |
-+===========+====================+=====================+======================+==================+
-|                                               So-Cal                                           |
-+-----------+--------------------+---------------------+----------------------+------------------+
-| IMDB      |   0.5496 (+/- 0.1) |  0.4475 (+/- 0.16)  |  0.4852 (+/- 0.13)   |  74.9 (+/- 0.14) |
-| SST       |   0.4829           |  0.4917             |  0.4797              |  58.247          |
-+-----------+--------------------+---------------------+----------------------+------------------+
-|                                               XLNET                                            |
-+-----------+--------------------+---------------------+----------------------+------------------+
-| IMDB      |   0.562 (+/- 0.12) |  0.4832 (+/- 0.16)  |  0.5168 (+/- 0.14)   |  80.6 (+/- 0.07) |
-| SST       |   0.6848           |  0.6854             |  0.6842              |  75.569          |
-+-----------+--------------------+---------------------+----------------------+------------------+
++-----------+--------------------+---------------------+---------------------+------------------+
+| **Data**  |  Macro-Precision   |     Macro-Recall    |       Macro-F1      |     Accuracy     |
++===========+====================+=====================+=====================+==================+
+|                                               So-Cal                                          |
++-----------+--------------------+---------------------+---------------------+------------------+
+| IMDB      |   0.5496 (+/- 0.1) |  0.4475 (+/- 0.16)  |  0.4852 (+/- 0.13)  |  74.9 (+/- 0.14) |
+| SST       |   0.4829           |  0.4917             |  0.4797             |  58.247          |
++-----------+--------------------+---------------------+---------------------+------------------+
+|                                               XLNET                                           |
++-----------+--------------------+---------------------+---------------------+------------------+
+| IMDB      |   0.562 (+/- 0.12) |  0.4832 (+/- 0.16)  |  0.5168 (+/- 0.14)  |  80.6 (+/- 0.07) |
+| SST       |   0.6848           |  0.6854             |  0.6842             |  75.569          |
++-----------+--------------------+---------------------+---------------------+------------------+
 
 Root EDU
 ^^^^^^^^
@@ -382,7 +385,7 @@ Root EDU
 |                                               So-Cal                                          |
 +-----------+--------------------+---------------------+--------------------+-------------------+
 | IMDB      | 0.5173 (+/- 0.03)  |  0.3450 (+/- 0.13)  |  0.4036 (+/- 0.1)  | 57.35 (+/- 10.46) |
-| SST       | 0.486              |  0.447              |  0.4379            |                   |
+| SST       | 0.486              |  0.447              |  0.4379            | 44.7895           |
 +-----------+--------------------+---------------------+--------------------+-------------------+
 |                                               XLNET                                           |
 +-----------+--------------------+---------------------+--------------------+-------------------+
@@ -464,6 +467,10 @@ WANG
 | IMDB      |                    |                     |                    |                  |
 | SST       |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
+
+.. |--| unicode:: U+2013   .. en dash
+.. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
+   :trim:
 
 .. _IMDB: http://www.cs.cornell.edu/people/pabo/movie-review-data/review_polarity.tar.gz
 .. _Stanford Sentiment Treebank: http://nlp.stanford.edu/~socherr/stanfordSentimentTreebank.zip
