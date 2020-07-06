@@ -96,8 +96,10 @@ class R2N2Analyzer(DLBaseAnalyzer):
     Attributes:
 
     """
+    _name = "R2N2"
 
-    def __init__(self, relation_scheme, *args, **kwargs):
+    def __init__(self, relation_scheme: str, sentiment_scores: str,
+                 n_classes: int):
         """Class constructor.
 
         Args:
@@ -105,8 +107,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(R2N2Analyzer, self).__init__(*args, **kwargs)
-        self._name = "R2N2"
+        super().__init__(sentiment_scores, n_classes)
         self._relation_scheme = relation_scheme
         self._relations = {}
         self._max_nodes = -1    # maximum depth of an RST tree
