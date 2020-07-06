@@ -91,12 +91,24 @@ The exact preparation steps for these datasets looked as follows:
 Models
 ------
 
-DDR
-^^^
+This package comes with the following discourse-aware sentiment models:
 
-To determine the polarity of a tweet using the discourse depth
-reweighting (DDR) method [BHATIA]_, you can use the following command
-to create the model:
+* `no-discourse`, which simply re-uses the classification of the base
+  predictor
+
+* `last`, which decides on the polarity of the whole document by the
+  polarity of the last elementary discourse unit
+
+* `root`, which induce the polarity of the whole document from the
+  polarity of the top-most (root) EDU
+
+* `ddr` &ndash; a re-implementation of the discourse depth
+reweighting (DDR) approach by [BHATIA]_
+
+* `r2n2` &ndash; a re-implementation of the rhetorical recursive
+  neural-network approach by [BHATIA]_
+
+* `rdm` &ndash our own **Recursive Dirichlet Model**.
 
 Training
 --------
@@ -107,8 +119,10 @@ Sentiment Treebank`_, can use the following command::
   dasa_sentiment train -t $MODEL -m data/SST/models/${MODEL}.${SSCORE}.model \
   -n 3 -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
 
-where `${MODEL}` is one of `rdm`, `no-discourse`, `root`, `last`,
-`wang`, `ddr`, or `r2n2`; and `$SSCORE` is either `xlnet` or `socal`.
+where `${MODEL}` is one of the implemented models (`rdm`,
+`no-discourse`, `root`, `last`, `wang`, `ddr`, or `r2n2`); and
+`$SSCORE` is one of the available sentiment scores in the respective
+data set (`xlnet` or `socal`).
 
 Testing and Evaluation
 ----------------------
@@ -118,10 +132,21 @@ Once you've trained your model, you can run it on the `SST test set
 
   dasa_sentiment -v test -m data/SST/models/last.${SSCORE}.model \
   data/SST/test/test.json > data/SST/predicted/last/last.{xlnet,socal}.json
+
+and evaluate the predictions with the help of the provided
+`dasa_evaluate <scripts/dasa_evaluate`_ script::
+
   dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.{xlnet,socal}.json
 
-For cross-validation, use::
-  dasa_sentiment cv -t last -n 2 -s {xlnet,socal}  data/IMDB/*/*.json
+For data sets that do not have an explicit test set, you can
+cross-validate your classifier with the following command::
+
+  dasa_sentiment cv -t ${MODEL} -n 2 -s ${SSCORE} PATH_TO_THE_DATA_FILES
+
+for example::
+
+  dasa_sentiment cv -t rdm -n 2 -s xlnet data/IMDB/*/*.json
+
 
 Results
 -------
@@ -138,7 +163,7 @@ DDR
 .. comment: SST (XLNET)
 
 +-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
+| **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro :math:`F_1` |     Accuracy     |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
@@ -205,19 +230,19 @@ Last EDU
     Macro-Averaged F1-Score: 31.14%
     Micro-Averaged F1-Score (All Classes): 33.5404%
 
-+-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
-+-----------+--------------------+---------------------+--------------------+------------------+
-|                                               So-Cal                                         |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |  0.3518 (+/- 0.04) |  0.1267 (+/- 0.04)  |  0.1840 (+/- 0.05) | 31.85 (+/-5.88)  |
-| SST       |  0.4484            |  0.4253             |  0.4168            | 43.2%            |
-+-----------+--------------------+---------------------+--------------------+------------------+
-|                                               XLNET                                          |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |  0.45 (+/- 0.1)    |  0.3003 (+/- 0.24)  |  0.2679 (+/- 0.22) | 50.05 (+/-44.44) |
-| SST       |  0.4007            |  0.36               |  0.3141            | 33.54%           |
-+-----------+--------------------+---------------------+--------------------+------------------+
++-----------+--------------------+---------------------+---------------------+------------------+
+| **Data**  |  Macro-Precision   |     Macro-Recall    | Macro :math:`{F}_1` |     Accuracy     |
++===========+====================+=====================+=====================+==================+
+|                                                So-Cal                                         |
++-----------+--------------------+---------------------+---------------------+------------------+
+| IMDB      |  0.3518 (+/- 0.04) |  0.1267 (+/- 0.04)  |  0.1840 (+/- 0.05)  | 31.85 (+/-5.88)  |
+| SST       |  0.4484            |  0.4253             |  0.4168             | 43.2%            |
++-----------+--------------------+---------------------+---------------------+------------------+
+|                                               XLNET                                           |
++-----------+--------------------+---------------------+---------------------+------------------+
+| IMDB      |  0.45 (+/- 0.1)    |  0.3003 (+/- 0.24)  |  0.2679 (+/- 0.22)  | 50.05 (+/-44.44) |
+| SST       |  0.4007            |  0.36               |  0.3141             | 33.54%           |
++-----------+--------------------+---------------------+---------------------+------------------+
 
 
 No-Discourse
@@ -271,19 +296,19 @@ No-Discourse
    Macro-Averaged F1-Score: 68.42%
    Micro-Averaged F1-Score (All Classes): 75.5694%
 
-+-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
-+-----------+--------------------+---------------------+--------------------+------------------+
-|                                               So-Cal                                         |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |   0.5496 (+/- 0.1) |  0.4475 (+/- 0.16)  |  0.4852 (+/- 0.13) |  74.9 (+/- 0.14) |
-| SST       |   0.4829           |  0.4917             |  0.4797            |  58.247          |
-+-----------+--------------------+---------------------+--------------------+------------------+
-|                                               XLNET                                          |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |   0.562 (+/- 0.12) |  0.4832 (+/- 0.16)  |  0.5168 (+/- 0.14) |  80.6 (+/- 0.07) |
-| SST       |   0.6848           |  0.6854             |  0.6842            |  75.569          |
-+-----------+--------------------+---------------------+--------------------+------------------+
++-----------+--------------------+---------------------+----------------------+------------------+
+| **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro :math:`{F}_1` |     Accuracy     |
++===========+====================+=====================+======================+==================+
+|                                               So-Cal                                           |
++-----------+--------------------+---------------------+----------------------+------------------+
+| IMDB      |   0.5496 (+/- 0.1) |  0.4475 (+/- 0.16)  |  0.4852 (+/- 0.13)   |  74.9 (+/- 0.14) |
+| SST       |   0.4829           |  0.4917             |  0.4797              |  58.247          |
++-----------+--------------------+---------------------+----------------------+------------------+
+|                                               XLNET                                            |
++-----------+--------------------+---------------------+----------------------+------------------+
+| IMDB      |   0.562 (+/- 0.12) |  0.4832 (+/- 0.16)  |  0.5168 (+/- 0.14)   |  80.6 (+/- 0.07) |
+| SST       |   0.6848           |  0.6854             |  0.6842              |  75.569          |
++-----------+--------------------+---------------------+----------------------+------------------+
 
 Root EDU
 ^^^^^^^^
@@ -352,8 +377,8 @@ Root EDU
    Micro-Averaged F1-Score (All Classes): 31.9531%
 
 +-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro-:math:`F_1` |     Accuracy     |
-+-----------+--------------------+---------------------+--------------------+------------------+
+| **Data**  |  Macro-Precision   |     Macro-Recall    |  Macro :math:`F_1` |     Accuracy     |
++===========+====================+=====================+====================+==================+
 |                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      | 0.5173 (+/- 0.03)  |  0.3450 (+/- 0.13)  |  0.4036 (+/- 0.10) | 57.35 (+/- 10.46)|
