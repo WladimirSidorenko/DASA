@@ -98,30 +98,36 @@ To determine the polarity of a tweet using the discourse depth
 reweighting (DDR) method [BHATIA]_, you can use the following command
 to create the model:
 
-.. code-block:: shell
+Training
+--------
 
-  dasa_sentiment -v train -t ddr -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
+To train a discourse-aware sentiment analysis model on the `Stanford
+Sentiment Treebank`_, can use the following command::
 
-and then execute the following scripts to predict the labels for the
-test sets and evaluate the quality of the resulting model:
+  dasa_sentiment train -t $MODEL -m data/SST/models/${MODEL}.${SSCORE}.model \
+  -n 3 -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
 
-.. code-block:: shell
+where `${MODEL}` is one of `rdm`, `no-discourse`, `root`, `last`,
+`wang`, `ddr`, or `r2n2`; and `$SSCORE` is either `xlnet` or `socal`.
 
-  dasa_sentiment -v test data/PotTS/test/*.json > data/PotTS/predicted/ddr/ddr.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/ddr/ddr.json
+Testing and Evaluation
+----------------------
 
-Equivalently, you can run the following commands to check the
-performance of this approach on the SB10k_ corpus:
+Once you've trained your model, you can run it on the `SST test set
+<data/SST/test/test.json>`_::
 
-.. code-block:: shell
+  dasa_sentiment -v test -m data/SST/models/last.${SSCORE}.model \
+  data/SST/test/test.json > data/SST/predicted/last/last.{xlnet,socal}.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.{xlnet,socal}.json
 
-  dasa_sentiment -v train -t ddr -r bhatia data/SB10k/train/*.json  data/SB10k/dev/*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/ddr/ddr.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/ddr/ddr.json
-
+For cross-validation, use::
+  dasa_sentiment cv -t last -n 2 -s {xlnet,socal}  data/IMDB/*/*.json
 
 Results
-~~~~~~~
+-------
+
+DDR
+^^^
 
 .. comment: IMDB (So-Cal)
 
@@ -147,28 +153,6 @@ Results
 
 Last EDU
 ^^^^^^^^
-
-To predict the polarity of a document based on the polarity of its
-last EDU, you can use the following command to create the model::
-
-  dasa_sentiment train -t last -m data/SST/models/last.{xlnet,socal}.model \
-  -n 3 -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
-
-and then execute the following scripts to predict the label and
-evaluate the quality::
-
-  dasa_sentiment -v test -m data/SST/models/last.{xlnet,socal}.model \
-  data/SST/test/test.json > data/SST/predicted/last/last.{xlnet,socal}.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.{xlnet,socal}.json
-
-If you want to cross-validate the classifier on IMDB, you can use the
-following commands::
-
-  dasa_sentiment cv -t last -n 2 -s {xlnet,socal}  data/IMDB/*/*.json
-
-
-Results
-~~~~~~~
 
 .. comment: IMDB (So-Cal)
    Command: dasa_sentiment cv -t last -n 3 -s socal  data/IMDB/*/*.json
@@ -239,35 +223,6 @@ Results
 No-Discourse
 ^^^^^^^^^^^^
 
-To predict the polarity of a tweet irrespective of discourse
-information, you can invoke the above scripts as follows:
-
-.. code-block:: shell
-
-  dasa_sentiment train -t no-discourse -m data/SST/models/no-discourse.model -n 3 \
-  -s xlnet -d data/SST/dev/dev.json data/SST/train/train.json
-
-and then the following scripts to predict the label and evaluate the
-quality:
-
-.. code-block:: shell
-
-  dasa_sentiment test -m data/SST/models/no-discourse.model data/SST/test/test.json \
-  > data/SST/predicted/no-discourse/no-discourse.xlnet.json
-  dasa_evaluate data/SST/test/test.json data/SST/predicted/no-discourse/no-discourse.json
-
-equivalently for IMDB:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t no-discourse data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/no-discourse/no-discourse.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/no-discourse/no-discourse .json
-
-
-Results
-~~~~~~~
-
 .. comment: IMDB (So-Cal)
    dasa_sentiment cv -t no-discourse -n 2 -s socal  data/IMDB/*/*.json
    precision_macro: 0.5496 (+/- 0.10)
@@ -332,28 +287,6 @@ Results
 
 Root EDU
 ^^^^^^^^
-
-To predict the polarity of a document based on the root EDU (*i.e.*,
-the top-most nucleus), I used the following commands to create and
-test the models::
-
-  dasa_sentiment train -t root -m data/SST/models/root.{xlnet,socal}.model -n 3 \
-  -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
-
-and then the following scripts to predict labels and evaluate the
-results::
-
-  dasa_sentiment -v test -m data/SST/models/root.{xlnet,socal}.model \
-  data/SST/test/test.json > data/SST/predicted/root/root.{xlnet,socal}.json
-  dasa_evaluate  data/SST/test/test.json  data/SST/predicted/root/root.{xlnet,socal}.json
-
-Equivalently, for crossvalidation::
-
-   dasa_sentiment cv -t root -n 2 -s {xlnet,socal} data/IMDB/*/*.json
-
-
-Results
-~~~~~~~
 
 .. comment: IMDB (So-Cal)
    Command:
@@ -435,37 +368,6 @@ Results
 R2N2
 ^^^^
 
-To determine the polarity of a tweet using rhetorical recursive neural
-networks (R2N2) [BHATIA]_, you can use the following command to create
-the model:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t r2n2 -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-
-and then run:
-
-.. code-block:: shell
-
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/r2n2/r2n2.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/r2n2/r2n2.json
-
-to predict the labels on the test sets and evaluate the quality of the
-resulting model.
-
-Equivalently, you can run the following commands to check the
-performance of this approach on the SB10k_ corpus:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t r2n2 -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/r2n2/r2n2.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/r2n2/r2n2.json
-
-
-Results
-~~~~~~~
-
 .. comment: IMDB (So-Cal)
 
 .. comment: SST (So-Cal)
@@ -491,36 +393,6 @@ Results
 RDM
 ^^^
 
-To determine the polarity of a tweet using a recursive Dirichlet
-process (RDP), you can use the following command to train the model:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t rdp -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-
-and then run:
-
-.. code-block:: shell
-
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/rdp/rdp.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/rdp/rdp.json
-
-to predict the labels on the test sets and evaluate the quality of the
-resulting model.
-
-Equivalently, you can run the following commands to check the
-performance of this approach on the SB10k_ corpus:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t rdp -r bhatia data/SB10k/train/\*.json  data/SB10k/dev/\*.json
-  dasa_sentiment -v test data/SB10k/test/\*.json > data/SB10k/predicted/rdp/rdp.json
-  dasa_evaluate data/SB10k/test/ data/SB10k/predicted/rdp/rdp.json
-
-
-Results
-~~~~~~~
-
 .. comment: IMDB (So-Cal)
 
 .. comment: SST (So-Cal)
@@ -545,28 +417,6 @@ Results
 
 WANG
 ^^^^
-
-To determine the polarity of a message using a linear combination of
-EDU polarities [WANG]_, you can use the following command to create
-the model:
-
-.. code-block:: shell
-
-  dasa_sentiment -v train -t wang -r bhatia data/PotTS/train/\*.json  data/PotTS/dev/\*.json
-
-and run:
-
-.. code-block:: shell
-
-  dasa_sentiment -v test data/PotTS/test/\*.json > data/PotTS/predicted/wang/wang.json
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/wang/wang.json
-
-to predict the labels on the test sets and evaluate the quality of the
-resulting model.
-
-
-Results
-~~~~~~~
 
 .. comment: IMDB (So-Cal)
 
