@@ -72,13 +72,8 @@ class RootAnalyzer(DASBaseAnalyzer):
     def predict_instance(self, instance: dict,
                          relation_scheme: Optional[str] = None,
                          sentiment_scores: Optional[str] = None):
-        if relation_scheme is None:
-            relation_scheme = self.relation_scheme
-        get_scores = partial(self._get_scores,
-                             scores_key=sentiment_scores)
-        tree = RSTTree(instance,
-                       instance["rst_trees"][relation_scheme],
-                       get_scores)
+        tree = self.build_rst(instance, relation_scheme,
+                              sentiment_scores)
         scores = np.sum(r.polarity_scores for r in tree.root_edus)
         self._prune_prediction(scores)
         return IDX2CLS[np.argmax(scores)]

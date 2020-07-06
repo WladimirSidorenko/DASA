@@ -16,7 +16,7 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from itertools import chain
-from typing import Callable
+from typing import List
 import numpy as np
 
 from .constants import IDX2CLS
@@ -73,7 +73,7 @@ class Tree(TreeMixin):
             pass
 
     def __init__(self, data: dict, root: dict,
-                 get_scores: Callable[[dict], np.array], prnt=None):
+                 scores: List[np.array], prnt=None):
         """Class constructor.
 
         Args:
@@ -91,7 +91,7 @@ class Tree(TreeMixin):
         self._rel2par = root["rel2par"]
         self._ns = root["n/s"]
         self._prnt = prnt
-        self._children = [Tree(data, ch, get_scores, self)
+        self._children = [Tree(data, ch, scores, self)
                           for ch in root["children"]]
         self.toks = []
         self._root_edus = None
@@ -101,7 +101,7 @@ class Tree(TreeMixin):
             edu = data["edus"][self._id]
             toks = data["toks"]
             self.toks = [toks[t] for t in edu["toks"]]
-            self.polarity_scores = np.array(get_scores(edu))
+            self.polarity_scores = np.array(scores[self._id])
         else:
             self._leaves = [leaf
                             for ch in self._children
