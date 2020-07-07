@@ -20,15 +20,14 @@ from builtins import range
 from math import ceil
 from six import iteritems
 from torch.utils.data import DataLoader
+from typing import Optional
 import numpy as np
 import torch.nn as nn
-import torch.nn.functional as F
 import torch
 
 from .constants import BUFFER_FACTOR, CLS2IDX, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
-from .rst import Tree as RSTTree
 
 
 ##################################################################
@@ -84,10 +83,11 @@ class R2N2(nn.Module):
             update_scores = torch.bmm(child_scores, rel_scores).view(
                 (node_scores.shape[0], -1, node_scores.shape[2])
             )
-            update_scores = F.tanh(torch.sum(update_scores, dim=1))
+            update_scores = torch.tanh(torch.sum(update_scores, dim=1))
             # add new scores to the existing ones
             node_scores[:, i] += update_scores
-        return F.softmax(self.gamma * msg_scores + node_scores[:, -1], dim=-1)
+        return torch.softmax(self.gamma * msg_scores + node_scores[:, -1],
+                             dim=-1)
 
 
 class R2N2Analyzer(DLBaseAnalyzer):
@@ -108,7 +108,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
 
         """
         super().__init__(sentiment_scores, n_classes)
-        self._relation_scheme = relation_scheme
+        self.relation_scheme = relation_scheme
         self._relations = {}
         self._max_nodes = -1    # maximum depth of an RST tree
         self._max_width = -1    # maximum number of children in an RST node
@@ -118,19 +118,18 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._wbench_msg_scores = None
         self.root_offset = 1
 
-    def predict(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
-        tree = self.span2nuc(
-            RSTTree(
-                instance, instance["rst_trees"][relation_scheme])
-        )
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None) -> str:
+        tree = self.span2nuc(self.build_rst(instance, relation_scheme))
         self._resize(tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
                       tree, instance)
-        self._wbench_msg_scores[0, :] = instance["polarity_scores"]
+        self._wbench_msg_scores[0, :] = self._get_scores(
+            instance, sentiment_scores
+        )
         with torch.no_grad():
             out = self._model(
                 torch.from_numpy(self._wbench_node_scores),
@@ -142,12 +141,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         return IDX2CLS[cls_idx.item()]
 
     def debug(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
-        tree = self.span2nuc(
-            RSTTree(
-                instance, instance["rst_trees"][relation_scheme])
-        )
+        tree = self.span2nuc(self.build_rst(instance, relation_scheme))
         self._resize(tree)
         self._logger.info("RST tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
@@ -174,11 +168,8 @@ class R2N2Analyzer(DLBaseAnalyzer):
 
     def _digitize_data(self, data, train_mode=False):
         forrest = [
-            self.span2nuc(
-                RSTTree(
-                    instance, instance["rst_trees"][self._relation_scheme])
-            )
-            for instance in data]
+            self.span2nuc(self.build_rst(instance)) for instance in data
+        ]
         if self._max_nodes < 0:
             self._max_width = ceil(max([t.width for t in forrest])
                                    * BUFFER_FACTOR)
@@ -198,7 +189,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
         for i, (tree_i, instance_i) in enumerate(zip(forrest, data)):
             self.tree2mtx(node_scores[i, :], children[i, :],
                           rels[i, :], tree_i, instance_i)
-            msg_scores[i] = instance_i["polarity_scores"]
+            msg_scores[i] = self._get_scores(instance_i)
             labels[i] = CLS2IDX[instance_i["label"]]
         dataset = Dataset(node_scores, children, rels, msg_scores, labels)
         return DataLoader(dataset, **DATALOADER_KWARGS)
