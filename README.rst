@@ -111,20 +111,20 @@ This package comes with the following discourse-aware sentiment models:
 * **r2n2** |--| a re-implementation of the rhetorical recursive
   neural-network approach by [BHATIA]_
 
-* **rdm** |--| our own *Recursive Dirichlet Model*.
+* **rdm** |--| our own **Recursive Dirichlet Model**.
 
 Training
 --------
 
 To train a discourse-aware sentiment analysis model on the `Stanford
-Sentiment Treebank`_, can use the following command::
+Sentiment Treebank`_, you can use the following command::
 
   dasa_sentiment train -t $MODEL -m data/SST/models/${MODEL}.${SSCORE}.model \
-  -n 3 -s {xlnet,socal} -d data/SST/dev/dev.json data/SST/train/train.json
+  -n 3 -s ${SSCORE} -d data/SST/dev/dev.json data/SST/train/train.json
 
 where `${MODEL}` is one of the implemented models (`rdm`,
 `no-discourse`, `root`, `last`, `wang`, `ddr`, or `r2n2`); and
-`$SSCORE` is one of the available sentiment scores in the respective
+`${SSCORE}` is one of the available sentiment scores in the respective
 data set (`xlnet` or `socal`).
 
 Testing and Evaluation
@@ -133,13 +133,13 @@ Testing and Evaluation
 Once you've trained your model, you can run it on the `SST test set
 <data/SST/test/test.json>`_::
 
-  dasa_sentiment -v test -m data/SST/models/last.${SSCORE}.model \
-  data/SST/test/test.json > data/SST/predicted/last/last.{xlnet,socal}.json
+  dasa_sentiment -v test -m data/SST/models/${MODEL}.${SSCORE}.model \
+  data/SST/test/test.json > data/SST/predicted/${MODEL}/${MODEL}.${SSCORE}.json
 
 and evaluate the predictions with the help of the provided
 `dasa_evaluate <scripts/dasa_evaluate`_ script::
 
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/last/last.{xlnet,socal}.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/${MODEL}/${MODEL}.{xlnet,socal}.json
 
 For data sets that do not have an explicit test set, you can
 cross-validate your classifier with the following command::
@@ -411,16 +411,18 @@ R2N2
 .. comment: SST (XLNET)
 
 +-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
-+-----------+--------------------+---------------------+--------------------+------------------+
+|   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
++===========+====================+=====================+====================+==================+
 |                                               So-Cal                                         |
-+-----------+--------------------+---------------------+--------------------+------------------+
++===========+====================+=====================+====================+==================+
 | IMDB      |                    |                     |                    |                  |
++-----------+--------------------+---------------------+--------------------+------------------+
 | SST       |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
-+-----------+--------------------+---------------------+--------------------+------------------+
++===========+====================+=====================+====================+==================+
 | IMDB      |                    |                     |                    |                  |
++-----------+--------------------+---------------------+--------------------+------------------+
 | SST       |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 
