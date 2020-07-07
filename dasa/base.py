@@ -14,13 +14,10 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
+from pickle import dump, load
 from sklearn.base import BaseEstimator
 from sklearn.model_selection import cross_validate
 from typing import List, Optional
-try:
-    from cPickle import dump, load
-except ImportError:
-    from _pickle import dump, load
 
 import abc
 import numpy as np
