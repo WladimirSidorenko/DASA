@@ -26,7 +26,7 @@ import abc
 import numpy as np
 import os
 
-from .rst import RSTTree
+from .rst import Tree
 from .utils import LOGGER
 
 
@@ -101,7 +101,7 @@ class DASBaseAnalyzer(BaseEstimator):
 
     def build_rst(self, instance: dict,
                   relation_scheme: Optional[str] = None,
-                  scores_key: Optional[str] = None) -> RSTTree:
+                  scores_key: Optional[str] = None) -> Tree:
         """Construct RSTTree for the given instance.
 
         """
@@ -113,7 +113,7 @@ class DASBaseAnalyzer(BaseEstimator):
             tree = instance["rst_trees"]
         sentiment_scores = [self._get_scores(edu_i, scores_key)
                             for edu_i in instance["edus"]]
-        return RSTTree(instance, tree, sentiment_scores)
+        return Tree(instance, tree, sentiment_scores)
 
     @abc.abstractmethod
     def _digitize_input(self, data: List[dict],
