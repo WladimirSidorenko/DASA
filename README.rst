@@ -137,7 +137,7 @@ Once you've trained your model, you can run it on the `SST test set
   data/SST/test/test.json > data/SST/predicted/${MODEL}/${MODEL}.${SSCORE}.json
 
 and evaluate the predictions with the help of the provided
-`dasa_evaluate <scripts/dasa_evaluate`_ script::
+`dasa_evaluate <scripts/dasa_evaluate>`_ script::
 
   dasa_evaluate data/PotTS/test/ data/PotTS/predicted/${MODEL}/${MODEL}.{xlnet,socal}.json
 
