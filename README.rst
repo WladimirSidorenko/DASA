@@ -406,24 +406,38 @@ R2N2
 
 .. comment: SST (So-Cal)
    General Statistics:
-              precision    recall  f1-score   support
+               precision    recall  f1-score   support
 
-    negative       0.62      0.63      0.62       606
-     neutral       0.24      0.12      0.16       254
-    positive       0.63      0.76      0.69       589
-
-    accuracy                           0.59      1449
-    macro avg      0.50      0.50      0.49      1449
-    weighted avg   0.56      0.59      0.57      1449
-
-    Macro-Averaged Precision: 49.64%
-    Macro-Averaged Recall: 50.08%
-    Macro-Averaged F1-Score: 48.92%
-    Micro-Averaged F1-Score (All Classes): 59.0752%
+   negative       0.61      0.64      0.62       606
+   neutral        0.22      0.09      0.13       254
+   positive       0.62      0.74      0.67       589
+   accuracy                           0.59      1449
+   macro avg      0.48      0.49      0.48      1449
+   weighted avg   0.54      0.59      0.56      1449
+   Macro-Averaged Precision: 48.29%
+   Macro-Averaged Recall: 49.09%
+   Macro-Averaged F1-Score: 47.55%
+   Micro-Averaged F1-Score (All Classes): 58.5231%
 
 .. comment: IMDB (XLNET)
 
 .. comment: SST (XLNET)
+
+   General Statistics:
+              precision    recall  f1-score   support
+
+   negative       0.83      0.75      0.79       606
+   neutral        0.37      0.38      0.37       254
+   positive       0.83      0.90      0.86       589
+
+   accuracy                           0.75      1449
+   macro avg      0.68      0.68      0.68      1449
+   weighted avg   0.75      0.75      0.75      1449
+
+   Macro-Averaged Precision: 67.60%
+   Macro-Averaged Recall: 67.67%
+   Macro-Averaged F1-Score: 67.53%
+   Micro-Averaged F1-Score (All Classes): 74.6722%
 
 +-----------+--------------------+---------------------+--------------------+------------------+
 |   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
@@ -432,7 +446,7 @@ R2N2
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| SST       |    0.4964          |    0.5008           |    0.4892          |   59.0752        |
+| SST       |    0.4829          |    0.4909           |    0.4755          |   58.5231        |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
 +-----------+--------------------+---------------------+--------------------+------------------+
