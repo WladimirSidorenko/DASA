@@ -14,7 +14,6 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
-from pickle import dump, load
 from sklearn.base import BaseEstimator
 from sklearn.model_selection import cross_validate
 from typing import List, Optional
@@ -22,6 +21,7 @@ from typing import List, Optional
 import abc
 import numpy as np
 import os
+import torch
 
 from .rst import Tree
 from .utils import LOGGER
@@ -44,20 +44,20 @@ class DASBaseAnalyzer(BaseEstimator):
     _name = "BaseAnalyzer"
 
     @staticmethod
-    def load(a_path):
+    def load(path):
         """Load serialized model from disc.
 
         Args:
-          a_path (str): path to file from which to load the model
+          path (str): path to file from which to load the model
 
         Returns:
           (DASentimentAnalyzer)
 
         """
-        LOGGER.debug("Loading model from file: %s", a_path)
-        with open(a_path, "rb") as ifile:
-            analyzer = load(ifile)
-        analyzer._restore(a_path)
+        LOGGER.debug("Loading model from file: %s", path)
+        with open(path, "rb") as ifile:
+            analyzer = torch.load(ifile)
+        analyzer._restore(path)
         return analyzer
 
     def __init__(self, sentiment_scores: str, n_classes: int):
@@ -200,20 +200,20 @@ class DASBaseAnalyzer(BaseEstimator):
         """
         raise NotImplementedError
 
-    def save(self, a_path):
+    def save(self, path):
         """Dump model to disc.
 
         Args:
-          a_models (list[str]): type of the models to train
+          path (str): path at which to store the model
 
         """
-        dirname = self._check_path(a_path)
+        dirname = self._check_path(path)
         # store each trained model
         logger = self._logger
         self._reset()
         logger.debug("Saving analyzer %s in %s.", self._name, dirname)
-        with open(a_path, "wb") as ofile:
-            dump(self, ofile)
+        with open(path, "wb") as ofile:
+            torch.save(self, ofile)
         logger.debug("Analyzer %s saved", self._name)
 
     def _check_path(self, a_path):

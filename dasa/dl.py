@@ -151,3 +151,13 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._model = best_model
         self._logger.debug("Model trained...")
         return best_f1
+
+    def _restore(self, path: str):
+        """Restore members which could not be serialized.
+
+        Args:
+          path (str): path to saved model
+
+        """
+        super()._restore(path)
+        self._model.eval()

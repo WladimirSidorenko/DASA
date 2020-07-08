@@ -275,14 +275,6 @@ class R2N2Analyzer(DLBaseAnalyzer):
                 rel_id = self._model.rel2idx.get(rel_name, 0)
                 rels[mtx_idx, i] = rel_id
 
-    def _restore(self, a_path):
-        """Restore members which could not be serialized.
-
-        """
-        super(R2N2Analyzer, self)._restore(a_path)
-        if not hasattr(self, "root_offset"):
-            self.root_offset = 1
-
     def _resize(self, tree):
         """Prepare workbenches for newer bigger instances.
 
