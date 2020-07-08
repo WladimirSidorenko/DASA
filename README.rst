@@ -139,7 +139,7 @@ Once you've trained your model, you can run it on the `SST test set
 and evaluate the predictions with the help of the provided
 `dasa_evaluate <scripts/dasa_evaluate>`_ script::
 
-  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/${MODEL}/${MODEL}.{xlnet,socal}.json
+  dasa_evaluate data/PotTS/test/ data/PotTS/predicted/${MODEL}/${MODEL}.${SSCORE}.json
 
 For data sets that do not have an explicit test set, you can
 cross-validate your classifier with the following command::
