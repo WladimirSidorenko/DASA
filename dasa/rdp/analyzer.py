@@ -115,7 +115,7 @@ class RDPAnalyzer(R2N2Analyzer):
         super(RDPAnalyzer, self)._init_wbenches()
         self._wbench_y = np.zeros(1, dtype="long")
 
-    def _train(self, train_set, dev_set, grid_search=True, balance=False):
+    def _train(self, train_set, dev_set):
         """Train specified model(s) on the provided data.
 
         Args:

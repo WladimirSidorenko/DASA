@@ -85,7 +85,7 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
             nodes.extend(node.children)
         return tree
 
-    def train(self, train_set, dev_set=None, grid_search=True, balance=False):
+    def train(self, train_set, dev_set=None):
         """Train specified model(s) on the provided data.
 
         Args:
@@ -93,11 +93,6 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
             training set
           dev_set (list or None):
             development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
         Returns:
           float: best macro-averaged F1 observed on the dev set
@@ -106,20 +101,15 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
         self._logger.debug("Preparing data...")
         train_set, dev_set = self._prepare_data(train_set, dev_set)
         self._logger.debug("Data prepared...")
-        return self._train(train_set, dev_set, grid_search, balance)
+        return self._train(train_set, dev_set)
 
     @abc.abstractmethod
-    def _train(self, train_set, dev_set, grid_search=True, balance=False):
+    def _train(self, train_set, dev_set):
         """Train specified model(s) on the provided data.
 
         Args:
           train_set (list): training set
           dev_set (list): development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
 
         Returns:

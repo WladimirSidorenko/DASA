@@ -121,8 +121,7 @@ class DASBaseAnalyzer(BaseEstimator):
         return np.array([instance["label"] for instance in data])
 
     @abc.abstractmethod
-    def train(self, train_set, dev_set=None,
-              grid_search=True, balance=False):
+    def train(self, train_set, dev_set=None):
         """Train specified model(s) on the provided data.
 
         Args:
@@ -130,11 +129,6 @@ class DASBaseAnalyzer(BaseEstimator):
             training set
           dev_set (list or None):
             development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
         Returns:
           void:

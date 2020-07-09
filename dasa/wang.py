@@ -125,7 +125,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._wbench_node_scores = None
         self._wbench_rels = None
 
-    def train(self, train_set, dev_set=None, grid_search=True, balance=False):
+    def train(self, train_set, dev_set=None):
         """Train specified model(s) on the provided data.
 
         Args:
@@ -133,11 +133,6 @@ class WangAnalyzer(DLBaseAnalyzer):
             training set
           dev_set (list or None):
             development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
         Returns:
           float: best macro-averaged F1 observed on the dev set
