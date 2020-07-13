@@ -42,6 +42,8 @@ class DASBaseAnalyzer(BaseEstimator):
     """
     __metaclass__ = abc.ABCMeta
     _name = "BaseAnalyzer"
+    SCORERS = ("precision_macro", "recall_macro",
+               "f1_macro", "accuracy")
 
     @staticmethod
     def load(path):
@@ -85,11 +87,9 @@ class DASBaseAnalyzer(BaseEstimator):
           void:
 
         """
-        scorers = ("precision_macro", "recall_macro",
-                   "f1_macro", "accuracy")
         Y = self._digitize_labels(X)
-        results = cross_validate(self, X, Y, scoring=scorers)
-        for scorer_i in scorers:
+        results = cross_validate(self, X, Y, scoring=self.SCORERS)
+        for scorer_i in self.SCORERS:
             stat = results["test_" + scorer_i]
             if scorer_i == "accuracy":
                 stat *= 100

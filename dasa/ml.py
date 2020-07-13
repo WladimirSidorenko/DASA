@@ -15,12 +15,15 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
-from builtins import range
 from copy import deepcopy
+from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader
+from typing import List
 import abc
 import numpy as np
 
 from .base import DASBaseAnalyzer
+from .constants import CLS2IDX
 
 ##################################################################
 # Variables and Constants
@@ -111,34 +114,33 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
           train_set (list): training set
           dev_set (list): development set
 
-
         Returns:
           float: best macro-averaged F1 observed on the dev set
 
         """
         raise NotImplementedError
 
-    def _prepare_data(self, train_set, dev_set):
+    def _prepare_data(self, X_train, X_dev):
         """Provide train/test split and digitize the data.
 
         """
-        if not dev_set and len(train_set) > 1:
-            n = len(train_set)
-            n_dev = max(1, n // 15)
-            idcs = list(range(n))
-            np.random.shuffle(idcs)
-
-            def get_split(data, idcs):
-                return [data[i] for i in idcs]
-
-            dev_set = get_split(train_set, idcs[:n_dev])
-            train_set = get_split(train_set, idcs[n_dev:])
-
+        Y_train = self._digitize_labels(X_train)
+        if not X_dev:
+            X_train, Y_train, X_dev, Y_dev = train_test_split(
+                X_train, Y_train, test_size=0.15, stratify=Y_train
+            )
+        else:
+            Y_dev = self._digitize_labels(X_dev)
         # convert tweets to word indices
-        train_set = self._digitize_data(train_set, train_mode=True)
-        dev_set = self._digitize_data(dev_set, train_mode=False)
+        train_set = self._digitize_data(X_train, Y_train, train_mode=True)
+        dev_set = self._digitize_data(X_dev, Y_dev, train_mode=False)
         return (train_set, dev_set)
 
     @abc.abstractmethod
-    def _digitize_data(self, data, train_mode=False):
+    def _digitize_data(self, X: List[dict], Y: np.array,
+                       train_mode: bool = False) -> DataLoader:
         raise NotImplementedError
+
+    def _digitize_labels(self, X: List[dict]) -> np.array:
+        return np.array([CLS2IDX[x_i["label"]] for x_i in X],
+                        dtype="long")

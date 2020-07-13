@@ -20,7 +20,7 @@ from builtins import range
 from math import ceil
 from six import iteritems
 from torch.utils.data import DataLoader
-from typing import Optional
+from typing import List, Optional
 import numpy as np
 import torch.nn as nn
 import torch
@@ -166,9 +166,10 @@ class R2N2Analyzer(DLBaseAnalyzer):
         self._logger.info("cls_idx: %r (%s)", cls_idx, IDX2CLS[cls_idx.item()])
         return IDX2CLS[cls_idx.item()]
 
-    def _digitize_data(self, data, train_mode=False):
+    def _digitize_data(self, X: List[dict], Y: np.array,
+                       train_mode: bool = False) -> DataLoader:
         forrest = [
-            self.span2nuc(self.build_rst(instance)) for instance in data
+            self.span2nuc(self.build_rst(instance)) for instance in X
         ]
         if self._max_nodes < 0:
             self._max_width = ceil(max([t.width for t in forrest])
@@ -177,7 +178,7 @@ class R2N2Analyzer(DLBaseAnalyzer):
                                    * BUFFER_FACTOR + 1)
             self._init_model(forrest)
             self._init_wbenches()
-        n = len(data)
+        n = len(X)
         node_scores = np.zeros((n, self._max_nodes, N_POLARITIES),
                                dtype="float32")
         msg_scores = np.zeros((n, N_POLARITIES), dtype="float32")
@@ -185,13 +186,11 @@ class R2N2Analyzer(DLBaseAnalyzer):
                             dtype="long")
         rels = np.zeros((n, self._max_nodes, self._max_width),
                         dtype="long")
-        labels = np.zeros(n, dtype="long")
-        for i, (tree_i, instance_i) in enumerate(zip(forrest, data)):
+        for i, (tree_i, instance_i) in enumerate(zip(forrest, X)):
             self.tree2mtx(node_scores[i, :], children[i, :],
                           rels[i, :], tree_i, instance_i)
             msg_scores[i] = self._get_scores(instance_i)
-            labels[i] = CLS2IDX[instance_i["label"]]
-        dataset = Dataset(node_scores, children, rels, msg_scores, labels)
+        dataset = Dataset(node_scores, children, rels, msg_scores, Y)
         return DataLoader(dataset, **DATALOADER_KWARGS)
 
     def _init_model(self, forrest):
