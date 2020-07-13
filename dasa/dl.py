@@ -19,6 +19,8 @@ from copy import deepcopy
 from datetime import datetime
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split
+from typing import List
 import abc
 import numpy as np
 import torch
@@ -67,17 +69,12 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._n_cls = len(CLS2IDX)
         self._wbench = np.zeros((1, self._n_cls), dtype="float32")
 
-    def _train(self, train_set, dev_set, grid_search=True, balance=False):
+    def _train(self, train_set, dev_set):
         """Train specified model(s) on the provided data.
 
         Args:
           train_set (list): training set
           dev_set (list): development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
         Returns:
           float: best macro-averaged F1 observed on the dev set
@@ -100,6 +97,7 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
             dev_loss = 0.
             i = next_i = 0
             epoch_start = datetime.utcnow()
+            self._model.train()
             for train_batch in train_set:
                 inputs = train_batch[:-1]
                 labels = train_batch[-1]
@@ -118,6 +116,7 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
                 loss.backward()
                 optimizer.step()
             # evaluate model's performance on the dev set
+            self._model.eval()
             with torch.no_grad():
                 j = next_j = 0
                 for dev_batch in dev_set:
@@ -151,6 +150,19 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._model = best_model
         self._logger.debug("Model trained...")
         return best_f1
+
+    def fit(self, X: List[dict], Y: np.array):
+        """Fit classifier to the data.
+
+        """
+        self._model = None
+        X_train, Y_train, X_dev, Y_dev = train_test_split(
+            X, Y, test_size=0.15, stratify=Y
+        )
+        train_set = self._digitize_data(X_train, Y_train, train_mode=True)
+        dev_set = self._digitize_data(X_dev, Y_dev, train_mode=False)
+        self._train(train_set, dev_set)
+        self._model.eval()
 
     def _restore(self, path: str):
         """Restore members which could not be serialized.

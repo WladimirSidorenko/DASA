@@ -18,6 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from torch import eye
 from torch.utils.data import DataLoader
+from typing import List
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
@@ -47,7 +48,7 @@ class DDR(nn.Linear):
     def forward(self, x):
         try:
             ret = super(DDR, self).forward(x)
-        except:
+        except Exception:
             ret = super(DDR, self).forward(x.float())
         return F.softmax(ret, dim=-1)
 
@@ -97,8 +98,9 @@ class DDRAnalyzer(DLBaseAnalyzer):
                           cls_idx, IDX2CLS[cls_idx.item()])
         return IDX2CLS[cls_idx.item()]
 
-    def _digitize_data(self, data, train_mode=False):
-        n = len(data)
+    def _digitize_data(self, X: List[dict], Y: np.array,
+                       train_mode: bool = False) -> DataLoader:
+        n = len(X)
         m = len(CLS2IDX)
         digitized_input = np.zeros((n, m), dtype="float32")
         digitized_labels = np.zeros(n, dtype="long")

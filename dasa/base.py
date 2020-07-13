@@ -42,6 +42,8 @@ class DASBaseAnalyzer(BaseEstimator):
     """
     __metaclass__ = abc.ABCMeta
     _name = "BaseAnalyzer"
+    SCORERS = ("precision_macro", "recall_macro",
+               "f1_macro", "accuracy")
 
     @staticmethod
     def load(path):
@@ -85,11 +87,9 @@ class DASBaseAnalyzer(BaseEstimator):
           void:
 
         """
-        scorers = ("precision_macro", "recall_macro",
-                   "f1_macro", "accuracy")
         Y = self._digitize_labels(X)
-        results = cross_validate(self, X, Y, scoring=scorers)
-        for scorer_i in scorers:
+        results = cross_validate(self, X, Y, scoring=self.SCORERS)
+        for scorer_i in self.SCORERS:
             stat = results["test_" + scorer_i]
             if scorer_i == "accuracy":
                 stat *= 100
@@ -121,8 +121,7 @@ class DASBaseAnalyzer(BaseEstimator):
         return np.array([instance["label"] for instance in data])
 
     @abc.abstractmethod
-    def train(self, train_set, dev_set=None,
-              grid_search=True, balance=False):
+    def train(self, train_set, dev_set=None):
         """Train specified model(s) on the provided data.
 
         Args:
@@ -130,11 +129,6 @@ class DASBaseAnalyzer(BaseEstimator):
             training set
           dev_set (list or None):
             development set
-          grid_search (bool):
-            use grid search in order to determine hyper-paramaters of
-            the model
-          balance (bool): balance dataset to get equal number of instances
-            for all classes (via downsampling)
 
         Returns:
           void:

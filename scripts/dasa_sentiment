@@ -95,9 +95,6 @@ def parse_args() -> Namespace:
         TRAIN, help="train model on the provided data")
     parser_train.add_argument("-d", "--dev",
                               help="development data", action="append")
-    parser_train.add_argument("-g", "--grid-search",
-                              help="determine optimal parameters using grid"
-                              " search", action="store_true")
     _add_cmn_train_options(parser_train)
     _add_cmn_options(parser_train)
 
@@ -209,7 +206,7 @@ def main(argv):
             LOGGER.debug("Reading development set...")
             dev_set = [doc_i for doc_i in _read_data(args.dev)]
             LOGGER.debug("Training analyzer...")
-            analyzer.train(train_set, dev_set, grid_search=args.grid_search)
+            analyzer.train(train_set, dev_set)
             LOGGER.debug("Analyzer trained.")
             analyzer.save(args.model)
         else:
