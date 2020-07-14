@@ -25,7 +25,7 @@ import numpy as np
 import torch.nn as nn
 import torch
 
-from .constants import BUFFER_FACTOR, CLS2IDX, IDX2CLS, N_POLARITIES
+from .constants import BUFFER_FACTOR, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
 

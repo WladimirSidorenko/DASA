@@ -406,38 +406,39 @@ R2N2
 
 .. comment: SST (So-Cal)
    General Statistics:
-               precision    recall  f1-score   support
+   precision    recall  f1-score   support
 
-   negative       0.61      0.64      0.62       606
-   neutral        0.22      0.09      0.13       254
-   positive       0.62      0.74      0.67       589
-   accuracy                           0.59      1449
-   macro avg      0.48      0.49      0.48      1449
-   weighted avg   0.54      0.59      0.56      1449
-   Macro-Averaged Precision: 48.29%
-   Macro-Averaged Recall: 49.09%
-   Macro-Averaged F1-Score: 47.55%
-   Micro-Averaged F1-Score (All Classes): 58.5231%
+   negative       0.62      0.61      0.62       606
+   neutral       0.23      0.11      0.14       254
+   positive       0.61      0.76      0.67       589
+
+   accuracy                           0.58      1449
+   macro avg       0.49      0.49      0.48      1449
+   weighted avg       0.55      0.58      0.56      1449
+
+   Macro-Averaged Precision: 48.51%
+   Macro-Averaged Recall: 49.13%
+   Macro-Averaged F1-Score: 47.83%
+   Micro-Averaged F1-Score (All Classes): 58.1781%
 
 .. comment: IMDB (XLNET)
 
 .. comment: SST (XLNET)
-
    General Statistics:
               precision    recall  f1-score   support
 
-   negative       0.83      0.75      0.79       606
-   neutral        0.37      0.38      0.37       254
-   positive       0.83      0.90      0.86       589
+    negative       0.83      0.76      0.79       606
+     neutral       0.36      0.37      0.36       254
+    positive       0.83      0.89      0.86       589
 
-   accuracy                           0.75      1449
-   macro avg      0.68      0.68      0.68      1449
-   weighted avg   0.75      0.75      0.75      1449
+    accuracy                           0.75      1449
+    macro avg      0.67      0.67      0.67      1449
+    weighted avg   0.75      0.75      0.75      1449
 
-   Macro-Averaged Precision: 67.60%
-   Macro-Averaged Recall: 67.67%
-   Macro-Averaged F1-Score: 67.53%
-   Micro-Averaged F1-Score (All Classes): 74.6722%
+    Macro-Averaged Precision: 67.33%
+    Macro-Averaged Recall: 67.39%
+    Macro-Averaged F1-Score: 67.26%
+    Micro-Averaged F1-Score (All Classes): 74.6032%
 
 +-----------+--------------------+---------------------+--------------------+------------------+
 |   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
@@ -446,13 +447,13 @@ R2N2
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| SST       |    0.4829          |    0.4909           |    0.4755          |   58.5231        |
+| SST       |    0.4851          |    0.4913           |    0.4783          |   58.1781        |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| SST       |    0.676           |    0.6767           |    0.6753          |   74.6722        |
+| SST       |    0.6733          |    0.6739           |    0.6726          |   74.6032        |
 +-----------+--------------------+---------------------+--------------------+------------------+
 
 RDM

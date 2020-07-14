@@ -70,21 +70,10 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
             node = nodes.pop(0)
             if node.rel2par == "span":
                 siblings = node.parent.children
-                # assert len(siblings) == 2, \
-                #     "Multiple siblings found for a span node."
-                idx2delete = -100
-                nodes2add = []
-                substituted = False
                 for i, sib_i in enumerate(siblings):
-                    if sib_i.id == node.id:
-                        idx2delete = i
-                    elif not substituted:
-                        node = deepcopy(node)
+                    if sib_i.id != node.id:
                         node.rel2par = sib_i.rel2par
-                        nodes2add.append(node)
-                        substituted = True
-                siblings.pop(idx2delete)
-                siblings.extend(nodes2add)
+                        break
             nodes.extend(node.children)
         return tree
 
@@ -126,7 +115,7 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
         """
         Y_train = self._digitize_labels(X_train)
         if not X_dev:
-            X_train, Y_train, X_dev, Y_dev = train_test_split(
+            X_train, X_dev, Y_train, Y_dev = train_test_split(
                 X_train, Y_train, test_size=0.15, stratify=Y_train
             )
         else:
@@ -142,5 +131,4 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
         raise NotImplementedError
 
     def _digitize_labels(self, X: List[dict]) -> np.array:
-        return np.array([CLS2IDX[x_i["label"]] for x_i in X],
-                        dtype="long")
+        return np.array([CLS2IDX[x_i["label"]] for x_i in X], dtype="long")

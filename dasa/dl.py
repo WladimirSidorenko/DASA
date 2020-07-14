@@ -69,12 +69,6 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._n_cls = len(CLS2IDX)
         self._wbench = np.zeros((1, self._n_cls), dtype="float32")
 
-<<<<<<< HEAD
-    def fit(self, train_set: List[dict]):
-        raise NotImplementedError
-
-=======
->>>>>>> 58903225324fe5153ad45ee2b014146f87e25088
     def _train(self, train_set, dev_set):
         """Train specified model(s) on the provided data.
 
@@ -161,8 +155,7 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         """Fit classifier to the data.
 
         """
-        self._model = None
-        X_train, Y_train, X_dev, Y_dev = train_test_split(
+        X_train, X_dev, Y_train, Y_dev = train_test_split(
             X, Y, test_size=0.15, stratify=Y
         )
         train_set = self._digitize_data(X_train, Y_train, train_mode=True)
