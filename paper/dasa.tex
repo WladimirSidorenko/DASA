@@ -44,21 +44,25 @@
 \maketitle
 \begin{abstract}
   This paper presents a novel Bayesian approach to sentiment analysis
-  of documents, in which we estimate the overall polarity of a text
-  from sentiment scores of its elementary discourse units (typically
-  clauses) using a dedicated probabilistic algebra.  In particular, we
-  consider the semantic orientation of each unit as a multinomial
-  random variable drawn from a Dirichlet distribution.  The parameters
-  of this distribution, in turn, depend on the polarity scores
-  predicted by a simplistic base classifier for the respective clause,
-  as well as polarities of dependent discourse segments and their
-  semantic and pragmatic relations (as defined by Rhetorical Structure
-  Theory).  We evaluate our method on the IMDB corpus and Stanford
-  Sentiment Treebank, getting\todo{add evaluation numbers}.
+  of documents, in which we estimate the overall polarity of the whole
+  text from sentiment scores of its elementary discourse units
+  (typically clauses).  For this purpose, we first let a base
+  sentiment classifier (So-Cal or XLNET) predict polarity scores for
+  each discourse unit.  Afterwards,
+
+  consider the semantic orientation of each EDU as a
+  categorical random variable whose probability is drawn from a
+  Dirichlet distribution.  The parameters of this distribution, in
+  turn, depend on the polarity scores predicted by a simplistic base
+  classifier for the respective clause, as well as polarities of
+  dependent discourse segments and their semantic and pragmatic
+  relations (as defined by Rhetorical Structure Theory).  We evaluate
+  our method on the IMDB corpus and Stanford Sentiment Treebank,
+  getting\todo{add evaluation numbers}.
 \end{abstract}
 
 \section{Introduction}\label{intro}
-\input{intro}
+%% \input{intro}
 % Sentiment analysis has admittedly been one of the most popular,
 % competitive, and prolific areas of natural language processing since
 % its very inception~\cite[pp.~1--5]{Liu:12}.  However, most
