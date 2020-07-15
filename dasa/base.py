@@ -87,7 +87,7 @@ class DASBaseAnalyzer(BaseEstimator):
           void:
 
         """
-        Y = self._digitize_labels(X)
+        Y = self._extract_labels(X)
         results = cross_validate(self, X, Y, scoring=self.SCORERS)
         for scorer_i in self.SCORERS:
             stat = results["test_" + scorer_i]
@@ -117,7 +117,7 @@ class DASBaseAnalyzer(BaseEstimator):
                         train_mode: bool = False) -> np.array:
         raise NotImplementedError
 
-    def _digitize_labels(self, data: List[dict]) -> np.array:
+    def _extract_labels(self, data: List[dict]) -> np.array:
         return np.array([instance["label"] for instance in data])
 
     @abc.abstractmethod

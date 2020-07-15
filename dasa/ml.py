@@ -15,10 +15,9 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
-from copy import deepcopy
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
-from typing import List
+from typing import Iterable, List
 import abc
 import numpy as np
 
@@ -110,7 +109,7 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
         raise NotImplementedError
 
     def _prepare_data(self, X_train, X_dev):
-        """Provide train/test split and digitize the data.
+        """Provide train/test split and digitize data.
 
         """
         Y_train = self._digitize_labels(X_train)
@@ -130,5 +129,12 @@ class MLBaseAnalyzer(DASBaseAnalyzer):
                        train_mode: bool = False) -> DataLoader:
         raise NotImplementedError
 
+    def _lbls2ints(self, labels: Iterable[str]) -> np.array:
+        return np.array(
+            [CLS2IDX[lbl_i] for lbl_i in labels],
+            dtype="long"
+        )
+
     def _digitize_labels(self, X: List[dict]) -> np.array:
-        return np.array([CLS2IDX[x_i["label"]] for x_i in X], dtype="long")
+        labels = self._extract_labels(X)
+        return self._lbls2ints(labels)

@@ -20,7 +20,7 @@ from datetime import datetime
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
-from typing import List
+from typing import Iterable, List
 import abc
 import numpy as np
 import torch
@@ -151,10 +151,11 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         self._logger.debug("Model trained...")
         return best_f1
 
-    def fit(self, X: List[dict], Y: np.array):
+    def fit(self, X: List[dict], Y: Iterable[str]):
         """Fit classifier to the data.
 
         """
+        Y = self._lbls2ints(Y)
         X_train, X_dev, Y_train, Y_dev = train_test_split(
             X, Y, test_size=0.15, stratify=Y
         )
