@@ -88,7 +88,8 @@ class DASBaseAnalyzer(BaseEstimator):
 
         """
         Y = self._extract_labels(X)
-        results = cross_validate(self, X, Y, scoring=self.SCORERS)
+        results = cross_validate(self, X, Y, scoring=self.SCORERS,
+                                 n_jobs=min(2, os.cpu_count()))
         for scorer_i in self.SCORERS:
             stat = results["test_" + scorer_i]
             if scorer_i == "accuracy":
