@@ -15,7 +15,6 @@ Attributes:
 ##################################################################
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
-from functools import partial
 from typing import Optional
 
 import numpy as np
@@ -74,7 +73,7 @@ class RootAnalyzer(DASBaseAnalyzer):
                          sentiment_scores: Optional[str] = None):
         if relation_scheme is None:
             relation_scheme = self.relation_scheme
-        scores = [self._get_scores(edu_i, scores_key=sentiment_scores)
+        scores = [self._get_scores(edu_i, sentiment_scores=sentiment_scores)
                   for edu_i in instance["edus"]]
         tree = self.build_rst(instance,
                               instance["rst_trees"][relation_scheme],

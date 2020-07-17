@@ -18,7 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from torch import eye
 from torch.utils.data import DataLoader
-from typing import List
+from typing import List, Optional
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
@@ -27,7 +27,6 @@ import torch
 from .constants import CLS2IDX, IDX2CLS
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
-from .rst import Tree as RSTTree
 
 
 ##################################################################
@@ -46,10 +45,7 @@ class DDR(nn.Linear):
         self.weight.data.copy_(eye(n))
 
     def forward(self, x):
-        try:
-            ret = super(DDR, self).forward(x)
-        except Exception:
-            ret = super(DDR, self).forward(x.float())
+        ret = super(DDR, self).forward(x)
         return F.softmax(ret, dim=-1)
 
 
@@ -59,7 +55,10 @@ class DDRAnalyzer(DLBaseAnalyzer):
     Attributes:
 
     """
-    def __init__(self, relation_scheme, *args, **kwargs):
+    _name = "DDR"
+
+    def __init__(self, relation_scheme: str, sentiment_scores: str,
+                 n_classes: int):
         """Class constructor.
 
         Args:
@@ -67,14 +66,16 @@ class DDRAnalyzer(DLBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(DDRAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "DDR"
+        super().__init__(sentiment_scores, n_classes)
+        self.relation_scheme = relation_scheme
         self._model = DDR()
-        self._relation_scheme = relation_scheme
 
-    def predict(self, instance, relation_scheme=None):
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None) -> str:
         self._wbench *= 0
-        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
+        self._compute_scores(self._wbench[0, :], instance,
+                             relation_scheme, sentiment_scores)
         with torch.no_grad():
             out = self._model(
                 torch.from_numpy(self._wbench)
@@ -82,11 +83,14 @@ class DDRAnalyzer(DLBaseAnalyzer):
             _, cls_idx = torch.max(out, 1)
         return IDX2CLS[cls_idx.item()]
 
-    def debug(self, instance, relation_scheme=None):
+    def debug(self, instance: dict,
+              relation_scheme: Optional[str] = None,
+              sentiment_scores: Optional[str] = None) -> str:
         self._logger.info("instance: %r", instance)
         self._wbench *= 0
         self._logger.info("wbench: %r", self._wbench)
-        self._compute_scores(self._wbench[0, :], instance, relation_scheme)
+        self._compute_scores(self._wbench[0, :], instance,
+                             relation_scheme, sentiment_scores)
         self._logger.info("* wbench: %r", self._wbench)
         with torch.no_grad():
             out = self._model(
@@ -103,18 +107,15 @@ class DDRAnalyzer(DLBaseAnalyzer):
         n = len(X)
         m = len(CLS2IDX)
         digitized_input = np.zeros((n, m), dtype="float32")
-        digitized_labels = np.zeros(n, dtype="long")
-        for i, instance in enumerate(data):
+        for i, instance in enumerate(X):
             self._compute_scores(digitized_input[i, :], instance)
-            digitized_labels[i] = CLS2IDX[instance["label"]]
-        dataset = Dataset(digitized_input, digitized_labels)
+        dataset = Dataset(digitized_input, Y)
         return DataLoader(dataset, **DATALOADER_KWARGS)
 
-    def _compute_scores(self, scores, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
-        rst_tree = RSTTree(instance,
-                           instance["rst_trees"][relation_scheme])
+    def _compute_scores(self, scores: np.array, instance: dict,
+                        relation_scheme: Optional[str] = None,
+                        sentiment_scores: Optional[str] = None) -> np.array:
+        rst_tree = self.build_rst(instance, relation_scheme, sentiment_scores)
         dep_tree = rst_tree.to_deps()
         for i, nodes_i in enumerate(dep_tree.bfs(), -1):
             if i < 0:

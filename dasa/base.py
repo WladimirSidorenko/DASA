@@ -99,7 +99,7 @@ class DASBaseAnalyzer(BaseEstimator):
 
     def build_rst(self, instance: dict,
                   relation_scheme: Optional[str] = None,
-                  scores_key: Optional[str] = None) -> Tree:
+                  sentiment_scores: Optional[str] = None) -> Tree:
         """Construct RSTTree for the given instance.
 
         """
@@ -109,7 +109,7 @@ class DASBaseAnalyzer(BaseEstimator):
             tree = instance["rst_trees"][self.relation_scheme]
         else:
             tree = instance["rst_trees"]
-        sentiment_scores = [self._get_scores(edu_i, scores_key)
+        sentiment_scores = [self._get_scores(edu_i, sentiment_scores)
                             for edu_i in instance["edus"]]
         return Tree(instance, tree, sentiment_scores)
 
@@ -254,8 +254,7 @@ class DASBaseAnalyzer(BaseEstimator):
         """Remove.
 
         Args:
-          item (dict): EDU or whole document
-          scores_key (dict): symbolic key of base sentiment scores
+          scores (np.array): prediction scores
 
         Returns:
           np.array: sentiment scores of analyzed item

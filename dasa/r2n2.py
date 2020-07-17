@@ -121,7 +121,9 @@ class R2N2Analyzer(DLBaseAnalyzer):
     def predict_instance(self, instance: dict,
                          relation_scheme: Optional[str] = None,
                          sentiment_scores: Optional[str] = None) -> str:
-        tree = self.span2nuc(self.build_rst(instance, relation_scheme))
+        tree = self.span2nuc(
+            self.build_rst(instance, relation_scheme, sentiment_scores)
+        )
         self._resize(tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
@@ -140,8 +142,12 @@ class R2N2Analyzer(DLBaseAnalyzer):
         _, cls_idx = torch.max(out, 1)
         return IDX2CLS[cls_idx.item()]
 
-    def debug(self, instance, relation_scheme=None):
-        tree = self.span2nuc(self.build_rst(instance, relation_scheme))
+    def debug(self, instance: dict,
+              relation_scheme: Optional[str] = None,
+              sentiment_scores: Optional[str] = None) -> str:
+        tree = self.span2nuc(
+            self.build_rst(instance, relation_scheme, sentiment_scores)
+        )
         self._resize(tree)
         self._logger.info("RST tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
