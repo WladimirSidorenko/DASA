@@ -166,65 +166,6 @@ DDR
      f1_macro: 0.4076 (+/- 0.16)
      accuracy: 53.7500 (+/- 10.57)
 
-.. comment: SST (So-Cal)
-   Command:
-     dasa_sentiment train -t ddr -n3 -m data/models/ddr.socal.model -s socal -d data/SST/dev/dev.json data/SST/train/train.json
-     dasa_sentiment test -m data/models/ddr.socal.model data/SST/test/test.json > data/SST/predicted/ddr/ddr.socal.json
-     dasa_evaluate data/SST/test/test.json data/SST/predicted/ddr/ddr.socal.json
-   Results:
-              precision    recall  f1-score   support
-
-    negative       0.62      0.50      0.55       606
-     neutral       0.20      0.35      0.25       254
-    positive       0.67      0.60      0.63       589
-
-    accuracy                           0.51      1449
-    macro avg      0.50      0.48      0.48      1449
-    weighted avg   0.57      0.51      0.53      1449
-
-    Macro-Averaged Precision: 49.92%
-    Macro-Averaged Recall: 48.19%
-    Macro-Averaged F1-Score: 48.11%
-    Micro-Averaged F1-Score (All Classes): 51.3458%
-
-.. comment: IMDB (XLNET)
-   Command:
-     dasa_sentiment -v cv -t ddr -n2 -s xlnet data/IMDB/{pos,neg}/*.json
-   Results:
-     precision_macro: 0.4956 (+/- 0.01)
-     recall_macro: 0.2978 (+/- 0.17)
-     f1_macro: 0.3291 (+/- 0.15)
-     accuracy: 49.8500 (+/- 29.08)
-
-.. comment: SST (XLNET)
-   Command:
-     dasa_sentiment train -t ddr -n3 -m data/models/ddr.xlnet.model -s xlnet -d data/SST/dev/dev.json data/SST/train/train.json
-     dasa_sentiment test -m data/models/ddr.xlnet.model data/SST/test/test.json > data/SST/predicted/ddr/ddr.xlnet.json
-     dasa_evaluate data/SST/test/test.json data/SST/predicted/ddr/ddr.xlnet.json
-   Results:
-              precision    recall  f1-score   support
-
-    negative       0.48      0.48      0.48       606
-     neutral       0.00      0.00      0.00       254
-    positive       0.46      0.65      0.54       589
-
-    accuracy                           0.47      1449
-   macro avg       0.31      0.38      0.34      1449
-   weighted avg    0.39      0.47      0.42      1449
-
-   Macro-Averaged Precision: 31.34%
-   Macro-Averaged Recall: 37.74%
-   Macro-Averaged F1-Score: 33.96%
-   Micro-Averaged F1-Score (All Classes): 46.5839%
-
-+-----------+--------------------+---------------------+--------------------+------------------+
-|   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
-+===========+====================+=====================+====================+==================+
-|                                               So-Cal                                         |
-+-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |  0.5465 (+/- 0.09) |  
-     f1_macro: 0.4076 (+/- 0.16)
-     accuracy: 53.7500 (+/- 10.57)
 
 .. comment: SST (So-Cal)
    Command:
