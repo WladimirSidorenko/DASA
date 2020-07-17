@@ -561,24 +561,42 @@ WANG
 ^^^^
 
 .. comment: IMDB (So-Cal)
+   Command:
+     dasa_sentiment -v cv -t wang -n2 -s socal data/IMDB/{pos,neg}/*.json
+   Results:
 
 .. comment: SST (So-Cal)
+   Command:
+     dasa_sentiment train -t wang -n3 -m data/models/wang.socal.model -s socal -d data/SST/dev/dev.json data/SST/train/train.json
+     dasa_sentiment test -m data/models/wang.socal.model data/SST/test/test.json > data/SST/predicted/wang/wang.socal.json
+     dasa_evaluate data/SST/test/test.json data/SST/predicted/wang/wang.socal.json
+   Results:
 
 .. comment: IMDB (XLNET)
+   Command:
+     dasa_sentiment -v cv -t wang -n2 -s xlnet data/IMDB/{pos,neg}/*.json
+   Results:
 
 .. comment: SST (XLNET)
+   Command:
+     dasa_sentiment train -t wang -n3 -m data/models/wang.xlnet.model -s xlnet -d data/SST/dev/dev.json data/SST/train/train.json
+     dasa_sentiment test -m data/models/wang.xlnet.model data/SST/test/test.json > data/SST/predicted/wang/wang.xlnet.json
+     dasa_evaluate data/SST/test/test.json data/SST/predicted/wang/wang.xlnet.json
+   Results:
 
 +-----------+--------------------+---------------------+--------------------+------------------+
-| **Data**  |  Macro-Precision   |     Macro-Recall    |  :math:`Macro F_1` |     Accuracy     |
-+-----------+--------------------+---------------------+--------------------+------------------+
+|   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
++===========+====================+=====================+====================+==================+
 |                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
++-----------+--------------------+---------------------+--------------------+------------------+
 | SST       |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
++-----------+--------------------+---------------------+--------------------+------------------+
 | SST       |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
 

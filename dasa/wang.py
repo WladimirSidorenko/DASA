@@ -65,6 +65,7 @@ class WangAnalyzer(DLBaseAnalyzer):
     """Main class for coarse-grained sentiment analyzer.
 
     """
+    _name = "Wang"
 
     @staticmethod
     def _replace_rel(data, from_idx, to_idx):
@@ -108,7 +109,8 @@ class WangAnalyzer(DLBaseAnalyzer):
         old_val = mask.type_as(rels) * idx
         rels.data = torch.where(mask, old_val, rels)
 
-    def __init__(self, relation_scheme, *args, **kwargs):
+    def __init__(self, relation_scheme: str, sentiment_scores: str,
+                 n_classes: int):
         """Class constructor.
 
         Args:
@@ -116,12 +118,11 @@ class WangAnalyzer(DLBaseAnalyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(WangAnalyzer, self).__init__(*args, **kwargs)
-        self._name = "Wang"
+        super().__init__(sentiment_scores, n_classes)
+        self.relation_scheme = relation_scheme
         # maximum number of leaves in an RST tree
         self._max_nodes = -1
         self._rel2idx = {None: NONE_IDX, "IRD": IRD_IDX}
-        self._relation_scheme = relation_scheme
         self._wbench_node_scores = None
         self._wbench_rels = None
 
@@ -210,9 +211,9 @@ class WangAnalyzer(DLBaseAnalyzer):
 
     def _train(self, train_set, dev_set, n_rels):
         self._model = Wang(n_rels)
-        return super(WangAnalyzer, self)._train(train_set, dev_set)
+        return super()._train(train_set, dev_set)
 
-    def predict(self, instance, relation_scheme=None):
+    def predict_instance(self, instance, relation_scheme=None):
         if relation_scheme is None:
             relation_scheme = self._relation_scheme
         leaves = [n
