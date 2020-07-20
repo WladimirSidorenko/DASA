@@ -18,6 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from math import ceil
 from torch.utils.data import DataLoader
+from typing import List, Optional
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
@@ -26,7 +27,6 @@ import torch
 from .constants import BUFFER_FACTOR, CLS2IDX, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
-from .rst import Tree as RSTTree
 
 
 ##################################################################
@@ -213,13 +213,12 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._model = Wang(n_rels)
         return super()._train(train_set, dev_set)
 
-    def predict_instance(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None) -> str:
         leaves = [n
-                  for n in
-                  RSTTree(instance,
-                          instance["rst_trees"][relation_scheme])
+                  for n in self.build_rst(instance, relation_scheme,
+                                          sentiment_scores)
                   if n.is_leaf]
         if len(leaves) > self._max_nodes:
             self._max_nodes = len(leaves)
@@ -229,8 +228,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._wbench_rels *= 0
         edus = instance["edus"]
         for i, leaf in enumerate(leaves):
-            self._wbench_node_scores[0, i, :] = \
-                edus[leaf.id]["polarity_scores"]
+            self._wbench_node_scores[0, i, :] = self._get_scores(edus[leaf.id])
             rel = (leaf.rel2par, leaf.ns)
             self._wbench_rels[0, i] = self._rel2idx.get(rel, IRD_IDX)
         with torch.no_grad():
@@ -242,14 +240,13 @@ class WangAnalyzer(DLBaseAnalyzer):
         cls = IDX2CLS[cls_idx.item()]
         return cls
 
-    def debug(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
+    def debug(self, instance,
+              relation_scheme: Optional[str] = None,
+              sentiment_scores: Optional[str] = None) -> str:
         self._logger.debug("instance: %r", instance)
         leaves = [n
-                  for n in
-                  RSTTree(instance,
-                          instance["rst_trees"][relation_scheme])
+                  for n in self.build_rst(instance, relation_scheme,
+                                          sentiment_scores)
                   if n.is_leaf]
         self._logger.debug("leaves: %r", leaves)
         if len(leaves) > self._max_nodes:
@@ -260,8 +257,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._wbench_rels *= 0
         edus = instance["edus"]
         for i, leaf in enumerate(leaves):
-            self._wbench_node_scores[0, i, :] = \
-                edus[leaf.id]["polarity_scores"]
+            self._wbench_node_scores[0, i, :] = self._get_scores(edus[leaf.id])
             rel = (leaf.rel2par, leaf.ns)
             self._wbench_rels[0, i] = self._rel2idx.get(rel, IRD_IDX)
         self._logger.debug("rels: %r", self._wbench_rels)
@@ -277,33 +273,28 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._logger.debug("cls_idx: %d (%s)", cls_idx, cls)
         return cls
 
-    def _digitize_data(self, data, train_mode=False):
+    def _digitize_data(self, X: List[dict], Y: np.array, train_mode=False):
         rst_leaves = [
             [
                 (
-                    instance["edus"][node.id]["polarity_scores"],
+                    self._get_scores(instance["edus"][node.id]),
                     (node.rel2par, node.ns)
                 )
-                for node in
-                RSTTree(
-                    instance,
-                    instance["rst_trees"][self._relation_scheme]
-                )
+                for node in self.build_rst(instance)
                 if node.is_leaf
             ]
-            for instance in data
+            for instance in X
         ]
         if self._max_nodes < 0:
             self._max_nodes = ceil(
                 BUFFER_FACTOR * max([len(nodes) for nodes in rst_leaves])
             )
             self._init_wbenches()
-        n = len(data)
+        n = len(X)
         digitized_rels = np.zeros((n, self._max_nodes), dtype="long")
         digitized_input = np.zeros((n, self._max_nodes, N_POLARITIES),
                                    dtype="float32")
-        digitized_labels = np.zeros(n, dtype="long")
-        for i, (leaves, instance) in enumerate(zip(rst_leaves, data)):
+        for i, (leaves, instance) in enumerate(zip(rst_leaves, X)):
             for j, (pol_scores, rel) in enumerate(leaves):
                 if rel not in self._rel2idx:
                     if train_mode:
@@ -315,8 +306,7 @@ class WangAnalyzer(DLBaseAnalyzer):
                         )
                 digitized_rels[i, j] = self._rel2idx.get(rel, IRD_IDX)
                 digitized_input[i, j, :] = pol_scores
-            digitized_labels[i] = CLS2IDX[instance["label"]]
-        dataset = Dataset(digitized_rels, digitized_input, digitized_labels)
+        dataset = Dataset(digitized_rels, digitized_input, Y)
         return DataLoader(dataset, **DATALOADER_KWARGS)
 
     def _init_wbenches(self):
@@ -324,7 +314,6 @@ class WangAnalyzer(DLBaseAnalyzer):
 
         """
         self._wbench_node_scores = np.zeros(
-            (1, self._max_nodes, N_POLARITIES),
-            dtype="float32"
+            (1, self._max_nodes, N_POLARITIES), dtype="float32"
         )
         self._wbench_rels = np.zeros((1, self._max_nodes), dtype="long")
