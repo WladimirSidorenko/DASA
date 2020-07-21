@@ -564,6 +564,10 @@ WANG
    Command:
      dasa_sentiment -v cv -t wang -n2 -s socal data/IMDB/{pos,neg}/*.json
    Results:
+     precision_macro: 0.3297 (+/- 0.01)
+     recall_macro: 0.1305 (+/- 0.10)
+     f1_macro: 0.1678 (+/- 0.09)
+     accuracy: 29.9500 (+/- 13.51)
 
 .. comment: SST (So-Cal)
    Command:
@@ -596,7 +600,7 @@ WANG
      dasa_sentiment test -m data/models/wang.xlnet.model data/SST/test/test.json > data/SST/predicted/wang/wang.xlnet.json
      dasa_evaluate data/SST/test/test.json data/SST/predicted/wang/wang.xlnet.json
    Results:
-                 precision    recall  f1-score   support
+                 precision   recall  f1-score   support
      negative       0.44      0.34      0.39       606
      neutral        0.18      0.48      0.26       254
      positive       0.42      0.20      0.27       589
@@ -615,7 +619,7 @@ WANG
 +===========+====================+=====================+====================+==================+
 |                                               So-Cal                                         |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| IMDB      |                    |                     |                    |                  |
+| IMDB      |  0.3297 (+/- 0.01) |  0.1305 (+/- 0.1)   |  0.1678 (+/- 0.09) | 29.95 (+/- 13.51)|
 +-----------+--------------------+---------------------+--------------------+------------------+
 | SST       |      0.4345        |       0.4181        |       0.4083       |     42.5811      |
 +-----------+--------------------+---------------------+--------------------+------------------+
