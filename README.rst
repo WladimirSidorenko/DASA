@@ -571,6 +571,19 @@ WANG
      dasa_sentiment test -m data/models/wang.socal.model data/SST/test/test.json > data/SST/predicted/wang/wang.socal.json
      dasa_evaluate data/SST/test/test.json data/SST/predicted/wang/wang.socal.json
    Results:
+                 precision    recall  f1-score   support
+     negative       0.55      0.37      0.44       606
+     neutral        0.19      0.38      0.25       254
+     positive       0.56      0.51      0.53       589
+
+     accuracy                           0.43      1449
+     macro avg      0.43      0.42      0.41      1449
+     weighted avg   0.49      0.43      0.45      1449
+
+     Macro-Averaged Precision: 43.45%
+     Macro-Averaged Recall:    41.81%
+     Macro-Averaged F1-Score:  40.83%
+     Micro-Averaged F1-Score (All Classes): 42.5811%
 
 .. comment: IMDB (XLNET)
    Command:
@@ -583,6 +596,19 @@ WANG
      dasa_sentiment test -m data/models/wang.xlnet.model data/SST/test/test.json > data/SST/predicted/wang/wang.xlnet.json
      dasa_evaluate data/SST/test/test.json data/SST/predicted/wang/wang.xlnet.json
    Results:
+                 precision    recall  f1-score   support
+     negative       0.44      0.34      0.39       606
+     neutral        0.18      0.48      0.26       254
+     positive       0.42      0.20      0.27       589
+
+     accuracy                           0.31      1449
+     macro avg      0.34      0.34      0.31      1449
+     weighted avg   0.38      0.31      0.32      1449
+
+     Macro-Averaged Precision: 34.48%
+     Macro-Averaged Recall:    34.24%
+     Macro-Averaged F1-Score:  30.59%
+     Micro-Averaged F1-Score (All Classes): 31.0559%
 
 +-----------+--------------------+---------------------+--------------------+------------------+
 |   Data    |  Macro-Precision   |     Macro-Recall    |      Macro-F1      |     Accuracy     |
@@ -591,13 +617,13 @@ WANG
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| SST       |                    |                     |                    |                  |
+| SST       |      0.4345        |       0.4181        |       0.4083       |     42.5811      |
 +-----------+--------------------+---------------------+--------------------+------------------+
 |                                               XLNET                                          |
 +-----------+--------------------+---------------------+--------------------+------------------+
 | IMDB      |                    |                     |                    |                  |
 +-----------+--------------------+---------------------+--------------------+------------------+
-| SST       |                    |                     |                    |                  |
+| SST       |      0.3448        |       0.3424        |       0.3059       |     31.0559      |
 +-----------+--------------------+---------------------+--------------------+------------------+
 
 .. |--| unicode:: U+2013   .. en dash

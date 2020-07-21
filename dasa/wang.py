@@ -24,7 +24,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-from .constants import BUFFER_FACTOR, CLS2IDX, IDX2CLS, N_POLARITIES
+from .constants import BUFFER_FACTOR, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
 from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
 
@@ -126,7 +126,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._wbench_node_scores = None
         self._wbench_rels = None
 
-    def train(self, train_set, dev_set=None):
+    def _train(self, train_set, dev_set=None):
         """Train specified model(s) on the provided data.
 
         Args:
@@ -139,17 +139,14 @@ class WangAnalyzer(DLBaseAnalyzer):
           float: best macro-averaged F1 observed on the dev set
 
         """
-        self._logger.debug("Preparing data...")
-        train_set, dev_set = self._prepare_data(train_set, dev_set)
-        self._logger.debug("Data prepared...")
         # determine which kind of relations to keep
         self.n_rels = n_rels = len(self._rel2idx)
         #  if we only have auxiliary relations, the just train on them
         self._logger.debug("Training model on the complete relation set.")
-        best_f1 = self._train(train_set, dev_set, n_rels)
+        best_f1 = self._train_model(train_set, dev_set, self.n_rels)
         self._logger.debug("Overall F1 score: %f", best_f1)
         best_model = self._model
-        if n_rels <= AUX_RELS:
+        if self.n_rels <= AUX_RELS:
             return best_f1
         rels = list(self._rel2idx.keys())
         while n_rels > AUX_RELS:
@@ -172,7 +169,9 @@ class WangAnalyzer(DLBaseAnalyzer):
                 changed_indices_dev = self._replace_rel(
                      dev_set, rel_idx, IRD_IDX
                 )
-                f1 = self._train(train_set, dev_set, self.n_rels)
+                # we keep the initial number of relations in each new model in
+                # order not to relabel the complete training set
+                f1 = self._train_model(train_set, dev_set, self.n_rels)
                 self._logger.debug("F1 score: %f", f1)
                 if f1 > best_iteration_f1:
                     self._logger.debug(
@@ -209,7 +208,7 @@ class WangAnalyzer(DLBaseAnalyzer):
         self._logger.debug("Best observed F1 score: %f", best_f1)
         return best_f1
 
-    def _train(self, train_set, dev_set, n_rels):
+    def _train_model(self, train_set, dev_set, n_rels):
         self._model = Wang(n_rels)
         return super()._train(train_set, dev_set)
 
