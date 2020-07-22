@@ -19,6 +19,8 @@ from __future__ import absolute_import, print_function, unicode_literals
 from builtins import range
 from datetime import datetime
 from sklearn.metrics import f1_score
+from torch.utils.data import DataLoader
+from typing import List, Optional
 import numpy as np
 import pyro
 import torch
@@ -26,7 +28,6 @@ import torch
 from .model import RDPModel
 from ..constants import IDX2CLS
 from ..dl import N_EPOCHS
-from ..rst import Tree as RSTTree
 from ..r2n2 import R2N2Analyzer
 
 
@@ -43,8 +44,10 @@ class RDPAnalyzer(R2N2Analyzer):
     Attributes:
 
     """
+    _name = "RDP"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, relation_scheme: str, sentiment_scores: str,
+                 n_classes: int):
         """Class constructor.
 
         Args:
@@ -52,22 +55,20 @@ class RDPAnalyzer(R2N2Analyzer):
           kwargs (dict): keyword arguments to use for initializing models
 
         """
-        super(RDPAnalyzer, self).__init__(*args, **kwargs)
+        super().__init__(relation_scheme, sentiment_scores, n_classes)
         self._wbench_y = None
-        self._name = "RDP"
 
-    def predict(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
+    def predict_instance(self, instance: dict,
+                         relation_scheme: Optional[str] = None,
+                         sentiment_scores: Optional[str] = None) -> str:
         tree = self.span2nuc(
-            RSTTree(
-                instance, instance["rst_trees"][relation_scheme])
+            self.build_rst(instance, relation_scheme, sentiment_scores)
         )
         self._resize(tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
-                      tree, instance)
+                      tree, instance, sentiment_scores)
         self._model.predict([torch.from_numpy(self._wbench_node_scores),
                              torch.from_numpy(self._wbench_children),
                              torch.from_numpy(self._wbench_rels),
@@ -75,19 +76,18 @@ class RDPAnalyzer(R2N2Analyzer):
                             self._wbench_y)
         return IDX2CLS[self._wbench_y[0]]
 
-    def debug(self, instance, relation_scheme=None):
-        if relation_scheme is None:
-            relation_scheme = self._relation_scheme
+    def debug(self, instance: dict,
+              relation_scheme: Optional[str] = None,
+              sentiment_scores: Optional[str] = None) -> str:
         tree = self.span2nuc(
-            RSTTree(
-                instance, instance["rst_trees"][relation_scheme])
+            self.build_rst(instance, relation_scheme, sentiment_scores)
         )
         self._resize(tree)
         self._logger.debug("tree: %r", tree)
         self.tree2mtx(self._wbench_node_scores[0, :],
                       self._wbench_children[0, :],
                       self._wbench_rels[0, :],
-                      tree, instance)
+                      tree, instance, sentiment_scores)
         self._logger.debug("node_scores: %r", self._wbench_node_scores)
         self._logger.debug("children: %r", self._wbench_children)
         self._logger.debug("rels: %r", self._wbench_rels)
@@ -112,7 +112,7 @@ class RDPAnalyzer(R2N2Analyzer):
         self._model = RDPModel(rels)
 
     def _init_wbenches(self):
-        super(RDPAnalyzer, self)._init_wbenches()
+        super()._init_wbenches()
         self._wbench_y = np.zeros(1, dtype="long")
 
     def _train(self, train_set, dev_set):
@@ -168,10 +168,9 @@ class RDPAnalyzer(R2N2Analyzer):
         self._model.inspect_state()
         return best_f1
 
-    def _digitize_data(self, data, train_mode=False):
-        dataloader = super(RDPAnalyzer, self)._digitize_data(
-            data, train_mode
-        )
+    def _digitize_data(self, X: List[dict], Y: np.array,
+                       train_mode: bool = False) -> DataLoader:
+        dataloader = super()._digitize_data(X, Y, train_mode)
         # remove message scores as they will be incorporated as regular priors
         # of the root node
         tensors = list(dataloader.dataset.tensors)
@@ -179,24 +178,24 @@ class RDPAnalyzer(R2N2Analyzer):
         dataloader.dataset.tensors = tuple(tensors)
         return dataloader
 
-    def tree2mtx(self, node_scores, children, rels, tree, instance):
-        super(RDPAnalyzer, self).tree2mtx(node_scores, children, rels,
-                                          tree, instance)
+    def tree2mtx(self, node_scores, children, rels, tree,
+                 instance, sentiment_scores: Optional[str] = None):
+        super().tree2mtx(node_scores, children, rels, tree, instance)
         assert np.sum(node_scores[-1, :]) == 0, \
-            "Scores of the root node are not equal 0."
+            "Scores of the root node do not equal 0."
         # node_scores[-1, :] = 1. / len(instance["polarity_scores"])
-        node_scores[-1, :] = instance["polarity_scores"]
+        node_scores[-1, :] = self._get_scores(instance, sentiment_scores)
 
     def _reset(self):
         """Remove members which cannot be serialized.
 
         """
         self._model._reset()
-        super(RDPAnalyzer, self)._reset()
+        super()._reset()
 
     def _restore(self, a_path):
         """Remove members which cannot be serialized.
 
         """
-        super(RDPAnalyzer, self)._restore(a_path)
+        super()._restore(a_path)
         self._model._restore()
