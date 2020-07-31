@@ -34,6 +34,8 @@ from ..r2n2 import R2N2Analyzer
 ##################################################################
 # Setup
 torch.set_printoptions(precision=8)
+# activate sanity checks in PyRo
+pyro.enable_validation()
 
 
 ##################################################################
@@ -143,6 +145,8 @@ class RDPAnalyzer(R2N2Analyzer):
             selected = False
             epoch_start = datetime.utcnow()
             train_loss = self._model.step(train_set)
+            print("X_train:", X_train)
+            print("Y_train[1]:", Y_train[1])
             self._model.predict(X_train, Y_train[1])
             train_macro_f1 = f1_score(Y_train[0], Y_train[1], average="macro")
             dev_loss = self._model.loss(X_dev)

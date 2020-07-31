@@ -205,6 +205,9 @@ class RDPModel(nn.Module):
                     if alpha is not None:
                         z_ij = pyro.sample(
                             "z_{}_{}".format(i, j), dist.Dirichlet(alpha))
+                        if torch.isnan(z_ij).any() or torch.isinf(z_ij).any():
+                            print("z_{}_{}:".format(i, j), z_ij)
+                            exit(66)
                         node_scores[inst_indices[alpha_indices], i] = z_ij
                         prnt_scores_i = node_scores[inst_indices, i]
             return node_scores[inst_indices, -1]
@@ -220,8 +223,13 @@ class RDPModel(nn.Module):
 
         """
         loss = 0.
-        for batch_j in data:
+        for j, batch_j in enumerate(data):
+            print("j:", j)
             loss += self._svi.step(*batch_j)
+            print("loss:", loss)
+            if (torch.isnan(self.alpha_guide.M.flatten()).any()
+                    or torch.isinf(self.alpha_guide.M.flatten()).any()):
+                exit(66)
         return loss
 
     def loss(self, x):
@@ -248,7 +256,6 @@ class RDPModel(nn.Module):
         n_instances = x[0].shape[0]
         self._resize_wbench(n_instances)
         self._test_wbench *= 0
-        # print("self._test_wbench:", repr(self._test_wbench))
         with poutine.block():
             with torch.no_grad():
                 for wbench_i in self._test_wbench:
@@ -272,7 +279,6 @@ class RDPModel(nn.Module):
         n_instances = x[0].shape[0]
         self._resize_wbench(n_instances)
         self._test_wbench *= 0
-        # print("self._test_wbench:", repr(self._test_wbench))
         with poutine.block():
             with torch.no_grad():
                 for wbench_i in self._test_wbench:
@@ -324,24 +330,13 @@ class RDPModel(nn.Module):
         """
         # relation transformation matrix
         M_mu = np.eye(self.n_polarities, dtype="float32")
-        M_mu[1, :] = [0., 0.3, 0.]
-        M_mu = np.tile(M_mu, (self.n_rels, 1)).reshape(
-            self.n_rels, self.n_polarities, self.n_polarities
-        )
-        # for rel, rel_idx in iteritems(self.rel2idx):
-        #     # swap axes for contrastive relations
-        #     if check_rel(rel, CONTRASTIVE_RELS):
-        #         mu_i = M_mu[rel_idx]
-        #         mu_i[[0, 2]] = mu_i[[2, 0]]
+        M_mu[1, 1] = 0.3
         M_mu = torch.tensor(M_mu)
-        M_sigma = torch.tensor(
-            np.ones((self.n_rels, self.n_polarities, self.n_polarities),
-                    dtype="float32")
-        )
+        M_sigma = torch.tensor(np.eye(self.n_polarities, dtype="float32"))
         # beta
-        beta_p = 5. * torch.tensor(np.ones((self.n_rels, self.n_polarities),
+        beta_p = 5. * torch.tensor(np.ones((1, self.n_polarities),
                                            dtype="float32"))
-        beta_q = 5. * torch.tensor(np.ones((self.n_rels, self.n_polarities),
+        beta_q = 5. * torch.tensor(np.ones((1, self.n_polarities),
                                            dtype="float32"))
         # z_epsilon
         z_epsilon_p = torch.tensor(1.)
@@ -402,10 +397,15 @@ class RDPModel(nn.Module):
           dict[str -> Dist]: dictionary of prior probabilities
 
         """
+        print(params["M_mu"])
         M = dist.Normal(params["M_mu"],
-                        self.softplus(params["M_sigma"])).independent(2)
+                        self.softplus(params["M_sigma"])).expand(
+                            [self.n_rels, self.n_polarities, self.n_polarities]
+                        ).to_event(2)
         beta = dist.Beta(self.softplus(params["beta_p"]),
-                         self.softplus(params["beta_q"])).independent(1)
+                         self.softplus(params["beta_q"])).expand(
+                            [self.n_rels, self.n_polarities]
+                            ).to_event(2)
         z_epsilon = dist.Beta(
             self.softplus(params["z_epsilon_p"]),
             self.softplus(params["z_epsilon_q"]))

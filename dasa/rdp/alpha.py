@@ -16,17 +16,16 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
+from sparsemax import Sparsemax
 import torch.nn as nn
 import torch
-
-from .sparsemax import Sparsemax
 
 
 ##################################################################
 # Classes
 class AlphaModel(nn.Module):
     def __init__(self, n_rels, n_polarities=3):
-        super(AlphaModel, self).__init__()
+        super().__init__()
         # create separate prior for every relation
         self.M = nn.Parameter(torch.ones(n_rels, n_polarities, n_polarities))
         self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
@@ -52,7 +51,7 @@ class AlphaModel(nn.Module):
         # Softmax
         # child_probs = self._softmax(child_probs)
         # Sparsemax
-        child_probs = self._sparsemax(child_probs)
+        child_probs = self._softmax(child_probs + 1e-2)
         # Custom Normalization
         # child_probs = self._normalize(child_probs)
         # We will only take a convex combination of the means if the parent
@@ -80,6 +79,14 @@ class AlphaModel(nn.Module):
             alpha = (1. - beta) * prnt_probs + beta * child_probs
             scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
             alpha *= scale
+        if torch.isnan(child_probs2copy).any():
+            print("alpha:", alpha)
+            print("M:", self.__class__.__name__, self.M)
+            print("nz_chld_indices:", nz_chld_indices)
+            print("child_probs:", child_probs)
+            print("prnt_probs:", prnt_probs)
+            print("child_probs2copy:", child_probs2copy)
+            exit(66)
         return copy_indices, child_probs2copy, alpha_indices, alpha
 
     def scale(self, prnt_probs, child_probs):

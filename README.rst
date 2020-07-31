@@ -675,3 +675,15 @@ References
 	  analysis. In 2013 International Conference on Asian Language
 	  Processing, IALP 2013, Urumqi, China, August 17-19, 2013 ,
 	  pages 121--124. IEEE.
+
+
+param = dict(
+    root='/home/sidorenko/Work/lab-results-conversion/nutrient-bag-ids+blacklisted',
+    data='/home/sidorenko/Work/lab-results-conversion/nutrient-bag-ids+blacklisted',
+    timestamp='2020-07-31',
+    interpolate='smooth',
+    whiten=False,
+    clean=None,
+    impute=None,
+    depth='any',
+    protos='/home/sidorenko/Work/lab-results-conversion/nutrient-bag-ids+blacklisted/protobufs')
