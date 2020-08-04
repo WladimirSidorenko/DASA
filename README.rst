@@ -680,7 +680,7 @@ References
 param = dict(
     root='/home/sidorenko/Work/lab-results-conversion/nutrient-bag-ids+blacklisted',
     data='/home/sidorenko/Work/lab-results-conversion/nutrient-bag-ids+blacklisted',
-    timestamp='2020-07-31',
+    timestamp='2020-08-04',
     interpolate='smooth',
     whiten=False,
     clean=None,

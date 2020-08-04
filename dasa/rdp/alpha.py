@@ -16,24 +16,80 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
+from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from sparsemax import Sparsemax
-import torch.nn as nn
+from torch.distributions import constraints, Beta, MultivariateNormal
+from torch.nn import Softmax
+import numpy as np
 import torch
 
 
 ##################################################################
 # Classes
-class AlphaModel(nn.Module):
+class AlphaModel(PyroModule):
     def __init__(self, n_rels, n_polarities=3):
         super().__init__()
+        self._n_rels = n_rels
+        self._n_polarities = n_polarities
+        self._sparsemax = Sparsemax(dim=-1)
+        self._softmax = Softmax(dim=-1)
+
+    @PyroParam(constraint=constraints.real)
+    def M_Mu(self):
+        Mu = np.eye(self._n_polarities, dtype="float32")
+        Mu[1, 1] = 0.3
+        Mu = np.tile(Mu, (self.n_rels, 1)).reshape(
+                self._n_rels, self._n_polarities, self._n_polarities
+        )
+        return torch.tensor(Mu)
+
+    @PyroParam
+    def M_Sigma(self):
+        return torch.tensor(np.eye(self._n_polarities, dtype="float32"))
+
+    @PyroSample
+    def M(self):
+        return MultivariateNormal(self.M_Mu, self.M_Sigma)
+
+    @PyroParam
+    def beta_p(self):
+        return 5. * torch.tensor(
+            np.ones((1, self.n_polarities), dtype="float32")
+        )
+
+    @PyroParam
+    def beta_q(self):
+        return 5. * torch.tensor(
+            np.ones((1, self.n_polarities), dtype="float32")
+        )
+
+    @PyroSample
+    def beta(self):
+        return Beta(self.beta_p, self.beta_q).expand(
+                            [self.n_rels, self.n_polarities]
+                            ).to_event(2)
+
+    @PyroParam
+    def beta_p(self):
+        return 5. * torch.tensor(
+            np.ones((1, self.n_polarities), dtype="float32")
+        )
+
+    @PyroParam
+    def beta_q(self):
+        return 5. * torch.tensor(
+            np.ones((1, self.n_polarities), dtype="float32")
+        )
+
+    @PyroSample
+    def beta(self):
+        raise NotImplementedError
+
         # create separate prior for every relation
-        self.M = nn.Parameter(torch.ones(n_rels, n_polarities, n_polarities))
         self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
         self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
         self.scale_factor = nn.Parameter(torch.tensor(21.))
         self._min_sum = torch.tensor(1e-10)
-        self._sparsemax = Sparsemax(dim=-1)
-        self._softmax = nn.Softmax(dim=-1)
 
     def forward(self, var_sfx, prnt_probs, child_probs, rels):
         # The vector `nz_chld_indices` will contain indices of the child_probs
@@ -45,15 +101,11 @@ class AlphaModel(nn.Module):
         # `child_probs` are not zero.
         child_probs = child_probs[nz_chld_indices].unsqueeze_(-1)
         rels = rels[nz_chld_indices]
-        child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
         # Batch-multiply the remaining child scores with relation matrices (M).
-        # Three different normalization variants:
-        # Softmax
-        # child_probs = self._softmax(child_probs)
-        # Sparsemax
-        child_probs = self._softmax(child_probs + 1e-2)
+        child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
+        # Normalize child probabilities:
+        child_probs = self._softmax(child_probs)
         # Custom Normalization
-        # child_probs = self._normalize(child_probs)
         # We will only take a convex combination of the means if the parent
         # probs are also non-zero, otherwise we will assign the child probs to
         # the parents unchanged.
@@ -103,20 +155,3 @@ class AlphaModel(nn.Module):
         cos = 0.1 + cos / norm
         scale = self.scale_factor * cos / entropy
         return scale
-
-    def _normalize(self, probs):
-        """Normalize probabilities.
-
-        Args:
-          probs (torch.tensor): unnormalized probabilities
-
-        """
-        min_correction = torch.min(probs, dim=1, keepdim=True)[0] - 0.1
-        probs -= min_correction
-        probs /= torch.clamp(probs.sum(dim=1, keepdim=True),
-                             min=self._min_sum)
-        return probs
-
-
-class AlphaGuide(AlphaModel):
-    pass

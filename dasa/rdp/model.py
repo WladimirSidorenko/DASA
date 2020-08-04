@@ -18,6 +18,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from builtins import range
 from copy import deepcopy
+from pyro.contrib.autoguide import AutoDelta
 from pyro.infer import SVI, Trace_ELBO
 from pyro.optim import RMSprop
 from six import iteritems, string_types
@@ -28,7 +29,7 @@ import pyro.poutine as poutine
 import torch.nn as nn
 import torch
 
-from .alpha import AlphaGuide, AlphaModel
+from .alpha import AlphaModel
 # from ..constants import CONTRASTIVE_RELS
 from ..dl import OPTIM_PARAM
 from ..utils import LOGGER
@@ -90,12 +91,9 @@ class RDPModel(nn.Module):
         self._test_wbench = np.empty((self._test_epochs,
                                       self._max_test_instances,
                                       self.n_polarities))
-        self.softplus = nn.Softplus()
         # initialize internal models
         self.alpha_model = AlphaModel(self.n_rels)
-        self._alpha_model_priors = None
-        self.alpha_guide = AlphaGuide(self.n_rels)
-        self._alpha_guide_prior_params = None
+        self.alpha_guide = AutoDelta(self.alpha_model)
         self._param_store = pyro.get_param_store()
         self._best_params = None
         self._svi = SVI(self.model, self.guide, optim=RMSprop(OPTIM_PARAM),
@@ -331,7 +329,11 @@ class RDPModel(nn.Module):
         # relation transformation matrix
         M_mu = np.eye(self.n_polarities, dtype="float32")
         M_mu[1, 1] = 0.3
-        M_mu = torch.tensor(M_mu)
+        M_mu = torch.tensor(
+            np.tile(M_mu, (self.n_rels, 1)).reshape(
+                self.n_rels, self.n_polarities, self.n_polarities
+            )
+        )
         M_sigma = torch.tensor(np.eye(self.n_polarities, dtype="float32"))
         # beta
         beta_p = 5. * torch.tensor(np.ones((1, self.n_polarities),
@@ -347,46 +349,6 @@ class RDPModel(nn.Module):
                 "beta_q": beta_q, "z_epsilon_p": z_epsilon_p,
                 "z_epsilon_q": z_epsilon_q, "scale_factor": scale_factor}
 
-    def _get_model_priors(self):
-        """Initialize priors for alpha model.
-
-        Returns:
-          dict: dictionary of priors
-
-        """
-        if self._alpha_model_priors:
-            return self._alpha_model_priors
-        # sample the variables from their corresponding distributions
-        params = self._get_prior_params()
-        self._alpha_model_priors = self._params2probs(params)
-        return self._alpha_model_priors
-
-    def _get_guide_priors(self):
-        """Initialize priors for alpha guide.
-
-        Args:
-          guide_mode (bool): create priors for guide (i.e., wrap relevant
-            parameters into `pyro.param`)
-
-        Returns:
-          dict: dictionary of priors
-
-        """
-        if not self._alpha_guide_prior_params:
-            # create initial parameters
-            params = self._get_prior_params()
-            # register all parameters in pyro
-            for p, v in iteritems(params):
-                pyro.param(p, v)
-            self._alpha_guide_prior_params = dict(
-                self._param_store.named_parameters()
-            )
-        else:
-            # register all parameters in pyro
-            for p, v in iteritems(self._alpha_guide_prior_params):
-                pyro.param(p, v)
-        return self._params2probs(self._alpha_guide_prior_params)
-
     def _params2probs(self, params):
         """Convert parameters to probability distributions.
 
@@ -398,10 +360,9 @@ class RDPModel(nn.Module):
 
         """
         print(params["M_mu"])
-        M = dist.Normal(params["M_mu"],
-                        self.softplus(params["M_sigma"])).expand(
-                            [self.n_rels, self.n_polarities, self.n_polarities]
-                        ).to_event(2)
+        M = dist.MultivariateNormal(
+            params["M_mu"], self.softplus(params["M_sigma"])
+        ).independent(2)
         beta = dist.Beta(self.softplus(params["beta_p"]),
                          self.softplus(params["beta_q"])).expand(
                             [self.n_rels, self.n_polarities]
