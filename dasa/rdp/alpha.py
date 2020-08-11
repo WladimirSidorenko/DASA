@@ -18,13 +18,17 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from sparsemax import Sparsemax
-from torch.distributions import constraints, Beta, MultivariateNormal
+from torch import tensor
+from torch.distributions import (
+    constraints, Beta, Chi2, Categorical, Dirichlet, MultivariateNormal
+)
 from torch.nn import Softmax
 import numpy as np
+import pyro
 import torch
 
 
-##################################################################
+################################es##################################
 # Classes
 class AlphaModel(PyroModule):
     def __init__(self, n_rels, n_polarities=3):
@@ -35,63 +39,110 @@ class AlphaModel(PyroModule):
         self._softmax = Softmax(dim=-1)
 
     @PyroParam(constraint=constraints.real)
-    def M_Mu(self):
+    def _M_Mu(self):
         Mu = np.eye(self._n_polarities, dtype="float32")
         Mu[1, 1] = 0.3
         Mu = np.tile(Mu, (self.n_rels, 1)).reshape(
                 self._n_rels, self._n_polarities, self._n_polarities
         )
-        return torch.tensor(Mu)
+        return tensor(Mu)
 
     @PyroParam
-    def M_Sigma(self):
-        return torch.tensor(np.eye(self._n_polarities, dtype="float32"))
+    def _M_Sigma(self):
+        return tensor(np.eye(self._n_polarities, dtype="float32"))
 
     @PyroSample
     def M(self):
-        return MultivariateNormal(self.M_Mu, self.M_Sigma)
+        return MultivariateNormal(self._M_Mu, self._M_Sigma)
 
-    @PyroParam
-    def beta_p(self):
-        return 5. * torch.tensor(
-            np.ones((1, self.n_polarities), dtype="float32")
-        )
+    @PyroParam(constraint=constraints.positive)
+    def _beta_p(self):
+        return 5. * tensor(np.ones((1, self.n_polarities), dtype="float32"))
 
-    @PyroParam
-    def beta_q(self):
-        return 5. * torch.tensor(
-            np.ones((1, self.n_polarities), dtype="float32")
-        )
+    @PyroParam(constraint=constraints.positive)
+    def _beta_q(self):
+        return 5. * tensor(np.ones((1, self.n_polarities), dtype="float32"))
 
     @PyroSample
     def beta(self):
-        return Beta(self.beta_p, self.beta_q).expand(
+        return Beta(self._beta_p, self._beta_q).expand(
                             [self.n_rels, self.n_polarities]
                             ).to_event(2)
 
-    @PyroParam
-    def beta_p(self):
-        return 5. * torch.tensor(
-            np.ones((1, self.n_polarities), dtype="float32")
-        )
+    @PyroParam(constraint=constraints.positive)
+    def _z_p(self):
+        return tensor(1.)
 
-    @PyroParam
-    def beta_q(self):
-        return 5. * torch.tensor(
-            np.ones((1, self.n_polarities), dtype="float32")
-        )
+    @PyroParam(constraint=constraints.positive)
+    def _z_q(self):
+        return tensor(15.)
 
     @PyroSample
-    def beta(self):
-        raise NotImplementedError
+    def z(self):
+        raise Beta(self._z_p, self._z_q)
 
-        # create separate prior for every relation
-        self.beta = nn.Parameter(torch.ones(n_rels, n_polarities))
-        self.z_epsilon = nn.Parameter(torch.tensor(1e-2))
-        self.scale_factor = nn.Parameter(torch.tensor(21.))
-        self._min_sum = torch.tensor(1e-10)
+    @PyroParam(constraint=constraints.positive)
+    def _scale_factor(self):
+        return tensor(34.)
 
-    def forward(self, var_sfx, prnt_probs, child_probs, rels):
+    @PyroSample
+    def scale_factor(self):
+        return Chi2(self._scale_factor)
+
+    def forward(self, x, y):
+        """Perform inference on a single batch.
+
+        """
+        # unpack x
+        node_scores, children, rels, labels = x
+        # work on a copy of node scores in order not to affect the original
+        # training set
+        node_scores = node_scores.clone()
+        # figure-out batch dimensions
+        # number of instances
+        n_instances = node_scores.shape[0]
+        # maximum tree depth
+        max_t = node_scores.shape[1]
+        # maximum tree width
+        max_children = children.shape[-1]
+        # iterate over each instance of the batch
+        with pyro.plate("batch", size=n_instances) as inst_indices:
+            # iterate over each node of the tree in the bottom-up fashion
+            for i in range(max_t):
+                prnt_scores_i = node_scores[inst_indices, i]
+                rels_i = rels[inst_indices, i]
+                child_scores_i = self._get_child_scores(
+                    node_scores, children, inst_indices, i,
+                    n_instances, max_children
+                )
+                for j in range(max_children):
+                    child_scores_ij = child_scores_i[inst_indices, j]
+                    var_sfx = "{}_{}".format(i, j)
+                    copy_indices, probs2copy, alpha_indices, alpha = \
+                        self._forward_node(
+                            var_sfx, prnt_scores_i,
+                            child_scores_ij, rels_i[inst_indices, j]
+                        )
+                    if probs2copy is not None:
+                        node_scores[inst_indices[copy_indices], i] = probs2copy
+                    if alpha is not None:
+                        z_ij = pyro.sample(
+                            "z_{}_{}".format(i, j), Dirichlet(alpha))
+                        node_scores[inst_indices[alpha_indices], i] = z_ij
+                        prnt_scores_i = node_scores[inst_indices, i]
+            z_ij = node_scores[inst_indices, -1]
+            y = pyro.sample("y", Categorical(z_ij), obs=labels[inst_indices])
+        return y
+
+    def _forward_node(self, var_sfx: str, prnt_probs: tensor,
+                      child_probs, rels):
+        """Update probability scores for a single node in the discourse tree.
+
+        Args:
+          var_sfx (str): suffix of variable names (corresponds to node index in
+            the tree)
+
+        """
         # The vector `nz_chld_indices` will contain indices of the child_probs
         # which are not zero.
         nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
@@ -140,6 +191,16 @@ class AlphaModel(PyroModule):
             print("child_probs2copy:", child_probs2copy)
             exit(66)
         return copy_indices, child_probs2copy, alpha_indices, alpha
+
+    def _get_child_scores(self, node_scores, children, inst_indices, i,
+                          n_instances, max_children):
+        child_indices = children[inst_indices, i].reshape(-1)
+        inst_indices.repeat(max_children, 1).t().reshape(-1)
+        child_scores = node_scores[
+            inst_indices.repeat(max_children, 1).t().reshape(-1),
+            child_indices
+        ].reshape(n_instances, max_children, -1)
+        return child_scores
 
     def scale(self, prnt_probs, child_probs):
         z = torch.clamp(prnt_probs + child_probs, min=self.z_epsilon.item())
