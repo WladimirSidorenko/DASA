@@ -89,12 +89,10 @@ class AlphaModel(PyroModule):
     def scale_factor(self):
         return Chi2(self._scale_factor)
 
-    def forward(self, x, y):
+    def forward(self, node_scores, children, rels, labels):
         """Perform inference on a single batch.
 
         """
-        # unpack x
-        node_scores, children, rels, labels = x
         # work on a copy of node scores in order not to affect the original
         # training set
         node_scores = node_scores.clone()
