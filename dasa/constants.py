@@ -32,7 +32,7 @@ LAST = "last"
 ROOT = "root"
 R2N2 = "r2n2"
 DDR = "ddr"
-RDP = "rdp"
+RDM = "rdm"
 WANG = "wang"
 NO_DISCOURSE = "no-discourse"
 

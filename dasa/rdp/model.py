@@ -16,14 +16,12 @@ Attributes:
 # Imports
 from __future__ import absolute_import, print_function, unicode_literals
 
-from builtins import range
 from copy import deepcopy
 from pyro.contrib.autoguide import AutoDelta
 from pyro.infer import SVI, Trace_ELBO
 from pyro.optim import RMSprop
 import numpy as np
 import pyro
-import pyro.distributions as dist
 import pyro.poutine as poutine
 import torch.nn as nn
 import torch
@@ -64,7 +62,7 @@ def check_rel(rel, rel_set):
 
 ##################################################################
 # Class
-class RDPModel(nn.Module):
+class RDModel(nn.Module):
     """Network for predicting tweet sentiment using variational inference.
 
     """
@@ -77,7 +75,7 @@ class RDPModel(nn.Module):
           n_polarities (int): number of polarities to predict
 
         """
-        super(RDPModel, self).__init__()
+        super().__init__()
         # initialize mapping from relations to indices
         self._logger = LOGGER
         self._rel2idx = {rel_i: i for i, rel_i in enumerate(rels, 1)}
@@ -221,7 +219,6 @@ class RDPModel(nn.Module):
         """
         self._logger.info("Parameters before saving.")
         self.inspect_state()
-        self._alpha_guide_prior_params = None
         self._param_store = None
         self._logger = None
 
@@ -232,6 +229,3 @@ class RDPModel(nn.Module):
         self._logger = LOGGER
         self._param_store = pyro.get_param_store()
         self.set_state(self.best_params)
-        self._alpha_guide_prior_params = dict(
-            self._param_store.named_parameters()
-        )

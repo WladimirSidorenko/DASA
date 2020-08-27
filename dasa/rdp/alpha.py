@@ -28,7 +28,7 @@ import pyro
 import torch
 
 
-################################es##################################
+##################################################################
 # Classes
 class AlphaModel(PyroModule):
     def __init__(self, n_rels, n_polarities=3):
@@ -37,31 +37,29 @@ class AlphaModel(PyroModule):
         self._n_polarities = n_polarities
         self._sparsemax = Sparsemax(dim=-1)
         self._softmax = Softmax(dim=-1)
+        self._set_M_params()
+        self._set_beta_params()
+        self._set_z_params()
 
-    @PyroParam(constraint=constraints.real)
-    def _M_Mu(self):
+    def _set_M_params(self):
         Mu = np.eye(self._n_polarities, dtype="float32")
         Mu[1, 1] = 0.3
-        Mu = np.tile(Mu, (self.n_rels, 1)).reshape(
+        Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
                 self._n_rels, self._n_polarities, self._n_polarities
         )
-        return tensor(Mu)
-
-    @PyroParam
-    def _M_Sigma(self):
-        return tensor(np.eye(self._n_polarities, dtype="float32"))
+        self.M_Mu = PyroParam(tensor(Mu))
+        self.M_Sigma = PyroParam(tensor(np.eye(self._n_polarities,
+                                               dtype="float32")))
 
     @PyroSample
     def M(self):
-        return MultivariateNormal(self._M_Mu, self._M_Sigma)
+        return MultivariateNormal(self.M_Mu, self.M_Sigma)
 
-    @PyroParam(constraint=constraints.positive)
-    def _beta_p(self):
-        return 5. * tensor(np.ones((1, self.n_polarities), dtype="float32"))
-
-    @PyroParam(constraint=constraints.positive)
-    def _beta_q(self):
-        return 5. * tensor(np.ones((1, self.n_polarities), dtype="float32"))
+    def _set_beta_params(self):
+        self._beta_p = 5. * tensor(np.ones((1, self.n_polarities),
+                                           dtype="float32"))
+        self._beta_q = 5. * tensor(np.ones((1, self.n_polarities),
+                                           dtype="float32"))
 
     @PyroSample
     def beta(self):

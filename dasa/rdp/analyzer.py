@@ -7,7 +7,7 @@
 recursive Dirichlet process.
 
 Attributes:
-  RDPAnalyzer (class): class for predicting polarity of a tweet using
+  RDAnalyzer (class): class for predicting polarity of a tweet using
     a recursive Dirichlet process
 
 """
@@ -25,7 +25,7 @@ import numpy as np
 import pyro
 import torch
 
-from .model import RDPModel
+from .model import RDModel
 from ..constants import IDX2CLS
 from ..dl import N_EPOCHS
 from ..r2n2 import R2N2Analyzer
@@ -40,13 +40,13 @@ pyro.enable_validation()
 
 ##################################################################
 # Class
-class RDPAnalyzer(R2N2Analyzer):
+class RDAnalyzer(R2N2Analyzer):
     """Discourse-aware sentiment analysis using variational inference.
 
     Attributes:
 
     """
-    _name = "RDP"
+    _name = "RD"
 
     def __init__(self, relation_scheme: str, sentiment_scores: str,
                  n_classes: int):
@@ -111,7 +111,7 @@ class RDPAnalyzer(R2N2Analyzer):
 
         """
         rels = self.get_rels(forrest)
-        self._model = RDPModel(rels)
+        self._model = RDModel(rels)
 
     def _init_wbenches(self):
         super()._init_wbenches()
