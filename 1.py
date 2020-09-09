@@ -5,9 +5,7 @@
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from scipy.special import softmax
 from torch import tensor
-from pyro.distributions import (
-    MultivariateNormal
-)
+from pyro.distributions import (MultivariateNormal)
 from torch.nn import Softmax
 import numpy as np
 import pyro
@@ -29,25 +27,49 @@ class AlphaModel(PyroModule):
         Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
                 self._n_rels, self._n_polarities, self._n_polarities
         )
+        print("Mu", Mu, Mu.shape)
         return tensor(Mu)
 
     @PyroParam
     def M_Sigma(self):
-        return tensor(np.eye(self._n_polarities, dtype="float32"))
+        Sigma = np.eye(self._n_polarities, dtype="float32")
+        print("Sigma", Sigma, Sigma.shape)
+        return tensor(Sigma)
 
     @PyroSample
     def M(self):
-        return MultivariateNormal(self.M_Mu, self.M_Sigma)
+        M = MultivariateNormal(self.M_Mu, self.M_Sigma)
+        print("M.batch_shape", M.batch_shape)
+        print("M.event_shape", M.event_shape)
+        return M
 
     def _get_child_scores(self, node_scores, children, inst_indices, i,
                           n_instances, max_children):
         child_indices = children[inst_indices, i].reshape(-1)
-        inst_indices.repeat(max_children, 1).t().reshape(-1)
+        print("child_indices:", child_indices)
         child_scores = node_scores[
             inst_indices.repeat(max_children, 1).t().reshape(-1),
             child_indices
         ].reshape(n_instances, max_children, -1)
+        print("* child_indices:", child_indices)
         return child_scores
+
+    def _forward_node(self, var_sfx: str, prnt_probs: tensor,
+                      child_probs, rels):
+        # The vector `nz_chld_indices` will contain indices of the child_probs
+        # which are not zero.
+        nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
+        if nz_chld_indices.nelement() == 0:
+            return None, None, None, None
+        # Only leave `parent`, `child`, and `rels` elements for which
+        # `child_probs` are not zero.
+        child_probs = child_probs[nz_chld_indices]
+        print("nz_child_probs:", child_probs)
+        rels = rels[nz_chld_indices]
+        print("nz_rels:", rels)
+        print("M:", self.M)
+        # print("M[nz_rels]:", self.M[rels])
+        raise NotImplementedError
 
     def forward(self, node_scores, children, rels, labels):
         n_instances = node_scores.shape[0]
@@ -65,6 +87,18 @@ class AlphaModel(PyroModule):
                     node_scores, children, inst_indices, i,
                     n_instances, max_width
                 )
+                print("child_scores_i:", child_scores_i)
+                for j in range(max_width):
+                    child_scores_ij = child_scores_i[inst_indices, j]
+                    print("child_scores_ij:", child_scores_ij)
+                    var_sfx = "{}_{}".format(i, j)
+                    print("var_sfx:", var_sfx)
+                    copy_indices, probs2copy, alpha_indices, alpha = \
+                        self._forward_node(
+                            var_sfx, prnt_scores_i,
+                            child_scores_ij, rels_i[inst_indices, j]
+                        )
+
         return self.M
 
 
@@ -77,8 +111,8 @@ node_scores[1][0] = 0.
 print("node_scores", node_scores)
 
 children = np.zeros(node_scores.shape, dtype=np.int32)
-children[0][-1] = [1, 2, 3]
-children[1, [2, 3, 4, 5], 0] = 1
+children[0][-1] = [2, 3, 4]
+children[1, [2, 3, 4, 5], 0] = [1, 2, 3, 4]
 print("children", children)
 
 rels = np.zeros(node_scores.shape, dtype=np.int32)

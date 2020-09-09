@@ -19,7 +19,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from sparsemax import Sparsemax
 from torch import tensor
-from torch.distributions import (
+from pyro.distributions import (
     constraints, Beta, Chi2, Categorical, Dirichlet, MultivariateNormal
 )
 from torch.nn import Softmax
@@ -35,49 +35,50 @@ class AlphaModel(PyroModule):
         super().__init__()
         self._n_rels = n_rels
         self._n_polarities = n_polarities
-        self._sparsemax = Sparsemax(dim=-1)
         self._softmax = Softmax(dim=-1)
-        self._set_M_params()
-        self._set_beta_params()
-        self._set_z_params()
 
-    def _set_M_params(self):
+    @PyroParam
+    def M_Mu(self):
         Mu = np.eye(self._n_polarities, dtype="float32")
         Mu[1, 1] = 0.3
         Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
                 self._n_rels, self._n_polarities, self._n_polarities
         )
-        self.M_Mu = PyroParam(tensor(Mu))
-        self.M_Sigma = PyroParam(tensor(np.eye(self._n_polarities,
-                                               dtype="float32")))
+        return tensor(Mu)
+
+    @PyroParam
+    def M_Sigma(self):
+        return tensor(np.eye(self._n_polarities, dtype="float32"))
 
     @PyroSample
     def M(self):
         return MultivariateNormal(self.M_Mu, self.M_Sigma)
 
-    def _set_beta_params(self):
-        self._beta_p = 5. * tensor(np.ones((1, self.n_polarities),
-                                           dtype="float32"))
-        self._beta_q = 5. * tensor(np.ones((1, self.n_polarities),
-                                           dtype="float32"))
+    @PyroParam
+    def beta_p(self):
+        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
+
+    @PyroParam
+    def beta_q(self):
+        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
 
     @PyroSample
     def beta(self):
-        return Beta(self._beta_p, self._beta_q).expand(
-                            [self.n_rels, self.n_polarities]
+        return Beta(self.beta_p, self.beta_q).expand(
+                            [self.n_rels, self._n_polarities]
                             ).to_event(2)
 
     @PyroParam(constraint=constraints.positive)
-    def _z_p(self):
+    def z_p(self):
         return tensor(1.)
 
     @PyroParam(constraint=constraints.positive)
-    def _z_q(self):
+    def z_q(self):
         return tensor(15.)
 
     @PyroSample
     def z(self):
-        raise Beta(self._z_p, self._z_q)
+        raise Beta(self.z_p, self.z_q)
 
     @PyroParam(constraint=constraints.positive)
     def _scale_factor(self):
@@ -98,20 +99,21 @@ class AlphaModel(PyroModule):
         # number of instances
         n_instances = node_scores.shape[0]
         # maximum tree depth
-        max_t = node_scores.shape[1]
+        max_depth = node_scores.shape[1]
         # maximum tree width
-        max_children = children.shape[-1]
+        max_width = children.shape[-1]
         # iterate over each instance of the batch
         with pyro.plate("batch", size=n_instances) as inst_indices:
+            print("inst_indices:", inst_indices)
             # iterate over each node of the tree in the bottom-up fashion
-            for i in range(max_t):
+            for i in range(max_depth):
                 prnt_scores_i = node_scores[inst_indices, i]
                 rels_i = rels[inst_indices, i]
                 child_scores_i = self._get_child_scores(
                     node_scores, children, inst_indices, i,
-                    n_instances, max_children
+                    n_instances, max_width
                 )
-                for j in range(max_children):
+                for j in range(max_width):
                     child_scores_ij = child_scores_i[inst_indices, j]
                     var_sfx = "{}_{}".format(i, j)
                     copy_indices, probs2copy, alpha_indices, alpha = \
@@ -149,6 +151,10 @@ class AlphaModel(PyroModule):
         child_probs = child_probs[nz_chld_indices].unsqueeze_(-1)
         rels = rels[nz_chld_indices]
         # Batch-multiply the remaining child scores with relation matrices (M).
+        print("child_probs:", child_probs)
+        print("self.M:", self.M)
+        print("rels:", rels)
+        print("self.M[rels]:", self.M[rels])
         child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
         # Normalize child probabilities:
         child_probs = self._softmax(child_probs)
