@@ -17,7 +17,6 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
-from sparsemax import Sparsemax
 from torch import tensor
 from pyro.distributions import (
     constraints, Beta, Chi2, Categorical, Dirichlet, MultivariateNormal
@@ -39,11 +38,14 @@ class AlphaModel(PyroModule):
 
     @PyroParam
     def M_Mu(self):
-        Mu = np.eye(self._n_polarities, dtype="float32")
-        Mu[1, 1] = 0.3
-        Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
-                self._n_rels, self._n_polarities, self._n_polarities
-        )
+        Mu = np.ones((self._n_polarities, self._n_polarities),
+                     dtype="float32")
+        # Mu[1, 1] = 0.3
+        Mu = np.tile(Mu, (self._n_rels, 1))
+        Mu = Mu.reshape(self._n_rels, self._n_polarities,
+                        1, self._n_polarities)
+        Mu *= np.expand_dims(np.arange(self._n_rels), (-3, -2, -1))
+        print(Mu)
         return tensor(Mu)
 
     @PyroParam
@@ -152,9 +154,11 @@ class AlphaModel(PyroModule):
         rels = rels[nz_chld_indices]
         # Batch-multiply the remaining child scores with relation matrices (M).
         print("child_probs:", child_probs)
-        print("self.M:", self.M)
         print("rels:", rels)
+        print("self.M:", self.M)
         print("self.M[rels]:", self.M[rels])
+        print("self.M.shape:", self.M.shape)
+        exit(66)
         child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
         # Normalize child probabilities:
         child_probs = self._softmax(child_probs)
