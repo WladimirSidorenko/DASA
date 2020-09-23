@@ -23,11 +23,13 @@ class AlphaModel(PyroModule):
     @PyroParam
     def M_Mu(self):
         Mu = np.eye(self._n_polarities, dtype="float32")
-        Mu[1, 1] = 0.3
+        # Mu[1, 1] = 0.3
         Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
-                self._n_rels, self._n_polarities, self._n_polarities
+                self._n_rels, self._n_polarities, 1, self._n_polarities
         )
         print("Mu", Mu, Mu.shape)
+        Mu *= np.arange(self._n_rels).reshape(self._n_rels, 1, 1, 1)
+        print("*Mu", Mu, Mu.shape)
         return tensor(Mu)
 
     @PyroParam
@@ -39,6 +41,7 @@ class AlphaModel(PyroModule):
     @PyroSample
     def M(self):
         M = MultivariateNormal(self.M_Mu, self.M_Sigma)
+        print("M", M, list(M.batch_shape))
         print("M.batch_shape", M.batch_shape)
         print("M.event_shape", M.event_shape)
         return M
@@ -59,16 +62,17 @@ class AlphaModel(PyroModule):
         # The vector `nz_chld_indices` will contain indices of the child_probs
         # which are not zero.
         nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
+        print("nz_chld_indices:", nz_chld_indices)
         if nz_chld_indices.nelement() == 0:
             return None, None, None, None
         # Only leave `parent`, `child`, and `rels` elements for which
         # `child_probs` are not zero.
         child_probs = child_probs[nz_chld_indices]
-        print("nz_child_probs:", child_probs)
+        print("* child_probs:", child_probs)
         rels = rels[nz_chld_indices]
         print("nz_rels:", rels)
         print("M:", self.M)
-        # print("M[nz_rels]:", self.M[rels])
+        print("M[nz_rels]:", self.M[rels])
         raise NotImplementedError
 
     def forward(self, node_scores, children, rels, labels):
@@ -80,25 +84,28 @@ class AlphaModel(PyroModule):
             for i in range(max_depth):
                 print("i:", i)
                 prnt_scores_i = node_scores[inst_indices, i]
-                print("prnt_scores_i:", prnt_scores_i)
+                print("prnt_scores[{}]:".format(i), prnt_scores_i)
                 rels_i = rels[inst_indices, i]
-                print("rels_i:", rels_i)
+                print("rels[i]:".format(i), rels_i)
                 child_scores_i = self._get_child_scores(
                     node_scores, children, inst_indices, i,
                     n_instances, max_width
                 )
-                print("child_scores_i:", child_scores_i)
+                print("child_scores[{}]:".format(i), child_scores_i)
                 for j in range(max_width):
                     child_scores_ij = child_scores_i[inst_indices, j]
-                    print("child_scores_ij:", child_scores_ij)
+                    print("child_scores[{}, {}]:".format(i, j),
+                          child_scores_ij)
                     var_sfx = "{}_{}".format(i, j)
-                    print("var_sfx:", var_sfx)
                     copy_indices, probs2copy, alpha_indices, alpha = \
                         self._forward_node(
                             var_sfx, prnt_scores_i,
                             child_scores_ij, rels_i[inst_indices, j]
                         )
-
+                    print("copy_indices", copy_indices)
+                    print("probs2copy", probs2copy)
+                    print("alpha_indices", alpha_indices)
+                    print("alpha", alpha)
         return self.M
 
 
@@ -121,5 +128,5 @@ rels[1, [2, 3, 4, 5], 0] = 2
 print("rels", rels)
 
 labels = np.array([0, 1], dtype=np.int32)
-print("labels", rels)
+print("labels", labels)
 print("a():", a(node_scores, children, rels, labels))
