@@ -71,8 +71,9 @@ class AlphaModel(PyroModule):
         print("* child_probs:", child_probs)
         rels = rels[nz_chld_indices]
         print("nz_rels:", rels)
-        print("M:", self.M)
-        print("M[nz_rels]:", self.M[rels])
+        print("M:", self.M, self.M.shape)
+        M_nz_rels = self.M[rels, :, nz_chld_indices, :].squeeze(1)
+        print("M[nz_rels]:", M_nz_rels, M_nz_rels.shape)
         raise NotImplementedError
 
     def forward(self, node_scores, children, rels, labels):
