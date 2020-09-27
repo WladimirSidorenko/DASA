@@ -5,10 +5,11 @@
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from scipy.special import softmax
 from torch import tensor
-from pyro.distributions import (MultivariateNormal)
+from pyro.distributions import (Beta, MultivariateNormal)
 from torch.nn import Softmax
 import numpy as np
 import pyro
+import torch
 
 
 ##################################################################
@@ -46,6 +47,20 @@ class AlphaModel(PyroModule):
         print("M.event_shape", M.event_shape)
         return M
 
+    @PyroParam
+    def beta_p(self):
+        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
+
+    @PyroParam
+    def beta_q(self):
+        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
+
+    @PyroSample
+    def beta(self):
+        return Beta(self.beta_p, self.beta_q).expand(
+                            [self._n_rels, self._n_polarities]
+                            ).to_event(2)
+
     def _get_child_scores(self, node_scores, children, inst_indices, i,
                           n_instances, max_children):
         child_indices = children[inst_indices, i].reshape(-1)
@@ -67,14 +82,49 @@ class AlphaModel(PyroModule):
             return None, None, None, None
         # Only leave `parent`, `child`, and `rels` elements for which
         # `child_probs` are not zero.
-        child_probs = child_probs[nz_chld_indices]
+        child_probs = child_probs[nz_chld_indices].unsqueeze(1)
         print("* child_probs:", child_probs)
         rels = rels[nz_chld_indices]
         print("nz_rels:", rels)
         print("M:", self.M, self.M.shape)
-        M_nz_rels = self.M[rels, :, nz_chld_indices, :].squeeze(1)
+        M_nz_rels = self.M[rels, :, nz_chld_indices, :]
         print("M[nz_rels]:", M_nz_rels, M_nz_rels.shape)
-        raise NotImplementedError
+        M_nz_rels = M_nz_rels.reshape(
+            -1, self._n_polarities, self._n_polarities
+        )
+        print("* M[nz_rels]:", M_nz_rels, M_nz_rels.shape)
+        print("* child_probs:", child_probs, child_probs.shape)
+        child_probs = torch.bmm(child_probs, M_nz_rels)
+        print("++ child_probs:", child_probs)
+        child_probs = self._softmax(child_probs)
+        print("^^ child_probs:", child_probs)
+        prnt_probs = prnt_probs[nz_chld_indices]
+        prnt_probs_sum = prnt_probs.sum(dim=-1)
+        z_prnt_indices = (prnt_probs_sum == 0.).nonzero().squeeze_(-1)
+        print("z_prnt_indices:", z_prnt_indices)
+        # indices of instances whose child scores are non-zero, but parent
+        # scores are zero
+        copy_indices = nz_chld_indices[z_prnt_indices]
+        child_probs2copy = child_probs[z_prnt_indices]
+        nz_prnt_indices = prnt_probs_sum.nonzero().squeeze(-1)
+        print("rels:", rels)
+        print("nz_prnt_indices:", nz_prnt_indices)
+        alpha_indices = nz_chld_indices[nz_prnt_indices]
+        print("alpha_indices:", alpha_indices)
+        if alpha_indices.nelement() == 0:
+            alpha = None
+        else:
+            child_probs = child_probs[nz_prnt_indices]
+            prnt_probs = prnt_probs[nz_prnt_indices]
+            rels = rels[nz_prnt_indices]
+            # take a convex combination of the parent and child scores as new
+            # values for alpha and scale the resulting alpha scores with the
+            # corresponding scale factor.
+            beta = self.beta[rels]
+            alpha = (1. - beta) * prnt_probs + beta * child_probs
+            scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
+            alpha *= scale
+        return copy_indices, child_probs2copy, alpha_indices, alpha
 
     def forward(self, node_scores, children, rels, labels):
         n_instances = node_scores.shape[0]
@@ -112,7 +162,10 @@ class AlphaModel(PyroModule):
 
 a = AlphaModel(6, 3)
 
-node_scores = tensor(softmax(np.random.uniform(0, 1, (2, 6, 3)), -1))
+node_scores = tensor(
+    softmax(
+        np.random.uniform(0, 1, (2, 6, 3)), -1)
+).to(torch.float32)
 node_scores[0][0] = 0.
 node_scores[0][1] = 0.
 node_scores[1][0] = 0.
@@ -126,6 +179,7 @@ print("children", children)
 rels = np.zeros(node_scores.shape, dtype=np.int32)
 rels[0][-1] = [1, 2, 3]
 rels[1, [2, 3, 4, 5], 0] = 2
+rels = tensor(rels, dtype=torch.long)
 print("rels", rels)
 
 labels = np.array([0, 1], dtype=np.int32)
