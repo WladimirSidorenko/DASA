@@ -60,7 +60,7 @@ class AlphaModel(PyroModule):
     @PyroSample
     def beta(self):
         beta = Beta(self.beta_p, self.beta_q)
-        print("beta", beta, list(beta.batch_shape))
+        print("beta", beta, beta.batch_shape)
         print("beta.batch_shape", beta.batch_shape)
         print("beta.event_shape", beta.event_shape)
         return beta
@@ -124,7 +124,7 @@ class AlphaModel(PyroModule):
             # take a convex combination of the parent and child scores as new
             # values for alpha and scale the resulting alpha scores with the
             # corresponding scale factor.
-            print("self.beta:", self.beta)
+            print("self.beta:", self.beta, self.beta.shape)
             print("rels:", rels)
             print("self.beta[rels]:", self.beta[rels, :, nz_prnt_indices])
             beta = self.beta[rels, ]
