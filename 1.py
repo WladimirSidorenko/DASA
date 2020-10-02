@@ -5,7 +5,9 @@
 from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from scipy.special import softmax
 from torch import tensor
-from pyro.distributions import (Beta, MultivariateNormal)
+from pyro.distributions import (
+    constraints, Beta, Chi2, MultivariateNormal
+)
 from torch.nn import Softmax
 import numpy as np
 import pyro
@@ -19,6 +21,7 @@ class AlphaModel(PyroModule):
         super().__init__()
         self._n_rels = n_rels
         self._n_polarities = n_polarities
+        self._min_sum = tensor(1e-10)
         self._softmax = Softmax(dim=-1)
 
     @PyroParam
@@ -65,6 +68,18 @@ class AlphaModel(PyroModule):
         print("beta.event_shape", beta.event_shape)
         return beta
 
+    @PyroParam(constraint=constraints.positive)
+    def _scale_factor(self):
+        return tensor(34.)
+
+    @PyroSample
+    def scale_factor(self):
+        return Chi2(self._scale_factor)
+
+    @PyroParam(constraint=constraints.positive)
+    def z_epsilon(self):
+        return tensor(1e-2)
+
     def _get_child_scores(self, node_scores, children, inst_indices, i,
                           n_instances, max_children):
         child_indices = children[inst_indices, i].reshape(-1)
@@ -75,6 +90,39 @@ class AlphaModel(PyroModule):
         ].reshape(n_instances, max_children, -1)
         # print("* child_indices:", child_indices)
         return child_scores
+
+    def forward(self, node_scores, children, rels, labels):
+        n_instances = node_scores.shape[0]
+        max_depth = node_scores.shape[1]
+        max_width = children.shape[-1]
+        with pyro.plate("batch", size=n_instances) as inst_indices:
+            print("inst_indices", inst_indices)
+            for i in range(max_depth):
+                print("i:", i)
+                prnt_scores_i = node_scores[inst_indices, i]
+                print("prnt_scores[{}]:".format(i), prnt_scores_i)
+                rels_i = rels[inst_indices, i]
+                print("rels[{}]:".format(i), rels_i)
+                child_scores_i = self._get_child_scores(
+                    node_scores, children, inst_indices, i,
+                    n_instances, max_width
+                )
+                print("child_scores[{}]:".format(i), child_scores_i)
+                for j in range(max_width):
+                    child_scores_ij = child_scores_i[inst_indices, j]
+                    print("child_scores[{}, {}]:".format(i, j),
+                          child_scores_ij)
+                    var_sfx = "{}_{}".format(i, j)
+                    copy_indices, probs2copy, alpha_indices, alpha = \
+                        self._forward_node(
+                            var_sfx, prnt_scores_i,
+                            child_scores_ij, rels_i[inst_indices, j]
+                        )
+                    print("copy_indices", copy_indices)
+                    print("probs2copy", probs2copy)
+                    print("alpha_indices", alpha_indices)
+                    print("alpha", alpha)
+        return self.M
 
     def _forward_node(self, var_sfx: str, prnt_probs: tensor,
                       child_probs, rels):
@@ -114,7 +162,7 @@ class AlphaModel(PyroModule):
         # print("rels:", rels)
         # print("nz_prnt_indices:", nz_prnt_indices)
         alpha_indices = nz_chld_indices[nz_prnt_indices]
-        # print("alpha_indices:", alpha_indices)
+        print("alpha_indices:", alpha_indices)
         if alpha_indices.nelement() == 0:
             alpha = None
         else:
@@ -124,47 +172,44 @@ class AlphaModel(PyroModule):
             # take a convex combination of the parent and child scores as new
             # values for alpha and scale the resulting alpha scores with the
             # corresponding scale factor.
-            print("self.beta:", self.beta, self.beta.shape)
-            print("rels:", rels)
-            print("self.beta[rels]:", self.beta[rels, :, nz_prnt_indices])
-            beta = self.beta[rels, ]
+            # print("self.beta:", self.beta, self.beta.shape)
+            # print("rels:", rels)
+            # print("alpha_indices:", alpha_indices)
+            # print("nz_prnt_indices:", nz_prnt_indices)
+            # print("self.beta[rels]:", self.beta[rels, :, alpha_indices])
+            beta = self.beta[rels, :, alpha_indices]
             alpha = (1. - beta) * prnt_probs + beta * child_probs
-            scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
+            print("prnt_probs:", prnt_probs)
+            print("child_probs:", child_probs)
+            scale = self.scale(prnt_probs, child_probs, alpha_indices).unsqueeze_(-1)
+            print("alpha:", alpha)
+            print("scale:", scale)
             alpha *= scale
         return copy_indices, child_probs2copy, alpha_indices, alpha
 
-    def forward(self, node_scores, children, rels, labels):
-        n_instances = node_scores.shape[0]
-        max_depth = node_scores.shape[1]
-        max_width = children.shape[-1]
-        with pyro.plate("batch", size=n_instances) as inst_indices:
-            print("inst_indices", inst_indices)
-            for i in range(max_depth):
-                print("i:", i)
-                prnt_scores_i = node_scores[inst_indices, i]
-                print("prnt_scores[{}]:".format(i), prnt_scores_i)
-                rels_i = rels[inst_indices, i]
-                print("rels[{}]:".format(i), rels_i)
-                child_scores_i = self._get_child_scores(
-                    node_scores, children, inst_indices, i,
-                    n_instances, max_width
-                )
-                print("child_scores[{}]:".format(i), child_scores_i)
-                for j in range(max_width):
-                    child_scores_ij = child_scores_i[inst_indices, j]
-                    print("child_scores[{}, {}]:".format(i, j),
-                          child_scores_ij)
-                    var_sfx = "{}_{}".format(i, j)
-                    copy_indices, probs2copy, alpha_indices, alpha = \
-                        self._forward_node(
-                            var_sfx, prnt_scores_i,
-                            child_scores_ij, rels_i[inst_indices, j]
-                        )
-                    print("copy_indices", copy_indices)
-                    print("probs2copy", probs2copy)
-                    print("alpha_indices", alpha_indices)
-                    print("alpha", alpha)
-        return self.M
+    def scale(self, prnt_probs, child_probs, alpha_indices):
+        print("alpha_indices:", alpha_indices)
+        z = torch.clamp(prnt_probs + child_probs, min=self.z_epsilon.item())
+        z_norm = 1. / torch.sum(z, dim=-1)
+        z_norm.unsqueeze_(-1)
+        z *= z_norm
+        print("z:", z)
+        entropy = -torch.sum(z * torch.log(z), dim=-1)
+        print("entropy:", entropy)
+        cos = torch.sum(prnt_probs * child_probs, dim=-1)
+        print("cos:", cos)
+        norm = torch.norm(prnt_probs, dim=-1) * torch.norm(child_probs, dim=-1)
+        print("norm:", norm)
+        # replace 0's with 1's to prevent division by 0, since cosine in
+        # this case will be 0 anyway
+        norm = torch.clamp(norm, min=self._min_sum)
+        cos = 0.1 + cos / norm
+        print("self.scale_factor:", self.scale_factor)
+        scale_factor = self.scale_factor[alpha_indices]
+        print("scale_factor:", scale_factor)
+        scale = scale_factor * cos / entropy
+        print("scale:", scale)
+        return scale
 
 
 a = AlphaModel(6, 3)
