@@ -181,7 +181,9 @@ class AlphaModel(PyroModule):
             alpha = (1. - beta) * prnt_probs + beta * child_probs
             print("prnt_probs:", prnt_probs)
             print("child_probs:", child_probs)
-            scale = self.scale(prnt_probs, child_probs, alpha_indices).unsqueeze_(-1)
+            scale = self.scale(
+                prnt_probs, child_probs, alpha_indices
+            ).unsqueeze_(-1)
             print("alpha:", alpha)
             print("scale:", scale)
             alpha *= scale
