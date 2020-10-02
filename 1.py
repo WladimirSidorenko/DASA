@@ -6,7 +6,7 @@ from pyro.nn.module import PyroModule, PyroParam, PyroSample
 from scipy.special import softmax
 from torch import tensor
 from pyro.distributions import (
-    constraints, Beta, Chi2, MultivariateNormal
+    constraints, Beta, Categorical, Chi2, Dirichlet, MultivariateNormal
 )
 from torch.nn import Softmax
 import numpy as np
@@ -122,7 +122,16 @@ class AlphaModel(PyroModule):
                     print("probs2copy", probs2copy)
                     print("alpha_indices", alpha_indices)
                     print("alpha", alpha)
-        return self.M
+                    if probs2copy is not None:
+                        node_scores[inst_indices[copy_indices], i] = probs2copy
+                    if alpha is not None:
+                        z_ij = pyro.sample(
+                            "z_{}_{}".format(i, j), Dirichlet(alpha))
+                        node_scores[inst_indices[alpha_indices], i] = z_ij
+                        prnt_scores_i = node_scores[inst_indices, i]
+            z_ij = node_scores[inst_indices, -1]
+            y = pyro.sample("y", Categorical(z_ij), obs=labels[inst_indices])
+        return y
 
     def _forward_node(self, var_sfx: str, prnt_probs: tensor,
                       child_probs, rels):
