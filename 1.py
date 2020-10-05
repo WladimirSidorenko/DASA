@@ -118,16 +118,29 @@ class AlphaModel(PyroModule):
                             var_sfx, prnt_scores_i,
                             child_scores_ij, rels_i[inst_indices, j]
                         )
-                    print("copy_indices", copy_indices)
-                    print("probs2copy", probs2copy)
-                    print("alpha_indices", alpha_indices)
-                    print("alpha", alpha)
+                    # print("copy_indices", copy_indices)
+                    # print("probs2copy", probs2copy)
+                    # print("alpha_indices", alpha_indices)
+                    # print("alpha", alpha)
                     if probs2copy is not None:
+                        # print("inst_indices", inst_indices)
+                        # print("inst_indices[copy_indices]",
+                        #       inst_indices[copy_indices])
+                        # print("node_scores[inst_indices[copy_indices], i]",
+                        #       node_scores[inst_indices[copy_indices], i])
                         node_scores[inst_indices[copy_indices], i] = probs2copy
                     if alpha is not None:
+                        print("alpha:", alpha, alpha.shape)
                         z_ij = pyro.sample(
                             "z_{}_{}".format(i, j), Dirichlet(alpha))
-                        node_scores[inst_indices[alpha_indices], i] = z_ij
+                        print("z_ij:", z_ij, z_ij.shape, Dirichlet(alpha).batch_shape)
+                        print("alpha_indices:", alpha_indices)
+                        print("inst_indices:", inst_indices)
+                        print("inst_indices[alpha_indices]:",
+                              inst_indices[alpha_indices])
+                        print("node_scores[inst_indices[alpha_indices], i]:",
+                              node_scores[inst_indices[alpha_indices], i])
+                        node_scores[inst_indices[alpha_indices], i] = z_ij[inst_indices[alpha_indices], :]
                         prnt_scores_i = node_scores[inst_indices, i]
             z_ij = node_scores[inst_indices, -1]
             y = pyro.sample("y", Categorical(z_ij), obs=labels[inst_indices])
@@ -166,6 +179,7 @@ class AlphaModel(PyroModule):
         # indices of instances whose child scores are non-zero, but parent
         # scores are zero
         copy_indices = nz_chld_indices[z_prnt_indices]
+        child_probs = torch.squeeze(child_probs, 1)
         child_probs2copy = child_probs[z_prnt_indices]
         nz_prnt_indices = prnt_probs_sum.nonzero().squeeze(-1)
         # print("rels:", rels)
@@ -187,14 +201,15 @@ class AlphaModel(PyroModule):
             # print("nz_prnt_indices:", nz_prnt_indices)
             # print("self.beta[rels]:", self.beta[rels, :, alpha_indices])
             beta = self.beta[rels, :, alpha_indices]
+            print("beta:", beta, beta.shape)
+            print("prnt_probs:", prnt_probs, prnt_probs.shape)
+            print("child_probs:", child_probs, child_probs.shape)
             alpha = (1. - beta) * prnt_probs + beta * child_probs
-            print("prnt_probs:", prnt_probs)
-            print("child_probs:", child_probs)
+            print("* alpha:", alpha)
             scale = self.scale(
                 prnt_probs, child_probs, alpha_indices
             ).unsqueeze_(-1)
-            print("alpha:", alpha)
-            print("scale:", scale)
+            print("* scale:", scale)
             alpha *= scale
         return copy_indices, child_probs2copy, alpha_indices, alpha
 
