@@ -34,23 +34,21 @@ class AlphaModel(PyroModule):
         super().__init__()
         self._n_rels = n_rels
         self._n_polarities = n_polarities
+        self._min_sum = tensor(1e-10)
         self._softmax = Softmax(dim=-1)
 
     @PyroParam
     def M_Mu(self):
-        Mu = np.ones((self._n_polarities, self._n_polarities),
-                     dtype="float32")
-        # Mu[1, 1] = 0.3
-        Mu = np.tile(Mu, (self._n_rels, 1))
-        Mu = Mu.reshape(self._n_rels, self._n_polarities,
-                        1, self._n_polarities)
-        Mu *= np.expand_dims(np.arange(self._n_rels), (-3, -2, -1))
-        print(Mu)
+        Mu = np.eye(self._n_polarities, dtype="float32")
+        Mu[1, 1] = 0.3
+        Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
+            self._n_rels, self._n_polarities, 1, self._n_polarities)
         return tensor(Mu)
 
     @PyroParam
     def M_Sigma(self):
-        return tensor(np.eye(self._n_polarities, dtype="float32"))
+        Sigma = np.eye(self._n_polarities, dtype="float32")
+        return tensor(Sigma)
 
     @PyroSample
     def M(self):
@@ -58,29 +56,17 @@ class AlphaModel(PyroModule):
 
     @PyroParam
     def beta_p(self):
-        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
+        return 5. * tensor(np.ones((self._n_rels, self._n_polarities, 1),
+                                   dtype="float32"))
 
     @PyroParam
     def beta_q(self):
-        return 5. * tensor(np.ones((1, self._n_polarities), dtype="float32"))
+        return 5. * tensor(np.ones((self._n_rels, self._n_polarities, 1),
+                                   dtype="float32"))
 
     @PyroSample
     def beta(self):
-        return Beta(self.beta_p, self.beta_q).expand(
-                            [self.n_rels, self._n_polarities]
-                            ).to_event(2)
-
-    @PyroParam(constraint=constraints.positive)
-    def z_p(self):
-        return tensor(1.)
-
-    @PyroParam(constraint=constraints.positive)
-    def z_q(self):
-        return tensor(15.)
-
-    @PyroSample
-    def z(self):
-        raise Beta(self.z_p, self.z_q)
+        return Beta(self.beta_p, self.beta_q)
 
     @PyroParam(constraint=constraints.positive)
     def _scale_factor(self):
@@ -89,6 +75,10 @@ class AlphaModel(PyroModule):
     @PyroSample
     def scale_factor(self):
         return Chi2(self._scale_factor)
+
+    @PyroParam(constraint=constraints.positive)
+    def z_epsilon(self):
+        return tensor(1e-2)
 
     def forward(self, node_scores, children, rels, labels):
         """Perform inference on a single batch.
@@ -150,16 +140,14 @@ class AlphaModel(PyroModule):
             return None, None, None, None
         # Only leave `parent`, `child`, and `rels` elements for which
         # `child_probs` are not zero.
-        child_probs = child_probs[nz_chld_indices].unsqueeze_(-1)
+        child_probs = child_probs[nz_chld_indices].unsqueeze(1)
         rels = rels[nz_chld_indices]
+        M_nz_rels = self.M[rels, :, nz_chld_indices, :]
+        M_nz_rels = M_nz_rels.reshape(
+            -1, self._n_polarities, self._n_polarities
+        )
         # Batch-multiply the remaining child scores with relation matrices (M).
-        print("child_probs:", child_probs)
-        print("rels:", rels)
-        print("self.M:", self.M)
-        print("self.M[rels]:", self.M[rels])
-        print("self.M.shape:", self.M.shape)
-        exit(66)
-        child_probs = torch.bmm(self.M[rels], child_probs).squeeze_(-1)
+        child_probs = torch.bmm(child_probs, M_nz_rels)
         # Normalize child probabilities:
         child_probs = self._softmax(child_probs)
         # Custom Normalization
@@ -172,6 +160,7 @@ class AlphaModel(PyroModule):
         # indices of instances whose child scores are non-zero, but parent
         # scores are zero
         copy_indices = nz_chld_indices[z_prnt_indices]
+        child_probs = torch.squeeze(child_probs, 1)
         child_probs2copy = child_probs[z_prnt_indices]
         nz_prnt_indices = prnt_probs_sum.nonzero().squeeze(-1)
         alpha_indices = nz_chld_indices[nz_prnt_indices]
@@ -184,9 +173,11 @@ class AlphaModel(PyroModule):
             # take a convex combination of the parent and child scores as new
             # values for alpha and scale the resulting alpha scores with the
             # corresponding scale factor.
-            beta = self.beta[rels]
+            beta = self.beta[rels, :, alpha_indices]
             alpha = (1. - beta) * prnt_probs + beta * child_probs
-            scale = self.scale(prnt_probs, child_probs).unsqueeze_(-1)
+            scale = self.scale(
+                prnt_probs, child_probs, alpha_indices
+            ).unsqueeze_(-1)
             alpha *= scale
         if torch.isnan(child_probs2copy).any():
             print("alpha:", alpha)
@@ -200,15 +191,14 @@ class AlphaModel(PyroModule):
 
     def _get_child_scores(self, node_scores, children, inst_indices, i,
                           n_instances, max_children):
-        child_indices = children[inst_indices, i].reshape(-1)
-        inst_indices.repeat(max_children, 1).t().reshape(-1)
+        child_indices = torch.flatten(children[inst_indices, i])
         child_scores = node_scores[
-            inst_indices.repeat(max_children, 1).t().reshape(-1),
+            torch.flatten(inst_indices.repeat(max_children, 1).t()),
             child_indices
         ].reshape(n_instances, max_children, -1)
         return child_scores
 
-    def scale(self, prnt_probs, child_probs):
+    def scale(self, prnt_probs, child_probs, alpha_indices):
         z = torch.clamp(prnt_probs + child_probs, min=self.z_epsilon.item())
         z_norm = 1. / torch.sum(z, dim=-1)
         z_norm.unsqueeze_(-1)
@@ -220,5 +210,6 @@ class AlphaModel(PyroModule):
         # this case will be 0 anyway
         norm = torch.clamp(norm, min=self._min_sum)
         cos = 0.1 + cos / norm
-        scale = self.scale_factor * cos / entropy
+        scale_factor = self.scale_factor[alpha_indices]
+        scale = scale_factor * cos / entropy
         return scale
