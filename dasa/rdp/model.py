@@ -120,8 +120,8 @@ class RDModel(nn.Module):
             print("j:", j)
             loss += self._svi.step(*batch_j)
             print("loss:", loss)
-            if (torch.isnan(self.alpha_guide.M.flatten()).any()
-                    or torch.isinf(self.alpha_guide.M.flatten()).any()):
+            if (torch.isnan(self.guide.M.flatten()).any()
+                    or torch.isinf(self.guide.M.flatten()).any()):
                 exit(66)
         return loss
 

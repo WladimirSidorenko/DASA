@@ -29,10 +29,10 @@ class AlphaModel(PyroModule):
         Mu = np.eye(self._n_polarities, dtype="float32")
         # Mu[1, 1] = 0.3
         Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
-                self._n_rels, self._n_polarities, 1, self._n_polarities
+                1, self._n_rels, self._n_polarities, self._n_polarities
         )
         # print("Mu", Mu, Mu.shape)
-        Mu *= np.arange(self._n_rels).reshape(self._n_rels, 1, 1, 1)
+        Mu *= np.arange(self._n_rels).reshape(1, self._n_rels, 1, 1)
         # print("*Mu", Mu, Mu.shape)
         return tensor(Mu)
 
@@ -44,7 +44,7 @@ class AlphaModel(PyroModule):
 
     @PyroSample
     def M(self):
-        M = MultivariateNormal(self.M_Mu, self.M_Sigma)
+        M = MultivariateNormal(self.M_Mu, self.M_Sigma).to_event(2)
         # print("M", M, list(M.batch_shape))
         # print("M.batch_shape", M.batch_shape)
         # print("M.event_shape", M.event_shape)
@@ -63,9 +63,6 @@ class AlphaModel(PyroModule):
     @PyroSample
     def beta(self):
         beta = Beta(self.beta_p, self.beta_q)
-        print("beta", beta, beta.batch_shape)
-        print("beta.batch_shape", beta.batch_shape)
-        print("beta.event_shape", beta.event_shape)
         return beta
 
     @PyroParam(constraint=constraints.positive)
@@ -161,7 +158,7 @@ class AlphaModel(PyroModule):
         rels = rels[nz_chld_indices]
         # print("nz_rels:", rels)
         # print("M:", self.M, self.M.shape)
-        M_nz_rels = self.M[rels, :, nz_chld_indices, :]
+        M_nz_rels = self.M[nz_chld_indices, rels]
         # print("M[nz_rels]:", M_nz_rels, M_nz_rels.shape)
         M_nz_rels = M_nz_rels.reshape(
             -1, self._n_polarities, self._n_polarities

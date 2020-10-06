@@ -42,31 +42,32 @@ class AlphaModel(PyroModule):
         Mu = np.eye(self._n_polarities, dtype="float32")
         Mu[1, 1] = 0.3
         Mu = np.tile(Mu, (self._n_rels, 1)).reshape(
-            self._n_rels, self._n_polarities, 1, self._n_polarities)
+            1, self._n_rels, self._n_polarities, self._n_polarities)
         return tensor(Mu)
 
-    @PyroParam
+    @PyroParam()
     def M_Sigma(self):
         Sigma = np.eye(self._n_polarities, dtype="float32")
         return tensor(Sigma)
 
     @PyroSample
     def M(self):
-        return MultivariateNormal(self.M_Mu, self.M_Sigma)
+        print("self.M_Sigma:", self.M_Sigma)
+        return MultivariateNormal(self.M_Mu, self.M_Sigma).to_event(2)
 
     @PyroParam
     def beta_p(self):
-        return 5. * tensor(np.ones((self._n_rels, self._n_polarities, 1),
+        return 5. * tensor(np.ones((1, self._n_rels, self._n_polarities),
                                    dtype="float32"))
 
     @PyroParam
     def beta_q(self):
-        return 5. * tensor(np.ones((self._n_rels, self._n_polarities, 1),
+        return 5. * tensor(np.ones((1, self._n_rels, self._n_polarities),
                                    dtype="float32"))
 
     @PyroSample
     def beta(self):
-        return Beta(self.beta_p, self.beta_q)
+        return Beta(self.beta_p, self.beta_q).to_event(2)
 
     @PyroParam(constraint=constraints.positive)
     def _scale_factor(self):
@@ -96,7 +97,6 @@ class AlphaModel(PyroModule):
         max_width = children.shape[-1]
         # iterate over each instance of the batch
         with pyro.plate("batch", size=n_instances) as inst_indices:
-            print("inst_indices:", inst_indices)
             # iterate over each node of the tree in the bottom-up fashion
             for i in range(max_depth):
                 prnt_scores_i = node_scores[inst_indices, i]
@@ -142,7 +142,7 @@ class AlphaModel(PyroModule):
         # `child_probs` are not zero.
         child_probs = child_probs[nz_chld_indices].unsqueeze(1)
         rels = rels[nz_chld_indices]
-        M_nz_rels = self.M[rels, :, nz_chld_indices, :]
+        M_nz_rels = self.M[nz_chld_indices, rels]
         M_nz_rels = M_nz_rels.reshape(
             -1, self._n_polarities, self._n_polarities
         )
@@ -173,7 +173,7 @@ class AlphaModel(PyroModule):
             # take a convex combination of the parent and child scores as new
             # values for alpha and scale the resulting alpha scores with the
             # corresponding scale factor.
-            beta = self.beta[rels, :, alpha_indices]
+            beta = self.beta[alpha_indices, rels]
             alpha = (1. - beta) * prnt_probs + beta * child_probs
             scale = self.scale(
                 prnt_probs, child_probs, alpha_indices
