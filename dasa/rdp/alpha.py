@@ -45,7 +45,7 @@ class AlphaModel(PyroModule):
             1, self._n_rels, self._n_polarities, self._n_polarities)
         return tensor(Mu)
 
-    @PyroParam()
+    @PyroParam(constraint=constraints.corr_cholesky_constraint)
     def M_Sigma(self):
         Sigma = np.eye(self._n_polarities, dtype="float32")
         return tensor(Sigma)
@@ -53,7 +53,8 @@ class AlphaModel(PyroModule):
     @PyroSample
     def M(self):
         print("self.M_Sigma:", self.M_Sigma)
-        return MultivariateNormal(self.M_Mu, self.M_Sigma).to_event(2)
+        return MultivariateNormal(
+            self.M_Mu, scale_tril=self.M_Sigma).to_event(2)
 
     @PyroParam
     def beta_p(self):

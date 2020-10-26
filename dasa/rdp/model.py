@@ -117,9 +117,7 @@ class RDModel(nn.Module):
         """
         loss = 0.
         for j, batch_j in enumerate(data):
-            print("j:", j)
             loss += self._svi.step(*batch_j)
-            print("loss:", loss)
             if (torch.isnan(self.guide.M.flatten()).any()
                     or torch.isinf(self.guide.M.flatten()).any()):
                 exit(66)
