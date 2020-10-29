@@ -96,7 +96,8 @@ class AlphaModel(PyroModule):
         # maximum tree width
         max_width = children.shape[-1]
         # iterate over each instance of the batch
-        with pyro.plate("batch", size=n_instances) as inst_indices:
+        with pyro.plate("batch{}".format(n_instances),
+                        size=n_instances) as inst_indices:
             # iterate over each node of the tree in the bottom-up fashion
             for i in range(max_depth):
                 prnt_scores_i = node_scores[inst_indices, i]
