@@ -52,7 +52,6 @@ class AlphaModel(PyroModule):
 
     @PyroSample
     def M(self):
-        print("self.M_Sigma:", self.M_Sigma)
         return MultivariateNormal(
             self.M_Mu, scale_tril=self.M_Sigma).to_event(2)
 
