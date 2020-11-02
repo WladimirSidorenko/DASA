@@ -118,7 +118,8 @@ class AlphaModel(PyroModule):
                         node_scores[inst_indices[copy_indices], i] = probs2copy
                     if alpha is not None:
                         z_ij = pyro.sample(
-                            "z_{}_{}".format(i, j), Dirichlet(alpha))
+                            "z_{}_{}_{}".format(i, j, len(alpha_indices)),
+                            Dirichlet(alpha))
                         node_scores[inst_indices[alpha_indices], i] = z_ij
                         prnt_scores_i = node_scores[inst_indices, i]
             z_ij = node_scores[inst_indices, -1]
