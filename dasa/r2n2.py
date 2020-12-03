@@ -27,7 +27,7 @@ import torch
 
 from .constants import BUFFER_FACTOR, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
-from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
+from .dl import DLBaseAnalyzer
 
 
 ##################################################################
@@ -197,7 +197,16 @@ class R2N2Analyzer(DLBaseAnalyzer):
                           rels[i, :], tree_i, instance_i)
             msg_scores[i] = self._get_scores(instance_i)
         dataset = Dataset(node_scores, children, rels, msg_scores, Y)
-        return DataLoader(dataset, **DATALOADER_KWARGS)
+        return self._init_dataloader(dataset)
+
+    def _init_dataloader(self, dataset: Dataset):
+        """Initialize dataloader for given dataset.
+
+        Args:
+          dataset (Dataset): list of all training RST trees
+
+        """
+        return DataLoader(dataset, **self.DATALOADER_KWARGS)
 
     def _init_model(self, forrest):
         """Initialize the model that will be used for prediction.

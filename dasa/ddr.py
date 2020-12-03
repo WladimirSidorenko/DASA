@@ -26,7 +26,7 @@ import torch
 
 from .constants import CLS2IDX, IDX2CLS
 from .dataset import Dataset
-from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
+from .dl import DLBaseAnalyzer
 
 
 ##################################################################
@@ -110,7 +110,7 @@ class DDRAnalyzer(DLBaseAnalyzer):
         for i, instance in enumerate(X):
             self._compute_scores(digitized_input[i, :], instance)
         dataset = Dataset(digitized_input, Y)
-        return DataLoader(dataset, **DATALOADER_KWARGS)
+        return DataLoader(dataset, **self.DATALOADER_KWARGS)
 
     def _compute_scores(self, scores: np.array, instance: dict,
                         relation_scheme: Optional[str] = None,

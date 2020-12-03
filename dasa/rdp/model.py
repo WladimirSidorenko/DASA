@@ -17,18 +17,15 @@ Attributes:
 from __future__ import absolute_import, print_function, unicode_literals
 
 from copy import deepcopy
-from pyro.contrib.autoguide import AutoDelta
-from pyro.infer import SVI, Trace_ELBO
-from pyro.optim import RMSprop
 import numpy as np
 import pyro
+from pyro.infer import MCMC, NUTS, Predictive
 import pyro.poutine as poutine
 import torch.nn as nn
 import torch
 
 from .alpha import AlphaModel
 # from ..constants import CONTRASTIVE_RELS
-from ..dl import OPTIM_PARAM
 from ..utils import LOGGER
 
 
@@ -63,10 +60,9 @@ def check_rel(rel, rel_set):
 ##################################################################
 # Class
 class RDModel(nn.Module):
-    """Network for predicting tweet sentiment using variational inference.
+    """Probabilistic NN model for predicting text's sentiment.
 
     """
-
     def __init__(self, rels, n_polarities=3):
         """Class constructor.
 
@@ -90,9 +86,8 @@ class RDModel(nn.Module):
                                       self.n_polarities))
         # initialize internal models
         self.model = AlphaModel(self.n_rels, self.n_polarities)
-        self.guide = AutoDelta(self.model)
-        self._svi = SVI(self.model, self.guide,
-                        optim=RMSprop(OPTIM_PARAM), loss=Trace_ELBO())
+        nuts = NUTS(self.model, adapt_step_size=True)
+        self._mcmc = MCMC(nuts, num_samples=500, warmup_steps=300)
         self._param_store = pyro.get_param_store()
         self._best_params = None
 
@@ -106,7 +101,7 @@ class RDModel(nn.Module):
 
     # the model: p(x, z) = p(x|z)p(z)
     def step(self, data):
-        """Perform a training step on a single epoch.
+        """Perform a training step in a single epoch.
 
         Args:
           data (torch.utils.data.DataLoader): training dataset
@@ -115,13 +110,10 @@ class RDModel(nn.Module):
           float: loss
 
         """
-        loss = 0.
-        for j, batch_j in enumerate(data):
-            loss += self._svi.step(*batch_j)
-            if (torch.isnan(self.guide.M.flatten()).any()
-                    or torch.isinf(self.guide.M.flatten()).any()):
-                exit(66)
-        return loss
+        print("data:", data)
+        for batch in data:
+            self._mcmc.run(*batch)
+        return 0.
 
     def loss(self, x):
         """Evaluate the loss function on the given data.

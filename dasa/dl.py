@@ -31,14 +31,6 @@ import warnings
 from .ml import MLBaseAnalyzer
 from .constants import CLS2IDX
 
-##################################################################
-# Variables and Constants
-OPTIM_PARAM = {}
-N_EPOCHS = 100
-DATALOADER_KWARGS = {
-    "batch_size": 4,
-    "shuffle": True
-}
 warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
 
@@ -51,6 +43,13 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
 
     """
     __metaclass__ = abc.ABCMeta
+
+    OPTIM_PARAM = {}
+    N_EPOCHS = 100
+    DATALOADER_KWARGS = {
+        "batch_size": 4,
+        "shuffle": True
+    }
 
     def __init__(self, *args, **kwargs):
         """Class constructor.
@@ -81,7 +80,8 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
 
         """
         self._logger.debug("Training model...")
-        optimizer = self._optim_cls(self._model.parameters(), **OPTIM_PARAM)
+        optimizer = self._optim_cls(self._model.parameters(),
+                                    **self.OPTIM_PARAM)
         # prepare matrices for storing gold and predicted labels on training
         # and test sets
         n_train = len(train_set.dataset)
@@ -91,7 +91,7 @@ class DLBaseAnalyzer(MLBaseAnalyzer):
         # optimize model on the training set
         best_model = None
         best_f1 = -1.
-        for epoch_i in range(N_EPOCHS):
+        for epoch_i in range(self.N_EPOCHS):
             selected = False
             train_loss = 0.
             dev_loss = 0.

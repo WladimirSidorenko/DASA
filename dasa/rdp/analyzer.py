@@ -20,14 +20,14 @@ from builtins import range
 from datetime import datetime
 from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader
-from typing import List, Optional
+from typing import Optional
 import numpy as np
 import pyro
 import torch
 
 from .model import RDModel
+from ..dataset import Dataset
 from ..constants import IDX2CLS
-from ..dl import N_EPOCHS
 from ..r2n2 import R2N2Analyzer
 
 
@@ -46,7 +46,10 @@ class RDAnalyzer(R2N2Analyzer):
     Attributes:
 
     """
-    _name = "RD"
+    _name = "RDP"
+    DATALOADER_KWARGS = {
+        "shuffle": True
+    }
 
     def __init__(self, relation_scheme: str, sentiment_scores: str,
                  n_classes: int):
@@ -118,7 +121,7 @@ class RDAnalyzer(R2N2Analyzer):
         self._wbench_y = np.zeros(1, dtype="long")
 
     def _train(self, train_set, dev_set):
-        """Train specified model(s) on the provided data.
+        """Train model(s) on provided data.
 
         Args:
           train_set (list): training set
@@ -141,7 +144,7 @@ class RDAnalyzer(R2N2Analyzer):
         best_f1 = -1.
         best_dev_loss = np.Inf
         pyro.clear_param_store()
-        for epoch_i in range(N_EPOCHS):
+        for epoch_i in range(self.N_EPOCHS):
             selected = False
             epoch_start = datetime.utcnow()
             train_loss = self._model.step(train_set)
@@ -172,15 +175,18 @@ class RDAnalyzer(R2N2Analyzer):
         self._model.inspect_state()
         return best_f1
 
-    def _digitize_data(self, X: List[dict], Y: np.array,
-                       train_mode: bool = False) -> DataLoader:
-        dataloader = super()._digitize_data(X, Y, train_mode)
-        # remove message scores as they will be incorporated as regular priors
-        # of the root node
-        tensors = list(dataloader.dataset.tensors)
+    def _init_dataloader(self, dataset: Dataset):
+        """Initialize dataloader for given dataset.
+
+        Args:
+          dataset (Dataset): list of all training RST trees
+
+        """
+        tensors = list(dataset.tensors)
         tensors.pop(-2)
-        dataloader.dataset.tensors = tuple(tensors)
-        return dataloader
+        dataset.tensors = tuple(tensors)
+        return DataLoader(dataset, batch_size=len(dataset),
+                          **self.DATALOADER_KWARGS)
 
     def tree2mtx(self, node_scores, children, rels, tree,
                  instance, sentiment_scores: Optional[str] = None):

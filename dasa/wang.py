@@ -26,7 +26,7 @@ import torch
 
 from .constants import BUFFER_FACTOR, IDX2CLS, N_POLARITIES
 from .dataset import Dataset
-from .dl import DATALOADER_KWARGS, DLBaseAnalyzer
+from .dl import DLBaseAnalyzer
 
 
 ##################################################################
@@ -306,7 +306,7 @@ class WangAnalyzer(DLBaseAnalyzer):
                 digitized_rels[i, j] = self._rel2idx.get(rel, IRD_IDX)
                 digitized_input[i, j, :] = pol_scores
         dataset = Dataset(digitized_rels, digitized_input, Y)
-        return DataLoader(dataset, **DATALOADER_KWARGS)
+        return DataLoader(dataset, **self.DATALOADER_KWARGS)
 
     def _init_wbenches(self):
         """Initialize workbenches that will be used at prediction time.
