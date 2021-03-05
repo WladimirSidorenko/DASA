@@ -17,7 +17,7 @@ from .last import LastAnalyzer
 from .no_discourse import DUSAnalyzer
 from .root import RootAnalyzer
 from .r2n2 import R2N2Analyzer
-from .rdp import RDAnalyzer
+from .rdm import RDAnalyzer
 from .wang import WangAnalyzer
 
 

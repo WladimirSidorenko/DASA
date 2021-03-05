@@ -37,7 +37,7 @@ TEST_EPOCHS = 40
 ##################################################################
 # Methods
 def check_rel(rel, rel_set):
-    """Check whether given relation is present in contrastive rel set.
+    """Check whether relation is present in contrastive rel set.
 
     Args:
       rel (str or tuple): relation to check
@@ -87,7 +87,7 @@ class RDModel(nn.Module):
         # initialize internal models
         self.model = AlphaModel(self.n_rels, self.n_polarities)
         nuts = NUTS(self.model, adapt_step_size=True)
-        self._mcmc = MCMC(nuts, num_samples=500, warmup_steps=300)
+        self._mcmc = MCMC(nuts, num_samples=50, warmup_steps=30)
         self._param_store = pyro.get_param_store()
         self._best_params = None
 
@@ -99,7 +99,6 @@ class RDModel(nn.Module):
     def best_params(self):
         return self._best_params
 
-    # the model: p(x, z) = p(x|z)p(z)
     def step(self, data):
         """Perform a training step in a single epoch.
 
@@ -110,9 +109,11 @@ class RDModel(nn.Module):
           float: loss
 
         """
-        print("data:", data)
         for batch in data:
             self._mcmc.run(*batch)
+        self._samples = self._mcmc.get_samples()
+        print("samles:", list(self._samples.keys()))
+        exit(66)
         return 0.
 
     def loss(self, x):

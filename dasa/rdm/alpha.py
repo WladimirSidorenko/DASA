@@ -137,7 +137,9 @@ class AlphaModel(PyroModule):
         """
         # The vector `nz_chld_indices` will contain indices of the child_probs
         # which are not zero.
-        nz_chld_indices = child_probs.sum(dim=-1).nonzero().squeeze(-1)
+        # print("child_probs:", child_probs)
+        nz_chld_indices = child_probs.sum(dim=-1).nonzero(as_tuple=False)
+        nz_chld_indices = nz_chld_indices.squeeze(-1)
         if nz_chld_indices.nelement() == 0:
             return None, None, None, None
         # Only leave `parent`, `child`, and `rels` elements for which
